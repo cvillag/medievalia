@@ -6,7 +6,7 @@
 		<h1><fmt:message key="bienvenida"/></h1>
 		<p><%= request.getAttribute("mje") %></p>
 	</div>
-	<form class="form-horizontal" role="form" method="post" action="addCosa.do">
+	<form class="form-horizontal" role="form" method="post" action="inicio.do">
 		<div class="form-group">
 			<label class="col-xs-3 control-label" for="nombre"><fmt:message key="intro.nombre"/></label>
 			<div class="col-xs-4">

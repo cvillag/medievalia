@@ -3,7 +3,7 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-	<display-name>Archetype Created Web Application</display-name>
+	<display-name>Aplicación de apoyo a la investigación</display-name>
   
 	<servlet>
 		<servlet-name>medievalia</servlet-name>

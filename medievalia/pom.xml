@@ -2,10 +2,9 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.cvilla</groupId>
-  <artifactId>springapp</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>springapp Maven Webapp</name>
+  <name>medievalia Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
@@ -84,8 +83,29 @@
 		<artifactId>slf4j-log4j12</artifactId>
 		<version>1.7.2</version>
 	</dependency>
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-core</artifactId>
+		<version>4.3.7.Final</version>
+	</dependency>
+	<dependency>
+		<groupId>org.hibernate.common</groupId>
+		<artifactId>hibernate-commons-annotations</artifactId>
+		<version>4.0.5.Final</version>
+	</dependency>
+	<dependency>
+		<groupId>org.hibernate.javax.persistence</groupId>
+		<artifactId>hibernate-jpa-2.0-api</artifactId>
+		<version>1.0.1.Final</version>
+	</dependency>
+	<dependency>
+		<groupId>org.hibernate.javax.persistence</groupId>
+		<artifactId>hibernate-jpa-2.1-api</artifactId>
+		<version>1.0.0.Final</version>
+	</dependency>
   </dependencies>
   <build>
     <finalName>springapp</finalName>
   </build>
+  <artifactId>medievalia</artifactId>
 </project>

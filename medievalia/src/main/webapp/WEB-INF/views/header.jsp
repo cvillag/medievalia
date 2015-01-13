@@ -1,6 +1,9 @@
 <%@ page session="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
+
+<%@ page import="com.cvilla.medievalia.utils.Header" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -20,11 +23,47 @@
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
+	<% List<Header> headers = (List<Header>) request.getAttribute("headers");%>
 	<div class="container">
-		<ul class="nav nav-tabs">
-			<li><a>Inicio</a></li>
-			<li><a>Cosas</a></li>
-		</ul>
+		<div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Medievalia</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Medievalia</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<%
+				if(!(headers == null || headers.size() < 1)){
+					for(Header h : headers){
+						if(h.getSons() == null || h.getSons().size() < 1){
+				%>
+				<li><a href="<%= h.getServiceUrl() %>"><%= h.getServiceName() %></a></li>
+				<%
+						}
+						else{
+							%>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= h.getServiceName() %><span class="caret"></span></a>
+					 <ul class="dropdown-menu" role="menu">
+							<%
+							for(Header h2 : h.getSons()){
+								%>
+						<li><a href="<%= h2.getServiceUrl() %>"><%= h2.getServiceName() %></a></li>
+								<%
+							}
+						}
+						%>
+					</ul>
+				</li>
+						<%
+					}
+				}
+				%>
+			</ul>
+		</div>
 	</div>
 </nav>
 

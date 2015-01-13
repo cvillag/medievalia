@@ -3,6 +3,8 @@
 <%@ include file="/WEB-INF/views/header.jsp" %>
 <%@ page import="com.cvilla.medievalia.domain.Cosa" %>
 <%@ page import="java.util.List" %>
+
+<div class="container theme-showcase" role="main">
 <%
 	List<Cosa> lc = (List<Cosa>)request.getAttribute("lcosas");%>
 	<c:forEach items="{model.lcosas}" var="cosa">
@@ -24,5 +26,5 @@
 <p>De la BD: <%= request.getAttribute("nom1") %></p>
 <input type="button" onclick="location.href='hello.do'" value="volver"/>
 
-</body>
-</html>
+</div>
+<%@ include file="/WEB-INF/views/footer.jsp"%>
