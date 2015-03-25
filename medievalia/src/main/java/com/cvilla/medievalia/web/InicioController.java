@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.CosaManager;
+import com.cvilla.medievalia.service.ILoginManager;
 import com.cvilla.medievalia.utils.Header;
 
 @Controller
@@ -20,22 +22,32 @@ public class InicioController {
 
 	@Autowired
 	private CosaManager cosaManager;
+	
+	@Autowired
+	private ILoginManager userManager;
 
 	@RequestMapping(value = "inicio.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		ModelAndView model = new ModelAndView("inicio");
+		ModelAndView model;
 		String nombre = request.getParameter("nombre");
-		cosaManager.addCosa(nombre);
-		String nom = cosaManager.getCosaName(5);
-		model.addObject("headers", getHeaders());
-		model.addObject("lcosas", cosaManager.listar());
-		model.addObject("nom1",nom);
+		String pass = request.getParameter("pass");
+		String mensaje;
+		User user = null;
+		if(userManager.login(nombre, pass)){
+			user = userManager.getCurrentUser();
+			mensaje = "main.mensaje1" ;
+			model = new ModelAndView("inicio");
+			model.addObject("headers", getHeaders());
+			model.addObject("usuario", user);
+			model.addObject("mensaje", mensaje);
+		}
+		else{
+			model = new ModelAndView("bienvenida");
+			String mensaje2 = "intro.mensaje2";
+			model.addObject("mensaje2", mensaje2);
+		}
 		return model;
-	}
-
-	public void setCosaManager(CosaManager cm) {
-		this.cosaManager = cm;
 	}
 	
 	private List<Header> getHeaders(){

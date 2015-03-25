@@ -8,5 +8,9 @@ public interface IUserDAO {
 	public void nuevo(User u);
 	
 	public List<User> list();
+	
+	public User getUserByName(String name);
+	
+	public User login(String name, String pass);
 
 }

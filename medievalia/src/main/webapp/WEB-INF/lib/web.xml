@@ -3,10 +3,10 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-	<display-name>Medievalia</display-name>
+	<display-name>Gestión F1</display-name>
   
 	<servlet>
-		<servlet-name>medievalia</servlet-name>
+		<servlet-name>f1</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
@@ -16,7 +16,7 @@
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>medievalia</servlet-name>
+		<servlet-name>f1</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 

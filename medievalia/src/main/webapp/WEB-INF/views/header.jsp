@@ -1,6 +1,7 @@
 <%@ page session="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 
 <%@ page import="com.cvilla.medievalia.utils.Header" %>
 <%@ page import="java.util.List" %>
@@ -22,8 +23,10 @@
 <title>Medievalia</title>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-	<% List<Header> headers = (List<Header>) request.getAttribute("headers");%>
+<nav class="navbar navbar-inverse">
+	<%
+	@SuppressWarnings("unchecked")
+	List<Header> headers = (List<Header>) request.getAttribute("headers");%>
 	<div class="container">
 		<div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">

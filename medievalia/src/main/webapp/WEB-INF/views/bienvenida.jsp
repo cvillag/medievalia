@@ -4,7 +4,7 @@
 <div class="container theme-showcase" role="main">
 	<div class="jumbotron">
 		<h1><fmt:message key="bienvenida"/></h1>
-		<p><%= request.getAttribute("mje") %></p>
+		<p><fmt:message key="intro.mensaje"/></p>
 	</div>
 	<form class="form-horizontal" role="form" method="post" action="inicio.do">
 		<div class="form-group">
@@ -24,6 +24,9 @@
 				<button type="submit" class="btn btn-default"><fmt:message key="intro.btn1"/></button>
 			</div>
 		</div>
+		<%	if(request.getAttribute("mensaje2") != null){%>
+		<div class="alert alert-danger"><fmt:message key="${mensaje2}"/></div>
+		<%} %>
 	</form>
 </div>
 <%@ include file="/WEB-INF/views/footer.jsp" %>

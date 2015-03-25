@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cvilla.medievalia.dao.CosaDAO;
 import com.cvilla.medievalia.dao.ICosaDAO;
 import com.cvilla.medievalia.domain.Cosa;
 
