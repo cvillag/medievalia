@@ -13,7 +13,7 @@ public class UserDAO implements IUserDAO {
 	
 	private static final String GET_LISTADO = "select * from users";
 	private static final String GET_USER = "select * from users where user_name = ?";
-	private static final String GET_USER_LOGIN = "select * from users where user_name = ? and user_pass=sha1(?)";
+	private static final String GET_USER_LOGIN = "SELECT * FROM `users` WHERE user_name=? and user_pass=AES_ENCRYPT(?,UNHEX('28165A0B371ED2D9441B830D21A30887'))";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
