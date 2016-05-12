@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,17 +35,20 @@ public class InicioController {
 		String pass = request.getParameter("pass");
 		String mensaje;
 		User user = null;
+		HttpSession sesion = request.getSession();
 		if(userManager.login(nombre, pass)){
 			user = userManager.getCurrentUser();
-			mensaje = "main.mensaje1" ;
+			mensaje = "test.sesion";
+			sesion.setAttribute("login", nombre);
 			model = new ModelAndView("inicio");
 			model.addObject("headers", getHeaders());
 			model.addObject("usuario", user);
 			model.addObject("mensaje", mensaje);
+			model.addObject("user",nombre);
 		}
 		else{
 			model = new ModelAndView("bienvenida");
-			String mensaje2 = "intro.mensaje2";
+			String mensaje2 = "test.noSesion";
 			model.addObject("mensaje2", mensaje2);
 		}
 		return model;
