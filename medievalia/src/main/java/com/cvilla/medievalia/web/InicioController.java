@@ -1,8 +1,5 @@
 package com.cvilla.medievalia.web;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -14,18 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.User;
-import com.cvilla.medievalia.service.CosaManager;
+import com.cvilla.medievalia.service.IAutorizationManager;
 import com.cvilla.medievalia.service.ILoginManager;
-import com.cvilla.medievalia.utils.Header;
+import com.cvilla.medievalia.utils.Constants;
+
 
 @Controller
 public class InicioController {
 
 	@Autowired
-	private CosaManager cosaManager;
+	private ILoginManager userManager;
 	
 	@Autowired
-	private ILoginManager userManager;
+	private IAutorizationManager authManager;
 
 	@RequestMapping(value = "inicio.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -36,31 +34,37 @@ public class InicioController {
 		String mensaje;
 		User user = null;
 		HttpSession sesion = request.getSession();
-		if(userManager.login(nombre, pass)){
+		user = (User) sesion.getAttribute("user");
+		if(userManager.login(nombre, pass) || user != null){
 			user = userManager.getCurrentUser();
 			mensaje = "test.sesion";
-			sesion.setAttribute("login", nombre);
-			model = new ModelAndView("inicio");
-			model.addObject("headers", getHeaders());
+			sesion.setAttribute("user", user);
+			//FIXME Cambiar los nombres jsp por código de página
+			if(user.getUser_role() == 1)
+				model = new ModelAndView("1-1-inicio");
+			else if(user.getUser_role() == 2)
+				model = new ModelAndView("3-0-inicio");
+			else if(user.getUser_role() == 3)
+				model = new ModelAndView("4-0-inicio");
+			else
+				model = new ModelAndView("0-bienvenida");
+			model.addObject("headers", Constants.getHeaders(user.getUser_role()));
 			model.addObject("usuario", user);
-			model.addObject("mensaje", mensaje);
+			//model.addObject("mensaje", mensaje);
+			if(authManager.isAutorized(1, user)){
+				model.addObject("mensaje", "autorizado");
+			}
+			else{
+				model.addObject("mensaje", "noautorizado");
+			}
 			model.addObject("user",nombre);
 		}
 		else{
-			model = new ModelAndView("bienvenida");
+			model = new ModelAndView("0-bienvenida");
 			String mensaje2 = "test.noSesion";
 			model.addObject("mensaje2", mensaje2);
 		}
 		return model;
-	}
-	
-	private List<Header> getHeaders(){
-		ArrayList<Header> lista = new ArrayList<Header>();
-		lista.add(new Header("admin","Administración","",new ArrayList<Header>()));
-		lista.get(0).getSons().add(new Header("users","Usuarios","users.do",null));
-		lista.get(0).getSons().add(new Header("groups", "Grupos", "groups.do",null));
-		lista.add(new Header("actions", "Acciones", "actions.do", null));
-		return lista;
 	}
 
 }

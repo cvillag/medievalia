@@ -19,27 +19,11 @@
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basename" value="messages"/>
 	</bean>
-
-	<bean id="cosaManager" class="com.cvilla.medievalia.service.SimpleCosaManager">
-		<property name="cosas">
-			<list>
-				<ref bean="cosa1"></ref>
-				<ref bean="cosa2"></ref>
-			</list>
-		</property>
-	</bean>
 	
 	<bean id="loginManager" class="com.cvilla.medievalia.service.LoginManager">
 	</bean>
 	
-	<bean id="cosa1" class="com.cvilla.medievalia.domain.Cosa">
-		<constructor-arg name="id" type="int" value="1"/>
-		<constructor-arg name="nombre" value="${cosas.nombre1}"/>
-	</bean>
-	
-	<bean id="cosa2" class="com.cvilla.medievalia.domain.Cosa">
-		<constructor-arg name="id" type="int" value="2"/>
-		<constructor-arg name="nombre" value="Cosa2"/>
+	<bean id="authManager" class="com.cvilla.medievalia.service.AutorizationManager">
 	</bean>
 	
 	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -50,11 +34,11 @@
 		<property name="sessionFactory" ref="hibernateSessionFactory"/>
 	</bean> -->
 	
-	<bean id="cosaDAO" class="com.cvilla.medievalia.dao.CosaDAO">
+	<bean id="userDAO" class="com.cvilla.medievalia.dao.UserDAO">
 		<property name="jdbcTemplate" ref="jdbcTemplate"/>
 	</bean>
 	
-	<bean id="userDAO" class="com.cvilla.medievalia.dao.UserDAO">
+	<bean id="authDAO" class="com.cvilla.medievalia.dao.AuthDAO">
 		<property name="jdbcTemplate" ref="jdbcTemplate"/>
 	</bean>
 	

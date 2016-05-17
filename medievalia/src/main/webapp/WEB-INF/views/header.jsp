@@ -35,7 +35,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Medievalia</a>
+          <a class="navbar-brand" href="inicio.do">Medievalia</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
@@ -44,7 +44,7 @@
 					for(Header h : headers){
 						if(h.getSons() == null || h.getSons().size() < 1){
 				%>
-				<li><a href="<%= h.getServiceUrl() %>"><%= h.getServiceName() %></a></li>
+				<li><a class="dropdown-toggle" href="<%= h.getServiceUrl() %>"><%= h.getServiceName() %></a></li>
 				<%
 						}
 						else{
@@ -54,18 +54,22 @@
 							<%
 							for(Header h2 : h.getSons()){
 								%>
-						<li><a href="<%= h2.getServiceUrl() %>"><%= h2.getServiceName() %></a></li>
+						<li><a class="dropdown-toggle" href="<%= h2.getServiceUrl() %>"><%= h2.getServiceName() %></a></li>
 								<%
 							}
+							%>
+							</ul>
+						</li>
+								<%
 						}
-						%>
-					</ul>
-				</li>
-						<%
+						
 					}
 				}
-				%>
+					%>
 			</ul>
+				<button type="button" class="btn btn-default btn-sm nav navbar-nav navbar-right">
+ 					<a href="logout.do"><span onclick="document.location.href='logout.do'" class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a>
+				</button>			
 		</div>
 	</div>
 </nav>

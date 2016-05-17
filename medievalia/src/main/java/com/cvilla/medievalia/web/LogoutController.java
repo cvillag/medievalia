@@ -14,7 +14,7 @@ public class LogoutController {
 	
 	@RequestMapping(value = "logout.do")
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		ModelAndView model = new ModelAndView("bienvenida");
+		ModelAndView model = new ModelAndView("0-bienvenida");
 		
 		HttpSession sesion = request.getSession();
 		sesion.invalidate();

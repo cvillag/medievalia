@@ -25,7 +25,7 @@ public class WelcomeController {
 	
 	@RequestMapping(value="/hello.do")
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ModelAndView result = new ModelAndView("bienvenida");
+		ModelAndView result = new ModelAndView("0-bienvenida");
         logger.info("--->WelcomeController");
         //List<User> userList = loginManager.listar();
         //result.addObject("users", userList);

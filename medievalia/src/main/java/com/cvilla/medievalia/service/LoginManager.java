@@ -55,4 +55,5 @@ public class LoginManager implements ILoginManager {
 		this.currentUser = currentUser;
 	}
 
+
 }
