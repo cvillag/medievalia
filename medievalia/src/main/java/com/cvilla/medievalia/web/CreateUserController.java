@@ -1,8 +1,5 @@
 package com.cvilla.medievalia.web;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,37 +15,29 @@ import com.cvilla.medievalia.service.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller
-public class CuentasController {
+public class CreateUserController {
 
-	@Autowired
-	private ILoginManager userManager;
-	
 	@Autowired
 	private IAutorizationManager authManager;
 	
-	@RequestMapping(value = "users.do")
+	@Autowired
+	private ILoginManager userManager;
+	
+	@RequestMapping(value = "createUser.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView model = null;
+		
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		
 		if(authManager.isAutorized(3, user)){
-			model = new ModelAndView("1-3-listausuarios");
-			
-			ArrayList<User> users = (ArrayList<User>) userManager.listar();
-			
-			model.addObject("users", users);
+			model = new ModelAndView("1-2-creaUsuarios");
 			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
-			List<String> scripts = new ArrayList<String>();
-			scripts.add("js/users.js");
-			model.addObject("scripts",scripts);
-
 		}
 		else{
 			model = Constants.noPrivileges();
 		}
 		return model;
 	}
-	
 }

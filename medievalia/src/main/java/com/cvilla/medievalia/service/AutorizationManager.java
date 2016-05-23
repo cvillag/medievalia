@@ -28,7 +28,9 @@ public class AutorizationManager implements IAutorizationManager {
 	}
 
 	public boolean isAutorized(int action, User user) {
-		// TODO Auto-generated method stub
-		return authdao.isAuthorized(user.getId(), action);
+		if(user != null)
+			return authdao.isAuthorized(user.getId(), action);
+		else
+			return false;
 	}
 }

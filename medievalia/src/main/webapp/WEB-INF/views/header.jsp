@@ -20,6 +20,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <!-- Versión compilada y comprimida del JavaScript de Bootstrap -->
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<% 
+	List<String> scripts = (List<String>)request.getAttribute("scripts");
+	if(scripts != null && scripts.size() > 0){
+		for(String sc : scripts){
+		%>
+		<script src="<%=sc%>"></script>
+		<%
+		}
+	}
+%>
 <title>Medievalia</title>
 </head>
 <body>
@@ -64,12 +74,14 @@
 						}
 						
 					}
+					%>
+				<button type="button" class="btn btn-default navbar-btn" onclick="document.location.href='logout.do'">
+					<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+				</button>
+					<%
 				}
 					%>
-			</ul>
-				<button type="button" class="btn btn-default btn-sm nav navbar-nav navbar-right">
- 					<a href="logout.do"><span onclick="document.location.href='logout.do'" class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a>
-				</button>			
+			</ul>		
 		</div>
 	</div>
 </nav>

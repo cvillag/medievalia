@@ -3,6 +3,8 @@ package com.cvilla.medievalia.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.servlet.ModelAndView;
+
 public class Constants {
 	
 	private static final String PASS_KEY = "28165A0B371ED2D9441B830D21A30887";
@@ -42,6 +44,14 @@ public class Constants {
 		index++;
 		
 		return lista;
+	}
+	
+	public static ModelAndView noPrivileges(){
+		//FIXME Mensaje temporal. La página ha de ser otra
+		ModelAndView model = new ModelAndView("0-bienvenida");
+		String mensaje2 = "test.noSesion";
+		model.addObject("mensaje2", mensaje2);
+		return model;
 	}
 
 }

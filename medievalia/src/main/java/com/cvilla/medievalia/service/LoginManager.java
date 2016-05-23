@@ -31,7 +31,6 @@ public class LoginManager implements ILoginManager {
 		return userList;
 	}
 	public User getUser(String name) {
-		// TODO Auto-generated method stub
 		User u = userDAO.getUserByName(name);
 		return u;
 	}
