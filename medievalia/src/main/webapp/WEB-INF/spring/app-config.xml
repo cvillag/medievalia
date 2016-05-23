@@ -26,6 +26,9 @@
 	<bean id="authManager" class="com.cvilla.medievalia.service.AutorizationManager">
 	</bean>
 	
+	<bean id="roleManager" class="com.cvilla.medievalia.service.RoleManager">
+	</bean>
+	
 	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="classpath:application.properties"/>
 	</bean>
@@ -39,6 +42,10 @@
 	</bean>
 	
 	<bean id="authDAO" class="com.cvilla.medievalia.dao.AuthDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<bean id="roleDAO" class="com.cvilla.medievalia.dao.RoleDAO">
 		<property name="jdbcTemplate" ref="jdbcTemplate"/>
 	</bean>
 	

@@ -1,3 +1,4 @@
+<%@page import="com.cvilla.medievalia.domain.Role"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page import="com.cvilla.medievalia.domain.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,6 +6,7 @@
 <%@ include file="/WEB-INF/views/header.jsp" %>
 <%
 ArrayList<User> list = (ArrayList<User>)request.getAttribute("users");
+ArrayList<Role> roles = (ArrayList<Role>)request.getAttribute("roles");
 %>
 <div class="container">
 	<!-- div class="jumbotron">
@@ -34,7 +36,7 @@ ArrayList<User> list = (ArrayList<User>)request.getAttribute("users");
 						<td width="10%"><%=u.getId() %></td>
 						<td width="20%"><%=u.getUser_name() %></td>
 						<td width="20%"><%=u.getUser_long_name() %></td>
-						<td width="10%"><%=u.getUser_role() %></td>
+						<td width="10%"><%=roles.get(u.getUser_role()).getNombreRol() %></td>
 						<td width="20%">
 							<button type="button" class="btn btn-default navbar-btn deleteuser" data-val="<%=u.getId() %>">
 								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>

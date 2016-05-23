@@ -12,9 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cvilla.medievalia.domain.Role;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.IAutorizationManager;
 import com.cvilla.medievalia.service.ILoginManager;
+import com.cvilla.medievalia.service.IRoleManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller
@@ -25,6 +27,9 @@ public class CuentasController {
 	
 	@Autowired
 	private IAutorizationManager authManager;
+	
+	@Autowired
+	private IRoleManager roleManager;
 	
 	@RequestMapping(value = "users.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -37,8 +42,9 @@ public class CuentasController {
 			model = new ModelAndView("1-3-listausuarios");
 			
 			ArrayList<User> users = (ArrayList<User>) userManager.listar();
-			
+			ArrayList<Role> roles = (ArrayList<Role>) roleManager.getRoleList();
 			model.addObject("users", users);
+			model.addObject("roles", roles);
 			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 			List<String> scripts = new ArrayList<String>();
 			scripts.add("js/users.js");
