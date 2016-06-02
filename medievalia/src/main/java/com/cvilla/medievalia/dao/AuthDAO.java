@@ -25,7 +25,7 @@ public class AuthDAO implements IAuthDAO {
 
 	public boolean isAuthorized(int role, int action) {
 		try{
-			jdbcTemplate.queryForObject(GET_AUTH,new Object[]{role,action}, new AutorizationMapper());
+			jdbcTemplate.queryForObject(GET_AUTH,new Object[]{action,role}, new AutorizationMapper());
 			return true;
 		}
 		catch(EmptyResultDataAccessException e){

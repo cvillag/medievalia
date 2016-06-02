@@ -8,6 +8,17 @@ import org.springframework.web.servlet.ModelAndView;
 public class Constants {
 	
 	private static final String PASS_KEY = "28165A0B371ED2D9441B830D21A30887";
+	public static final int P_LOGIN = 1;
+	public static final int P_EDIT_PROFILE = 2;
+	public static final int P_USER_LIST = 3;
+	public static final int P_CREATE_USER = 4;
+	
+	public static final String M_DUPLICATED_USER = "p1-2.error.duplicateUser";
+	public static final String M_CREATE_USER_OK = "p1-2.createok";
+	public static final String M_NO_ROLE = "p1-2.error.norole";
+	public static final String M_NO_PASS = "p1-2.error.nopass";
+	public static final String M_NO_LNAME = "p1-2.error.nolname";
+	public static final String M_NO_NAME = "p1-2.error.noname";
 	
 	public static String getKey(){
 		return PASS_KEY;

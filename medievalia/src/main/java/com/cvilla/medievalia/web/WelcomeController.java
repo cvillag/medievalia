@@ -27,8 +27,6 @@ public class WelcomeController {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ModelAndView result = new ModelAndView("0-bienvenida");
         logger.info("--->WelcomeController");
-        //List<User> userList = loginManager.listar();
-        //result.addObject("users", userList);
         return result;
         		
     }

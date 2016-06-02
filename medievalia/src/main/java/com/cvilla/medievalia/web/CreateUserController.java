@@ -39,7 +39,7 @@ public class CreateUserController {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		
-		if(authManager.isAutorized(3, user)){
+		if(authManager.isAutorized(Constants.P_USER_LIST, user)){
 			model = new ModelAndView("1-2-creaUsuarios");
 			List<Role> roles = roleManager.getRoleList();
 			model.addObject("headers",Constants.getHeaders(user.getUser_role()));

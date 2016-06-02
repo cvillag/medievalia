@@ -5,7 +5,7 @@ import com.cvilla.medievalia.domain.User;
 
 public interface IUserDAO {
 	
-	public boolean nuevo(String name, String longname, String pass, String rol);
+	public String nuevo(String name, String longname, String pass, String rol);
 	
 	public List<User> list();
 	

@@ -47,7 +47,7 @@ public class InicioController {
 				model = new ModelAndView("0-bienvenida");
 			model.addObject("headers", Constants.getHeaders(user.getUser_role()));
 			model.addObject("usuario", user);
-			if(authManager.isAutorized(1, user)){
+			if(authManager.isAutorized(Constants.P_LOGIN, user)){
 				model.addObject("mensaje", "autorizado");
 			}
 			else{

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cvilla.medievalia.dao.IUserDAO;
 import com.cvilla.medievalia.domain.User;
+import com.cvilla.medievalia.utils.Constants;
 
 public class LoginManager implements ILoginManager {
 
@@ -54,9 +55,26 @@ public class LoginManager implements ILoginManager {
 		this.currentUser = currentUser;
 	}
 
-	public boolean createUser(String name, String longname, String pass,
+	public String createUser(String name, String longname, String pass,
 			String role) {
-		return userDAO.nuevo(name, longname, pass, role);
+		if(name.length()>0){
+			if(longname.length() > 0){
+				if( pass.length() > 0 ){
+					//TODO Añadir estos mensajes a messages_es.properties
+					if(role.length() > 0 ){
+						return userDAO.nuevo(name, longname, pass, role);
+					}else{
+						return Constants.M_NO_ROLE;
+					}
+				}else{
+					return Constants.M_NO_PASS;
+				}
+			}else{
+				return Constants.M_NO_LNAME;
+			}
+		}else{
+			return Constants.M_NO_NAME;
+		}
 	}
 
 

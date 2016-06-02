@@ -30,7 +30,7 @@ public class CreateUserController2 {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		
-		if(authManager.isAutorized(3, user)){
+		if(authManager.isAutorized(Constants.P_CREATE_USER, user)){
 			model = new ModelAndView("1-3-listausuarios");
 			
 			String name = (String)request.getParameter("name");
@@ -38,20 +38,12 @@ public class CreateUserController2 {
 			String pass = (String)request.getParameter("pass");
 			String role = (String)request.getParameter("role");
 			
-			if(name.length()>0){
-				if(longname.length() > 0){
-					if( pass.length() > 0 ){
-						if(role.length() > 0 ){
-							userManager.createUser(name, longname, pass, role);
-						}
-					}
-				}
-			}
-			
+			String message = userManager.createUser(name, longname, pass, role);
 			ArrayList<User> users = (ArrayList<User>) userManager.listar();
 			ArrayList<Role> roles = (ArrayList<Role>) roleManager.getRoleList();
 			model.addObject("users", users);
 			model.addObject("roles", roles);
+			model.addObject("message", message);
 			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 			List<String> scripts = new ArrayList<String>();
 			scripts.add("js/1-3.js");

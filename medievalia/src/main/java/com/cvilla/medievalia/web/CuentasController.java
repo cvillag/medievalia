@@ -38,7 +38,7 @@ public class CuentasController {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		
-		if(authManager.isAutorized(3, user)){
+		if(authManager.isAutorized(Constants.P_USER_LIST, user)){
 			model = new ModelAndView("1-3-listausuarios");
 			
 			ArrayList<User> users = (ArrayList<User>) userManager.listar();

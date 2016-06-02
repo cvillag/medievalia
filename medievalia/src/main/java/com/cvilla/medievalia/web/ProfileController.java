@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.User;
+import com.cvilla.medievalia.service.IAutorizationManager;
 import com.cvilla.medievalia.service.ILoginManager;
+import com.cvilla.medievalia.utils.Constants;
 import com.cvilla.medievalia.utils.Header;
 
 @Controller
@@ -21,6 +23,9 @@ public class ProfileController {
 	
 	@Autowired
 	private ILoginManager userManager;
+	
+	@Autowired
+	private IAutorizationManager authManager;
 	
 	@RequestMapping(value="profile.do")
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -33,9 +38,11 @@ public class ProfileController {
 			model.addObject("mensaje2", mensaje2);
 		}
 		else{
-			model = new ModelAndView("5-1-profile");
-			model.addObject("usuario", user);
-			model.addObject("headers", getHeaders());
+			if(authManager.isAutorized(Constants.P_LOGIN, user)){
+				model = new ModelAndView("5-1-profile");
+				model.addObject("usuario", user);
+				model.addObject("headers", getHeaders());
+			}
 		}
 		return model;
 	}

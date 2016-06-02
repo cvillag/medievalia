@@ -3,6 +3,7 @@ package com.cvilla.medievalia.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -60,19 +61,19 @@ public class UserDAO implements IUserDAO {
 		return user;
 	}
 
-	public boolean nuevo(String name, String longname, String pass, String rol) {
+	public String nuevo(String name, String longname, String pass, String rol) {
 		try{
 			int row = jdbcTemplate.update(CREATE_USER, new Object[]{name,longname,pass,Constants.getKey(),rol});
 			if(row < 1){
-				return false;
+				return "";
 			}
 			else{
-				return  true;
+				return  Constants.M_CREATE_USER_OK;
 			}
 		}
-		catch (Exception e){
+		catch (DuplicateKeyException e){
 			e.printStackTrace();
-			return true;
+			return Constants.M_DUPLICATED_USER;
 		}
 	}
 }

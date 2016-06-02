@@ -5,8 +5,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/header.jsp" %>
 <%
+@SuppressWarnings("unchecked")
 ArrayList<User> list = (ArrayList<User>)request.getAttribute("users");
+@SuppressWarnings("unchecked")
 ArrayList<Role> roles = (ArrayList<Role>)request.getAttribute("roles");
+String message = (String)request.getAttribute("message");
 %>
 <div class="container">
 <legend><fmt:message key="p1-3.bienvenida"/></legend>
@@ -47,11 +50,27 @@ ArrayList<Role> roles = (ArrayList<Role>)request.getAttribute("roles");
             </tbody>
         </table>
 </div>
-
 <div class="panel panel-default">
 	<button type="button" class="btn btn-default navbar-btn" id="adduser" >
 		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 	</button>
 </div>
+<% if(message != null && message.length()>0 ){ %>
+<div class="container">
+	<% if(message.equals("p1-2.error.duplicateUser")){ %>
+	<div class="alert alert-danger"><fmt:message key="p1-2.error.duplicateUser"/></div>
+	<%}else if(message.equals("p1-2.error.norole")){%>
+	<div class="alert alert-danger"><fmt:message key="p1-2.error.norole"/></div>
+	<%}else if(message.equals("p1-2.error.nopass")){%>
+	<div class="alert alert-danger"><fmt:message key="p1-2.error.nopass"/></div>
+	<%}else if(message.equals("p1-2.error.nolname")){%>
+	<div class="alert alert-danger"><fmt:message key="p1-2.error.nolname"/></div>
+	<%}else if(message.equals("p1-2.error.noname")){%>
+	<div class="alert alert-danger"><fmt:message key="p1-2.error.noname"/></div>
+	<%}else if(message.equals("p1-2.createok")){%>
+	<div class="alert alert-success"><fmt:message key="p1-2.createok"/></div>
+	<%} %>
+</div>
+<%}%>
 
 </div>
