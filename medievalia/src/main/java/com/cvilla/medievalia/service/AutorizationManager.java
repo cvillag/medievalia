@@ -29,7 +29,7 @@ public class AutorizationManager implements IAutorizationManager {
 
 	public boolean isAutorized(int action, User user) {
 		if(user != null)
-			return authdao.isAuthorized(user.getId(), action);
+			return authdao.isAuthorized(user.getUser_role(), action);
 		else
 			return false;
 	}

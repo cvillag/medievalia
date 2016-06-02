@@ -24,7 +24,7 @@ public class User implements Serializable {
 	private String userLongName;
 	
 	@Column(name="user_pass")
-	private String userPass;
+	private byte[] userPass;
 	
 	@Column(name="user_role")
 	private int userRole;
@@ -53,11 +53,11 @@ public class User implements Serializable {
 		this.userLongName = user_long_name;
 	}
 
-	public String getUser_pass() {
+	public byte[] getUser_pass() {
 		return userPass;
 	}
 
-	public void setUser_pass(String user_pass) {
+	public void setUser_pass(byte[] user_pass) {
 		this.userPass = user_pass;
 	}
 
