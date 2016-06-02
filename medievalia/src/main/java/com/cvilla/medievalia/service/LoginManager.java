@@ -54,5 +54,10 @@ public class LoginManager implements ILoginManager {
 		this.currentUser = currentUser;
 	}
 
+	public boolean createUser(String name, String longname, String pass,
+			String role) {
+		return userDAO.nuevo(name, longname, pass, role);
+	}
+
 
 }

@@ -14,7 +14,6 @@ public class Constants {
 	}
 	
 	public static  List<Header> getHeaders(int role){
-		//FIXME: dejar un solo header, y lo de más dentro
 		ArrayList<Header> lista = new ArrayList<Header>();
 		int index=-1;
 		//lista.add(new Header("index","inicio","inicio.do",null));

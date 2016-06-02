@@ -14,6 +14,7 @@ public class UserDAO implements IUserDAO {
 	private static final String GET_LISTADO = "select * from users";
 	private static final String GET_USER = "select * from users where user_name = ?";
 	private static final String GET_USER_LOGIN = "SELECT * FROM `users` WHERE user_name=? and user_pass=AES_ENCRYPT(?,UNHEX('"+ Constants.getKey() + "'))";
+	private static final String CREATE_USER = "INSERT INTO `users`( `user_name`, `user_long_name`, `user_pass`, `user_role`) VALUES (?,?,AES_ENCRYPT(?,UNHEX(?)),?)";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -57,5 +58,21 @@ public class UserDAO implements IUserDAO {
 			user = null;
 		}
 		return user;
+	}
+
+	public boolean nuevo(String name, String longname, String pass, String rol) {
+		try{
+			int row = jdbcTemplate.update(CREATE_USER, new Object[]{name,longname,pass,Constants.getKey(),rol});
+			if(row < 1){
+				return false;
+			}
+			else{
+				return  true;
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+			return true;
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.cvilla.medievalia.domain;
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity

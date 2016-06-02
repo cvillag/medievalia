@@ -31,15 +31,12 @@ public class InicioController {
 		ModelAndView model;
 		String nombre = request.getParameter("nombre");
 		String pass = request.getParameter("pass");
-		String mensaje;
 		User user = null;
 		HttpSession sesion = request.getSession();
 		user = (User) sesion.getAttribute("user");
-		if(userManager.login(nombre, pass) || user != null){
+		if(user != null || userManager.login(nombre, pass)){
 			user = userManager.getCurrentUser();
-			mensaje = "test.sesion";
 			sesion.setAttribute("user", user);
-			//FIXME Cambiar los nombres jsp por código de página
 			if(user.getUser_role() == 1)
 				model = new ModelAndView("1-1-inicio");
 			else if(user.getUser_role() == 2)
@@ -50,7 +47,6 @@ public class InicioController {
 				model = new ModelAndView("0-bienvenida");
 			model.addObject("headers", Constants.getHeaders(user.getUser_role()));
 			model.addObject("usuario", user);
-			//model.addObject("mensaje", mensaje);
 			if(authManager.isAutorized(1, user)){
 				model.addObject("mensaje", "autorizado");
 			}
@@ -60,6 +56,7 @@ public class InicioController {
 			model.addObject("user",nombre);
 		}
 		else{
+			// FIXME: Cambiar el mensaje de error de contraseña del de sin sesión
 			model = new ModelAndView("0-bienvenida");
 			String mensaje2 = "test.noSesion";
 			model.addObject("mensaje2", mensaje2);

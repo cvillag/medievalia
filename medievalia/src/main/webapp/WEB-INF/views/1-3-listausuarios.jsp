@@ -9,13 +9,6 @@ ArrayList<User> list = (ArrayList<User>)request.getAttribute("users");
 ArrayList<Role> roles = (ArrayList<Role>)request.getAttribute("roles");
 %>
 <div class="container">
-	<!-- div class="jumbotron">
-		<h3></h3>
-	</div>
-	<form class="form-horizontal">
-	<fieldset>
- -->
-<!-- Form Name -->
 <legend><fmt:message key="p1-3.bienvenida"/></legend>
 
 <div class="panel panel-default">

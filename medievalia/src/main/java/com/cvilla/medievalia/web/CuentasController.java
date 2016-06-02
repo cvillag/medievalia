@@ -47,7 +47,7 @@ public class CuentasController {
 			model.addObject("roles", roles);
 			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 			List<String> scripts = new ArrayList<String>();
-			scripts.add("js/users.js");
+			scripts.add("js/1-3.js");
 			model.addObject("scripts",scripts);
 
 		}
