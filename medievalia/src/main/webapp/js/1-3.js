@@ -13,7 +13,8 @@ $(document).ready(function(){
 	//TODO: acciones de los botones con jquery y ajax
 	$(".deleteuser").click(function(){
 		alert("Borrar id: " + $(this).data('val'));
-		// document.location.href='deleteUser.do';
+		$("#deleteId").val($(this).data('val'));
+		$("#deletion").submit();
 	});
 	
 	$(".modifyuser").click(function(){
@@ -24,5 +25,9 @@ $(document).ready(function(){
 	$(".detailsuser").click(function(){
 		alert("Detalle de id: " + $(this).data('val'));
 		//  document.location.href='userDetails.do';
+	});
+	
+	$( "#deletion" ).submit(function( event ) {
+		  alert( "Handler for .submit() called." );
 	});
 });

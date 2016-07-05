@@ -12,5 +12,7 @@ public interface IUserDAO {
 	public User getUserByName(String name);
 	
 	public User login(String name, String pass);
+	
+	public boolean deleteUser(int id);
 
 }

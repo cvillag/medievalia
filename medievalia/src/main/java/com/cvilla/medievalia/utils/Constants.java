@@ -12,6 +12,7 @@ public class Constants {
 	public static final int P_EDIT_PROFILE = 2;
 	public static final int P_USER_LIST = 3;
 	public static final int P_CREATE_USER = 4;
+	public static final int P_DELETE_USER = 5;
 	
 	public static final String M_DUPLICATED_USER = "p1-2.error.duplicateUser";
 	public static final String M_CREATE_USER_OK = "p1-2.createok";
@@ -19,6 +20,7 @@ public class Constants {
 	public static final String M_NO_PASS = "p1-2.error.nopass";
 	public static final String M_NO_LNAME = "p1-2.error.nolname";
 	public static final String M_NO_NAME = "p1-2.error.noname";
+	
 	
 	public static String getKey(){
 		return PASS_KEY;

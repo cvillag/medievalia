@@ -15,5 +15,5 @@ public interface ILoginManager extends Serializable{
 	public User getCurrentUser();
 	public void setCurrentUser(User user);
 	public String createUser(String name, String longname, String pass, String role);
-	
+	public String deleteUser(int id, User current);
 }

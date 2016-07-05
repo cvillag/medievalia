@@ -77,5 +77,19 @@ public class LoginManager implements ILoginManager {
 		}
 	}
 
+	public String deleteUser(int id, User current) {
+		if(id != current.getId()){
+			if(userDAO.deleteUser(id)){
+				return "borrado";
+			}
+			else{
+				return "noBorrado";
+			}
+		}
+		else{
+			return "noAuto";
+		}
+	}
+
 
 }

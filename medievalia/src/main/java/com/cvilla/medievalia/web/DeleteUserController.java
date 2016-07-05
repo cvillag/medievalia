@@ -20,8 +20,8 @@ import com.cvilla.medievalia.service.IRoleManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller
-public class CuentasController {
-
+public class DeleteUserController {
+	
 	@Autowired
 	private ILoginManager userManager;
 	
@@ -31,31 +31,30 @@ public class CuentasController {
 	@Autowired
 	private IRoleManager roleManager;
 	
-	@RequestMapping(value = "users.do")
+	@RequestMapping(value = "deleteUser.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		ModelAndView model = null;
+		ModelAndView model = new ModelAndView();
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		
-		if(authManager.isAutorized(Constants.P_USER_LIST, user)){
+		if(authManager.isAutorized(Constants.P_DELETE_USER, user)){
+			String idUs = request.getParameter("deleteId");
+			int id = (new Integer(idUs)).intValue();
 			model = new ModelAndView("1-3-listausuarios");
 			
+			String message = userManager.deleteUser(id, user);
 			
 			ArrayList<User> users = (ArrayList<User>) userManager.listar();
 			ArrayList<Role> roles = (ArrayList<Role>) roleManager.getRoleList();
+			model.addObject("message",message);
 			model.addObject("users", users);
 			model.addObject("roles", roles);
 			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 			List<String> scripts = new ArrayList<String>();
 			scripts.add("js/1-3.js");
 			model.addObject("scripts",scripts);
-
-		}
-		else{
-			model = Constants.noPrivileges();
 		}
 		return model;
 	}
-	
 }

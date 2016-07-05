@@ -16,6 +16,7 @@ public class UserDAO implements IUserDAO {
 	private static final String GET_USER = "select * from users where user_name = ?";
 	private static final String GET_USER_LOGIN = "SELECT * FROM `users` WHERE user_name=? and user_pass=AES_ENCRYPT(?,UNHEX('"+ Constants.getKey() + "'))";
 	private static final String CREATE_USER = "INSERT INTO `users`( `user_name`, `user_long_name`, `user_pass`, `user_role`) VALUES (?,?,AES_ENCRYPT(?,UNHEX(?)),?)";
+	private static final String DELETE_USER = "DELETE FROM `users` WHERE user_id = ?";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -74,6 +75,16 @@ public class UserDAO implements IUserDAO {
 		catch (DuplicateKeyException e){
 			e.printStackTrace();
 			return Constants.M_DUPLICATED_USER;
+		}
+	}
+
+	public boolean deleteUser(int id) {
+		try{
+			int row = jdbcTemplate.update(DELETE_USER, new Object[]{id});
+			return row == 1;
+		}
+		catch(Exception e){
+			return false;
 		}
 	}
 }

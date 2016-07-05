@@ -115,8 +115,16 @@ String message = (String)request.getAttribute("message");
 	<div class="alert alert-danger"><fmt:message key="p1-2.error.noname"/></div>
 	<%}else if(message.equals("p1-2.createok")){%>
 	<div class="alert alert-success"><fmt:message key="p1-2.createok"/></div>
+	<%}else if(message.equals("borrado")){%>
+	<div class="alert alert-success"><fmt:message key="p1-3.deleteok"/></div>
+	<%}else if(message.equals("noBorrado")){%>
+	<div class="alert alert-danger"><fmt:message key="p1-3.error.noDelete"/></div>
+	<%}else if(message.equals("noAuto")){%>
+	<div class="alert alert-danger"><fmt:message key="p1-3.error.noSelf"/></div>
 	<%} %>
 </div>
 <%}%>
-
+<form id="deletion" action="deleteUser.do" method="post">
+	<input type="hidden" name="deleteId" id="deleteId">
+</form>
 </div>
