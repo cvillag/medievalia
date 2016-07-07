@@ -3,7 +3,7 @@
  */
 $(document).ready(function(){
 	
-	
+	//FIXME: Limpiar el código
 	$("#createUser").click(function(){
 		alert($("#name").val().length + " " + $("#longname").val().length + " " + $("#pass").val().length + " " );
 	

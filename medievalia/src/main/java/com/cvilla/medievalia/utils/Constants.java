@@ -13,6 +13,7 @@ public class Constants {
 	public static final int P_USER_LIST = 3;
 	public static final int P_CREATE_USER = 4;
 	public static final int P_DELETE_USER = 5;
+	public static final int P_MODIFY_USER = 6;
 	
 	public static final String M_DUPLICATED_USER = "p1-2.error.duplicateUser";
 	public static final String M_CREATE_USER_OK = "p1-2.createok";

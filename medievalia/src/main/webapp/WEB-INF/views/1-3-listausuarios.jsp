@@ -121,10 +121,15 @@ String message = (String)request.getAttribute("message");
 	<div class="alert alert-danger"><fmt:message key="p1-3.error.noDelete"/></div>
 	<%}else if(message.equals("noAuto")){%>
 	<div class="alert alert-danger"><fmt:message key="p1-3.error.noSelf"/></div>
+	<%}else if(message.equals("p1.3.modifyok")){%>
+	<div class="alert alert-success"><fmt:message key="p1.3.modifyok"/></div>
 	<%} %>
 </div>
 <%}%>
 <form id="deletion" action="deleteUser.do" method="post">
 	<input type="hidden" name="deleteId" id="deleteId">
+</form>
+<form id="modify" action="modifyUser.do" method="post">
+	<input type="hidden" name="modifyId" id="modifyId">
 </form>
 </div>

@@ -20,8 +20,8 @@ import com.cvilla.medievalia.service.IRoleManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller
-public class DeleteUserController {
-	
+public class ModifyUserController {
+
 	@Autowired
 	private ILoginManager userManager;
 	
@@ -31,33 +31,32 @@ public class DeleteUserController {
 	@Autowired
 	private IRoleManager roleManager;
 	
-	@RequestMapping(value = "deleteUser.do")
+	@RequestMapping(value = "modifyUser.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView model = new ModelAndView();
+		
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		
-		if(authManager.isAutorized(Constants.P_DELETE_USER, user)){
-			String idUs = request.getParameter("deleteId");
+		if(authManager.isAutorized(Constants.P_MODIFY_USER, user)){
+			String idUs = request.getParameter("modifyId");
 			int id = (new Integer(idUs)).intValue();
-			model = new ModelAndView("1-3-listausuarios");
+			model = new ModelAndView("1-3.1-modificaUsuarios");
 			
-			String message = userManager.deleteUser(id, user);
-			
-			ArrayList<User> users = (ArrayList<User>) userManager.listar();
-			ArrayList<Role> roles = (ArrayList<Role>) roleManager.getRoleList();
-			model.addObject("message",message);
-			model.addObject("users", users);
-			model.addObject("roles", roles);
+			User u = userManager.getUser(id);
 			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+			model.addObject("targetUser", u);
 			List<String> scripts = new ArrayList<String>();
-			scripts.add("js/1-3.js");
+			scripts.add("js/1-3.1.js");
 			model.addObject("scripts",scripts);
+			List<Role> roles = roleManager.getRoleList();
+			model.addObject("roles",roles);
 		}
 		else{
 			model = Constants.noPrivileges();
 		}
+		
 		return model;
 	}
 }
