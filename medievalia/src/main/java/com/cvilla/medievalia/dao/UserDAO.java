@@ -12,13 +12,13 @@ import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.utils.Constants;
 public class UserDAO implements IUserDAO {
 	
-	private static final String GET_LISTADO = "select * from users";
-	private static final String GET_USER_BY_NAME = "select * from users where user_name = ?";
-	private static final String GET_USER_BY_ID = "select * from users where user_id = ?";
-	private static final String GET_USER_LOGIN = "SELECT * FROM `users` WHERE user_name=? and user_pass=AES_ENCRYPT(?,UNHEX('"+ Constants.getKey() + "'))";
+	private static final String GET_LISTADO = "select * from users where user_id != 0";
+	private static final String GET_USER_BY_NAME = "select * from users where user_name = ? and user_id != 0";
+	private static final String GET_USER_BY_ID = "select * from users where user_id = ? and user_id != 0";
+	private static final String GET_USER_LOGIN = "SELECT * FROM `users` WHERE user_name=? and user_id != 0 and user_pass=AES_ENCRYPT(?,UNHEX('"+ Constants.getKey() + "'))";
 	private static final String CREATE_USER = "INSERT INTO `users`( `user_name`, `user_long_name`, `user_pass`, `user_role`) VALUES (?,?,AES_ENCRYPT(?,UNHEX(?)),?)";
-	private static final String DELETE_USER = "DELETE FROM `users` WHERE user_id = ?";
-	private static final String UPDATE_USER = "UPDATE `users` set user_name = ?, user_long_name = ?, user_pass = AES_ENCRYPT(?,UNHEX(?)), user_role = ? where user_id = ?";
+	private static final String DELETE_USER = "DELETE FROM `users` WHERE user_id = ? and user_id != 0";
+	private static final String UPDATE_USER = "UPDATE `users` set user_name = ?, user_long_name = ?, user_pass = AES_ENCRYPT(?,UNHEX(?)), user_role = ? where user_id = ? and user_id != 0";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;

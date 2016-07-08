@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cvilla.medievalia.domain.Role;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.IAutorizationManager;
+import com.cvilla.medievalia.service.ILogManager;
 import com.cvilla.medievalia.service.ILoginManager;
 import com.cvilla.medievalia.service.IRoleManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -31,6 +32,9 @@ public class CreateUserController {
 	@Autowired
 	private IRoleManager roleManager;
 	
+	@Autowired
+	private ILogManager logManager;
+	
 	@RequestMapping(value = "createUser.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -40,17 +44,19 @@ public class CreateUserController {
 		User user = (User) sesion.getAttribute("user");
 		
 		if(authManager.isAutorized(Constants.P_USER_LIST, user)){
+			logManager.log(user.getId(), Constants.P_CREATE_USER, "Inicio crear usuario", Constants.P_OK);
 			model = new ModelAndView("1-2-creaUsuarios");
 			List<Role> roles = roleManager.getRoleList();
-			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 			List<String> scripts = new ArrayList<String>();
 			scripts.add("js/1-2.js");
 			model.addObject("scripts",scripts);
 			model.addObject("roles",roles);
 		}
 		else{
+			logManager.log(user.getId(), Constants.P_CREATE_USER, "Intento de crear usuario no permitido", Constants.P_NOK);
 			model = Constants.noPrivileges();
 		}
+		model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 		return model;
 	}
 }

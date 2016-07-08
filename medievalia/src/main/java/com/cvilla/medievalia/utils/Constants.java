@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cvilla.medievalia.service.ILogManager;
+
 public class Constants {
 	
 	private static final String PASS_KEY = "28165A0B371ED2D9441B830D21A30887";
@@ -14,6 +16,12 @@ public class Constants {
 	public static final int P_CREATE_USER = 4;
 	public static final int P_DELETE_USER = 5;
 	public static final int P_MODIFY_USER = 6;
+	public static final int P_ACCESO_PORTAL = 7;
+	public static final int P_LOGOUT = 8;
+	
+	public static final int P_OK = 1;
+	public static final int P_NOK = 0;
+	public static final int P_NOUSER = 0;
 	
 	public static final String M_DUPLICATED_USER = "p1-2.error.duplicateUser";
 	public static final String M_CREATE_USER_OK = "p1-2.createok";
@@ -63,6 +71,15 @@ public class Constants {
 		//FIXME Mensaje temporal. La página ha de ser otra
 		ModelAndView model = new ModelAndView("0-bienvenida");
 		String mensaje2 = "test.noSesion";
+		model.addObject("mensaje2", mensaje2);
+		return model;
+	}
+	
+	public static ModelAndView paramError(ILogManager log,int idaction,int iduser){
+		//FIXME Mensaje temporal. La página ha de ser otra
+		log.log(iduser, idaction, "Error de falta de parámetros", Constants.P_NOK);
+		ModelAndView model = new ModelAndView("0-bienvenida");
+		String mensaje2 = "test.noParam";
 		model.addObject("mensaje2", mensaje2);
 		return model;
 	}

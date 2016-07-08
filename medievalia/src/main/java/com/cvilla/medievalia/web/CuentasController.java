@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cvilla.medievalia.domain.Role;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.IAutorizationManager;
+import com.cvilla.medievalia.service.ILogManager;
 import com.cvilla.medievalia.service.ILoginManager;
 import com.cvilla.medievalia.service.IRoleManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -31,6 +32,9 @@ public class CuentasController {
 	@Autowired
 	private IRoleManager roleManager;
 	
+	@Autowired
+	private ILogManager logManager;
+	
 	@RequestMapping(value = "users.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -40,22 +44,22 @@ public class CuentasController {
 		
 		if(authManager.isAutorized(Constants.P_USER_LIST, user)){
 			model = new ModelAndView("1-3-listausuarios");
-			
+			logManager.log(user.getId(), Constants.P_USER_LIST, "Listado de usuarios", Constants.P_OK);
 			
 			ArrayList<User> users = (ArrayList<User>) userManager.listar();
 			ArrayList<Role> roles = (ArrayList<Role>) roleManager.getRoleList();
 			model.addObject("users", users);
 			model.addObject("roles", roles);
-			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 			List<String> scripts = new ArrayList<String>();
 			scripts.add("js/1-3.js");
 			model.addObject("scripts",scripts);
 
 		}
 		else{
+			logManager.log(user.getId(), Constants.P_USER_LIST, "Intento no permitido de listado de usuarios", Constants.P_NOK);
 			model = Constants.noPrivileges();
 		}
+		model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 		return model;
-	}
-	
+	}	
 }

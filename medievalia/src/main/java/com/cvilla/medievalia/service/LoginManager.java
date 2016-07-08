@@ -57,6 +57,7 @@ public class LoginManager implements ILoginManager {
 
 	public String createUser(String name, String longname, String pass,
 			String role) {
+		// FIXME: Comprobar que coinciden las contraseñas
 		if(name.length()>0){
 			if(longname.length() > 0){
 				if( pass.length() > 0 ){

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.IAutorizationManager;
+import com.cvilla.medievalia.service.ILogManager;
 import com.cvilla.medievalia.service.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
 
@@ -25,10 +26,14 @@ public class InicioController {
 	@Autowired
 	private IAutorizationManager authManager;
 
+	@Autowired
+	private ILogManager logManager;
+	
 	@RequestMapping(value = "inicio.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView model;
+		
 		String nombre = request.getParameter("nombre");
 		String pass = request.getParameter("pass");
 		User user = null;
@@ -36,6 +41,7 @@ public class InicioController {
 		user = (User) sesion.getAttribute("user");
 		if(user != null || userManager.login(nombre, pass)){
 			user = userManager.getCurrentUser();
+			logManager.log(user.getId(), Constants.P_LOGIN, "Login desde " + request.getRemoteAddr(), Constants.P_OK);
 			sesion.setAttribute("user", user);
 			if(user.getUser_role() == 1)
 				model = new ModelAndView("1-1-inicio");
@@ -45,7 +51,6 @@ public class InicioController {
 				model = new ModelAndView("4-0-inicio");
 			else
 				model = new ModelAndView("0-bienvenida");
-			model.addObject("headers", Constants.getHeaders(user.getUser_role()));
 			model.addObject("usuario", user);
 			if(authManager.isAutorized(Constants.P_LOGIN, user)){
 				model.addObject("mensaje", "autorizado");
@@ -54,14 +59,27 @@ public class InicioController {
 				model.addObject("mensaje", "noautorizado");
 			}
 			model.addObject("user",nombre);
+			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 		}
 		else{
 			// FIXME: Cambiar el mensaje de error de contraseña del de sin sesión
-			model = new ModelAndView("0-bienvenida");
-			String mensaje2 = "test.noSesion";
-			model.addObject("mensaje2", mensaje2);
+			if(errorParam(request)){
+				model = Constants.paramError(logManager,Constants.P_NOUSER,Constants.P_LOGIN);
+				return model;
+			}
+			else{
+				logManager.log(Constants.P_NOUSER, Constants.P_LOGIN, "Login fallido desde " + request.getRemoteAddr() + " usuario: " + nombre, Constants.P_OK);
+				model = new ModelAndView("0-bienvenida");
+				String mensaje2 = "test.noSesion";
+				model.addObject("mensaje2", mensaje2);
+			}
 		}
 		return model;
+	}
+	
+	private boolean errorParam(HttpServletRequest request){
+		return request.getParameter("nombre") == null 
+				|| request.getParameter("pass") == null;
 	}
 
 }
