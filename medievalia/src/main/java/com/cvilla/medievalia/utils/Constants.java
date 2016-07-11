@@ -72,17 +72,15 @@ public class Constants {
 	}
 	
 	public static ModelAndView noPrivileges(){
-		//FIXME Mensaje temporal. La página ha de ser otra
-		ModelAndView model = new ModelAndView("0-bienvenida");
-		String mensaje2 = "test.noSesion";
+		ModelAndView model = new ModelAndView("5-2-error");
+		String mensaje2 = "test.noPermiso";
 		model.addObject("mensaje2", mensaje2);
 		return model;
 	}
 	
 	public static ModelAndView paramError(ILogManager log,int idaction,int iduser){
-		//FIXME Mensaje temporal. La página ha de ser otra
 		log.log(iduser, idaction, "Error de falta de parámetros", Constants.P_NOK);
-		ModelAndView model = new ModelAndView("0-bienvenida");
+		ModelAndView model = new ModelAndView("5-2-error");
 		String mensaje2 = "test.noParam";
 		model.addObject("mensaje2", mensaje2);
 		return model;
