@@ -25,5 +25,9 @@
 			</div>
 		</div>
 	</form>
+	<%	if(request.getAttribute("mensaje2") != null){%>
+		<div class="alert alert-danger"><fmt:message key="${mensaje2}"/></div>
+		<%} %>
 </div>
+		
 <%@ include file="/WEB-INF/views/footer.jsp" %>

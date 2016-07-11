@@ -38,8 +38,6 @@ public class Constants {
 	public static  List<Header> getHeaders(int role){
 		ArrayList<Header> lista = new ArrayList<Header>();
 		int index=-1;
-		//lista.add(new Header("index","inicio","inicio.do",null));
-		//index++;
 		if(role == 1){
 			lista.add(new Header("admin","Administración","",new ArrayList<Header>()));
 			index++;
@@ -65,6 +63,12 @@ public class Constants {
 		index++;
 		
 		return lista;
+	}
+	
+	public static ModelAndView processError(String message){
+		ModelAndView model = new ModelAndView("5-2-error");
+		model.addObject("mensaje2", message);
+		return model;
 	}
 	
 	public static ModelAndView noPrivileges(){

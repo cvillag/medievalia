@@ -51,6 +51,7 @@ public class ModifyUserController {
 		
 			if(authManager.isAutorized(Constants.P_MODIFY_USER, user)){
 				String idUs = request.getParameter("modifyId");
+				sesion.setAttribute("modifyUserId", idUs);
 				int id = (new Integer(idUs)).intValue();
 				model = new ModelAndView("1-3.1-modificaUsuarios");
 				

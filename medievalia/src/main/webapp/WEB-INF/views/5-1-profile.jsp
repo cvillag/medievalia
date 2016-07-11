@@ -13,7 +13,7 @@ User u = (User)request.getAttribute("usuario");
 		<p>Login de usuario: <%= u.getUser_name() %></p>
 		<p>Rol de usuario: <%= u.getUser_role()%></p>
 		<%} %>
-		<input type="button" onclick="location.href='inicio.do'" value="volver"/>
+		<input type="button" onclick="location.href='main.do'" value="Aceptar"/>
 	</div>
 </div>
 <%@ include file="/WEB-INF/views/footer.jsp"%>

@@ -14,7 +14,6 @@ User u = (User)request.getAttribute("usuario");
 		<%if (u != null){ %>
 		<p>Usuario: <%= u.getId() + "," + u.getUser_long_name() + "," + u.getUser_name() + "," + u.getUser_pass() + "," + u.getUser_role()%></p>
 		<%} %>
-		<input type="button" onclick="location.href='hello.do'" value="volver"/>
 		<p>Administrador: <fmt:message key="${mensaje}"/>,<%=u.getUser_long_name()  %></p>
 	</div>
 </div>
