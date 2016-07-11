@@ -113,6 +113,8 @@ String message = (String)request.getAttribute("message");
 	<div class="alert alert-danger"><fmt:message key="p1-2.error.nolname"/></div>
 	<%}else if(message.equals("p1-2.error.noname")){%>
 	<div class="alert alert-danger"><fmt:message key="p1-2.error.noname"/></div>
+	<%}else if(message.equals("p1-2.error.passnomatch")){%>
+	<div class="alert alert-danger"><fmt:message key="p1-2.error.passnomatch"/></div>
 	<%}else if(message.equals("p1-2.createok")){%>
 	<div class="alert alert-success"><fmt:message key="p1-2.createok"/></div>
 	<%}else if(message.equals("borrado")){%>

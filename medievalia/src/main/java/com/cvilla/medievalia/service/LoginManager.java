@@ -55,15 +55,16 @@ public class LoginManager implements ILoginManager {
 		this.currentUser = currentUser;
 	}
 
-	public String createUser(String name, String longname, String pass,
-			String role) {
-		// FIXME: Comprobar que coinciden las contraseñas
+	public String createUser(String name, String longname, String pass, String pass2, String role) {
 		if(name.length()>0){
 			if(longname.length() > 0){
 				if( pass.length() > 0 ){
-					//TODO Añadir estos mensajes a messages_es.properties
 					if(role.length() > 0 ){
-						return userDAO.nuevo(name, longname, pass, role);
+						if(pass.equals(pass2))
+							return userDAO.nuevo(name, longname, pass, role);
+						else{
+							return Constants.M_PASS_NO_MATCH;
+						}
 					}else{
 						return Constants.M_NO_ROLE;
 					}

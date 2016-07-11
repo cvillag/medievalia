@@ -29,6 +29,7 @@ public class Constants {
 	public static final String M_NO_PASS = "p1-2.error.nopass";
 	public static final String M_NO_LNAME = "p1-2.error.nolname";
 	public static final String M_NO_NAME = "p1-2.error.noname";
+	public static final String M_PASS_NO_MATCH = "p1-2.error.passnomatch";
 	
 	
 	public static String getKey(){
