@@ -100,7 +100,12 @@ public class LoginManager implements ILoginManager {
 	public String modifyUser(String name, String lname, 
 			String pass, String pass2, String role, User user) {
 		if(pass.equals(pass2)){
-			return userDAO.modifyUser(name, lname, pass, pass2, role, user.getId());
+			if(pass.length()>1){
+				return userDAO.modifyUser(name, lname, pass, pass2, role, user.getId());
+			}
+			else{
+				return userDAO.modifyUser(name, lname, role, user.getId());
+			}
 		}
 		else{
 			return "p1-3.1.error.mismatchPass";

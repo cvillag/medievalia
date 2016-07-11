@@ -17,5 +17,6 @@ public interface IUserDAO {
 	public boolean deleteUser(int id);
 	
 	public String modifyUser(String name, String lname,	String pass, String pass2, String role, int iduser);
+	public String modifyUser(String name, String lname, String role, int iduser);
 
 }

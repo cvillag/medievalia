@@ -19,6 +19,8 @@ public class UserDAO implements IUserDAO {
 	private static final String CREATE_USER = "INSERT INTO `users`( `user_name`, `user_long_name`, `user_pass`, `user_role`) VALUES (?,?,AES_ENCRYPT(?,UNHEX(?)),?)";
 	private static final String DELETE_USER = "DELETE FROM `users` WHERE user_id = ? and user_id != 0";
 	private static final String UPDATE_USER = "UPDATE `users` set user_name = ?, user_long_name = ?, user_pass = AES_ENCRYPT(?,UNHEX(?)), user_role = ? where user_id = ? and user_id != 0";
+	private static final String UPDATE_USER_NO_PASS = "UPDATE `users` set user_name = ?, user_long_name = ?, user_role = ? where user_id = ? and user_id != 0";
+
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -105,6 +107,21 @@ public class UserDAO implements IUserDAO {
 			String pass2, String role, int iduser) {
 		try{
 			int row = jdbcTemplate.update(UPDATE_USER, new Object[]{name,lname,pass,Constants.getKey(),role,iduser});
+			if(row == 1){
+				return "p1.3.modifyok";
+			}
+			else{
+				return "p1-3.1.error.nok";
+			}
+		}
+		catch(Exception e){
+			return "p1-3.1.error.nok";
+		}
+	}
+	
+	public String modifyUser(String name, String lname, String role, int iduser) {
+		try{
+			int row = jdbcTemplate.update(UPDATE_USER_NO_PASS, new Object[]{name,lname,role,iduser});
 			if(row == 1){
 				return "p1.3.modifyok";
 			}
