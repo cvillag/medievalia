@@ -85,5 +85,4 @@ public class Constants {
 		model.addObject("mensaje2", mensaje2);
 		return model;
 	}
-
 }

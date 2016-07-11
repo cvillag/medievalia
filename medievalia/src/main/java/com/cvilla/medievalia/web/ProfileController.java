@@ -33,7 +33,6 @@ public class ProfileController {
 	
 	@RequestMapping(value="profile.do")
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		//FIXME: Cambiar el destino, que no sea el login, o se diferencie de la acciónd de login. En el log son iguales.
 		ModelAndView model = null;
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");

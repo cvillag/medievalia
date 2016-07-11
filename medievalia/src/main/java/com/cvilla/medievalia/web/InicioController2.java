@@ -50,10 +50,18 @@ public class InicioController2 {
 			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 		}
 		else{
-			logManager.log(user.getId(), Constants.P_LOGIN, "Visualización de página principal no permitida"	, Constants.P_NOK);
-			model = Constants.noPrivileges();
+			if(user != null){
+				logManager.log(user.getId(), Constants.P_LOGIN, "Visualización de página principal no permitida"	, Constants.P_NOK);
+				model = Constants.noPrivileges();
+			}
+			else{
+				model = new ModelAndView("0-bienvenida");
+				logManager.log(Constants.P_NOUSER, Constants.P_ACCESO_PORTAL, "Acceso a login desde " + request.getRemoteAddr(), Constants.P_OK);
+			}
 		}
-		model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+		if(user != null){
+			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+		}
 		return model;
 	}
 }
