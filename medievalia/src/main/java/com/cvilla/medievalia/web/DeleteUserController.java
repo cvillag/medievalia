@@ -67,8 +67,7 @@ public class DeleteUserController {
 				model.addObject("scripts",scripts);
 			}
 			else{
-				logManager.log(user.getId(), Constants.P_DELETE_USER, "Intento de borrado de usuario con ID: " + request.getParameter("deleteId"), Constants.P_OK);
-				model = Constants.noPrivileges();
+				model = Constants.noPrivileges(user,logManager,Constants.P_DELETE_USER,"Intento de borrado de usuario con ID: " + request.getParameter("deleteId"));
 			}
 			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 			return model;

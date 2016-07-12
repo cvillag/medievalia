@@ -57,8 +57,7 @@ public class GroupController {
 			model.addObject("directors", directors);
 		}
 		else{
-			//logManager.log(idUser, idAction, desc, succ);
-			model = Constants.noPrivileges();
+			model = Constants.noPrivileges(user,logManager,Constants.P_GROUP_LIST,"Intento de visualización de grupos no permitida");
 		}			
 		model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 		return model;

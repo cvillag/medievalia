@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.ILogManager;
 
 public class Constants {
@@ -79,11 +80,21 @@ public class Constants {
 		return model;
 	}
 	
-	public static ModelAndView noPrivileges(){
-		ModelAndView model = new ModelAndView("5-2-error");
-		String mensaje2 = "test.noPermiso";
-		model.addObject("mensaje2", mensaje2);
-		return model;
+	public static ModelAndView noPrivileges(User user, ILogManager logManager, int action, String message){
+		if(user != null){
+			logManager.log(user.getId(), action, message, Constants.P_NOK);
+			ModelAndView model = new ModelAndView("5-2-error");
+			String mensaje2 = "test.noPermiso";
+			model.addObject("mensaje2", mensaje2);
+			return model;
+		}
+		else{
+			logManager.log(Constants.P_NOUSER, action, "Sesión posiblemente expirada (usuario nulo)", Constants.P_NOK);
+			ModelAndView model = new ModelAndView("0-bienvenida");
+			model.addObject("mensaje2", "test.noSesion");
+			return model;
+		}
+		
 	}
 	
 	public static ModelAndView paramError(ILogManager log,int idaction,int iduser){

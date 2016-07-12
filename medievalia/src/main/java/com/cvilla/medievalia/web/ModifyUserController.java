@@ -68,8 +68,7 @@ public class ModifyUserController {
 				model.addObject("roles",roles);
 			}
 			else{
-				logManager.log(user.getId(), Constants.P_MODIFY_USER, "Intento de modificación de usuario. ID: " + request.getParameter("modifyId"), Constants.P_NOK);
-				model = Constants.noPrivileges();
+				model = Constants.noPrivileges(user,logManager,Constants.P_MODIFY_USER,"Intento de modificación de usuario. ID: " + request.getParameter("modifyId"));
 			}
 			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 			return model;

@@ -1,8 +1,5 @@
 package com.cvilla.medievalia.web;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,7 +14,6 @@ import com.cvilla.medievalia.service.IAutorizationManager;
 import com.cvilla.medievalia.service.ILogManager;
 import com.cvilla.medievalia.service.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
-import com.cvilla.medievalia.utils.Header;
 
 @Controller
 public class ProfileController {
@@ -40,7 +36,7 @@ public class ProfileController {
 			model = new ModelAndView("bienvenida");
 			String mensaje2 = "test.noSesion";
 			model.addObject("mensaje2", mensaje2);
-			logManager.log(user.getId(), Constants.P_EDIT_PROFILE, "Intento de visualización de perfil propio sin sesión", Constants.P_NOK);
+			logManager.log(Constants.P_NOUSER, Constants.P_EDIT_PROFILE, "Intento de visualización de perfil propio sin sesión", Constants.P_NOK);
 		}
 		else{
 			if(authManager.isAutorized(Constants.P_LOGIN, user)){

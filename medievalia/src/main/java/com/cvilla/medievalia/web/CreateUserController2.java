@@ -61,8 +61,7 @@ public class CreateUserController2 {
 	
 			}
 			else{
-				logManager.log(user.getId(), Constants.P_CREATE_USER, "Intento de crear usuario no permitido en segudo paso. Nombre: " + request.getParameter("user"), Constants.P_NOK);
-				model = Constants.noPrivileges();
+				model = Constants.noPrivileges(user,logManager,Constants.P_CREATE_USER,"Intento de crear usuario no permitido en segudo paso. Nombre: " + request.getParameter("user"));
 			}
 		model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 		return model;

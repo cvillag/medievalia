@@ -56,8 +56,7 @@ public class CuentasController {
 
 		}
 		else{
-			logManager.log(user.getId(), Constants.P_USER_LIST, "Intento no permitido de listado de usuarios", Constants.P_NOK);
-			model = Constants.noPrivileges();
+			model = Constants.noPrivileges(user,logManager,Constants.P_USER_LIST,"Intento de listado de usuarios no permitido");
 		}
 		model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 		return model;

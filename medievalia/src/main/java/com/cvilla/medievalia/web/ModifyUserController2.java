@@ -94,12 +94,10 @@ public class ModifyUserController2 {
 					String id = request.getParameter("id");
 					if(id == null)
 						id = "nulo";
-					logManager.log(user.getId(), Constants.P_MODIFY_USER, "Intento de modificación de usuario no permitida. ID: "
+					model = Constants.noPrivileges(user,logManager,Constants.P_MODIFY_USER,"Intento de modificación de usuario no permitida. ID: "
 							+ id
 							+ ". Nombre: "
-							+ request.getParameter("name")
-							, Constants.P_NOK);
-					model = Constants.noPrivileges();
+							+ request.getParameter("name"));
 				}
 			}
 			model.addObject("headers",Constants.getHeaders(user.getUser_role()));

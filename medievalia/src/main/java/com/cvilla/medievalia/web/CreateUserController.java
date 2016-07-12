@@ -53,8 +53,7 @@ public class CreateUserController {
 			model.addObject("roles",roles);
 		}
 		else{
-			logManager.log(user.getId(), Constants.P_CREATE_USER, "Intento de crear usuario no permitido", Constants.P_NOK);
-			model = Constants.noPrivileges();
+			model = Constants.noPrivileges(user,logManager,Constants.P_CREATE_USER,"Intento de crear usuario en primera ventana, no permitido");
 		}
 		model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 		return model;
