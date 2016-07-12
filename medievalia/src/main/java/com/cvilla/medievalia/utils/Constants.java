@@ -18,6 +18,8 @@ public class Constants {
 	public static final int P_MODIFY_USER = 6;
 	public static final int P_ACCESO_PORTAL = 7;
 	public static final int P_LOGOUT = 8;
+	public static final int P_GROUP_LIST = 9;
+	public static final int P_GROUP_OWN = 10;
 	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;
@@ -30,6 +32,11 @@ public class Constants {
 	public static final String M_NO_LNAME = "p1-2.error.nolname";
 	public static final String M_NO_NAME = "p1-2.error.noname";
 	public static final String M_PASS_NO_MATCH = "p1-2.error.passnomatch";
+	
+	public static final int ROLE_ADMIN = 1;
+	public static final int ROLE_PROFESOR = 2;
+	public static final int ROLE_ALUMNO = 3;
+	public static final int ROLE_INACTIVO = 4;
 	
 	
 	public static String getKey(){

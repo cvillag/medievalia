@@ -135,3 +135,4 @@ String message = (String)request.getAttribute("message");
 	<input type="hidden" name="modifyId" id="modifyId">
 </form>
 </div>
+<%@ include file="/WEB-INF/views/footer.jsp" %>

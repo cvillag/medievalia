@@ -27,6 +27,7 @@ public class CreateUserController2 {
 	@Autowired
 	private ILogManager logManager;
 	
+	//TODO: usar una sola clase, con dos métodos, usando http://chuwiki.chuidiang.org/index.php?title=Controladores_con_anotaciones_en_Spring_MVC_Framework
 	@RequestMapping(value = "createUserAction.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {

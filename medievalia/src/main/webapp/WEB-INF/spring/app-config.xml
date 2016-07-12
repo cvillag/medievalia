@@ -32,6 +32,9 @@
 	<bean id="logManager" class="com.cvilla.medievalia.service.LogManager">
 	</bean>
 	
+	<bean id="groupManager" class="com.cvilla.medievalia.service.GroupManager">
+	</bean>
+	
 	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="classpath:application.properties"/>
 	</bean>
@@ -53,6 +56,10 @@
 	</bean>
 	
 	<bean id="logDAO" class="com.cvilla.medievalia.dao.LogDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<bean id="groupDAO" class="com.cvilla.medievalia.dao.GroupDAO">
 		<property name="jdbcTemplate" ref="jdbcTemplate"/>
 	</bean>
 	
