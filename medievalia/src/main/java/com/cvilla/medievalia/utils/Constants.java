@@ -86,6 +86,7 @@ public class Constants {
 			ModelAndView model = new ModelAndView("5-2-error");
 			String mensaje2 = "test.noPermiso";
 			model.addObject("mensaje2", mensaje2);
+			model.addObject("headers",getHeaders(user.getUser_role()));
 			return model;
 		}
 		else{

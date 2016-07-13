@@ -43,11 +43,13 @@ public class ModifyUserController2 {
 		User user = (User) sesion.getAttribute("user");
 		if(errorParam(request)){
 			model = Constants.paramError(logManager,user.getId(),Constants.P_MODIFY_USER);
+			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 			return model;
 		}
 		else{
 			if(!request.getParameter("id").equals(sesion.getAttribute("modifyUserId"))){
 				model = Constants.processError("p5-2.errorPeticion");
+				model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 			}
 			else{
 				if(authManager.isAutorized(Constants.P_MODIFY_USER, user)){
@@ -89,6 +91,8 @@ public class ModifyUserController2 {
 						model.addObject("roles",roles);
 						model.addObject("message", message);
 					}
+					model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+
 				}
 				else{
 					String id = request.getParameter("id");
@@ -100,7 +104,6 @@ public class ModifyUserController2 {
 							+ request.getParameter("name"));
 				}
 			}
-			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 			return model;
 		}
 	}

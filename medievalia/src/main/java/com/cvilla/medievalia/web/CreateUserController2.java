@@ -36,6 +36,7 @@ public class CreateUserController2 {
 		User user = (User) sesion.getAttribute("user");
 		if(errorParam(request)){
 			model = Constants.paramError(logManager,user.getId(),Constants.P_CREATE_USER);
+			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 			return model;
 		}
 		else{
@@ -58,12 +59,11 @@ public class CreateUserController2 {
 				List<String> scripts = new ArrayList<String>();
 				scripts.add("js/1-3.js");
 				model.addObject("scripts",scripts);
-	
+				model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 			}
 			else{
 				model = Constants.noPrivileges(user,logManager,Constants.P_CREATE_USER,"Intento de crear usuario no permitido en segudo paso. Nombre: " + request.getParameter("user"));
 			}
-		model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 		return model;
 		}
 	}

@@ -14,37 +14,59 @@ String message = (String)request.getAttribute("message");
 <div class="container">
 <legend><fmt:message key="p1-3.bienvenida"/></legend>
 
-<!-- 
-<div class="table-responsive">
-<table class="table table-striped table-hover table-condensed">
-    <thead>
-        <tr>
-            <th width="25%">First Name</th>
-            <th width="13%">Last Name</th>
-            <th width="25%" class="text-center">Address</th>
-            <th width="25%" class="text-center">City</th>
-            <th width="4%" class="text-center">State</th>
-            <th width="8%" class="text-center">Zip</th>
-        </tr>
-    </thead>
-</table>
-<div class="bodycontainer scrollable">
-<table class="table table-hover table-striped table-condensed table-scrollable">
-    <tbody>
-    < add rows here, specifying same widths as in header, at least on one row >
-    </tbody>
-</table>
-</div>
-<table class="table table-hover table-striped table-condensed">
-    <tfoot>
-    < add your footer here... >
-    </tfoot>
-</table>
-</div>
- -->
 
 <div class="panel panel-default">
 	<div class="table-responsive">
+	<!-- 
+		<div class="row">
+			<div class="col-xs-1">
+				<fmt:message key="p1-3.tabla1"/>
+			</div>
+			<div class="col-xs-3">
+				<fmt:message key="p1-3.tabla2"/>
+			</div>
+			<div class="col-xs-4">
+				<fmt:message key="p1-3.tabla3"/>
+			</div>
+			<div class="col-xs-1">
+				<fmt:message key="p1-3.tabla4"/>
+			</div>
+			<div class="col-xs-3">
+				<fmt:message key="p1-3.tabla5"/>
+			</div>
+		</div>
+		<%
+			for(User u : list){ %>
+			<div class="row">
+				<div class="col-xs-1"><%=u.getId() %></div>
+				<div class="col-xs-3"><%=u.getUser_name() %></div>
+				<div class="col-xs-4"><%=u.getUser_long_name() %></div>
+				<%if(u.getUser_role() == 1){ %>
+						<div class="col-xs-1"><span class="glyphicon glyphicon-cog" title="<fmt:message key="general.administrador"/>"></span></div>
+						<%} 
+						else if(u.getUser_role() == 2){%>
+						<div class="col-xs-1"><span class="glyphicon glyphicon-briefcase" title="<fmt:message key="general.profesor"/>"></span></div>
+						<%} 
+						else if(u.getUser_role() == 3){%>
+						<div class="col-xs-1"><span class="glyphicon glyphicon-user" title="<fmt:message key="general.alumno"/>"></span></div>
+						<%}
+						else if(u.getUser_role() == 4){%>
+						<div class="col-xs-1"><span class="glyphicon glyphicon-ban-circle" title="<fmt:message key="general.inactivo"/>"></span></div>
+						<%} %>
+						<div class="col-xs-3">
+							<button type="button" class="btn btn-default navbar-btn deleteuser" data-val="<%=u.getId() %>">
+								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+							</button>
+							<button type="button" class="btn btn-default navbar-btn modifyuser" data-val="<%=u.getId() %>">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+							</button>
+							<button type="button" class="btn btn-default navbar-btn detailsuser" data-val="<%=u.getId() %>">
+								<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+							</button>
+						</div>
+					</div>
+		<%	}%>
+	 --> 
         <table id="myTable" class="table table-bordered table-striped table-hover table-condensed">
             <thead>
                 <tr>

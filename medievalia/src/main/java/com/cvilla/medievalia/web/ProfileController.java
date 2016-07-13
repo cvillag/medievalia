@@ -43,10 +43,10 @@ public class ProfileController {
 				model = new ModelAndView("5-1-profile");
 				model.addObject("usuario", user);
 				logManager.log(user.getId(), Constants.P_EDIT_PROFILE, "Visualización de perfil propio", Constants.P_OK);
+				model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 				//model.addObject("headers", getHeaders());
 			}
 		}
-		model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 		return model;
 	}
 	
