@@ -156,5 +156,8 @@ String message = (String)request.getAttribute("message");
 <form id="modify" action="modifyUser.do" method="post">
 	<input type="hidden" name="modifyId" id="modifyId">
 </form>
+<form id="detail" action="detailUser.do" method="post">
+	<input type="hidden" name="detailId" id="detailId">
+</form>
 </div>
 <%@ include file="/WEB-INF/views/footer.jsp" %>
