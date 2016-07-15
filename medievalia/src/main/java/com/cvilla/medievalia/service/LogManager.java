@@ -31,10 +31,15 @@ public class LogManager implements ILogManager{
 
 	public List<Log> getActivity(int idUser, int pag, int tamPag, boolean order) throws PaginaException {
 		int num = logDao.getNumLogByUser(idUser);
-		if(pag < num/tamPag)
+		if(pag-1 <= num/tamPag)
 			return logDao.getLogByUser(idUser, pag, tamPag, order);
 		else
 			throw new PaginaException("La página solicitada es superior a las disponibles");
+	}
+
+	public int getNumPag(int idUser, int tamPag) {
+		int pags = logDao.getNumLogByUser(idUser)/tamPag + 1;
+		return pags;
 	}
 	
 	

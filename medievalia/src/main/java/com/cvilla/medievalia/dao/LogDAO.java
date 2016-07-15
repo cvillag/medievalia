@@ -46,7 +46,7 @@ public class LogDAO implements ILogDAO {
 
 	public List<Log> getLogByUser(int idUser, int pag, int tamPag, boolean order) {
 		try{
-			int off = pag * tamPag;
+			int off = (pag-1) * tamPag;
 			if(order){
 				return jdbcTemplate.query(PAGED_ACTION_LIST_ASC, new Object[]{idUser,off,tamPag}, new LogMapper());
 			}

@@ -57,7 +57,9 @@ public class UserDetailController {
 				else{
 					model = new ModelAndView("1-3.2-detalleUsuario");
 					try{
-						List<Log> activity = logManager.getActivity(user.getId(), pag, tamPag,Constants.ORDER_ASC);
+						int pags = logManager.getNumPag(u.getId(), tamPag);
+						model.addObject("numPags",pags);
+						List<Log> activity = logManager.getActivity(u.getId(), pag, tamPag,Constants.ORDER_ASC);
 						logManager.log(user.getId(), Constants.P_DETAIL_OTHER_USER, "Detalle de actividad de otro usuario " + id, Constants.P_OK);
 						model.addObject("activity", activity);
 					}

@@ -13,5 +13,6 @@ public interface ILogManager extends Serializable{
 	
 	public void log(int idUser, int idAction, String desc, int succ);
 	public List<Log> getActivity(int idUser, int pag, int tamPag, boolean order) throws PaginaException;
+	public int getNumPag(int idUser, int tamPag);
 
 }
