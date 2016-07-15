@@ -3,6 +3,7 @@ package com.cvilla.medievalia.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.User;
@@ -39,6 +40,9 @@ public class Constants {
 	public static final int ROLE_PROFESOR = 2;
 	public static final int ROLE_ALUMNO = 3;
 	public static final int ROLE_INACTIVO = 4;
+	
+	public static final boolean ORDER_ASC = true;
+	public static final boolean ORDER_DESC = false;
 	
 	
 	public static String getKey(){
@@ -105,5 +109,25 @@ public class Constants {
 		String mensaje2 = "test.noParam";
 		model.addObject("mensaje2", mensaje2);
 		return model;
+	}
+	
+	public static String nullParameterString(HttpServletRequest request, String name, String defValue){
+		String par = request.getParameter(name);
+		if(par == null || par.equals("")){
+			return defValue;
+		}
+		else{
+			return par;
+		}
+	}
+	
+	public static int nullParameterInt(HttpServletRequest request, String name, int defValue){
+		String par = request.getParameter(name);
+		if(par != null && ! par.equals("")){
+			return (new Integer(par)).intValue();
+		}
+		else{
+			return defValue;
+		}
 	}
 }

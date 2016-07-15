@@ -12,10 +12,13 @@ public class LogMapper implements RowMapper<Log> {
 		Log l = new Log();
 		l.setDescription(rs.getString("description"));
 		l.setIdAction(rs.getInt("idAction"));
+		l.setActionName(rs.getString("actionName"));
 		l.setIdLog(rs.getInt("idLog"));
 		l.setIdUser(rs.getInt("idUser"));
+		l.setUserName(rs.getString("userName"));
+		l.setUserLongName(rs.getString("userLongName"));
 		l.setSuccess(rs.getInt("success"));
-		l.setTime(rs.getDate("time"));
+		l.setTime(rs.getTimestamp("time"));
 		return l;
 	}
 }
