@@ -48,6 +48,7 @@ public class UserDetailController {
 				String pa = request.getParameter("pag");
 				int pag = Constants.nullParameterInt(request, "pag", 1);
 				int tamPag = Constants.nullParameterInt(request, "tamPag", 10);
+				int pags = 0;
 				String id = request.getParameter("detailId");
 				User u = userManager.getUser((new Integer(id).intValue()));
 				if(u == null){
@@ -57,7 +58,7 @@ public class UserDetailController {
 				else{
 					model = new ModelAndView("1-3.2-detalleUsuario");
 					try{
-						int pags = logManager.getNumPag(u.getId(), tamPag);
+						pags = logManager.getNumPag(u.getId(), tamPag);
 						model.addObject("numPags",pags);
 						List<Log> activity = logManager.getActivity(u.getId(), pag, tamPag,Constants.ORDER_ASC);
 						logManager.log(user.getId(), Constants.P_DETAIL_OTHER_USER, "Detalle de actividad de otro usuario " + id, Constants.P_OK);
@@ -66,6 +67,18 @@ public class UserDetailController {
 					catch(PaginaException e){
 						logManager.log(user.getId(), Constants.P_DETAIL_OTHER_USER, "Detalle de actividad de otro usuario " + id + " " + e.getMessage(), Constants.P_NOK);
 						model.addObject("message", "p1-3.2.error.paginaNoExiste");
+					}
+					if(pag == 1){
+						model.addObject("first",true);
+					}
+					else{
+						model.addObject("first",false);
+					}
+					if(pag == pags){
+						model.addObject("last",true);
+					}
+					else{
+						model.addObject("last",false);
 					}
 					model.addObject("user", u);
 				}
