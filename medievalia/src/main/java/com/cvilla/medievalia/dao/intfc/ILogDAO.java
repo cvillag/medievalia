@@ -1,4 +1,4 @@
-package com.cvilla.medievalia.dao;
+package com.cvilla.medievalia.dao.intfc;
 
 import java.sql.Date;
 import java.util.List;

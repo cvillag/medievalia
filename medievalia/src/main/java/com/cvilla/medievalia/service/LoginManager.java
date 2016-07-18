@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cvilla.medievalia.dao.IUserDAO;
+import com.cvilla.medievalia.dao.intfc.IUserDAO;
 import com.cvilla.medievalia.domain.User;
+import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
 
 public class LoginManager implements ILoginManager {

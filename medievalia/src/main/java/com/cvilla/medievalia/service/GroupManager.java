@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cvilla.medievalia.dao.IGroupDAO;
+import com.cvilla.medievalia.dao.intfc.IGroupDAO;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.User;
+import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.utils.Constants;
 
 public class GroupManager implements IGroupManager {

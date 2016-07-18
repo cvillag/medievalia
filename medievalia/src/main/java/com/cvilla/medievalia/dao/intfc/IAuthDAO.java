@@ -1,4 +1,4 @@
-package com.cvilla.medievalia.dao;
+package com.cvilla.medievalia.dao.intfc;
 
 public interface IAuthDAO {
 	

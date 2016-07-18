@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.cvilla.medievalia.dao.intfc.IRoleDAO;
 import com.cvilla.medievalia.dao.mappers.RoleMapper;
 import com.cvilla.medievalia.domain.Role;
 

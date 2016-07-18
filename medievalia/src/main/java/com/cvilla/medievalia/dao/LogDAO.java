@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.cvilla.medievalia.dao.intfc.ILogDAO;
 import com.cvilla.medievalia.dao.mappers.LogMapper;
 import com.cvilla.medievalia.domain.Log;
 import com.cvilla.medievalia.service.LogManager;

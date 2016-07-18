@@ -5,7 +5,6 @@ $(document).ready(function(){
 	var btngr2 = 0;
 	var btngr3 = 0;
 	
-	//TODO: desactivar botones cuando no se pueda ir en una dirección u otra
 	$("#siguiente").click(function(){
 		var pag = $("#actual").val();
 		pag++;

@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cvilla.medievalia.dao.ILogDAO;
+import com.cvilla.medievalia.dao.intfc.ILogDAO;
 import com.cvilla.medievalia.domain.Log;
+import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.utils.PaginaException;
 
 public class LogManager implements ILogManager{

@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cvilla.medievalia.dao.IRoleDAO;
+import com.cvilla.medievalia.dao.intfc.IRoleDAO;
 import com.cvilla.medievalia.domain.Role;
+import com.cvilla.medievalia.service.intf.IRoleManager;
 
 public class RoleManager implements IRoleManager {
 

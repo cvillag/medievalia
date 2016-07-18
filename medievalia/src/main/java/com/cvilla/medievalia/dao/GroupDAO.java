@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.cvilla.medievalia.dao.intfc.IGroupDAO;
 import com.cvilla.medievalia.dao.mappers.GroupMapper;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.User;
@@ -31,7 +32,6 @@ public class GroupDAO implements IGroupDAO {
 	
 	public List<Group> getGroupList() {
 		try{
-			//FIXME: Error al recoger el resultset. En vez de dos objetos group, dos null.
 			List<Group> g = getJdbcTemplate().query(GET_GROUP_LIST, new GroupMapper());
 			return g;
 		}

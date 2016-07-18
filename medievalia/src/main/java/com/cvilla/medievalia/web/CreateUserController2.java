@@ -15,10 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Role;
 import com.cvilla.medievalia.domain.User;
-import com.cvilla.medievalia.service.IAutorizationManager;
-import com.cvilla.medievalia.service.ILogManager;
-import com.cvilla.medievalia.service.ILoginManager;
-import com.cvilla.medievalia.service.IRoleManager;
+import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.ILogManager;
+import com.cvilla.medievalia.service.intf.ILoginManager;
+import com.cvilla.medievalia.service.intf.IRoleManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller
@@ -27,7 +27,6 @@ public class CreateUserController2 {
 	@Autowired
 	private ILogManager logManager;
 	
-	//TODO: usar una sola clase, con dos métodos, usando http://chuwiki.chuidiang.org/index.php?title=Controladores_con_anotaciones_en_Spring_MVC_Framework
 	@RequestMapping(value = "createUserAction.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {

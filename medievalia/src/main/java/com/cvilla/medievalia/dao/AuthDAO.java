@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.cvilla.medievalia.dao.intfc.IAuthDAO;
 import com.cvilla.medievalia.dao.mappers.AutorizationMapper;
 
 public class AuthDAO implements IAuthDAO {

@@ -1,4 +1,4 @@
-package com.cvilla.medievalia.service;
+package com.cvilla.medievalia.service.intf;
 
 import java.io.Serializable;
 

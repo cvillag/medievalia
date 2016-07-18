@@ -14,9 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Log;
 import com.cvilla.medievalia.domain.User;
-import com.cvilla.medievalia.service.IAutorizationManager;
-import com.cvilla.medievalia.service.ILogManager;
-import com.cvilla.medievalia.service.ILoginManager;
+import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.ILogManager;
+import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
 import com.cvilla.medievalia.utils.PaginaException;
 

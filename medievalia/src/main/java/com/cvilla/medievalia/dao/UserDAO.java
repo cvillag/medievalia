@@ -7,6 +7,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.cvilla.medievalia.dao.intfc.IUserDAO;
 import com.cvilla.medievalia.dao.mappers.UserMapper;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.utils.Constants;

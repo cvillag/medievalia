@@ -2,8 +2,9 @@ package com.cvilla.medievalia.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cvilla.medievalia.dao.IAuthDAO;
+import com.cvilla.medievalia.dao.intfc.IAuthDAO;
 import com.cvilla.medievalia.domain.User;
+import com.cvilla.medievalia.service.intf.IAutorizationManager;
 
 public class AutorizationManager implements IAutorizationManager {
 	

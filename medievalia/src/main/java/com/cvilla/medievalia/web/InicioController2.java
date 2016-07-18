@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.User;
-import com.cvilla.medievalia.service.IAutorizationManager;
-import com.cvilla.medievalia.service.ILogManager;
+import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller

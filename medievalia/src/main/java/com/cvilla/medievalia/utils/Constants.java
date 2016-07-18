@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.User;
-import com.cvilla.medievalia.service.ILogManager;
+import com.cvilla.medievalia.service.intf.ILogManager;
 
 public class Constants {
 	
