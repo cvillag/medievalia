@@ -11,4 +11,5 @@ public interface IGroupDAO {
 	public List<Group> getOwnGroups(User u);
 	public String addGroup(Group g);
 	public boolean removeGroup(Group g);
+	public List<Group> getGroupListByDir(User dir);
 }

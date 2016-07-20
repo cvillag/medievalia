@@ -24,6 +24,8 @@ public class Constants {
 	public static final int P_GROUP_LIST = 9;
 	public static final int P_GROUP_OWN = 10;
 	public static final int P_DETAIL_OTHER_USER = 11;
+	public static final int P_DETAIL_DIRECTOR_GROUPS_OTHER = 12;
+	public static final int P_DETAIL_DIRECTOR_GROUPS_OWN = 13;
 	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;

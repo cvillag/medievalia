@@ -74,4 +74,17 @@ public class GroupManager implements IGroupManager {
 		return false;
 	}
 
+	public List<Group> getListByDirector(User user, User dir) {
+		List<Group> l = null;
+		if(user.getUser_role() == Constants.ROLE_ADMIN){
+			l = groupDAO.getGroupListByDir(dir);
+			logManager.log(user.getId(), Constants.P_DETAIL_DIRECTOR_GROUPS_OTHER,"Visualización de grupos del usuario con id " + dir.getId() + " como director", Constants.P_OK);
+		}
+		else if(user.getUser_role() == Constants.ROLE_PROFESOR){
+			l = groupDAO.getGroupListByDir(user);
+			logManager.log(user.getId(), Constants.P_DETAIL_DIRECTOR_GROUPS_OWN,"Visualización de grupos del usuario propio id " + dir.getId() + " como director", Constants.P_OK);
+		}
+		return l;
+	}
+
 }

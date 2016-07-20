@@ -1,5 +1,14 @@
 $(document).ready(function(){
 	
+	var userId = $("#detailId").val();
+	
+	$.post("belongGroupA.do",{
+		idDir : userId
+	}, function(responseText){
+		$("#group-block1").html(responseText);
+	}
+	);
+	
 	var btnact = 0;
 	var btngr1 = 0;
 	var btngr2 = 0;

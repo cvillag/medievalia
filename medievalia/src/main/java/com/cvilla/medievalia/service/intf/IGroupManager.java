@@ -13,4 +13,5 @@ public interface IGroupManager extends Serializable {
 	public List<Group> getList(User u);
 	public String addGroup(int director, String name);
 	public boolean removeGroup(int idGroup);
+	public List<Group> getListByDirector(User user, User dir);
 }

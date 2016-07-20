@@ -16,7 +16,8 @@ public class GroupDAO implements IGroupDAO {
 	private static final String ADD_GROUP = "insert into groups (teacher,name) values (?,?)";
 	private static final String REMOVE_GROUP = "delete from groups where idGroup = ?";
 	private static final String GET_OWN_GROUP_LIST = "select * from groups where director = ? or idGroup in (select idGroup from teachers where idTeacher = ?) group by director";
-
+	private static final String GET_GROUP_LIST_BY_DIR = "SELECT `idGroup`, `name`, `director` FROM `groups` WHERE director = ?";
+	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -74,4 +75,13 @@ public class GroupDAO implements IGroupDAO {
 		}
 	}
 
+	public List<Group> getGroupListByDir(User dir) {
+		try{
+			List<Group> g = getJdbcTemplate().query(GET_GROUP_LIST_BY_DIR, new Object[]{dir.getId()}, new GroupMapper());
+			return g;
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
 }
