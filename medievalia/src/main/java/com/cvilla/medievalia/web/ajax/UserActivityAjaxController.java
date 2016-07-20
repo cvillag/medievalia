@@ -35,7 +35,7 @@ public class UserActivityAjaxController {
 	@Autowired
 	private ILoginManager loginManager;
 	
-	@RequestMapping(value = "belongGroupA.do")
+	@RequestMapping(value = "activityUserA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView model;
