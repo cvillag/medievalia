@@ -1,46 +1,94 @@
 $(document).ready(function(){
 	
 	var userId = $("#detailId").val();
-	
-	$.post("belongGroupA.do",{
-		idDir : userId
-	}, function(responseText){
-		$("#group-block1").html(responseText);
-	}
-	);
-	
+	var tamPag = $("#tamPag").val();
+	var maxPag = $("#numPags").val();
+	var pagAct = 1;
 	var btnact = 0;
 	var btngr1 = 0;
 	var btngr2 = 0;
 	var btngr3 = 0;
 	
+	$("#primero").hide();
+	$("#anterior").hide();
+	$("#primeros").show();
+	$("#anteriores").show();
+	$("#pagA").hide();
+	$("#pagB").hide();
+	$("#pagC").show();
+	$("#pagD").show();
+	$("#siguiente").show();
+	$("#ultimo").show();
+	$("#siguientes").hide();
+	$("#ultimos").hide();
+	
+	$.post("belongGroupA.do",{
+		idDir : userId,
+	}, function(responseText){
+		$("#group-block1").html(responseText);
+	}
+	);
+	
+	
+	$.post("activityUserA.do",{
+		detailId : userId,
+		pag : 1,
+		tamPag : 10
+	}, function(responseText){
+		$("#activity-block").html(responseText);
+	}
+	);
+		
 	$("#siguiente").click(function(){
-		var pag = $("#actual").val();
-		pag++;
-		$("#pag").val(pag);
-//		alert("Página siguiente " + $("#pag").val());
-		$("#pagForm").submit();
+		pagAct++;
+		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
+		cargaPagina(pagAct,userId,tamPag);
 	});
 	
 	$("#anterior").click(function(){
-		var pag = $("#actual").val();
-		pag--;
-		$("#pag").val(pag);
-//		alert("Página siguiente " + $("#pag").val());
-		$("#pagForm").submit();
+		pagAct--;
+		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
+		cargaPagina(pagAct,userId,tamPag);
 	});
 	
 	$("#primero").click(function(){
-		$("#pag").val(1);
-//		alert("Página siguiente " + $("#pag").val());
-		$("#pagForm").submit();
+		pagAct=1;
+		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
+		cargaPagina(pagAct,userId,tamPag);
 	});
 	
 	$("#ultimo").click(function(){
-		$("#pag").val($("#maxPag").val());
-//		alert("Página siguiente " + $("#pag").val());
-		$("#pagForm").submit();
+		pagAct = maxPag;
+		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
+		cargaPagina(pagAct,userId,tamPag);
 	});
+	
+	$("#pagA").click(function(){
+		pagAct = pagAct - 2;
+		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
+		cargaPagina(pagAct,userId,tamPag);
+	});
+	
+	$("#pagB").click(function(){
+		pagAct--;
+		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
+		cargaPagina(pagAct,userId,tamPag);
+	});
+	
+	$("#pagC").click(function(){
+		pagAct++;
+		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
+		cargaPagina(pagAct,userId,tamPag);
+	});
+	
+	$("#pagD").click(function(){
+		pagAct = pagAct + 2;
+		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
+		cargaPagina(pagAct,userId,tamPag);
+	});
+
+		
+
 	
 	$("#volver").click(function(){
 		document.location = "users.do";
@@ -49,16 +97,12 @@ $(document).ready(function(){
 	$("#displayActivity").click(function(){
 		if(btnact == 0){
 			$("#activity-block").slideUp(500);
-			$("#activity-block2").slideUp(500);
-			$("#activity-block3").slideUp(500);
 			$("#displayActivity").removeClass();
 			$("#displayActivity").addClass("glyphicon glyphicon-chevron-up");
 			btnact = 1;
 		}
 		else{
 			$("#activity-block").slideDown(500);
-			$("#activity-block2").slideDown(500);
-			$("#activity-block3").slideDown(500);
 			$("#displayActivity").removeClass();
 			$("#displayActivity").addClass("glyphicon glyphicon-chevron-down");
 			btnact = 0;
@@ -110,23 +154,64 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#pagA").click(function(){
-		$("#pag").val($("#pagp2").val());
-		$("#pagForm").submit();
-	});
+	function cargaPagina(pag,uid,tpag){
+		$.post("activityUserA.do",{
+			detailId : uid,
+			pag: pagAct,
+			tamPag : tpag
+		}, function(responseText){
+			$("#activity-block").html(responseText);
+		});
+		actualizaBotones(pag);
+	}
 	
-	$("#pagB").click(function(){
-		$("#pag").val($("#pagp1").val());
-		$("#pagForm").submit();
-	});
-	
-	$("#pagC").click(function(){
-		$("#pag").val($("#pagm1").val());
-		$("#pagForm").submit();
-	});
-	
-	$("#pagD").click(function(){
-		$("#pag").val($("#pagm2").val());
-		$("#pagForm").submit();
-	});
+	function actualizaBotones(pag){
+		if(pag < 2){		
+			$("#primero").hide();
+			$("#primeros").show();
+			$("#anterior").hide();
+			$("#anteriores").show();
+			$("#pagA").hide();
+			$("#pagB").hide();
+		}
+		else{
+			$("#primero").show();
+			$("#primeros").hide();
+			$("#anterior").show();
+			$("#anteriores").hide();
+			$("#pagB").show();
+			if(pag < 3){
+				$("#pagA").hide();
+			}
+			else{
+				$("#pagA").show();
+			}
+		}
+		if(pag < maxPag){
+			$("#pagC").show();
+			$("#siguiente").show();
+			$("#siguientes").hide();
+			$("#ultimo").show();
+			$("#ultimos").hide();
+			if(pag < (maxPag -1)){
+				$("#pagD").show();
+			}
+			else{
+				$("#pagD").hide();
+			}
+		}
+		else{
+			$("#pagC").hide();
+			$("#pagD").hide();
+			$("#siguiente").hide();
+			$("#siguientes").show();
+			$("#ultimo").hide();
+			$("#ultimos").show();
+		}
+		$("#pagA").html(pag-2);
+		$("#pagB").html(pag-1);
+		$("#paginaActual").html("<u><strong>" + pag + "</strong></u></span>");
+		$("#pagC").html(pag+1);
+		$("#pagD").html(pag+2);
+	}
 });
