@@ -54,34 +54,39 @@ public class UserActivityAjaxController {
 				model = Constants.processError("Error: el usuario seleccionado no existe");
 			}
 			else{
-				model = new ModelAndView("a-1-3.2-actividad");
-				int pag = Constants.nullParameterInt(request, "pag", 1);
-				int tamPag = Constants.nullParameterInt(request, "tamPag", 10);
-				int pags = 0;
-				try{
-					pags = logManager.getNumPag(u.getId(), tamPag);
-					model.addObject("numPags",pags);
-					List<Log> activity = logManager.getActivity(u.getId(), pag, tamPag,Constants.ORDER_ASC);
-					logManager.log(user.getId(), Constants.P_DETAIL_OTHER_USER, "Detalle de actividad de otro usuario " + id, Constants.P_OK);
-					model.addObject("activity", activity);
-				}
-				catch(PaginaException e){
-					logManager.log(user.getId(), Constants.P_DETAIL_OTHER_USER, "Detalle de actividad de otro usuario " + id + " " + e.getMessage(), Constants.P_NOK);
-					model.addObject("message", "p1-3.2.error.paginaNoExiste");
-				}
-				if(pag == 1){
-					model.addObject("first",true);
+				if(authManager.isAutorized(Constants.P_DETAIL_OTHER_USER, user)){
+					model = new ModelAndView("a-1-3.2-actividad");
+					int pag = Constants.nullParameterInt(request, "pag", 1);
+					int tamPag = Constants.nullParameterInt(request, "tamPag", 10);
+					int pags = 0;
+					try{
+						pags = logManager.getNumPag(u.getId(), tamPag);
+						model.addObject("numPags",pags);
+						List<Log> activity = logManager.getActivity(u.getId(), pag, tamPag,Constants.ORDER_ASC);
+						logManager.log(user.getId(), Constants.P_DETAIL_OTHER_USER, "Detalle de actividad de otro usuario " + id, Constants.P_OK);
+						model.addObject("activity", activity);
+					}
+					catch(PaginaException e){
+						logManager.log(user.getId(), Constants.P_DETAIL_OTHER_USER, "Detalle de actividad de otro usuario " + id + " " + e.getMessage(), Constants.P_NOK);
+						model.addObject("message", "p1-3.2.error.paginaNoExiste");
+					}
+					if(pag == 1){
+						model.addObject("first",true);
+					}
+					else{
+						model.addObject("first",false);
+					}
+					if(pag == pags){
+						model.addObject("last",true);
+					}
+					else{
+						model.addObject("last",false);
+					}
+					model.addObject("actual",pag);
 				}
 				else{
-					model.addObject("first",false);
+					model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_OTHER_USER,"Intento de visionado de actividad de otro usuario con ID: " + id);
 				}
-				if(pag == pags){
-					model.addObject("last",true);
-				}
-				else{
-					model.addObject("last",false);
-				}
-				model.addObject("actual",pag);
 			}
 		}
 		return model;

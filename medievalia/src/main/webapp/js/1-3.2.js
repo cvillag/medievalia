@@ -35,6 +35,12 @@ $(document).ready(function(){
 		$("#group-block2").html(responseText);
 	}
 	);
+	$.post("studentGroupA.do",{
+		idStud : userId,
+	}, function(responseText){
+		$("#group-block3").html(responseText);
+	}
+	);
 	
 	
 	$.post("activityUserA.do",{

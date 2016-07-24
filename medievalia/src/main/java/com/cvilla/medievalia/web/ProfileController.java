@@ -1,5 +1,8 @@
 package com.cvilla.medievalia.web;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -42,21 +45,14 @@ public class ProfileController {
 			if(authManager.isAutorized(Constants.P_LOGIN, user)){
 				model = new ModelAndView("5-1-profile");
 				model.addObject("usuario", user);
+				List<String> scripts = new ArrayList<String>();
+				scripts.add("js/5-1.js");
+				model.addObject("scripts",scripts);
 				logManager.log(user.getId(), Constants.P_EDIT_PROFILE, "Visualización de perfil propio", Constants.P_OK);
 				model.addObject("headers",Constants.getHeaders(user.getUser_role()));
-				//model.addObject("headers", getHeaders());
 			}
 		}
 		return model;
 	}
-	
-//	private List<Header> getHeaders(){
-//		ArrayList<Header> lista = new ArrayList<Header>();
-//		lista.add(new Header("admin","Administración","",new ArrayList<Header>()));
-//		lista.get(0).getSons().add(new Header("users","Usuarios","users.do",null));
-//		lista.get(0).getSons().add(new Header("groups", "Grupos", "groups.do",null));
-//		lista.add(new Header("actions", "Acciones", "actions.do", null));
-//		return lista;
-//	}
 
 }

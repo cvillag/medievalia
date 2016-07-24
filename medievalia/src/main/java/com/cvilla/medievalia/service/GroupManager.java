@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cvilla.medievalia.dao.intfc.IGroupDAO;
 import com.cvilla.medievalia.domain.Group;
+import com.cvilla.medievalia.domain.Students;
 import com.cvilla.medievalia.domain.Teachers;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IGroupManager;
@@ -92,11 +93,24 @@ public class GroupManager implements IGroupManager {
 		List<Teachers> l = null;
 		if(user.getUser_role() == Constants.ROLE_ADMIN){
 			l = groupDAO.getGroupListByTeacher(teacher);
-			logManager.log(user.getId(), Constants.P_DETAIL_TEACHER_GROUPS_OTHER,"Visualización de grupos del usuario con id " + teacher.getId() + " como director", Constants.P_OK);
+			logManager.log(user.getId(), Constants.P_DETAIL_TEACHER_GROUPS_OTHER,"Visualización de grupos del usuario con id " + teacher.getId() + " como profesor", Constants.P_OK);
 		}
 		else if(user.getUser_role() == Constants.ROLE_PROFESOR){
 			l = groupDAO.getGroupListByTeacher(teacher);
-			logManager.log(user.getId(), Constants.P_DETAIL_TEACHER_GROUPS_OWN,"Visualización de grupos del usuario propio id " + teacher.getId() + " como director", Constants.P_OK);
+			logManager.log(user.getId(), Constants.P_DETAIL_TEACHER_GROUPS_OWN,"Visualización de grupos del usuario propio id " + teacher.getId() + " como profesor", Constants.P_OK);
+		}
+		return l;
+	}
+
+	public List<Students> getListByStudent(User user, User user2) {
+		List<Students> l = null;
+		if(user.getUser_role() == Constants.ROLE_ADMIN || user.getUser_role() == Constants.ROLE_PROFESOR){
+			l = groupDAO.getGroupListByStudent(user2);
+			logManager.log(user.getId(), Constants.P_DETAIL_STUDENT_GROUPS_OTHER,"Visualización de grupos del usuario con id " + user2.getId() + " como estudiante", Constants.P_OK);
+		}
+		else if(user.getUser_role() == Constants.ROLE_ALUMNO){
+			l = groupDAO.getGroupListByStudent(user);
+			logManager.log(user.getId(), Constants.P_DETAIL_STUDENT_GROUPS_OWN,"Visualización de grupos del usuario propio id " + user.getId() + " como estudiante", Constants.P_OK);
 		}
 		return l;
 	}

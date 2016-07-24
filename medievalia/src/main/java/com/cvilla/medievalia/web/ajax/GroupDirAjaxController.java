@@ -41,8 +41,15 @@ public class GroupDirAjaxController {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		if(errorParam(request)){
-			model = new ModelAndView("a-1-3.2-grupos");
-			model.addObject("message", "nok");
+			if(authManager.isAutorized(Constants.P_DETAIL_DIRECTOR_GROUPS_OWN, user) ){
+				List<Group> lista = groupManager.getListByDirector(user,user);
+				model = new ModelAndView("a-1-3.2-grupos");
+				model.addObject("message", "ok");
+				model.addObject("gruposDir",lista);
+			}
+			else{
+				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_DIRECTOR_GROUPS_OWN,"mensaje");
+			}			
 		}
 		else{
 			if(authManager.isAutorized(Constants.P_DETAIL_DIRECTOR_GROUPS_OTHER, user) || authManager.isAutorized(Constants.P_DETAIL_DIRECTOR_GROUPS_OWN, user) ){
@@ -54,7 +61,7 @@ public class GroupDirAjaxController {
 				model.addObject("gruposDir",lista);
 			}
 			else{
-				model = Constants.noPrivileges(user,logManager,Constants.P_DETAIL_DIRECTOR_GROUPS_OTHER,"mensaje");
+				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_DIRECTOR_GROUPS_OTHER,"mensaje");
 			}			
 		}
 		return model;

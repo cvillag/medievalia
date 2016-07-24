@@ -7,8 +7,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.cvilla.medievalia.dao.intfc.IGroupDAO;
 import com.cvilla.medievalia.dao.mappers.GroupMapper;
+import com.cvilla.medievalia.dao.mappers.StudentsMapper;
 import com.cvilla.medievalia.dao.mappers.TeacherMapper;
 import com.cvilla.medievalia.domain.Group;
+import com.cvilla.medievalia.domain.Students;
 import com.cvilla.medievalia.domain.Teachers;
 import com.cvilla.medievalia.domain.User;
 
@@ -20,6 +22,7 @@ public class GroupDAO implements IGroupDAO {
 	private static final String GET_OWN_GROUP_LIST = "select * from groups where director = ? or idGroup in (select idGroup from teachers where idTeacher = ?) group by director";
 	private static final String GET_GROUP_LIST_BY_DIR = "SELECT `idGroup`, `name`, `director` FROM `groups` WHERE director = ?";
 	private static final String GET_GROUP_LIST_BY_TEACHER = "select groups.name as name, teachers.idGroup as idGroup, teachers.idTeacher as idTeacher from groups left join teachers on teachers.idGroup = groups.idGroup where idTeacher = ?";
+	private static final String GET_GROUP_LIST_BY_STUDENT = "select idGroup, director as idDirector, name as groupName, idStudent, user_name as directorName from (SELECT groups.idGroup as idGroup, director, name, idStudent from groups left join students on groups.idGroup = students.idGroup where idStudent = ?   ) as s1 left join users on s1.director = users.user_id";
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -90,6 +93,16 @@ public class GroupDAO implements IGroupDAO {
 	public List<Teachers> getGroupListByTeacher(User teacher) {
 		try{
 			List<Teachers> g = getJdbcTemplate().query(GET_GROUP_LIST_BY_TEACHER, new Object[]{teacher.getId()}, new TeacherMapper());
+			return g;
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
+
+	public List<Students> getGroupListByStudent(User student) {
+		try{
+			List<Students> g = getJdbcTemplate().query(GET_GROUP_LIST_BY_STUDENT, new Object[]{student.getId()}, new StudentsMapper());
 			return g;
 		}
 		catch(Exception e){

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.cvilla.medievalia.domain.Group;
+import com.cvilla.medievalia.domain.Students;
 import com.cvilla.medievalia.domain.Teachers;
 import com.cvilla.medievalia.domain.User;
 
@@ -16,4 +17,5 @@ public interface IGroupManager extends Serializable {
 	public boolean removeGroup(int idGroup);
 	public List<Group> getListByDirector(User user, User dir);
 	public List<Teachers> getListByTeacher(User user, User teacher);
+	public List<Students> getListByStudent(User user, User user2);
 }

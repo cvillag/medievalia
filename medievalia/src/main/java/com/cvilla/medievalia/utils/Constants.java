@@ -28,6 +28,8 @@ public class Constants {
 	public static final int P_DETAIL_DIRECTOR_GROUPS_OWN = 13;
 	public static final int P_DETAIL_TEACHER_GROUPS_OTHER = 14;
 	public static final int P_DETAIL_TEACHER_GROUPS_OWN = 15;
+	public static final int P_DETAIL_STUDENT_GROUPS_OWN = 16;
+	public static final int P_DETAIL_STUDENT_GROUPS_OTHER = 17;
 	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;
@@ -48,6 +50,7 @@ public class Constants {
 	
 	public static final boolean ORDER_ASC = true;
 	public static final boolean ORDER_DESC = false;
+
 	
 	
 	public static String getKey(){
@@ -105,7 +108,22 @@ public class Constants {
 			model.addObject("mensaje2", "test.noSesion");
 			return model;
 		}
-		
+	}
+	
+	public static ModelAndView noPrivilegesA(User user, ILogManager logManager, int action, String message){
+		if(user != null){
+			logManager.log(user.getId(), action, message, Constants.P_NOK);
+			ModelAndView model = new ModelAndView("5-2-errorAjax");
+			String mensaje2 = "test.noPermiso";
+			model.addObject("mensaje2", mensaje2);
+			return model;
+		}
+		else{
+			logManager.log(Constants.P_NOUSER, action, "Sesión posiblemente expirada (usuario nulo)", Constants.P_NOK);
+			ModelAndView model = new ModelAndView("0-bienvenida");
+			model.addObject("mensaje2", "test.noSesion");
+			return model;
+		}
 	}
 	
 	public static ModelAndView paramError(ILogManager log,int idaction,int iduser){

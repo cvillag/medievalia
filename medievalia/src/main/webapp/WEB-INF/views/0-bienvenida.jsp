@@ -10,7 +10,7 @@
 		<div class="form-group">
 			<label class="col-xs-3 control-label" for="nombre"><fmt:message key="intro.nombre"/></label>
 			<div class="col-xs-4">
-				<input class="form-control" type="text" id="nombre" name="nombre"/>
+				<input class="form-control" type="text" id="nombre" name="nombre" autofocus/>
 			</div>
 		</div>
 		<div class="form-group">

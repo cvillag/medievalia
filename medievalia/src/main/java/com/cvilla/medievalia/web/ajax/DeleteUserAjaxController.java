@@ -56,7 +56,7 @@ public class DeleteUserAjaxController {
 				j.put("message", message);
 			}
 			else{
-				model = Constants.noPrivileges(user,logManager,Constants.P_DELETE_USER,"Intento de borrado de usuario con ID: " + request.getParameter("deleteId"));
+				model = Constants.noPrivilegesA(user,logManager,Constants.P_DELETE_USER,"Intento de borrado de usuario con ID: " + request.getParameter("deleteId"));
 			}
 		}
 		model.addObject("json", j);

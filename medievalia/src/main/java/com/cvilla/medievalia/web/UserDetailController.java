@@ -18,7 +18,6 @@ import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
-//import com.cvilla.medievalia.utils.PaginaException;
 
 @Controller
 public class UserDetailController {
@@ -45,9 +44,6 @@ public class UserDetailController {
 		}
 		else{
 			if(authManager.isAutorized(Constants.P_DETAIL_OTHER_USER, user)){
-//				String pa = request.getParameter("pag");
-//				int pag = Constants.nullParameterInt(request, "pag", 1);
-//				int tamPag = Constants.nullParameterInt(request, "tamPag", 10);
 				int pags = 0;
 				String id = request.getParameter("detailId");
 				User u = userManager.getUser((new Integer(id).intValue()));
@@ -57,34 +53,11 @@ public class UserDetailController {
 				}
 				else{
 					model = new ModelAndView("1-3.2-detalleUsuario");
-//					try{
 						pags = logManager.getNumPag(u.getId(), 10);
 						model.addObject("numPags",pags);
-//						List<Log> activity = logManager.getActivity(u.getId(), pag, tamPag,Constants.ORDER_ASC);
-//						logManager.log(user.getId(), Constants.P_DETAIL_OTHER_USER, "Detalle de actividad de otro usuario " + id, Constants.P_OK);
-//						model.addObject("activity", activity);
-//					}
-//					catch(PaginaException e){
-//						logManager.log(user.getId(), Constants.P_DETAIL_OTHER_USER, "Detalle de actividad de otro usuario " + id + " " + e.getMessage(), Constants.P_NOK);
-//						model.addObject("message", "p1-3.2.error.paginaNoExiste");
-//					}
-//					if(pag == 1){
-//						model.addObject("first",true);
-//					}
-//					else{
-//						model.addObject("first",false);
-//					}
-//					if(pag == pags){
-//						model.addObject("last",true);
-//					}
-//					else{
-//						model.addObject("last",false);
-//					}
-//					model.addObject("user", u);
 				}
 				List<String> scripts = new ArrayList<String>();
 				scripts.add("js/1-3.2.js");
-//				model.addObject("actual",pag);
 				model.addObject("tamPag",10);
 				model.addObject("scripts",scripts);
 				model.addObject("detailId", id);
@@ -98,7 +71,6 @@ public class UserDetailController {
 		return model;
 	}
 	
-	//true si hay error
 	private boolean errorParam(HttpServletRequest request){
 		return request.getParameter("detailId") == null;
 	}
