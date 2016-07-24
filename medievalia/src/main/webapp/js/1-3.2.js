@@ -29,6 +29,13 @@ $(document).ready(function(){
 	}
 	);
 	
+	$.post("teacherGroupA.do",{
+		idTeach : userId,
+	}, function(responseText){
+		$("#group-block2").html(responseText);
+	}
+	);
+	
 	
 	$.post("activityUserA.do",{
 		detailId : userId,

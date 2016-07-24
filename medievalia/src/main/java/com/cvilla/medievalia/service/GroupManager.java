@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cvilla.medievalia.dao.intfc.IGroupDAO;
 import com.cvilla.medievalia.domain.Group;
+import com.cvilla.medievalia.domain.Teachers;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
@@ -83,6 +84,19 @@ public class GroupManager implements IGroupManager {
 		else if(user.getUser_role() == Constants.ROLE_PROFESOR){
 			l = groupDAO.getGroupListByDir(user);
 			logManager.log(user.getId(), Constants.P_DETAIL_DIRECTOR_GROUPS_OWN,"Visualización de grupos del usuario propio id " + dir.getId() + " como director", Constants.P_OK);
+		}
+		return l;
+	}
+
+	public List<Teachers> getListByTeacher(User user, User teacher) {
+		List<Teachers> l = null;
+		if(user.getUser_role() == Constants.ROLE_ADMIN){
+			l = groupDAO.getGroupListByTeacher(teacher);
+			logManager.log(user.getId(), Constants.P_DETAIL_TEACHER_GROUPS_OTHER,"Visualización de grupos del usuario con id " + teacher.getId() + " como director", Constants.P_OK);
+		}
+		else if(user.getUser_role() == Constants.ROLE_PROFESOR){
+			l = groupDAO.getGroupListByTeacher(teacher);
+			logManager.log(user.getId(), Constants.P_DETAIL_TEACHER_GROUPS_OWN,"Visualización de grupos del usuario propio id " + teacher.getId() + " como director", Constants.P_OK);
 		}
 		return l;
 	}

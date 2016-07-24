@@ -7,7 +7,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.cvilla.medievalia.dao.intfc.IGroupDAO;
 import com.cvilla.medievalia.dao.mappers.GroupMapper;
+import com.cvilla.medievalia.dao.mappers.TeacherMapper;
 import com.cvilla.medievalia.domain.Group;
+import com.cvilla.medievalia.domain.Teachers;
 import com.cvilla.medievalia.domain.User;
 
 public class GroupDAO implements IGroupDAO {
@@ -17,7 +19,7 @@ public class GroupDAO implements IGroupDAO {
 	private static final String REMOVE_GROUP = "delete from groups where idGroup = ?";
 	private static final String GET_OWN_GROUP_LIST = "select * from groups where director = ? or idGroup in (select idGroup from teachers where idTeacher = ?) group by director";
 	private static final String GET_GROUP_LIST_BY_DIR = "SELECT `idGroup`, `name`, `director` FROM `groups` WHERE director = ?";
-	
+	private static final String GET_GROUP_LIST_BY_TEACHER = "select groups.name as name, teachers.idGroup as idGroup, teachers.idTeacher as idTeacher from groups left join teachers on teachers.idGroup = groups.idGroup where idTeacher = ?";
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -78,6 +80,16 @@ public class GroupDAO implements IGroupDAO {
 	public List<Group> getGroupListByDir(User dir) {
 		try{
 			List<Group> g = getJdbcTemplate().query(GET_GROUP_LIST_BY_DIR, new Object[]{dir.getId()}, new GroupMapper());
+			return g;
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
+
+	public List<Teachers> getGroupListByTeacher(User teacher) {
+		try{
+			List<Teachers> g = getJdbcTemplate().query(GET_GROUP_LIST_BY_TEACHER, new Object[]{teacher.getId()}, new TeacherMapper());
 			return g;
 		}
 		catch(Exception e){
