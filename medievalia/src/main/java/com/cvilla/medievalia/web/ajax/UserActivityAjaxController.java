@@ -41,6 +41,7 @@ public class UserActivityAjaxController {
 		ModelAndView model;
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
+		
 		if(errorParam(request)){
 			model = new ModelAndView("a-1-3.2-actividad");
 			model.addObject("message", "nok");

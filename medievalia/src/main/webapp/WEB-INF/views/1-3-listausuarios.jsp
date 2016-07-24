@@ -84,7 +84,7 @@ String message = (String)request.getAttribute("message");
             <tbody>
             <%
 				for(User u : list){ %>
-					 <tr>
+					 <tr id="fila<%=u.getId()%>">
 						<td width="5%"><%=u.getId() %></td>
 						<td width="10%"><%=u.getUser_name() %></td>
 						<td width="20%"><%=u.getUser_long_name() %></td>
@@ -101,7 +101,7 @@ String message = (String)request.getAttribute("message");
 						<td width="5%"><span class="glyphicon glyphicon-ban-circle" title="<fmt:message key="general.inactivo"/>"></span></td>
 						<%} %>
 						<td width="20%">
-							<button type="button" class="btn btn-default navbar-btn deleteuser" data-val="<%=u.getId() %>">
+							<button type="button" class="btn btn-default navbar-btn deleteuser" data-toggle="modal" data-target="#modalBorrar" data-val="<%=u.getId() %>">
 								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 							</button>
 							<button type="button" class="btn btn-default navbar-btn modifyuser" data-val="<%=u.getId() %>">
@@ -150,9 +150,6 @@ String message = (String)request.getAttribute("message");
 	<%} %>
 </div>
 <%}%>
-<form id="deletion" action="deleteUser.do" method="post">
-	<input type="hidden" name="deleteId" id="deleteId">
-</form>
 <form id="modify" action="modifyUser.do" method="post">
 	<input type="hidden" name="modifyId" id="modifyId">
 </form>
@@ -160,4 +157,26 @@ String message = (String)request.getAttribute("message");
 	<input type="hidden" name="detailId" id="detailId">
 </form>
 </div>
+
+<div id="modalBorrar" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><fmt:message key="p1-3.modalborrar1"></fmt:message></h4>
+      </div>
+      <div class="modal-body">
+        <p><fmt:message key="p1-3.modalborrar2"></fmt:message></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="modalok" class="btn btn-default" data-dismiss="modal"><fmt:message key="p1-3.modalborrar"></fmt:message></button>
+        <button type="button" id="modalcancel" class="btn btn-default" data-dismiss="modal"><fmt:message key="p1-3.modalcancelar"></fmt:message></button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <%@ include file="/WEB-INF/views/footer.jsp" %>

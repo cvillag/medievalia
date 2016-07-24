@@ -38,7 +38,6 @@ String message = (String)request.getAttribute("message");
 			}%>
 		</tbody>
 	</table>
-	<!--  TODO: Pasar el div entero a 1-3.2-userDetail.jsp para tener botones fijos, ocultar mediante js los necesarios -->
 <%if(message != null && message.length()>0){ %>
 	<%if(message.equals("p1-3.2.error.paginaNoExiste")){ %>
 	<div class="alert alert-danger"><fmt:message key="p1-3.2.error.paginaNoExiste"/></div>
