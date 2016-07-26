@@ -15,9 +15,11 @@ public class LogDAO implements ILogDAO {
 
 	private static final String INSERT_LOG = "INSERT INTO `log`(`idUser`, `idAction`, `time`, `description`, `success`) VALUES (?,?,NOW(),?,?)";
 	private static final String NUM_LOG_PER_USER = "select count(*) from log where idUser = ?";
-	private static final String PAGED_ACTION_LIST_ASC = "select idUser,time,idLog,idAction,description,success,actionName, user_long_name as userLongName, user_name as userName from users right join (SELECT `idUser`, `time`, action.idAction, `idLog`, `description`, `success`, action_name as `actionName`  FROM `log` left join `action` on `action`.idAction = `log`.idAction WHERE	idUser = ? order by idLog asc limit ?,?) as sel1 on users.user_id = sel1.idUser";
-	private static final String PAGED_ACTION_LIST_DESC = "select idUser,time,idLog,idAction,description,success,actionName, user_long_name as userLongName, user_name as userName from users right join (SELECT `idUser`, `time`, action.idAction, `idLog`, `description`, `success`, action_name as `actionName`  FROM `log` left join `action` on `action`.idAction = `log`.idAction WHERE	idUser = ? order by idLog desc limit ?,?) as sel1 on users.user_id = sel1.idUser";
-	
+	private static final String PAGED_ACTION_LIST_ASC_BY_USER = "select idUser,time,idLog,idAction,description,success,actionName, user_long_name as userLongName, user_name as userName from users right join (SELECT `idUser`, `time`, action.idAction, `idLog`, `description`, `success`, action_name as `actionName`  FROM `log` left join `action` on `action`.idAction = `log`.idAction WHERE	idUser = ? order by idLog asc limit ?,?) as sel1 on users.user_id = sel1.idUser";
+	private static final String NUM_LOG= "select count(*) from log";
+	private static final String PAGED_ACTION_LIST_DESC_BY_USER = "select idUser,time,idLog,idAction,description,success,actionName, user_long_name as userLongName, user_name as userName from users right join (SELECT `idUser`, `time`, action.idAction, `idLog`, `description`, `success`, action_name as `actionName`  FROM `log` left join `action` on `action`.idAction = `log`.idAction WHERE	idUser = ? order by idLog desc limit ?,?) as sel1 on users.user_id = sel1.idUser";
+	private static final String PAGED_ACTION_LIST_ASC_GENERAL = "select idUser,time,idLog,idAction,description,success,actionName, user_long_name as userLongName, user_name as userName from users right join (SELECT `idUser`, `time`, action.idAction, `idLog`, `description`, `success`, action_name as `actionName`  FROM `log` left join `action` on `action`.idAction = `log`.idAction order by idLog asc limit ?,?) as sel1 on users.user_id = sel1.idUser";
+	private static final String PAGED_ACTION_LIST_DESC_GENERAL = "select idUser,time,idLog,idAction,description,success,actionName, user_long_name as userLongName, user_name as userName from users right join (SELECT `idUser`, `time`, action.idAction, `idLog`, `description`, `success`, action_name as `actionName`  FROM `log` left join `action` on `action`.idAction = `log`.idAction order by idLog desc limit ?,?) as sel1 on users.user_id = sel1.idUser";
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -49,16 +51,15 @@ public class LogDAO implements ILogDAO {
 		try{
 			int off = (pag-1) * tamPag;
 			if(order){
-				return jdbcTemplate.query(PAGED_ACTION_LIST_ASC, new Object[]{idUser,off,tamPag}, new LogMapper());
+				return jdbcTemplate.query(PAGED_ACTION_LIST_ASC_BY_USER, new Object[]{idUser,off,tamPag}, new LogMapper());
 			}
 			else{
-				return jdbcTemplate.query(PAGED_ACTION_LIST_DESC, new Object[]{idUser,off,tamPag}, new LogMapper());
+				return jdbcTemplate.query(PAGED_ACTION_LIST_DESC_BY_USER, new Object[]{idUser,off,tamPag}, new LogMapper());
 			}
 		}
 		catch(Exception e){
-			
+			return null;
 		}
-		return null;
 	}
 	
 	public int getNumLogByUser(int idUser){
@@ -78,6 +79,30 @@ public class LogDAO implements ILogDAO {
 	public Log getLogByDateRange(Date d1, Date d2) {
 		// TODO Auto
 		return null;
+	}
+
+	public List<Log> getLog(int pag, int tamPag, boolean order) {
+		try{
+			int off = (pag-1) * tamPag;
+			if(order){
+				return jdbcTemplate.query(PAGED_ACTION_LIST_ASC_GENERAL, new Object[]{off,tamPag}, new LogMapper());
+			}
+			else{
+				return jdbcTemplate.query(PAGED_ACTION_LIST_DESC_GENERAL, new Object[]{off,tamPag}, new LogMapper());
+			}
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
+
+	public int getNumLog() {
+		try{
+			return jdbcTemplate.queryForInt(NUM_LOG);
+		}
+		catch(Exception e){
+			return 0;
+		}
 	}
 
 }

@@ -43,6 +43,17 @@ public class LogManager implements ILogManager{
 		return pags;
 	}
 	
+	public int getNumPag(int tamPag) {
+		int pags = logDao.getNumLog()/tamPag + 1;
+		return pags;
+	}
 	
+	public List<Log> getActivity(int pag, int tamPag, boolean order) throws PaginaException {
+		int num = logDao.getNumLog();
+		if(pag-1 <= num/tamPag)
+			return logDao.getLog(pag, tamPag, order);
+		else
+			throw new PaginaException("La página solicitada es superior a las disponibles");
+	}
 	
 }

@@ -30,6 +30,7 @@ public class Constants {
 	public static final int P_DETAIL_TEACHER_GROUPS_OWN = 15;
 	public static final int P_DETAIL_STUDENT_GROUPS_OWN = 16;
 	public static final int P_DETAIL_STUDENT_GROUPS_OTHER = 17;
+	public static final int P_GENERAL_LOG = 18;
 	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;
@@ -65,7 +66,7 @@ public class Constants {
 			index++;
 			lista.get(index).getSons().add(new Header("users","Usuarios","users.do",null));
 			lista.get(index).getSons().add(new Header("groups", "Grupos", "groups.do",null));
-			lista.get(index).getSons().add(new Header("profile","Perfil","profile.do",null));
+			lista.get(index).getSons().add(new Header("logs","Logs","generalLog.do",null));
 			lista.add(new Header("actions", "Acciones", "actions.do", null));
 			index++;
 		}

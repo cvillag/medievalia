@@ -13,5 +13,7 @@ public interface ILogDAO {
 	public Log getLogByDate(Date d);
 	public Log getLogByDateRange(Date d1, Date d2);
 	public int getNumLogByUser(int idUser);
+	public int getNumLog();
+	public List<Log> getLog(int pag, int tamPag, boolean order);
 	
 }
