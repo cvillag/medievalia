@@ -43,7 +43,7 @@ public class GroupStudentAjaxController {
 		if(errorParam(request)){
 			if(authManager.isAutorized(Constants.P_DETAIL_STUDENT_GROUPS_OWN, user) ){
 				List<Students> lista = groupManager.getListByStudent(user,user);
-				model = new ModelAndView("a-1-3.2-grupos-s");
+				model = new ModelAndView("ajax/a-1-3.2-grupos-s");
 				model.addObject("message", "ok");
 				model.addObject("gruposStud",lista);
 			}
@@ -55,7 +55,7 @@ public class GroupStudentAjaxController {
 				int idStud = (new Integer(request.getParameter("idStud"))).intValue();
 				User student = loginManager.getUser(idStud);
 				List<Students> lista = groupManager.getListByStudent(user,student);
-				model = new ModelAndView("a-1-3.2-grupos-s");
+				model = new ModelAndView("ajax/a-1-3.2-grupos-s");
 				model.addObject("message", "ok");
 				model.addObject("gruposStud",lista);
 			}

@@ -1,5 +1,8 @@
 package com.cvilla.medievalia.web;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -58,6 +61,9 @@ public class InicioController {
 			else{
 				model.addObject("mensaje", "noautorizado");
 			}
+			List<String> scripts = new ArrayList<String>();
+			scripts.add("js/common/groups-list.js");
+			model.addObject("scripts",scripts);
 			model.addObject("user",nombre);
 			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 		}

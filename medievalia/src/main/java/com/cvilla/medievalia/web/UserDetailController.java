@@ -58,6 +58,7 @@ public class UserDetailController {
 				}
 				List<String> scripts = new ArrayList<String>();
 				scripts.add("js/1-3.2.js");
+				scripts.add("js/common/groups-list.js");
 				model.addObject("tamPag",10);
 				model.addObject("scripts",scripts);
 				model.addObject("detailId", id);

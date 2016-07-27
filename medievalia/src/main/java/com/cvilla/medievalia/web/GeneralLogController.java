@@ -38,7 +38,7 @@ public class GeneralLogController {
 			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 			int numLog = logManager.getNumPag(20);
 			model.addObject("numPag", numLog);
-			model.addObject("tamPag",20);
+			model.addObject("tamPag",10);
 			List<String> scripts = new ArrayList<String>();
 			scripts.add("js/1-8.js");
 			model.addObject("scripts",scripts);

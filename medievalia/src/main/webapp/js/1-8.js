@@ -21,7 +21,7 @@ $(document).ready(function(){
 	
 	$.post("activityLogA.do",{
 		pag : 1,
-		tamPag : 20
+		tamPag : 10
 	}, function(responseText){
 		$("#activity-block").html(responseText);
 	}

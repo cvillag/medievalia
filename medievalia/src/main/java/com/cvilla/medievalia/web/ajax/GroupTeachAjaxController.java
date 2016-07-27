@@ -43,7 +43,7 @@ public class GroupTeachAjaxController {
 		if(errorParam(request)){
 			if(authManager.isAutorized(Constants.P_DETAIL_DIRECTOR_GROUPS_OWN, user) ){
 				List<Teachers> lista = groupManager.getListByTeacher(user,user);
-				model = new ModelAndView("a-1-3.2-grupos-t");
+				model = new ModelAndView("ajax/a-1-3.2-grupos-t");
 				model.addObject("message", "ok");
 				model.addObject("gruposTeach",lista);
 			}
@@ -56,7 +56,7 @@ public class GroupTeachAjaxController {
 				int idTeach = (new Integer(request.getParameter("idTeach"))).intValue();
 				User teacher = loginManager.getUser(idTeach);
 				List<Teachers> lista = groupManager.getListByTeacher(user,teacher);
-				model = new ModelAndView("a-1-3.2-grupos-t");
+				model = new ModelAndView("ajax/a-1-3.2-grupos-t");
 				model.addObject("message", "ok");
 				model.addObject("gruposTeach",lista);
 			}

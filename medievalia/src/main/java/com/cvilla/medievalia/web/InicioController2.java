@@ -1,5 +1,8 @@
 package com.cvilla.medievalia.web;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -46,6 +49,9 @@ public class InicioController2 {
 			else{
 				model.addObject("mensaje", "noautorizado");
 			}
+			List<String> scripts = new ArrayList<String>();
+			scripts.add("js/common/groups-list.js");
+			model.addObject("scripts",scripts);
 			model.addObject("user",user.getUser_name());
 			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 		}

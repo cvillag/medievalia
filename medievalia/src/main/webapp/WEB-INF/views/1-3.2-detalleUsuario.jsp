@@ -34,7 +34,7 @@ int numPags = (Integer)request.getAttribute("numPags");
 	</ul>
 </div>
 <div class="container">
-	<legend><h3><span id="displayActivity" class="glyphicon glyphicon-chevron-down"></span><fmt:message key="p1-3.2.actividad"/></h3></legend>
+	<legend><h3><button id="displayActivity" class="btn btn-default btn-xs"><span id="displayActivityi" class="glyphicon glyphicon-chevron-down"></span></button>&nbsp;<fmt:message key="p1-3.2.actividad"/></h3></legend>
 </div>
 <div class="container" id="activity-block">
 
@@ -58,24 +58,8 @@ int numPags = (Integer)request.getAttribute("numPags");
 		</ul>
 	</div>
 </div> 
-<div class="container">
-	<legend><h3><span id="displayGroup1" class="glyphicon glyphicon-chevron-down"></span><fmt:message key="p1-3.2.gruposDir"/></h3></legend>
-</div>
-<div id="group-block1" class="container">
-	<p>Lorem ipsum</p>
-</div>
-<div class="container">
-	<legend><h3><span id="displayGroup2"class="glyphicon glyphicon-chevron-down"></span><fmt:message key="p1-3.2.gruposProf"/></h3></legend>
-</div>
-<div id="group-block2" class="container">
-	<p>Lorem ipsum</p>
-</div>
-<div class="container">
-	<legend><h3><span id="displayGroup3" class="glyphicon glyphicon-chevron-down"></span><fmt:message key="p1-3.2.gruposAlum"/></h3></legend>
-</div>
-<div id="group-block3" class="container">
-	<p>Lorem ipsum</p>
-</div>
+<!-- TODO: cambiar el id del spam al button -->
+<%@ include file="/WEB-INF/views/component/groups-list.jsp" %>
 <div class="container">
 	<div class="col-md-6 col-md-offset-3">
 		<button type="button" class="btn btn-default" id="volver"><fmt:message key="general.volver"/></button>

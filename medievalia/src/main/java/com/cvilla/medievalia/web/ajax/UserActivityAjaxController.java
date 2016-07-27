@@ -43,7 +43,7 @@ public class UserActivityAjaxController {
 		User user = (User) sesion.getAttribute("user");
 		
 		if(errorParam(request)){
-			model = new ModelAndView("a-1-3.2-actividad");
+			model = new ModelAndView("ajax/a-1-3.2-actividad");
 			model.addObject("message", "nok");
 		}
 		else{
@@ -55,7 +55,7 @@ public class UserActivityAjaxController {
 			}
 			else{
 				if(authManager.isAutorized(Constants.P_DETAIL_OTHER_USER, user)){
-					model = new ModelAndView("a-1-3.2-actividad");
+					model = new ModelAndView("ajax/a-1-3.2-actividad");
 					int pag = Constants.nullParameterInt(request, "pag", 1);
 					int tamPag = Constants.nullParameterInt(request, "tamPag", 10);
 					int pags = 0;

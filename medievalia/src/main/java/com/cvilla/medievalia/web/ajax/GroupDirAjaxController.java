@@ -43,7 +43,7 @@ public class GroupDirAjaxController {
 		if(errorParam(request)){
 			if(authManager.isAutorized(Constants.P_DETAIL_DIRECTOR_GROUPS_OWN, user) ){
 				List<Group> lista = groupManager.getListByDirector(user,user);
-				model = new ModelAndView("a-1-3.2-grupos");
+				model = new ModelAndView("ajax/a-1-3.2-grupos");
 				model.addObject("message", "ok");
 				model.addObject("gruposDir",lista);
 			}
@@ -56,7 +56,7 @@ public class GroupDirAjaxController {
 				int idDir = (new Integer(request.getParameter("idDir"))).intValue();
 				User dir = loginManager.getUser(idDir);
 				List<Group> lista = groupManager.getListByDirector(user,dir);
-				model = new ModelAndView("a-1-3.2-grupos");
+				model = new ModelAndView("ajax/a-1-3.2-grupos");
 				model.addObject("message", "ok");
 				model.addObject("gruposDir",lista);
 			}

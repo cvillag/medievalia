@@ -38,7 +38,7 @@ public class DeleteUserAjaxController {
 			HttpServletResponse response) throws Exception {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
-		ModelAndView model = new ModelAndView("empty");
+		ModelAndView model = new ModelAndView("ajax/empty");
 		JSONObject j = new JSONObject();
 		if(errorParam(request)){
 			model = Constants.paramError(logManager,user.getId(),Constants.P_DELETE_USER);

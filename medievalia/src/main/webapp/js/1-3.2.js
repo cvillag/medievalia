@@ -5,9 +5,6 @@ $(document).ready(function(){
 	var maxPag = $("#numPags").val();
 	var pagAct = 1;
 	var btnact = 0;
-	var btngr1 = 0;
-	var btngr2 = 0;
-	var btngr3 = 0;
 	
 	$("#primero").hide();
 	$("#anterior").hide();
@@ -21,27 +18,6 @@ $(document).ready(function(){
 	$("#ultimo").show();
 	$("#siguientes").hide();
 	$("#ultimos").hide();
-	
-	$.post("belongGroupA.do",{
-		idDir : userId,
-	}, function(responseText){
-		$("#group-block1").html(responseText);
-	}
-	);
-	
-	$.post("teacherGroupA.do",{
-		idTeach : userId,
-	}, function(responseText){
-		$("#group-block2").html(responseText);
-	}
-	);
-	$.post("studentGroupA.do",{
-		idStud : userId,
-	}, function(responseText){
-		$("#group-block3").html(responseText);
-	}
-	);
-	
 	
 	$.post("activityUserA.do",{
 		detailId : userId,
@@ -99,9 +75,6 @@ $(document).ready(function(){
 		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
 		cargaPagina(pagAct,userId,tamPag);
 	});
-
-		
-
 	
 	$("#volver").click(function(){
 		document.location = "users.do";
@@ -110,59 +83,14 @@ $(document).ready(function(){
 	$("#displayActivity").click(function(){
 		if(btnact == 0){
 			$("#activity-block").slideUp(500);
-			$("#displayActivity").removeClass();
-			$("#displayActivity").addClass("glyphicon glyphicon-chevron-up");
+			$("#displayActivityi").removeClass();
+			$("#displayActivityi").addClass("glyphicon glyphicon-chevron-up");
 			btnact = 1;
 		}
 		else{
 			$("#activity-block").slideDown(500);
-			$("#displayActivity").removeClass();
-			$("#displayActivity").addClass("glyphicon glyphicon-chevron-down");
-			btnact = 0;
-		}
-	});
-	
-	$("#displayGroup1").click(function(){
-		if(btnact == 0){
-			$("#group-block1").slideUp(500);
-			$("#displayGroup1").removeClass();
-			$("#displayGroup1").addClass("glyphicon glyphicon-chevron-up");
-			btnact = 1;
-		}
-		else{
-			$("#group-block1").slideDown(500);
-			$("#displayGroup1").removeClass();
-			$("#displayGroup1").addClass("glyphicon glyphicon-chevron-down");
-			btnact = 0;
-		}
-	});
-
-	$("#displayGroup2").click(function(){
-		if(btnact == 0){
-			$("#group-block2").slideUp(500);
-			$("#displayGroup2").removeClass();
-			$("#displayGroup2").addClass("glyphicon glyphicon-chevron-up");
-			btnact = 1;
-		}
-		else{
-			$("#group-block2").slideDown(500);
-			$("#displayGroup2").removeClass();
-			$("#displayGroup2").addClass("glyphicon glyphicon-chevron-down");
-			btnact = 0;
-		}
-	});
-
-	$("#displayGroup3").click(function(){
-		if(btnact == 0){
-			$("#group-block3").slideUp(500);
-			$("#displayGroup3").removeClass();
-			$("#displayGroup3").addClass("glyphicon glyphicon-chevron-up");
-			btnact = 1;
-		}
-		else{
-			$("#group-block3").slideDown(500);
-			$("#displayGroup3").removeClass();
-			$("#displayGroup3").addClass("glyphicon glyphicon-chevron-down");
+			$("#displayActivityi").removeClass();
+			$("#displayActivityi").addClass("glyphicon glyphicon-chevron-down");
 			btnact = 0;
 		}
 	});

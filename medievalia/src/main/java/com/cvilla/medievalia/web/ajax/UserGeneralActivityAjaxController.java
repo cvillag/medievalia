@@ -45,12 +45,12 @@ public class UserGeneralActivityAjaxController {
 		User user = (User) sesion.getAttribute("user");
 		
 		if(errorParam(request)){
-			model = new ModelAndView("a-1-3.2-actividad");
+			model = new ModelAndView("ajax/a-1-3.2-actividad");
 			model.addObject("message", "nok");
 		}
 		else{
 			if(authManager.isAutorized(activityid, user)){
-				model = new ModelAndView("a-1-3.2-actividad");
+				model = new ModelAndView("ajax/a-1-3.2-actividad");
 				int pag = Constants.nullParameterInt(request, "pag", 1);
 				int tamPag = Constants.nullParameterInt(request, "tamPag", 10);
 				int pags = 0;

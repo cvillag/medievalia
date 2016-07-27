@@ -8,7 +8,7 @@ User u = (User)request.getAttribute("usuario");
 <div class="container">
 	<div class="jumbotron">
 		<h1><fmt:message key="p1-1.bienvenida"/></h1>
-		<p><fmt:message key="p1-1.mensaje"/></p>
+		<p><%=u.getUser_long_name() %></p>
 	</div>
 	<div class="starter-template">
 		<%if (u != null){ %>
@@ -17,4 +17,6 @@ User u = (User)request.getAttribute("usuario");
 		<p>Administrador: <fmt:message key="${mensaje}"/>,<%=u.getUser_long_name()  %></p>
 	</div>
 </div>
+<%@ include file="/WEB-INF/views/component/groups-list.jsp" %>
+<input type="hidden" name="idUser" id="idUser" value="<%=u.getId() %>"/>
 <%@ include file="/WEB-INF/views/footer.jsp"%>
