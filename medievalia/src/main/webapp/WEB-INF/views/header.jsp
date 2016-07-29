@@ -1,3 +1,4 @@
+<%@page import="com.cvilla.medievalia.domain.Group"%>
 <%@ page session="false"%>
 
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
@@ -17,6 +18,7 @@
 -->
 <link rel="stylesheet" href="styles/css/bootstrap.min.css">
 <link rel="stylesheet" href="styles/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="styles/css/general.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <!-- Versión compilada y comprimida del JavaScript de Bootstrap -->
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
@@ -36,7 +38,10 @@
 <nav class="navbar navbar-inverse">
 	<%
 	@SuppressWarnings("unchecked")
-	List<Header> headers = (List<Header>) request.getAttribute("headers");%>
+	List<Header> headers = (List<Header>) request.getAttribute("headers");
+	HttpSession ses = request.getSession();
+	Group grupoactual = (Group) ses.getAttribute("grupoActual");
+	%>
 	<div class="container">
 		<div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -45,7 +50,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+          <%if(grupoactual == null){ %>
           <a class="navbar-brand" href="main.do">Medievalia</a>
+          <%}
+          	else{
+          	%>
+          	<a class="navbar-brand" href="main.do">Medievalia / <%=grupoactual.getName()%></a>
+          	<%} %>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">

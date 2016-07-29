@@ -24,7 +24,12 @@ public class LogoutController {
 		ModelAndView model = new ModelAndView("0-bienvenida");
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
-		logManager.log(user.getId(), Constants.P_LOGOUT, "Logout desde " + request.getRemoteAddr(), Constants.P_OK);
+		if(user != null){
+			logManager.log(user.getId(), Constants.P_LOGOUT, "Logout desde " + request.getRemoteAddr(), Constants.P_OK);
+		}
+		else{
+			logManager.log(Constants.P_NOUSER, Constants.P_LOGOUT, "Intento de Logout con sesión expirada desde " + request.getRemoteAddr(), Constants.P_NOK);
+		}
 		sesion.invalidate();
 
 		return model;

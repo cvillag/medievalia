@@ -115,4 +115,44 @@ public class GroupManager implements IGroupManager {
 		return l;
 	}
 
+	public Group getGroupById(int idGroup) {
+		return groupDAO.getGroup(idGroup);
+	}
+
+	public boolean setActiveGroup(User user, Group group, ILogManager log) {
+		boolean enc = false;
+		int i = 0;
+		if(user.getUser_role() == Constants.ROLE_ALUMNO){
+			List<Students> lista = groupDAO.getGroupListByStudent(user);
+			while(!enc || lista.size() > i){
+				enc = lista.get(i++).getIdStudent() == user.getId();
+			}
+			if(enc){
+				logManager.log(user.getId(), Constants.P_SELECT_ACTIVE_GROUP, "Selección de grupo " + group.getName() + " como alumno", Constants.P_OK);
+			}
+			else{
+				logManager.log(user.getId(), Constants.P_SELECT_ACTIVE_GROUP, "Selección de grupo " + group.getName() + " como alumno fallida por no estar en lista", Constants.P_NOK);
+			}
+		}
+		else if(user.getUser_role() == Constants.ROLE_PROFESOR){
+			if(user.getId() == group.getDirector()){
+				logManager.log(user.getId(), Constants.P_SELECT_ACTIVE_GROUP, "Selección de grupo " + group.getName() + " como director", Constants.P_OK);
+				enc = true;
+			}
+			else{
+				List<Teachers> lista = groupDAO.getGroupListByTeacher(user);
+				while(!enc || lista.size() > i){
+					enc = lista.get(i++).getIdTeacher() == user.getId();
+				}
+				if(enc){
+					logManager.log(user.getId(), Constants.P_SELECT_ACTIVE_GROUP, "Selección de grupo " + group.getName() + " como profesor", Constants.P_OK);
+				}
+				else{
+					logManager.log(user.getId(), Constants.P_SELECT_ACTIVE_GROUP, "Selección de grupo " + group.getName() + " como profesor fallida por no estar en lista", Constants.P_NOK);
+				}
+			}
+		}
+		return enc;
+	}	
+
 }

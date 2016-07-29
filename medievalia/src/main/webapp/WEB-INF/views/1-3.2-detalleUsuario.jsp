@@ -59,7 +59,7 @@ int numPags = (Integer)request.getAttribute("numPags");
 	</div>
 </div> 
 <!-- TODO: cambiar el id del spam al button -->
-<%@ include file="/WEB-INF/views/component/groups-list.jsp" %>
+<%@ include file="/WEB-INF/views/common/groups-list.jsp" %>
 <div class="container">
 	<div class="col-md-6 col-md-offset-3">
 		<button type="button" class="btn btn-default" id="volver"><fmt:message key="general.volver"/></button>

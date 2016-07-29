@@ -18,4 +18,6 @@ public interface IGroupManager extends Serializable {
 	public List<Group> getListByDirector(User user, User dir);
 	public List<Teachers> getListByTeacher(User user, User teacher);
 	public List<Students> getListByStudent(User user, User user2);
+	public Group getGroupById(int idGroup);
+	public boolean setActiveGroup (User user, Group group, ILogManager logManager);
 }

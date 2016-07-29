@@ -5,6 +5,8 @@ public class Teachers {
 	private String name;
 	private int idGroup;
 	private int idTeacher;
+	private int idDirector;
+	private String directorName;
 	
 	public Teachers(String name, int idGroup, int idTeacher) {
 		super();
@@ -39,5 +41,21 @@ public class Teachers {
 
 	public void setIdTeacher(int idTeacher) {
 		this.idTeacher = idTeacher;
+	}
+
+	public int getIdDirector() {
+		return idDirector;
+	}
+
+	public void setIdDirector(int idDirector) {
+		this.idDirector = idDirector;
+	}
+
+	public String getDirectorName() {
+		return directorName;
+	}
+
+	public void setDirectorName(String directorName) {
+		this.directorName = directorName;
 	}
 }

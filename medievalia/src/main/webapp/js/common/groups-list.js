@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	var grSel = $("#groupSelected").val();
 	var btngr1 = 0;
 	var btngr2 = 0;
 	var btngr3 = 0;
@@ -21,6 +22,24 @@ $(document).ready(function(){
 		idStud : userId,
 	}, function(responseText){
 		$("#group-block3").html(responseText);
+		$(".selectgrp").click(function(){
+			idGroup = $(this).data('val');
+			grSel = idGroup;
+			$("#idGroup").val(grSel);
+			$("#activeGroupForm").submit();
+//			$.post("selectActiveGroup.do",{
+//				idGroup : grSel
+//			},function(data){  
+//					var json = JSON.parse(data);
+//
+//					if(json.message == "ok"){
+//						alert("ok");
+//					}
+//					else{
+//						alert("nok")
+//					}
+//			});
+		});
 	}
 	);
 	

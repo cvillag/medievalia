@@ -16,4 +16,5 @@ public interface IGroupDAO {
 	public List<Group> getGroupListByDir(User dir);
 	public List<Teachers> getGroupListByTeacher(User teacher);
 	public List<Students> getGroupListByStudent(User student);
+	public Group getGroup(int idGroup);
 }
