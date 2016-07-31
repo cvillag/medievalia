@@ -5,6 +5,9 @@ $(document).ready(function(){
 	var btngr3 = 0;
 	var userId = $("#idUser").val();
 	
+	
+	//FIXME: No funciona bien la seleccion de grupo en algunas cargas de página.
+	//FIXME: una vez seleccionado el grupo, al volver a la página inicial, el grupo seleccionado es erróneo.
 	$.post("belongGroupA.do",{
 		idDir : userId,
 	}, function(responseText){

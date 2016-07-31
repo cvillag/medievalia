@@ -23,6 +23,7 @@
 <!-- Versión compilada y comprimida del JavaScript de Bootstrap -->
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 <% 
+	@SuppressWarnings(value="unchecked")
 	List<String> scripts = (List<String>)request.getAttribute("scripts");
 	if(scripts != null && scripts.size() > 0){
 		for(String sc : scripts){

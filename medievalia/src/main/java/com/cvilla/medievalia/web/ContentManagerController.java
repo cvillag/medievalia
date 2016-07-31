@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
+import com.cvilla.medievalia.domain.TemaGrupo;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
+import com.cvilla.medievalia.service.intf.ITemaManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller
@@ -32,6 +34,9 @@ public class ContentManagerController {
 	
 	@Autowired
 	private IGroupManager groupManager;
+	
+	@Autowired
+	private ITemaManager temaManager;
 	
 	@RequestMapping(value = "contentManager.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -49,15 +54,16 @@ public class ContentManagerController {
 				int idGroup = (new Integer(request.getParameter("idGroup"))).intValue();
 				String message;
 				Group g = groupManager.getGroupById(idGroup);
+				model = new ModelAndView("34-1-contentManager");
 				if(groupManager.setActiveGroup(user, g, logManager)){
 					sesion.setAttribute("grupoActual", g);
 					message = "p3.1.msg.ok";
+					List<TemaGrupo> listaTemas = temaManager.getTemaGrupoByGroup(g);
+					model.addObject("listaTemas", listaTemas);
 				}
 				else{
 					message = "p3.1.msg.grpNoExiste";
 				}
-				
-				model = new ModelAndView("34-1-contentManager");
 				model.addObject("message", message);
 				model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 				//Opcional

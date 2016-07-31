@@ -35,6 +35,9 @@
 	<bean id="groupManager" class="com.cvilla.medievalia.service.GroupManager">
 	</bean>
 	
+	<bean id="temaManager" class="com.cvilla.medievalia.service.TemaManager">
+	</bean>
+	
 	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="classpath:application.properties"/>
 	</bean>
@@ -61,6 +64,10 @@
 	
 	<bean id="groupDAO" class="com.cvilla.medievalia.dao.GroupDAO">
 		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+	</bean>
+	
+	<bean id="temaDAO" class="com.cvilla.medievalia.dao.TemaDAO">
+			<property name="jdbcTemplate" ref="jdbcTemplate"/>
 	</bean>
 	
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
