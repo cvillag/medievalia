@@ -62,7 +62,7 @@ public class UserDetailController {
 				model.addObject("tamPag",10);
 				model.addObject("scripts",scripts);
 				model.addObject("detailId", id);
-				model.addObject("user",u);
+				model.addObject("usuario",u);
 				model.addObject("headers",Constants.getHeaders(user.getUser_role()));
 			}
 			else{

@@ -8,7 +8,7 @@
 
 <%
 @SuppressWarnings("unchecked")
-User user = (User)request.getAttribute("user");
+User user = (User)request.getAttribute("usuario");
 int numPags = (Integer)request.getAttribute("numPags");
 %>
 <div class="container">
@@ -100,6 +100,8 @@ int numPags = (Integer)request.getAttribute("numPags");
 	</div>
 </div>
 <input type="hidden" name="detailId" id="detailId"
+	value="<%=request.getAttribute("detailId")%>">
+<input type="hidden" name="idUser" id="idUser"
 	value="<%=request.getAttribute("detailId")%>">
 <input type="hidden" name="tamPag" id="tamPag"
 	value="<%=request.getAttribute("tamPag")%>">
