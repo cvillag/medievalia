@@ -1,100 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 	<context:component-scan base-package="com.cvilla.medievalia" />
-	<mvc:annotation-driven/>
-	
-	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+	<mvc:annotation-driven />
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView"></property>
 		<property name="prefix" value="/WEB-INF/views/"></property>
-		<property name="suffix" value=".jsp"></property>        
+		<property name="suffix" value=".jsp"></property>
 	</bean>
-	
-	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basename" value="messages"/>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages" />
 	</bean>
-	
+
 	<bean id="loginManager" class="com.cvilla.medievalia.service.LoginManager">
 	</bean>
-	
+
 	<bean id="authManager" class="com.cvilla.medievalia.service.AutorizationManager">
 	</bean>
-	
+
 	<bean id="roleManager" class="com.cvilla.medievalia.service.RoleManager">
 	</bean>
-	
+
 	<bean id="logManager" class="com.cvilla.medievalia.service.LogManager">
 	</bean>
-	
+
 	<bean id="groupManager" class="com.cvilla.medievalia.service.GroupManager">
 	</bean>
-	
+
 	<bean id="temaManager" class="com.cvilla.medievalia.service.TemaManager">
 	</bean>
-	
-	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:application.properties"/>
-	</bean>
-	
-	<!-- <bean id="userDAO" class="com.cvilla.medievalia.dao.UserDAO">
-		<property name="sessionFactory" ref="hibernateSessionFactory"/>
-	</bean> -->
-	
-	<bean id="userDAO" class="com.cvilla.medievalia.dao.UserDAO">
-		<property name="jdbcTemplate" ref="jdbcTemplate"/>
-	</bean>
-	
-	<bean id="authDAO" class="com.cvilla.medievalia.dao.AuthDAO">
-		<property name="jdbcTemplate" ref="jdbcTemplate"/>
-	</bean>
-	
-	<bean id="roleDAO" class="com.cvilla.medievalia.dao.RoleDAO">
-		<property name="jdbcTemplate" ref="jdbcTemplate"/>
-	</bean>
-	
-	<bean id="logDAO" class="com.cvilla.medievalia.dao.LogDAO">
-		<property name="jdbcTemplate" ref="jdbcTemplate"/>
-	</bean>
-	
-	<bean id="groupDAO" class="com.cvilla.medievalia.dao.GroupDAO">
-		<property name="jdbcTemplate" ref="jdbcTemplate"/>
-	</bean>
-	
-	<bean id="temaDAO" class="com.cvilla.medievalia.dao.TemaDAO">
-			<property name="jdbcTemplate" ref="jdbcTemplate"/>
-	</bean>
-	
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource" ref="dataSource"/>
-	</bean>
-	
-	<!-- <bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
-		<property name="annotatedClasses">
-			<list>
-				<value>com.cvilla.medievalia.domain.User</value>
-			</list>
-		</property>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-				<prop key="hibernate.current_session_context_class">thread</prop>
-				<prop key="hibernate.show_sql">false</prop>
-			</props>
-		</property>
-	</bean> -->
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${jdbc.driver}"/>
-		<property name="url" value="${jdbc.url}"/>
-		<property name="username" value="${jdbc.username}"/>
-		<property name="password" value="${jdbc.password}"/>
+	<bean id="placeholderConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:application.properties" />
+	</bean>
+
+	<!-- <bean id="userDAO" class="com.cvilla.medievalia.dao.UserDAO"> <property 
+		name="sessionFactory" ref="hibernateSessionFactory"/> </bean> -->
+
+	<bean id="userDAO" class="com.cvilla.medievalia.dao.UserDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+	<bean id="authDAO" class="com.cvilla.medievalia.dao.AuthDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+	<bean id="roleDAO" class="com.cvilla.medievalia.dao.RoleDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+	<bean id="logDAO" class="com.cvilla.medievalia.dao.LogDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+	<bean id="groupDAO" class="com.cvilla.medievalia.dao.GroupDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+	<bean id="temaDAO" class="com.cvilla.medievalia.dao.TemaDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- <bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"> 
+		<property name="dataSource" ref="dataSource"/> <property name="annotatedClasses"> 
+		<list> <value>com.cvilla.medievalia.domain.User</value> </list> </property> 
+		<property name="hibernateProperties"> <props> <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> 
+		<prop key="hibernate.current_session_context_class">thread</prop> <prop key="hibernate.show_sql">false</prop> 
+		</props> </property> </bean> -->
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
 	</bean>
 
 </beans>

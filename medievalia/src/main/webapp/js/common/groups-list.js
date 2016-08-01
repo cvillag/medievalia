@@ -6,12 +6,16 @@ $(document).ready(function(){
 	var userId = $("#idUser").val();
 	
 	
-	//FIXME: No funciona bien la seleccion de grupo en algunas cargas de página.
-	//FIXME: una vez seleccionado el grupo, al volver a la página inicial, el grupo seleccionado es erróneo.
 	$.post("belongGroupA.do",{
 		idDir : userId,
 	}, function(responseText){
 		$("#group-block1").html(responseText);
+		$(".selectgrp").click(function(){
+			idGroup = $(this).data('val');
+			grSel = idGroup;
+			$("#idGroup").val(grSel);
+			$("#activeGroupForm").submit();
+		});
 	}
 	);
 	
@@ -19,6 +23,12 @@ $(document).ready(function(){
 		idTeach : userId,
 	}, function(responseText){
 		$("#group-block2").html(responseText);
+		$(".selectgrp").click(function(){
+			idGroup = $(this).data('val');
+			grSel = idGroup;
+			$("#idGroup").val(grSel);
+			$("#activeGroupForm").submit();
+		});
 	}
 	);
 	$.post("studentGroupA.do",{
@@ -30,18 +40,6 @@ $(document).ready(function(){
 			grSel = idGroup;
 			$("#idGroup").val(grSel);
 			$("#activeGroupForm").submit();
-//			$.post("selectActiveGroup.do",{
-//				idGroup : grSel
-//			},function(data){  
-//					var json = JSON.parse(data);
-//
-//					if(json.message == "ok"){
-//						alert("ok");
-//					}
-//					else{
-//						alert("nok")
-//					}
-//			});
 		});
 	}
 	);

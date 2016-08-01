@@ -2,8 +2,8 @@
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="com.cvilla.medievalia.domain.Group"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/header.jsp" %>
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/header.jsp"%>
 <%
 @SuppressWarnings("unchecked")
 ArrayList<Group> list = (ArrayList<Group>)request.getAttribute("listaGrupos");
@@ -13,7 +13,9 @@ User user = (User)request.getAttribute("user");
 //String message = (String)request.getAttribute("message");
 %>
 <div class="container">
-<legend><fmt:message key="p1-7.bienvenida"/></legend>
+	<legend>
+		<fmt:message key="p1-7.bienvenida" />
+	</legend>
 	<%if(list != null){
 		for (Group g : list){
 			String director;
@@ -29,13 +31,17 @@ User user = (User)request.getAttribute("user");
 				director = directors.get(i-1).getUser_long_name();
 			}
 	%>
-		<p><%=g.getName() %> (<%=director %>)</p>
+	<p><%=g.getName() %>
+		(<%=director %>)
+	</p>
 	<%	} 
 	}
 	else{%>
-		<div class="alert alert-danger"><fmt:message key="p1-7.error.nolist"/></div>
+	<div class="alert alert-danger">
+		<fmt:message key="p1-7.error.nolist" />
+	</div>
 	<%} %>
-	
+
 </div>
 
-<%@ include file="/WEB-INF/views/footer.jsp" %>
+<%@ include file="/WEB-INF/views/footer.jsp"%>

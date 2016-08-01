@@ -1,3 +1,3 @@
-<%@ include file="/WEB-INF/views/header.jsp" %>
+<%@ include file="/WEB-INF/views/header.jsp"%>
 
-<c:redirect url="/hello.do"/> 
+<c:redirect url="/hello.do" />
