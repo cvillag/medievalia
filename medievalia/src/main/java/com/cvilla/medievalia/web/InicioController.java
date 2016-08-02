@@ -49,9 +49,9 @@ public class InicioController {
 			if(user.getUser_role() == 1)
 				model = new ModelAndView("1-1-inicio");
 			else if(user.getUser_role() == 2)
-				model = new ModelAndView("3-0-inicio");
-			else if(user.getUser_role() == 3)
 				model = new ModelAndView("4-0-inicio");
+			else if(user.getUser_role() == 3)
+				model = new ModelAndView("3-0-inicio");
 			else
 				model = new ModelAndView("0-bienvenida");
 			model.addObject("usuario", user);
@@ -64,6 +64,9 @@ public class InicioController {
 			List<String> scripts = new ArrayList<String>();
 			scripts.add("js/common/groups-list.js");
 			scripts.add("js/1-1.js");
+			if(user.getUser_role() == Constants.ROLE_PROFESOR){
+				scripts.add("js/4-0.js");
+			}
 			model.addObject("scripts",scripts);
 			model.addObject("user",nombre);
 			model.addObject("headers",Constants.getHeaders(user.getUser_role()));

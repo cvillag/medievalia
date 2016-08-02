@@ -9,18 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IRoleManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller
-public class DeleteUserAjaxController {
-
+public class CreateGroupAjaxController {
+	
 	@Autowired
 	private ILoginManager userManager;
 	
@@ -33,7 +33,10 @@ public class DeleteUserAjaxController {
 	@Autowired
 	private ILogManager logManager;
 	
-	@RequestMapping(value = "deleteUserA.do")
+	@Autowired
+	private IGroupManager groupManager;
+	
+	@RequestMapping(value = "createGroupA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		HttpSession sesion = request.getSession();
@@ -41,21 +44,20 @@ public class DeleteUserAjaxController {
 		ModelAndView model = new ModelAndView("ajax/empty");
 		JSONObject j = new JSONObject();
 		if(errorParam(request)){
-			model = Constants.paramError(logManager,user.getId(),Constants.P_DELETE_USER);
+			model = Constants.paramError(logManager,user.getId(),Constants.P_CREATE_GROUP);
 			return model;
 		}
 		else{
-			if(authManager.isAutorized(Constants.P_DELETE_USER, user)){
-				int idUs = (new Integer(request.getParameter("deleteId"))).intValue();
-				String message = userManager.deleteUser(idUs, user);
-				logManager.log(user.getId(), Constants.P_DELETE_USER , "Borrado de usuario. Id: " 
-				+ (new Integer(idUs)).toString() 
-				+ ". Nombre: " + user.getUser_name() 
-				+ ". Nombre completo: " + user.getUser_long_name() , Constants.P_OK);
-				j.put("message", message);
+			if(authManager.isAutorized(Constants.P_CREATE_GROUP, user)){
+				String name = request.getParameter("nombreGrupo");
+				String res = groupManager.addGroup(user.getId(), name);
+				logManager.log(user.getId(), Constants.P_CREATE_GROUP, "Creación de nuevo grupo", Constants.P_OK);
+				j.put("message",res);
 			}
 			else{
 				model = Constants.noPrivilegesA(user,logManager,Constants.P_DELETE_USER,"Intento de borrado de usuario con ID: " + request.getParameter("deleteId"));
+				logManager.log(user.getId(), Constants.P_CREATE_GROUP, "Creación de nuevo grupo no permitida", Constants.P_NOK);
+				j.put("message", "noPrivileges");
 			}
 		}
 		model.addObject("json", j);
@@ -63,6 +65,6 @@ public class DeleteUserAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("deleteId") == null;
+		return request.getParameter("nombreGrupo") == null;
 	}
 }

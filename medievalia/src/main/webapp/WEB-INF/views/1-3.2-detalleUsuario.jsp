@@ -7,7 +7,6 @@
 <%@ include file="/WEB-INF/views/header.jsp"%>
 
 <%
-@SuppressWarnings("unchecked")
 User user = (User)request.getAttribute("usuario");
 int numPags = (Integer)request.getAttribute("numPags");
 %>
@@ -90,7 +89,6 @@ int numPags = (Integer)request.getAttribute("numPags");
 		</ul>
 	</div>
 </div>
-<!-- TODO: cambiar el id del spam al button -->
 <%@ include file="/WEB-INF/views/common/groups-list.jsp"%>
 <div class="container">
 	<div class="col-md-6 col-md-offset-3">

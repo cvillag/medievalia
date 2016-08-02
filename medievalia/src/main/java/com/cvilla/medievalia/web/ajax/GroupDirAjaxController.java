@@ -57,6 +57,7 @@ public class GroupDirAjaxController {
 				User dir = loginManager.getUser(idDir);
 				List<Group> lista = groupManager.getListByDirector(user,dir);
 				model = new ModelAndView("ajax/a-1-3.2-grupos");
+				model.addObject("director",dir);
 				model.addObject("message", "ok");
 				model.addObject("gruposDir",lista);
 			}

@@ -56,6 +56,7 @@ public class GroupStudentAjaxController {
 				User student = loginManager.getUser(idStud);
 				List<Students> lista = groupManager.getListByStudent(user,student);
 				model = new ModelAndView("ajax/a-1-3.2-grupos-s");
+				model.addObject("student",student);
 				model.addObject("message", "ok");
 				model.addObject("gruposStud",lista);
 			}

@@ -17,7 +17,7 @@ import com.cvilla.medievalia.domain.User;
 public class GroupDAO implements IGroupDAO {
 	
 	private static final String GET_GROUP_LIST = "SELECT * FROM `groups`";
-	private static final String ADD_GROUP = "insert into groups (teacher,name) values (?,?)";
+	private static final String ADD_GROUP = "insert into groups (director,name) values (?,?)";
 	private static final String REMOVE_GROUP = "delete from groups where idGroup = ?";
 	private static final String GET_OWN_GROUP_LIST = "select * from groups where director = ? or idGroup in (select idGroup from teachers where idTeacher = ?) group by director";
 	private static final String GET_GROUP_LIST_BY_DIR = "SELECT `idGroup`, `name`, `director` FROM `groups` WHERE director = ?";
@@ -51,7 +51,7 @@ public class GroupDAO implements IGroupDAO {
 		try{
 			int r = jdbcTemplate.update(ADD_GROUP, new Object[]{g.getDirector(),g.getName()});
 			if(r == 1){
-				return "ok";
+				return "creado";
 			}
 			else{
 				return "nok";

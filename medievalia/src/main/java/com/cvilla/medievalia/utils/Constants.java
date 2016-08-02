@@ -32,6 +32,7 @@ public class Constants {
 	public static final int P_DETAIL_STUDENT_GROUPS_OTHER = 17;
 	public static final int P_GENERAL_LOG = 18;
 	public static final int P_SELECT_ACTIVE_GROUP = 19;
+	public static final int P_CREATE_GROUP  = 20;
 	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;

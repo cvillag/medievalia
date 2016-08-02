@@ -67,8 +67,11 @@ public class GroupManager implements IGroupManager {
 	}
 
 	public String addGroup(int director, String name) {
-		// TODO Auto-generated method stub
-		return null;
+		if(name.length() > 3){
+			Group g = new Group(director, name);
+			return groupDAO.addGroup(g);
+		}
+		return "noLength";
 	}
 
 	public boolean removeGroup(int idGroup) {
