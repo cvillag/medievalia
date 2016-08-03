@@ -26,4 +26,46 @@ User u = (User)request.getAttribute("usuario");
 		</button>
 	</form>
 </div>
+<div id="modalCrearGrupo" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p4-0.modal0"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p4-0.modal1"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modalCrearGrupo2" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p4-0.modal0"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p4-0.modal2"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
 <%@ include file="/WEB-INF/views/footer.jsp"%>

@@ -13,16 +13,15 @@ $(document).ready(function(){
 	
 	$("#createButton").click(function(){
 		if($("#nombreGrupo").val().length < 3){
-			alert("No");
+			$("#modalCrearGrupo2").modal();
 		}
 		else{
-			alert("Nombre grupo : " + $("#nombreGrupo").val());
 			$.post("createGroupA.do",{
 				nombreGrupo : $("#nombreGrupo").val(),
 			}, function(data){  
 				var json = JSON.parse(data);
 				if(json.message == "creado"){
-					alert("ok");
+					$("#modalCrearGrupo").modal();
 					$.post("belongGroupA.do",
 						function(responseText){
 						$("#group-block1").html(responseText);
