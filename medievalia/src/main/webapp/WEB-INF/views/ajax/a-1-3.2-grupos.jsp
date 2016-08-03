@@ -9,6 +9,7 @@ Group ag = (Group) sess.getAttribute("grupoActual");
 @SuppressWarnings("unchecked")
 List<Group> lista = (List<Group>) request.getAttribute("gruposDir");
 User dir = (User) request.getAttribute("director");
+boolean play = (Boolean)request.getAttribute("play");
 if(lista != null && lista.size() > 0){
 %>
 <div class="col-lg-4">
@@ -19,7 +20,7 @@ if(lista != null && lista.size() > 0){
 				<!-- TODO: Crear enlaces a detalles del grupo -->
 				<th class="col-lg-1"><fmt:message key="p1-3.2.t3-1"></fmt:message></th>
 				<th class="col-lg-10"><fmt:message key="p1-3.2.t3-2"></fmt:message></th>
-				<%if(dir == null){ %>
+				<%if(play){ %>
 				<th class="col-lg-1"><fmt:message key="p1-3.2.t3-4"></fmt:message></th>
 				<%} %>
 			</tr>
@@ -32,7 +33,7 @@ if(lista != null && lista.size() > 0){
 				<td><%= i++ %></td>
 				<td><%=g.getName() %></td>
 				<%
-				if(dir == null){
+				if(play){
 					if(ag == null || g.getIdGrupo() != ag.getIdGrupo()){ %>
 				<td><button class="btn btn-default btn-xs selectgrp"
 						data-val="<%=g.getIdGrupo()%>">

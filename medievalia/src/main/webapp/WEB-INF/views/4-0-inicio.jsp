@@ -21,7 +21,6 @@ User u = (User)request.getAttribute("usuario");
 		<button type="button" class="btn btn-default" id="createButton">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 		</button>
-		<input type="hidden" name="directorId" id="directorId" value="<%=u.getId()%>">
 		<button type="button" class="btn btn-default" id="cancelButton">
 			<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 		</button>

@@ -10,6 +10,7 @@ Group g = (Group) sess.getAttribute("grupoActual");
 User teach = (User)request.getAttribute("teacher");
 @SuppressWarnings("unchecked")
 List<Teachers> lista = (List<Teachers>) request.getAttribute("gruposTeach");
+boolean play = (Boolean)request.getAttribute("play");
 if(lista != null && lista.size() > 0){
 %>
 
@@ -22,7 +23,7 @@ if(lista != null && lista.size() > 0){
 				<th class="col-lg-1"><fmt:message key="p1-3.2.t4-1"></fmt:message></th>
 				<th class="col-lg-6"><fmt:message key="p1-3.2.t4-2"></fmt:message></th>
 				<th class="col-lg-4"><fmt:message key="p1-3.2.t4-3"></fmt:message></th>
-				<% if(teach == null){ %>
+				<% if(play){ %>
 				<th class="col-lg-1"><fmt:message key="p1-3.2.t4-4"></fmt:message></th>
 				<%} %>
 			</tr>
@@ -36,7 +37,7 @@ if(lista != null && lista.size() > 0){
 				<td><%=t.getName() %></td>
 				<td><%=t.getDirectorName() %></td>
 				<%
-				if(teach == null){
+				if(play){
 					if (g == null || g.getIdGrupo() != t.getIdGroup()){ %>
 				<td><button class="btn btn-default btn-xs selectgrp"
 						data-val="<%=t.getIdGroup()%>">

@@ -46,6 +46,7 @@ public class GroupTeachAjaxController {
 				model = new ModelAndView("ajax/a-1-3.2-grupos-t");
 				model.addObject("message", "ok");
 				model.addObject("gruposTeach",lista);
+				model.addObject("play",true);
 			}
 			else{
 				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_TEACHER_GROUPS_OWN,"mensaje");
@@ -60,6 +61,8 @@ public class GroupTeachAjaxController {
 				model.addObject("teacher",teacher);
 				model.addObject("message", "ok");
 				model.addObject("gruposTeach",lista);
+				model.addObject("play",false);
+
 			}
 			else{
 				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_TEACHER_GROUPS_OTHER,"mensaje");

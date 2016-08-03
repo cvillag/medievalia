@@ -23,9 +23,8 @@ $(document).ready(function(){
 				var json = JSON.parse(data);
 				if(json.message == "creado"){
 					alert("ok");
-					$.post("belongGroupA.do",{
-						idDir : $("#directorId").val(),
-					}, function(responseText){
+					$.post("belongGroupA.do",
+						function(responseText){
 						$("#group-block1").html(responseText);
 						$(".selectgrp").click(function(){
 							idGroup = $(this).data('val');

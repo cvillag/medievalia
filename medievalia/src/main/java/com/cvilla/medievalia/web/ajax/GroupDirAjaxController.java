@@ -46,6 +46,7 @@ public class GroupDirAjaxController {
 				model = new ModelAndView("ajax/a-1-3.2-grupos");
 				model.addObject("message", "ok");
 				model.addObject("gruposDir",lista);
+				model.addObject("play",true);
 			}
 			else{
 				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_DIRECTOR_GROUPS_OWN,"mensaje");
@@ -60,6 +61,7 @@ public class GroupDirAjaxController {
 				model.addObject("director",dir);
 				model.addObject("message", "ok");
 				model.addObject("gruposDir",lista);
+				model.addObject("play",false);
 			}
 			else{
 				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_DIRECTOR_GROUPS_OTHER,"mensaje");
