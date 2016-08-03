@@ -51,7 +51,12 @@ public class CreateGroupAjaxController {
 			if(authManager.isAutorized(Constants.P_CREATE_GROUP, user)){
 				String name = request.getParameter("nombreGrupo");
 				String res = groupManager.addGroup(user.getId(), name);
-				logManager.log(user.getId(), Constants.P_CREATE_GROUP, "Creación de nuevo grupo", Constants.P_OK);
+				if(res.equals("creado")){
+					logManager.log(user.getId(), Constants.P_CREATE_GROUP, "Creación de nuevo grupo", Constants.P_OK);
+				}
+				else{
+					logManager.log(user.getId(), Constants.P_CREATE_GROUP, "Creación de nuevo grupo fallida: " + res, Constants.P_NOK);
+				}
 				j.put("message",res);
 			}
 			else{

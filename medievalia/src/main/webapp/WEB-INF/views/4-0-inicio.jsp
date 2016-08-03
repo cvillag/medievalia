@@ -68,4 +68,25 @@ User u = (User)request.getAttribute("usuario");
 		</div>
 	</div>
 </div>
+<div id="modalCrearGrupo3" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p4-0.modal0"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p4-0.modal3"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
 <%@ include file="/WEB-INF/views/footer.jsp"%>

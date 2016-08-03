@@ -12,7 +12,7 @@ $(document).ready(function(){
 	});
 	
 	$("#createButton").click(function(){
-		if($("#nombreGrupo").val().length < 3){
+		if($("#nombreGrupo").val().length < 4){
 			$("#modalCrearGrupo2").modal();
 		}
 		else{
@@ -38,8 +38,8 @@ $(document).ready(function(){
 					$("#secondForm").hide(200);
 					
 				}
-				else{
-					alert("json.message" + json.message);
+				else if(json.message == "nameRepeat"){
+					$("#modalCrearGrupo3").modal();
 				}
 			});
 		}

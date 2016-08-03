@@ -3,6 +3,7 @@ package com.cvilla.medievalia.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.cvilla.medievalia.dao.intfc.IGroupDAO;
@@ -56,6 +57,9 @@ public class GroupDAO implements IGroupDAO {
 			else{
 				return "nok";
 			}
+		}
+		catch(DataIntegrityViolationException e){
+			return "nameRepeat";
 		}
 		catch(Exception e){
 			return "nok";
