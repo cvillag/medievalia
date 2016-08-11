@@ -53,10 +53,10 @@ public class CuentasController {
 			List<String> scripts = new ArrayList<String>();
 			scripts.add("js/1-3.js");
 			model.addObject("scripts",scripts);
-			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 		}
 		else{
-			model = Constants.noPrivileges(user,logManager,Constants.P_USER_LIST,"Intento de listado de usuarios no permitido");
+			model = Constants.noPrivileges(user,logManager,Constants.P_USER_LIST,"Intento de listado de usuarios no permitido",request);
 		}
 		return model;
 	}	

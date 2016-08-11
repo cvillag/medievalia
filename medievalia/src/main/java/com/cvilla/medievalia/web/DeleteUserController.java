@@ -43,7 +43,7 @@ public class DeleteUserController {
 		User user = (User) sesion.getAttribute("user");
 		if(errorParam(request)){
 			model = Constants.paramError(logManager,user.getId(),Constants.P_DELETE_USER);
-			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 			return model;
 		}
 		else{
@@ -66,10 +66,10 @@ public class DeleteUserController {
 				List<String> scripts = new ArrayList<String>();
 				scripts.add("js/1-3.js");
 				model.addObject("scripts",scripts);
-				model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 			}
 			else{
-				model = Constants.noPrivileges(user,logManager,Constants.P_DELETE_USER,"Intento de borrado de usuario con ID: " + request.getParameter("deleteId"));
+				model = Constants.noPrivileges(user,logManager,Constants.P_DELETE_USER,"Intento de borrado de usuario con ID: " + request.getParameter("deleteId"),request);
 			}
 			return model;
 		}

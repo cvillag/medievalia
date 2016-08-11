@@ -57,13 +57,13 @@ public class InicioController2 {
 			}
 			model.addObject("scripts",scripts);
 			model.addObject("user",user.getUser_name());
-			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 		}
 		else{
-			model = Constants.noPrivileges(user,logManager,Constants.P_LOGIN,"Visualización de página principal no permitida");
+			model = Constants.noPrivileges(user,logManager,Constants.P_LOGIN,"Visualización de página principal no permitida",request);
 		}
 		if(user != null){
-			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 		}
 		return model;
 	}

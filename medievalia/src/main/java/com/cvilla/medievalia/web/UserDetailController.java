@@ -39,7 +39,7 @@ public class UserDetailController {
 		User user = (User) sesion.getAttribute("user");
 		if(errorParam(request)){
 			model = Constants.paramError(logManager,Constants.P_DETAIL_OTHER_USER,user.getId());
-			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 
 		}
 		else{
@@ -63,10 +63,10 @@ public class UserDetailController {
 				model.addObject("scripts",scripts);
 				model.addObject("detailId", id);
 				model.addObject("usuario",u);
-				model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 			}
 			else{
-				model = Constants.noPrivileges(user,logManager, Constants.P_DETAIL_OTHER_USER,"mensaje");
+				model = Constants.noPrivileges(user,logManager, Constants.P_DETAIL_OTHER_USER,"mensaje",request);
 			}			
 		}
 		return model;

@@ -45,7 +45,7 @@ public class ModifyUserController {
 		
 		if(errorParam(request)){
 			model = Constants.paramError(logManager,user.getId(),Constants.P_MODIFY_USER);
-			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 			return model;
 		}
 		else{
@@ -67,10 +67,10 @@ public class ModifyUserController {
 				model.addObject("scripts",scripts);
 				List<Role> roles = roleManager.getRoleList();
 				model.addObject("roles",roles);
-				model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 			}
 			else{
-				model = Constants.noPrivileges(user,logManager,Constants.P_MODIFY_USER,"Intento de modificación de usuario. ID: " + request.getParameter("modifyId"));
+				model = Constants.noPrivileges(user,logManager,Constants.P_MODIFY_USER,"Intento de modificación de usuario. ID: " + request.getParameter("modifyId"),request);
 			}
 			return model;
 		}

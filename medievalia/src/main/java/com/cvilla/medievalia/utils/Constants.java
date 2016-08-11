@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,6 +34,10 @@ public class Constants {
 	public static final int P_GENERAL_LOG = 18;
 	public static final int P_SELECT_ACTIVE_GROUP = 19;
 	public static final int P_CREATE_GROUP  = 20;
+	public static final int P_TOPIC_LIST = 21;
+	public static final int P_TOPIC_MANAGER = 22;
+	public static final int P_CREATE_TOPIC = 23;
+	
 	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;
@@ -60,7 +65,8 @@ public class Constants {
 		return PASS_KEY;
 	}
 	
-	public static  List<Header> getHeaders(int role){
+	public static  List<Header> getHeaders(int role, HttpServletRequest req){
+		HttpSession ses = req.getSession();
 		ArrayList<Header> lista = new ArrayList<Header>();
 		int index=-1;
 		if(role == 1){
@@ -76,7 +82,9 @@ public class Constants {
 			if(role == 2){
 				lista.add(new Header("docencia","Docencia","",new ArrayList<Header>()));
 				index++;
-				lista.get(index).getSons().add(new Header("revisiones","Revisiones","review.do",null));
+				if(ses.getAttribute("grupoActual") !=  null){
+					lista.get(index).getSons().add(new Header("temas","Temas","topicManager.do",null));
+				}
 				lista.get(index).getSons().add(new Header("matriculacion","Alumnos", "student.do", null));
 			}
 			lista.add(new Header("investigacion","Investigación","",new ArrayList<Header>()));
@@ -96,13 +104,13 @@ public class Constants {
 		return model;
 	}
 	
-	public static ModelAndView noPrivileges(User user, ILogManager logManager, int action, String message){
+	public static ModelAndView noPrivileges(User user, ILogManager logManager, int action, String message, HttpServletRequest req){
 		if(user != null){
 			logManager.log(user.getId(), action, message, Constants.P_NOK);
 			ModelAndView model = new ModelAndView("5-2-error");
 			String mensaje2 = "test.noPermiso";
 			model.addObject("mensaje2", mensaje2);
-			model.addObject("headers",getHeaders(user.getUser_role()));
+			model.addObject("headers",getHeaders(user.getUser_role(),req));
 			return model;
 		}
 		else{

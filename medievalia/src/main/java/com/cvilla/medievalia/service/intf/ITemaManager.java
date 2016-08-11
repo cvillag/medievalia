@@ -7,13 +7,12 @@ import org.springframework.stereotype.Component;
 
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.Tema;
-import com.cvilla.medievalia.domain.TemaGrupo;
 
 @Component
 public interface ITemaManager extends Serializable{
 	
-	public Tema addTema(String name);
+	public String addTema(String name,Group g);
 	public Tema getTema(int id);
-	public List<TemaGrupo> getTemaGrupoByGroup(Group g);
+	public List<Tema> getTemaGrupoByGroup(Group g);
 
 }

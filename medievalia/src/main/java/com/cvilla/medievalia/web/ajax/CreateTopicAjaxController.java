@@ -1,12 +1,10 @@
-package com.cvilla.medievalia.web;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.cvilla.medievalia.web.ajax;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +16,11 @@ import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
+import com.cvilla.medievalia.service.intf.ITemaManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller
-public class GroupController {
+public class CreateTopicAjaxController {
 
 	@Autowired
 	private IAutorizationManager authManager;
@@ -35,31 +34,36 @@ public class GroupController {
 	@Autowired
 	private ILoginManager loginManager;
 	
-	@RequestMapping(value = "groups.do")
+	@Autowired
+	private ITemaManager temaManager;
+	
+	@RequestMapping(value = "createTopicA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		ModelAndView model;
+		ModelAndView model = new ModelAndView("ajax/empty");
+		JSONObject j = new JSONObject();
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
-		if(authManager.isAutorized(Constants.P_GROUP_LIST, user) || authManager.isAutorized(Constants.P_GROUP_OWN, user)){
-			//logManager.log(idUser, idAction, desc, succ);
-			List<Group> list = groupManager.getList(user);
-			List<User> directors = new ArrayList<User>();
-			for(Group g : list){
-				if(g.getDirector() != user.getId()){
-					User u = loginManager.getUser(g.getDirector());
-					directors.add(u);
-				}
+		Group groupA = (Group) sesion.getAttribute("grupoActual");
+		
+		if(authManager.isAutorized(Constants.P_CREATE_TOPIC, user)){
+			if(errorParam(request)){
+				j.put("message","noName");
 			}
-			model = new ModelAndView("1-7-listaGrupos");
-			model.addObject("listaGrupos", list);
-			model.addObject("user", user);
-			model.addObject("directors", directors);
-			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+			else{
+				String nombre = request.getParameter("nombreTema");
+				j.put("message", temaManager.addTema(nombre,groupA));
+			}
 		}
 		else{
-			model = Constants.noPrivileges(user,logManager,Constants.P_GROUP_LIST,"Intento de visualización de grupos no permitida",request);
-		}			
+			j.put("message", "noPrivileges");
+		}
+		model.addObject("json", j);
 		return model;
 	}
+	
+	private boolean errorParam(HttpServletRequest request){
+		return request.getParameter("nombreTema") == null;
+	}
+	
 }

@@ -1,5 +1,5 @@
 package com.cvilla.medievalia.web;
-
+	
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,13 +43,13 @@ public class ModifyUserController2 {
 		User user = (User) sesion.getAttribute("user");
 		if(errorParam(request)){
 			model = Constants.paramError(logManager,user.getId(),Constants.P_MODIFY_USER);
-			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 			return model;
 		}
 		else{
 			if(!request.getParameter("id").equals(sesion.getAttribute("modifyUserId"))){
 				model = Constants.processError("p5-2.errorPeticion");
-				model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 			}
 			else{
 				if(authManager.isAutorized(Constants.P_MODIFY_USER, user)){
@@ -91,7 +91,7 @@ public class ModifyUserController2 {
 						model.addObject("roles",roles);
 						model.addObject("message", message);
 					}
-					model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+					model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 
 				}
 				else{
@@ -101,7 +101,7 @@ public class ModifyUserController2 {
 					model = Constants.noPrivileges(user,logManager,Constants.P_MODIFY_USER,"Intento de modificación de usuario no permitida. ID: "
 							+ id
 							+ ". Nombre: "
-							+ request.getParameter("name"));
+							+ request.getParameter("name"),request);
 				}
 			}
 			return model;

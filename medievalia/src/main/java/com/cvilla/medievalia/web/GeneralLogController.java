@@ -35,7 +35,7 @@ public class GeneralLogController {
 		if(authManager.isAutorized(Constants.P_GENERAL_LOG, user)){
 			logManager.log(user.getId(), Constants.P_GENERAL_LOG, "Acceso a página de log general", Constants.P_OK);
 			model = new ModelAndView("1-8-logGeneral");
-			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 			int numLog = logManager.getNumPag(20);
 			model.addObject("numPag", numLog);
 			model.addObject("tamPag",10);
@@ -44,7 +44,7 @@ public class GeneralLogController {
 			model.addObject("scripts",scripts);
 		}
 		else{
-			model = Constants.noPrivileges(user,logManager,Constants.P_GENERAL_LOG,"mensaje");
+			model = Constants.noPrivileges(user,logManager,Constants.P_GENERAL_LOG,"mensaje",request);
 		}			
 		return model;
 	}

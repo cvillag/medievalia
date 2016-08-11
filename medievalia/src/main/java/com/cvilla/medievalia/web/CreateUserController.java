@@ -51,10 +51,10 @@ public class CreateUserController {
 			scripts.add("js/1-2.js");
 			model.addObject("scripts",scripts);
 			model.addObject("roles",roles);
-			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 		}
 		else{
-			model = Constants.noPrivileges(user,logManager,Constants.P_CREATE_USER,"Intento de crear usuario en primera ventana, no permitido");
+			model = Constants.noPrivileges(user,logManager,Constants.P_CREATE_USER,"Intento de crear usuario en primera ventana, no permitido",request);
 		}
 		
 		return model;

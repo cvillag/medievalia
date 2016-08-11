@@ -69,7 +69,7 @@ public class InicioController {
 			}
 			model.addObject("scripts",scripts);
 			model.addObject("user",nombre);
-			model.addObject("headers",Constants.getHeaders(user.getUser_role()));
+			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 		}
 		else{
 			if(errorParam(request)){

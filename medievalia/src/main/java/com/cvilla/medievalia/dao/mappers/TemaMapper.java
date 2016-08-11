@@ -13,6 +13,8 @@ public class TemaMapper implements RowMapper<Tema> {
 		Tema t = new Tema();
 		t.setIdTema(rs.getInt("idTema"));
 		t.setNombre(rs.getString("nombre"));
+		t.setIdGroup(rs.getInt("idGrupo"));
+		t.setNombreGrupo(rs.getString("nombreGrupo"));
 		return t;
 	}
 

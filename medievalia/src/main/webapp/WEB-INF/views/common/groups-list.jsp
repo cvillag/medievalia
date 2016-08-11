@@ -23,7 +23,26 @@ if (ugl.getUser_role() == Constants.ROLE_PROFESOR || ugl.getUser_role() == Const
 	</legend>
 </div>
 <div id="group-block1" class="container"></div>
-<%} 
+<%if (ugl.getUser_role() == Constants.ROLE_PROFESOR){%>
+<div class="container">
+		<form class="form-inline" role="form" id="firstForm">
+		<label class="control-label formGroup" for="showform"><fmt:message key="p4-0.crearGrupo"></fmt:message></label>
+		<button type="button" class="btn btn-default" id="showform">
+			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+		</button>
+	</form>
+	<form class="form-inline" role="form" action="createGroup.do" id="secondForm">
+		<label class="control-label formGroup" for="showform"><fmt:message key="p4-0.nombreGrupo"></fmt:message></label>
+		<input type="text" name="nombreGrupo" id="nombreGrupo">
+		<button type="button" class="btn btn-default" id="createButton">
+			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+		</button>
+		<button type="button" class="btn btn-default" id="cancelButton">
+			<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+		</button>
+	</form>
+</div>
+<%}}
 if (ugl.getUser_role() == Constants.ROLE_PROFESOR || ugl.getUser_role() == Constants.ROLE_ADMIN){ %>
 <div class="container">
 	<legend>
