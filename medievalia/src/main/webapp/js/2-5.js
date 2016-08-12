@@ -4,6 +4,7 @@ $(document).ready(function(){
 	$.post("topicListA.do",
 		function(data){
 			$("#listatemas").html(data);
+			postCarga();
 	});
 	
 	$("#showform").click(function(){
@@ -14,6 +15,14 @@ $(document).ready(function(){
 	$("#cancelButton").click(function(){
 		$("#firstForm").show(200);
 		$("#secondForm").hide(200);
+	});
+	
+	$(document).keypress(function(e){
+		if(e.which == 13){
+			if($("#nombreTema").val().length > 4){
+				crear();
+			}
+		}
 	});
 	
 	$("#createButton").click(crear);
@@ -32,8 +41,8 @@ $(document).ready(function(){
 					$.post("topicListA.do",
 						function(responseText){
 						$("#listatemas").html(responseText);
-					}
-					);
+						postCarga();
+					}					);
 					$("#nombreTema").val("");
 					$("#firstForm").show(200);
 					$("#secondForm").hide(200);
@@ -49,5 +58,14 @@ $(document).ready(function(){
 				}
 			});
 		}
+	}
+	
+	function postCarga(){
+		$(".topicDetail").click(function(){
+			var topicId = $(this).data('val');
+			$("#idTopic").val(topicId);
+			alert("Detalle de " + $("#idTopic").val());
+			$("#topicDetail").submit();
+		});
 	}
 });

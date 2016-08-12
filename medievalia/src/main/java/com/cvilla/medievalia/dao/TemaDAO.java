@@ -26,9 +26,9 @@ public class TemaDAO implements ITemaDAO {
 	}
 	
 	private static String ADD_TEMA_1 = "insert into tema (nombre,idGrupo) values (?,?)";
-	private static String GET_TEMA_BY_ID = "select idTema, nombre, idGrupo, name as nombreGrupo from (select idTema, nombre, idGrupo from tema where idTema = ?) as sel1 left join groups on groups.idGroup = sel1.idGrupo";
-	private static String GET_TEMA_BY_NAME = "select idTema, nombre, idGrupo, name as nombreGrupo from (select idTema, nombre, idGrupo from tema where nombre = ? and idGrupo = ?) as sel1 left join groups on groups.idGroup = sel1.idGrupo";
-	private static String GET_TEMA_LIST_BY_GROUP = "select idTema, nombre, idGrupo, name as nombreGrupo from (select idTema, nombre, idGrupo from tema where idGrupo = ?) as sel1 left join groups on groups.idGroup = sel1.idGrupo";
+	private static String GET_TEMA_BY_ID = "select sel2.idTema, sel2.nombre, idGrupo, nombreGrupo, count(idSubtema) as numSubtemas from  (select idTema, nombre, idGrupo, name as nombreGrupo from (select idTema, nombre, idGrupo from tema where idTema = ?) as sel1 left join groups on groups.idGroup = sel1.idGrupo) as sel2 left join subtema on subtema.idTema = sel2.idTema";
+	private static String GET_TEMA_BY_NAME = "select  sel2.idTema, sel2.nombre, idGrupo, nombreGrupo, count(idSubtema) as numSubtemas from (select idTema, nombre, idGrupo, name as nombreGrupo from (select idTema, nombre, idGrupo from tema where nombre = ? and idGrupo = ?) as sel1 left join groups on groups.idGroup = sel1.idGrupo) as sel2 left join subtema on subtema.idTema = sel2.idTema";
+	private static String GET_TEMA_LIST_BY_GROUP = "select sel2.idTema, sel2.nombre, idGrupo, nombreGrupo, count(idSubtema) as numSubtemas from (select idTema, nombre, idGrupo, name as nombreGrupo from (select idTema, nombre, idGrupo from tema where idGrupo = ?) as sel1 left join groups on groups.idGroup = sel1.idGrupo) as sel2 left join subtema on sel2.idTema = subtema.idTema group by idTema";
 	
 	public Tema getTemaById(int id) {
 		try{

@@ -27,7 +27,6 @@
 		</button>
 	</div>
 </div>
-<!-- FIXME: arreglar los modales para los mensajes creado, no creado y repetido -->
 <div id="modalCrearTema" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -112,4 +111,7 @@
 		</div>
 	</div>
 </div>
+<form id="topicDetail" method="post" action="topicDetail.do">
+	<input type="hidden" name="idTopic" id="idTopic"/>
+</form>
 <%@ include file="/WEB-INF/views/footer.jsp"%>

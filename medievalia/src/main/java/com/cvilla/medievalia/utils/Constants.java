@@ -37,6 +37,7 @@ public class Constants {
 	public static final int P_TOPIC_LIST = 21;
 	public static final int P_TOPIC_MANAGER = 22;
 	public static final int P_CREATE_TOPIC = 23;
+	public static final int P_TOPIC_DETAIL = 24;
 	
 	
 	public static final int P_OK = 1;
@@ -58,6 +59,7 @@ public class Constants {
 	
 	public static final boolean ORDER_ASC = true;
 	public static final boolean ORDER_DESC = false;
+	
 
 	
 	

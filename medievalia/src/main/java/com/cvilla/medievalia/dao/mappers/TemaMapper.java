@@ -15,6 +15,7 @@ public class TemaMapper implements RowMapper<Tema> {
 		t.setNombre(rs.getString("nombre"));
 		t.setIdGroup(rs.getInt("idGrupo"));
 		t.setNombreGrupo(rs.getString("nombreGrupo"));
+		t.setNumSubtemas(rs.getInt("numSubtemas"));
 		return t;
 	}
 

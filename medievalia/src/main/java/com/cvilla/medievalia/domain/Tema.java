@@ -6,6 +6,7 @@ public class Tema {
 	private String nombre;
 	private int idGroup;
 	private String nombreGrupo;
+	private int numSubtemas;
 	
 	public Tema(int idTema, String nombre, int idGroup, String nombreGrupo) {
 		super();
@@ -40,6 +41,12 @@ public class Tema {
 	}
 	public void setNombreGrupo(String nombreGrupo) {
 		this.nombreGrupo = nombreGrupo;
+	}
+	public int getNumSubtemas() {
+		return numSubtemas;
+	}
+	public void setNumSubtemas(int numSubtemas) {
+		this.numSubtemas = numSubtemas;
 	}
 	
 	
