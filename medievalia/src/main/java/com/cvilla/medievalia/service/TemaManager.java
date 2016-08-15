@@ -6,14 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cvilla.medievalia.dao.intfc.ITemaDAO;
 import com.cvilla.medievalia.domain.Group;
+import com.cvilla.medievalia.domain.SubTema;
+import com.cvilla.medievalia.domain.Teachers;
 import com.cvilla.medievalia.domain.Tema;
+import com.cvilla.medievalia.domain.User;
+import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ITemaManager;
+import com.cvilla.medievalia.utils.Constants;
 
 public class TemaManager implements ITemaManager {
 
-	/**
-	 * 
-	 */
+	@Autowired
+	IGroupManager groupManager;
 	
 	@Autowired
 	ITemaDAO temaDAO;
@@ -21,7 +25,7 @@ public class TemaManager implements ITemaManager {
 	private static final long serialVersionUID = 1L;
 
 	public String addTema(String name,Group g) {
-		// TODO: Comprobar antes manualmente en la lista de temas si hay un tema igual en el mismo grupo
+		// FIXME: Comprobar la longitud del nombre y crear un modal con ese mensaje
 		List<Tema> listaPrevia = temaDAO.getTemaListByGroup(g);
 		if(!existeTemaEnGrupo(g, listaPrevia, name)){
 			return temaDAO.createTopic(name,g);
@@ -30,8 +34,7 @@ public class TemaManager implements ITemaManager {
 	}
 
 	public Tema getTema(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return temaDAO.getTemaById(id);
 	}
 
 	public List<Tema> getTemaGrupoByGroup(Group g) {
@@ -45,5 +48,44 @@ public class TemaManager implements ITemaManager {
 			enc = l.get(i++).getNombre().equals(n);
 		}
 		return enc;
+	}
+
+	public List<SubTema> getSubTemaGrupoByTema(Group groupA, int idTema) {
+		return temaDAO.getSubtemaList(idTema);
+	}
+
+	public String renameTema(String nombre, int idTema, User user, Group g) {
+		// TODO Comprobar que el tema pertenece al usuario
+		if(nombre.length() < Constants.MIN_TEMA_NAME){
+			return "noLength";
+		}
+		else{
+			List<Group> listaDir = groupManager.getListByDirector(user, user);
+			List<Teachers> listaTeach = groupManager.getListByTeacher(user, user);
+			Tema t = temaDAO.getTemaById(idTema);
+			boolean enc = false;
+			int i = 0;
+			
+			while(!enc && i < listaDir.size()){
+				enc = listaDir.get(i++).getIdGrupo() == t.getIdGroup();
+			}
+			
+			i = 0;
+			while(!enc && i < listaTeach.size()){
+				enc = listaTeach.get(i++).getIdGroup() == t.getIdGroup();
+			}
+			if(enc){
+				Tema t2 = temaDAO.getTemaByName(nombre, g);
+				if(t2 == null || t2.getIdTema() < 1 || t2.getNombre() == null){
+					return temaDAO.renameTopic(idTema,nombre);
+				}
+				else{
+					return "nameRepeat";
+				}
+			}
+			else{
+				return "noPrivileges";
+			}
+		}
 	}
 }

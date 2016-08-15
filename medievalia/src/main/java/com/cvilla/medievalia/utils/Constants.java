@@ -38,6 +38,9 @@ public class Constants {
 	public static final int P_TOPIC_MANAGER = 22;
 	public static final int P_CREATE_TOPIC = 23;
 	public static final int P_TOPIC_DETAIL = 24;
+	public static final int P_CREATE_SUB_TOPIC = 25;
+	public static final int P_SUBTOPIC_LIST = 26;
+	public static final int P_RENAME_TOPIC = 27;
 	
 	
 	public static final int P_OK = 1;
@@ -60,8 +63,8 @@ public class Constants {
 	public static final boolean ORDER_ASC = true;
 	public static final boolean ORDER_DESC = false;
 	
+	public static final int MIN_TEMA_NAME = 4;
 
-	
 	
 	public static String getKey(){
 		return PASS_KEY;

@@ -64,7 +64,6 @@ $(document).ready(function(){
 		$(".topicDetail").click(function(){
 			var topicId = $(this).data('val');
 			$("#idTopic").val(topicId);
-			alert("Detalle de " + $("#idTopic").val());
 			$("#topicDetail").submit();
 		});
 	}
