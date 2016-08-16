@@ -11,6 +11,7 @@ import com.cvilla.medievalia.domain.Teachers;
 import com.cvilla.medievalia.domain.Tema;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ITemaManager;
 import com.cvilla.medievalia.utils.Constants;
 
@@ -22,15 +23,23 @@ public class TemaManager implements ITemaManager {
 	@Autowired
 	ITemaDAO temaDAO;
 	
+	@Autowired
+	private ILogManager logManager;
+	
 	private static final long serialVersionUID = 1L;
 
 	public String addTema(String name,Group g) {
 		// FIXME: Comprobar la longitud del nombre y crear un modal con ese mensaje
-		List<Tema> listaPrevia = temaDAO.getTemaListByGroup(g);
-		if(!existeTemaEnGrupo(g, listaPrevia, name)){
-			return temaDAO.createTopic(name,g);
+		if(name.length() < Constants.MIN_TEMA_NAME){
+			return "noLength";
 		}
-		return "repetido";
+		else{
+			List<Tema> listaPrevia = temaDAO.getTemaListByGroup(g);
+			if(!existeTemaEnGrupo(g, listaPrevia, name)){
+				return temaDAO.createTopic(name,g);
+			}
+			return "repetido";
+		}
 	}
 
 	public Tema getTema(int id) {
@@ -85,6 +94,37 @@ public class TemaManager implements ITemaManager {
 			}
 			else{
 				return "noPrivileges";
+			}
+		}
+	}
+
+	public String addSubTema(String name, Group g, int idTema) {
+		if(name.length() < Constants.MIN_TEMA_NAME){
+			return "noLength";
+		}
+		else{
+			Tema t = temaDAO.getTemaById(idTema);
+			if(t == null || t.getIdTema() < 1 || t.getNombre() == null){
+				return "noTema";
+			}
+			else{
+				if(t.getIdGroup() != g.getIdGrupo()){
+					return "noGroup";
+				}
+				else{
+					List<SubTema> lista = temaDAO.getSubtemaList(t.getIdTema());
+					boolean enc = false;
+					int i = 0;
+					while (!enc && i < lista.size()){
+						enc = name.equals(lista.get(i++).getNombreSubtema());
+					}
+					if(enc){
+						return "nameRepeat";
+					}
+					else{
+						return temaDAO.createSubTopic(name, t.getIdTema());
+					}
+				}
 			}
 		}
 	}

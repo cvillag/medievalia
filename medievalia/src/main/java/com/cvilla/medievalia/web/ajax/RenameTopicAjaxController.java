@@ -47,6 +47,12 @@ public class RenameTopicAjaxController {
 				String message = temaManager.renameTema(nombre,idTema,user,groupA);
 				j.put("message", message);
 				model.addObject("json", j);
+				if(message.equals("cambiado")){
+					logManager.log(user.getId(), Constants.P_RENAME_TOPIC, "Renombrar tema. Nuevo nombre: " + nombre + " en tema id = " + idTema, Constants.P_OK);
+				}
+				else{
+					logManager.log(user.getId(), Constants.P_RENAME_TOPIC, "Renombrar tema. Nuevo nombre: " + nombre + " en tema id = " + idTema + ". Fallido: mensaje = " + message, Constants.P_NOK);
+				}
 			}
 			else{
 				model = Constants.noPrivilegesA(user,logManager,Constants.P_RENAME_TOPIC,"Intento cambio de nombre de tema con ID: " + idTema);

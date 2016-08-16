@@ -15,4 +15,5 @@ public interface ITemaDAO {
 	public Tema getTemaByName(String name, Group g);
 	public List<SubTema> getSubtemaList(int idTema);
 	public String renameTopic(int idTema, String nombre);
+	public String createSubTopic(String name, int idTema);
 }

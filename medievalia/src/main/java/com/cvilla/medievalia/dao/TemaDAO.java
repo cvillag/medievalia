@@ -28,11 +28,13 @@ public class TemaDAO implements ITemaDAO {
 	}
 	
 	private static String ADD_TEMA_1 = "insert into tema (nombre,idGrupo) values (?,?)";
+	private static String ADD_SUBTEMA = "insert into subtema (idTema,nombre) values(?,?)";
 	private static String GET_TEMA_BY_ID = "select sel2.idTema, sel2.nombre, idGrupo, nombreGrupo, count(idSubtema) as numSubtemas from  (select idTema, nombre, idGrupo, name as nombreGrupo from (select idTema, nombre, idGrupo from tema where idTema = ?) as sel1 left join groups on groups.idGroup = sel1.idGrupo) as sel2 left join subtema on subtema.idTema = sel2.idTema";
 	private static String GET_TEMA_BY_NAME = "select  sel2.idTema, sel2.nombre, idGrupo, nombreGrupo, count(idSubtema) as numSubtemas from (select idTema, nombre, idGrupo, name as nombreGrupo from (select idTema, nombre, idGrupo from tema where nombre = ? and idGrupo = ?) as sel1 left join groups on groups.idGroup = sel1.idGrupo) as sel2 left join subtema on subtema.idTema = sel2.idTema";
 	private static String GET_TEMA_LIST_BY_GROUP = "select sel2.idTema, sel2.nombre, idGrupo, nombreGrupo, count(idSubtema) as numSubtemas from (select idTema, nombre, idGrupo, name as nombreGrupo from (select idTema, nombre, idGrupo from tema where idGrupo = ?) as sel1 left join groups on groups.idGroup = sel1.idGrupo) as sel2 left join subtema on sel2.idTema = subtema.idTema group by idTema";
 	private static String GET_SUBTEMA_LIST_BY_IDTEMA = "select idSubtema, subtema.idTema, subtema.nombre as nombreSubtema, tema.nombre as nombreTema from subtema left join tema on subtema.idTema = tema.idTema where subtema.idTema = ?";
 	private static String RENAME_TEMA = "update tema set nombre = ? where idTema = ?";
+	
 	
 	public Tema getTemaById(int id) {
 		try{
@@ -96,6 +98,21 @@ public class TemaDAO implements ITemaDAO {
 		}
 		catch(Exception e){
 			return "error";
+		}
+	}
+
+	public String createSubTopic(String name, int idTema) {
+		try{
+			int num = jdbcTemplate.update(ADD_SUBTEMA,new Object[]{idTema,name});
+			if(num == 1){
+				return "creado";
+			}
+			else{
+				return "noCreado";
+			}
+		}
+		catch(Exception e){
+			return "noCreado";
 		}
 	}
 }

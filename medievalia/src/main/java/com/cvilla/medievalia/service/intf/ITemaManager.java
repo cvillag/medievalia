@@ -14,6 +14,7 @@ import com.cvilla.medievalia.domain.User;
 public interface ITemaManager extends Serializable{
 	
 	public String addTema(String name,Group g);
+	public String addSubTema(String name,Group g,int idTema);
 	public Tema getTema(int id);
 	public List<Tema> getTemaGrupoByGroup(Group g);
 	public List<SubTema> getSubTemaGrupoByTema(Group groupA, int idTema);

@@ -37,7 +37,7 @@ public class CreateSubTopicAjaxController {
 	@Autowired
 	private ITemaManager temaManager;
 	
-	@RequestMapping(value = "createSubtopicListA.do")
+	@RequestMapping(value = "createSTopicA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView model = new ModelAndView("ajax/empty");
@@ -51,8 +51,16 @@ public class CreateSubTopicAjaxController {
 				j.put("message","noParam");
 			}
 			else{
-				String nombre = request.getParameter("nombreSubTema");
-				j.put("message", temaManager.addTema(nombre,groupA));
+				String nombre = request.getParameter("nombreSTema");
+				int idTema = (new Integer(request.getParameter("idTema"))).intValue();
+				String message = temaManager.addSubTema(nombre, groupA, idTema);
+				j.put("message", message);
+				if(message.equals("creado")){
+					logManager.log(user.getId(), Constants.P_CREATE_SUB_TOPIC, "Creación de subtema. Nombre: " + nombre + " en tema id = " + idTema, Constants.P_OK);
+				}
+				else{
+					logManager.log(user.getId(), Constants.P_CREATE_SUB_TOPIC, "Intento de creación de subtema. Nombre: " + nombre + " en tema id = " + idTema + ". Fallido: mensaje = " + message, Constants.P_OK);
+				}
 			}
 		}
 		else{
@@ -63,7 +71,7 @@ public class CreateSubTopicAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("nombreTema") == null
+		return request.getParameter("nombreSTema") == null
 				&& request.getParameter("idTema") == null;
 	}
 	

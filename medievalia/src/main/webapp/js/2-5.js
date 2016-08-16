@@ -51,6 +51,9 @@ $(document).ready(function(){
 				else if(json.message == "repetido"){
 					$("#modalCrearGrupo3").modal();
 				}
+				else if(json.message == "noLength"){
+					$("#modalCrearTema").modal();
+				}
 				else{
 					$("#modalCrearGrupo4").modal();
 					$("#firstForm").show(200);
