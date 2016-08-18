@@ -120,7 +120,7 @@ public class UserDAO implements IUserDAO {
 		}
 	}
 	
-	public String modifyUser(String name, String lname, String role, int iduser) {
+	public String modifyUser(String name, String lname, int role, int iduser) {
 		try{
 			int row = jdbcTemplate.update(UPDATE_USER_NO_PASS, new Object[]{name,lname,role,iduser});
 			if(row == 1){

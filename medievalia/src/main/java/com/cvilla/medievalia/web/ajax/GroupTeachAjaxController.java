@@ -47,9 +47,10 @@ public class GroupTeachAjaxController {
 				model.addObject("message", "ok");
 				model.addObject("gruposTeach",lista);
 				model.addObject("play",true);
+				logManager.log(user.getId(), Constants.P_DETAIL_DIRECTOR_GROUPS_OWN, "Vista de detalle de grupos propios", Constants.P_OK);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_TEACHER_GROUPS_OWN,"mensaje");
+				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_TEACHER_GROUPS_OWN,"Sin permisos para ver detalle de grupos propio");
 			}		
 		}
 		else{
@@ -62,6 +63,7 @@ public class GroupTeachAjaxController {
 				model.addObject("message", "ok");
 				model.addObject("gruposTeach",lista);
 				model.addObject("play",false);
+				logManager.log(user.getId(), Constants.P_DETAIL_DIRECTOR_GROUPS_OTHER, "Vista de detalle de grupos de otros usuarios o propios", Constants.P_OK);
 
 			}
 			else{

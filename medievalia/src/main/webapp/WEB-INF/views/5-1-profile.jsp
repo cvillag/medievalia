@@ -7,58 +7,96 @@
 User u = (User)request.getAttribute("usuario");
 %>
 <div class="container">
-	<div class="starter-template">
-		<%if (u != null){ %>
-		<p>
-			Id Usuario:
-			<%= u.getId()%></p>
-		<p>
-			Nombre del usuario:
-			<%= u.getUser_long_name()%></p>
-		<p>
-			Login de usuario:
-			<%= u.getUser_name() %></p>
-		<p>
-			Rol de usuario:
-			<%= u.getUser_role()%></p>
-		<%} %>
-		<input type="button" onclick="location.href='main.do'" value="Aceptar" />
+	<form class="form-horizontal" role="form" id="modifyForm">
+	<div class="form-group">
+		<label class="col-xs-3" for="nombre"><fmt:message key="p5.1.nombreUser"></fmt:message></label>
+		<div class="col-xs-4">
+			<input type="text" class="form-control" id="nombre" name="nombre" value="<%=u.getUser_name()%>" disabled>
+		</div>
+		<div class="col-xs-3">
+			<div id="modificarUser">
+				<label><fmt:message key="p5.1.btn1"></fmt:message></label>
+				<button class="btn btn-default" id="btnU-modificar">
+					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+				</button>
+			</div>
+			<div id="modificarUser2">
+				<label><fmt:message key="p5.1.btn1"></fmt:message></label>
+				<button class="btn btn-default" id="btnU-cancel">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+				</button>
+				<button class="btn btn-default" id="btnU-guardar">
+					<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+				</button>
+			</div>
+		</div>
 	</div>
+	<div class="form-group">
+		<label class="col-xs-3" for="nombreC"><fmt:message key="p5.1.nombreCUser"></fmt:message></label>
+		<div class="col-xs-4">
+			<input type="text" class="form-control" id="nombreC" name="nombreC" value="<%=u.getUser_long_name() %>" disabled> 
+		</div>	
+	</div>
+	<div class="form-group">
+		<label class="col-xs-3"><fmt:message key="p5.1.role"></fmt:message></label>
+		<div class="col-xs-4">
+			<input type="text" id="role" class="form-control" value=" 
+			<%if(u.getUser_role() == Constants.ROLE_ADMIN){ %>
+			<fmt:message key="general.administrador"></fmt:message>
+			<%}else if(u.getUser_role() == Constants.ROLE_PROFESOR){ %>
+			<fmt:message key="general.profesor"></fmt:message>
+			<%}else if(u.getUser_role() == Constants.ROLE_ALUMNO){ %>
+			<fmt:message key="general.alumno"></fmt:message>
+			<%}else if(u.getUser_role() == Constants.ROLE_INACTIVO){ %>
+			<fmt:message key="general.inactivo"></fmt:message>
+			<%} %>
+		 	" disabled>
+		 </div>
+	</div>
+	
+	
+		<div class="form-group" id="modificarPass">
+		<label class="col-xs-3"><fmt:message key="p5.1.btn2"></fmt:message></label>
+		<div class="col-xs-4">
+			<button class="btn btn-default" id="btnP-modificar">
+				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+			</button>
+		</div>
+	</div>
+	<div class="form-group" id="passForm1">
+		<label class="col-xs-3"><fmt:message key="p5.1.pass1"></fmt:message></label>
+		<div class="col-xs-4">
+			<input type="password" class="form-control" id="pass1" name="pass1" disabled> 
+		</div>	
+	</div>
+	<div class="form-group" id="passForm2">
+		<label class="col-xs-3"><fmt:message key="p5.1.pass2"></fmt:message></label>
+		<div class="col-xs-4">
+			<input type="password" class="form-control" id="pass2" name="pass2" disabled> 
+		</div>	
+	</div>
+	<div class="form-group" id="passForm3">
+		<label class="col-xs-3"><fmt:message key="p5.1.pass3"></fmt:message></label>
+		<div class="col-xs-4">
+			<input type="password" class="form-control" id="pass3" name="pass3" disabled> 
+		</div>	
+	</div>
+	<div class="form-group" id="modificarPass2">
+		<label class="col-xs-3"><fmt:message key="p5.1.btn2"></fmt:message></label>
+		<div class="col-xs-4">
+			<button class="btn btn-default" id="btnP-cancel">
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+			</button>
+			<button class="btn btn-default" id="btnP-guardar">
+				<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+			</button>
+		</div>
+	</div>
+	</form>
 </div>
 
-<%if(u.getUser_role() == Constants.ROLE_ADMIN || u.getUser_role() == Constants.ROLE_PROFESOR){ %>
-<div class="container">
-	<legend>
-		<h3>
-			<span id="displayGroup1" class="glyphicon glyphicon-chevron-down"></span>
-			<fmt:message key="p1-3.2.gruposDir" />
-		</h3>
-	</legend>
-</div>
-<div id="group-block1" class="container">
-	<p>Lorem ipsum</p>
-</div>
-<div class="container">
-	<legend>
-		<h3>
-			<span id="displayGroup2" class="glyphicon glyphicon-chevron-down"></span>
-			<fmt:message key="p1-3.2.gruposProf" />
-		</h3>
-	</legend>
-</div>
-<div id="group-block2" class="container">
-	<p>Lorem ipsum</p>
-</div>
-<%} %>
-<div class="container">
-	<legend>
-		<h3>
-			<span id="displayGroup3" class="glyphicon glyphicon-chevron-down"></span>
-			<fmt:message key="p1-3.2.gruposAlum" />
-		</h3>
-	</legend>
-</div>
-<div id="group-block3" class="container">
-	<p>Lorem ipsum</p>
-</div>
+<input type="hidden" id="nameO" value="<%=u.getUser_name()%>">
+<input type="hidden" id="nameLO" value="<%=u.getUser_long_name()%>">
+
+<%@ include file="/WEB-INF/views/common/groups-list.jsp"%>
 <%@ include file="/WEB-INF/views/footer.jsp"%>

@@ -29,7 +29,6 @@ public class TemaManager implements ITemaManager {
 	private static final long serialVersionUID = 1L;
 
 	public String addTema(String name,Group g) {
-		// FIXME: Comprobar la longitud del nombre y crear un modal con ese mensaje
 		if(name.length() < Constants.MIN_TEMA_NAME){
 			return "noLength";
 		}
@@ -69,21 +68,8 @@ public class TemaManager implements ITemaManager {
 			return "noLength";
 		}
 		else{
-			List<Group> listaDir = groupManager.getListByDirector(user, user);
-			List<Teachers> listaTeach = groupManager.getListByTeacher(user, user);
 			Tema t = temaDAO.getTemaById(idTema);
-			boolean enc = false;
-			int i = 0;
-			
-			while(!enc && i < listaDir.size()){
-				enc = listaDir.get(i++).getIdGrupo() == t.getIdGroup();
-			}
-			
-			i = 0;
-			while(!enc && i < listaTeach.size()){
-				enc = listaTeach.get(i++).getIdGroup() == t.getIdGroup();
-			}
-			if(enc){
+			if(groupManager.isTeacherOrDirector(user, t.getIdGroup())){
 				Tema t2 = temaDAO.getTemaByName(nombre, g);
 				if(t2 == null || t2.getIdTema() < 1 || t2.getNombre() == null){
 					return temaDAO.renameTopic(idTema,nombre);

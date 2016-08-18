@@ -8,6 +8,7 @@ import com.cvilla.medievalia.dao.intfc.IGroupDAO;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.Students;
 import com.cvilla.medievalia.domain.Teachers;
+import com.cvilla.medievalia.domain.Tema;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
@@ -156,6 +157,23 @@ public class GroupManager implements IGroupManager {
 			}
 		}
 		return enc;
-	}	
+	}
+	
+	public boolean isTeacherOrDirector(User user, int idGrupo){
+		List<Group> listaDir = getListByDirector(user, user);
+		List<Teachers> listaTeach = getListByTeacher(user, user);
+		boolean enc = false;
+		int i = 0;
+		
+		while(!enc && i < listaDir.size()){
+			enc = listaDir.get(i++).getIdGrupo() == idGrupo;
+		}
+		
+		i = 0;
+		while(!enc && i < listaTeach.size()){
+			enc = listaTeach.get(i++).getIdGroup() == idGrupo;
+		}
+		return enc;
+	}
 
 }

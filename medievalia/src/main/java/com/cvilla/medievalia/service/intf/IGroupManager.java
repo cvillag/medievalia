@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.Students;
 import com.cvilla.medievalia.domain.Teachers;
+import com.cvilla.medievalia.domain.Tema;
 import com.cvilla.medievalia.domain.User;
 
 @Component
@@ -20,4 +21,5 @@ public interface IGroupManager extends Serializable {
 	public List<Students> getListByStudent(User user, User user2);
 	public Group getGroupById(int idGroup);
 	public boolean setActiveGroup (User user, Group group, ILogManager logManager);
+	public boolean isTeacherOrDirector(User user, int idGrupo);
 }

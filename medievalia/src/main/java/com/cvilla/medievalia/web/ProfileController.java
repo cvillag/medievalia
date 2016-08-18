@@ -47,6 +47,7 @@ public class ProfileController {
 				model.addObject("usuario", user);
 				List<String> scripts = new ArrayList<String>();
 				scripts.add("js/5-1.js");
+				scripts.add("js/common/groups-list.js");
 				model.addObject("scripts",scripts);
 				logManager.log(user.getId(), Constants.P_EDIT_PROFILE, "Visualización de perfil propio", Constants.P_OK);
 				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));

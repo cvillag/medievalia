@@ -47,7 +47,6 @@ $(document).ready(function(){
 					nombreTema : $("#nombreTema").val()},
 					function(data){
 						var json = JSON.parse(data);
-						alert(json.message);
 						if(json.message == "noLength"){
 							$("#modalRenTema").modal();
 						}

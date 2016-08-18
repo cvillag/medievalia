@@ -41,6 +41,7 @@ public class Constants {
 	public static final int P_CREATE_SUB_TOPIC = 25;
 	public static final int P_SUBTOPIC_LIST = 26;
 	public static final int P_RENAME_TOPIC = 27;
+	public static final int P_MODIFY_USER_OWN = 28;
 	
 	
 	public static final int P_OK = 1;

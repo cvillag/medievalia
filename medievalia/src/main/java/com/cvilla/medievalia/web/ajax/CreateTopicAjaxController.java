@@ -49,14 +49,17 @@ public class CreateTopicAjaxController {
 		if(authManager.isAutorized(Constants.P_CREATE_TOPIC, user)){
 			if(errorParam(request)){
 				j.put("message","noName");
+				logManager.log(user.getId(), Constants.P_CREATE_TOPIC, "Fallo en creación de tema. Parámetros incorrectos. Esquivada seguridad javascript", Constants.P_NOK);
 			}
 			else{
 				String nombre = request.getParameter("nombreTema");
 				j.put("message", temaManager.addTema(nombre,groupA));
+				logManager.log(user.getId(), Constants.P_CREATE_TOPIC, "Creado tema " + nombre + " en grupo " + groupA.getName() + "(id:" + groupA.getIdGrupo() + ")", Constants.P_OK);
 			}
 		}
 		else{
 			j.put("message", "noPrivileges");
+			logManager.log(user.getId(), Constants.P_CREATE_TOPIC, "Fallo en creación de tema. Sin privilegios", Constants.P_NOK);
 		}
 		model.addObject("json", j);
 		return model;
@@ -64,6 +67,5 @@ public class CreateTopicAjaxController {
 	
 	private boolean errorParam(HttpServletRequest request){
 		return request.getParameter("nombreTema") == null;
-	}
-	
+	}	
 }

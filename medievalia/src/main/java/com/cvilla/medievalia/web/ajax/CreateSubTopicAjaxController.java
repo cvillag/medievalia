@@ -65,6 +65,7 @@ public class CreateSubTopicAjaxController {
 		}
 		else{
 			j.put("message", "noPrivileges");
+			logManager.log(user.getId(), Constants.P_CREATE_SUB_TOPIC, "Intento de creación de subtema. Sin privilegios de usuario", Constants.P_OK);
 		}
 		model.addObject("json", j);
 		return model;

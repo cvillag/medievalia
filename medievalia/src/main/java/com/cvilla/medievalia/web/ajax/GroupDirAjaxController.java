@@ -47,9 +47,10 @@ public class GroupDirAjaxController {
 				model.addObject("message", "ok");
 				model.addObject("gruposDir",lista);
 				model.addObject("play",true);
+				logManager.log(user.getId(), Constants.P_DETAIL_DIRECTOR_GROUPS_OWN, "Detalle de grupos propios", Constants.P_OK);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_DIRECTOR_GROUPS_OWN,"mensaje");
+				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_DIRECTOR_GROUPS_OWN,"Sin permiso de ver grupos propios");
 			}			
 		}
 		else{
@@ -62,9 +63,10 @@ public class GroupDirAjaxController {
 				model.addObject("message", "ok");
 				model.addObject("gruposDir",lista);
 				model.addObject("play",false);
+				logManager.log(user.getId(), Constants.P_DETAIL_DIRECTOR_GROUPS_OTHER, "Detalle de grupos de otros usuarios o propios", Constants.P_OK);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_DIRECTOR_GROUPS_OTHER,"mensaje");
+				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_DIRECTOR_GROUPS_OTHER,"Sin permiso de ver grupos de otros usuarios");
 			}			
 		}
 		return model;

@@ -1,0 +1,71 @@
+package com.cvilla.medievalia.web.ajax;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
+
+import com.cvilla.medievalia.domain.User;
+import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.ILogManager;
+import com.cvilla.medievalia.service.intf.ILoginManager;
+import com.cvilla.medievalia.service.intf.IRoleManager;
+import com.cvilla.medievalia.utils.Constants;
+
+@Controller
+public class ModifyUserAjaxController {
+
+	@Autowired
+	private ILoginManager userManager;
+	
+	@Autowired
+	private IAutorizationManager authManager;
+	
+	@Autowired
+	private IRoleManager roleManager;
+	
+	@Autowired
+	private ILogManager logManager;
+	
+	@RequestMapping(value = "modifyUserA.do")
+	public ModelAndView handleRequest(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		HttpSession sesion = request.getSession();
+		User user = (User) sesion.getAttribute("user");
+		ModelAndView model = new ModelAndView("ajax/empty");
+		JSONObject j = new JSONObject();
+		if(errorParam(request)){
+			model = Constants.paramError(logManager,user.getId(),Constants.P_MODIFY_USER_OWN);
+			return model;
+		}
+		else{
+			if(authManager.isAutorized(Constants.P_MODIFY_USER_OWN, user)){
+				String name = request.getParameter("nombre");
+				String lname = request.getParameter("nombreC");
+				String message = userManager.modifyUser(name, lname, user);
+				j.put("message", message);
+				logManager.log(user.getId(), Constants.P_MODIFY_USER_OWN, "Modificación de datos personales", Constants.P_OK);
+				user.setUser_long_name(lname);
+				user.setUser_name(name);
+				sesion.setAttribute("user", user);
+			}
+			else{
+				j.put("message", "noPrivileges");
+				logManager.log(user.getId(), Constants.P_MODIFY_USER_OWN, "Intento de modificación de datos personales sin permisos", Constants.P_NOK);
+			}
+		}
+		model.addObject("json", j);
+		return model;
+	}
+	
+	private boolean errorParam(HttpServletRequest request){
+		return request.getParameter("nombre") == null &&
+				request.getParameter("nombreC") == null;
+	}
+}

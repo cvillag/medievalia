@@ -67,6 +67,9 @@ public class InicioController {
 			if(user.getUser_role() == Constants.ROLE_PROFESOR){
 				scripts.add("js/4-0.js");
 			}
+			if(user.getUser_role() == Constants.ROLE_ALUMNO){
+				scripts.add("js/3-0.js");
+			}
 			model.addObject("scripts",scripts);
 			model.addObject("user",nombre);
 			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));

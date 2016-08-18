@@ -22,6 +22,13 @@ $(document).ready(function(){
 			if($("#nombreTema").val().length > 4){
 				crear();
 			}
+			else{
+				$("#modalCrearTema").modal();
+			}
+		}
+		else if(e.which == 27){
+			$("#firstForm").show(200);
+			$("#secondForm").hide(200);
 		}
 	});
 	
