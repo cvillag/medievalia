@@ -73,13 +73,104 @@ $(document).ready(function(){
 	});
 	
 	$("#btnU-guardar").click(function(){
-		$.post("modifyUserA.do",
-				{nombre : $("#nombre").val(),
-				nombreC : $("#nombreC").val()},
-				function(data){
-					alert(data);
-				}
-		);
+		if($("#nombre").val().length < 4 || $("#nombreC").val().length < 4){
+			$("#modalModUser4").modal();
+		}
+		else{
+			$.post("modifyUserA.do",
+					{nombre : $("#nombre").val(),
+					nombreC : $("#nombreC").val()},
+					function(data){
+						var json = JSON.parse(data);
+						if(json.message == "nameRepeat"){
+							$("#nombre").val($("#nameO").val());
+							$("#nombreC").val($("#nameLO").val());
+							$("#modalModUser").modal();
+						}
+						else if(json.message == "p1.3.modifyok"){
+							$("#modalModUser2").modal();
+						}
+						else if(json.message == "p1-3.1.error.nok"){
+							$("#nombre").val($("#nameO").val());
+							$("#nombreC").val($("#nameLO").val());
+							$("#modalModUser3").modal();
+						}
+						else if(json.message == "noLength"){
+							$("#nombre").val($("#nameO").val());
+							$("#nombreC").val($("#nameLO").val());
+							$("#modalModUser4").modal();
+						}
+					}
+			);
+		}
 	});
 	
+	$("#btnP-guardar").click(function(){
+		$("#passForm1").removeClass("has-error");
+		if($("#pass2").val().length < 8){
+				$("#modalModPass4").modal();
+				$("#passForm2").addClass("has-error");
+			}
+			else{
+				$("#passForm2").removeClass("has-error");
+				if($("#pass3").val().length < 8){
+					$("#modalModPass4").modal();
+					$("#passForm3").addClass("has-error");
+				}
+				else{
+					$("#passForm3").removeClass("has-error");
+					if($("#pass2").val() != $("#pass3").val()){
+						$("#modalModPass6").modal();
+						$("#passForm2").addClass("has-error");
+						$("#passForm3").addClass("has-error");
+					}
+					else{
+						$("#passForm2").removeClass("has-error");
+						$("#passForm3").removeClass("has-error");
+						$.post("modifyUserPassA.do",
+								{pass1 : $("#pass1").val(),
+								pass2 : $("#pass2").val(),
+								pass3 : $("#pass3").val()},
+								function(data){
+									var json = JSON.parse(data);
+									if(json.message == "p1.3.modifyok"){
+										$("#modalModPass2").modal();
+									}
+									else if(json.message == "p1-3.1.error.nok"){
+										vaciaPass();
+										$("#modalModPass3").modal();
+									}
+									else if(json.message == "noLength"){
+										vaciaPass();
+										$("#modalModPass4").modal();
+										$("#passForm1").addClass("has-error");
+										$("#passForm2").addClass("has-error");
+										$("#passForm3").addClass("has-error");
+									}
+									else if(json.message == "mismatchPass1"){
+										vaciaPass();
+										$("#modalModPass5").modal();
+										$("#passForm1").addClass("has-error");
+										$("#passForm2").removeClass("has-error");
+										$("#passForm3").removeClass("has-error");
+									}
+									else if(json.message == "mismatchPass2"){
+										vaciaPass();
+										$("#modalModPass6").modal();
+										$("#passForm1").removeClass("has-error");
+										$("#passForm2").addClass("has-error");
+										$("#passForm3").addClass("has-error");
+									}
+								}
+						);
+					}
+				}
+			}
+	});
 });
+
+function vaciaPass(){
+	$("#pass1").val("");
+	$("#pass2").val("");
+	$("#pass3").val("");
+}

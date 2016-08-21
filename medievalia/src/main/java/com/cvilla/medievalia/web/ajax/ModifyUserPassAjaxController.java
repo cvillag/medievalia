@@ -19,7 +19,7 @@ import com.cvilla.medievalia.service.intf.IRoleManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller
-public class ModifyUserAjaxController {
+public class ModifyUserPassAjaxController {
 
 	@Autowired
 	private ILoginManager userManager;
@@ -33,7 +33,7 @@ public class ModifyUserAjaxController {
 	@Autowired
 	private ILogManager logManager;
 	
-	@RequestMapping(value = "modifyUserA.do")
+	@RequestMapping(value = "modifyUserPassA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		HttpSession sesion = request.getSession();
@@ -41,28 +41,26 @@ public class ModifyUserAjaxController {
 		ModelAndView model = new ModelAndView("ajax/empty");
 		JSONObject j = new JSONObject();
 		if(errorParam(request)){
-			model = Constants.paramError(logManager,user.getId(),Constants.P_MODIFY_USER_OWN);
+			model = Constants.paramError(logManager,user.getId(),Constants.P_MODIFY_USER_PASS_OWN);
 			return model;
 		}
 		else{
-			if(authManager.isAutorized(Constants.P_MODIFY_USER_OWN, user)){
-				String name = request.getParameter("nombre");
-				String lname = request.getParameter("nombreC");
-				String message = userManager.modifyUser(name, lname, user);
+			if(authManager.isAutorized(Constants.P_MODIFY_USER_PASS_OWN, user)){
+				String pass1 = request.getParameter("pass1");
+				String pass2 = request.getParameter("pass2");
+				String pass3 = request.getParameter("pass3");
+				String message = userManager.modifyUserPass(user.getUser_name(), user.getUser_long_name(), pass1, pass2, pass3, user.getUser_role(), user);
 				j.put("message", message);
-				user.setUser_long_name(lname);
-				user.setUser_name(name);
 				if(message.equals("p1.3.modifyok")){
-					sesion.setAttribute("user", user);
-					logManager.log(user.getId(), Constants.P_MODIFY_USER_OWN, "Modificación de datos personales", Constants.P_OK);
+					logManager.log(user.getId(), Constants.P_MODIFY_USER_PASS_OWN, "Modificación de contraseña propia", Constants.P_OK);
 				}
 				else{
-					logManager.log(user.getId(), Constants.P_MODIFY_USER_OWN, "Modificación de datos personales fallida. Mensaje:" + message, Constants.P_OK);
+					logManager.log(user.getId(), Constants.P_MODIFY_USER_PASS_OWN, "Modificación de contraseña propia fallida. Mensaje: " + message, Constants.P_OK);
 				}
 			}
 			else{
 				j.put("message", "noPrivileges");
-				logManager.log(user.getId(), Constants.P_MODIFY_USER_OWN, "Intento de modificación de datos personales sin permisos", Constants.P_NOK);
+				logManager.log(user.getId(), Constants.P_MODIFY_USER_PASS_OWN, "Intento de modificación contraseña sin permisos", Constants.P_NOK);
 			}
 		}
 		model.addObject("json", j);
@@ -70,7 +68,8 @@ public class ModifyUserAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("nombre") == null &&
-				request.getParameter("nombreC") == null;
+		return request.getParameter("pass1") == null &&
+				request.getParameter("pass2") == null &&
+				request.getParameter("pass3") == null;
 	}
 }

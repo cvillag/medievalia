@@ -115,14 +115,38 @@ public class LoginManager implements ILoginManager {
 	}
 	
 	public String modifyUser(String name, String lname,	User user) {
-		User u = userDAO.getUserByName(name);
-		if(u == null){
-			return userDAO.modifyUser(name, lname, user.getUser_role(), user.getId());
+		if(name.length() < Constants.MIN_USER_NAME || lname.length() < Constants.MIN_USER_NAME){
+			return "noLength";
 		}
 		else{
-			return "nameRepeat";
+			User u = userDAO.getUserByName(name);
+			if(u == null){
+				return userDAO.modifyUser(name, lname, user.getUser_role(), user.getId());
+			}
+			else{
+				return "nameRepeat";
+			}
 		}
 	}
 
-
+	public String modifyUserPass(String user_name, String user_long_name,
+			String pass1, String pass2, String pass3, int user_role, User user) {
+		if(!pass2.equals(pass3)){
+			return "mismatchPass2";
+		}
+		else{
+			if(pass2.length() < Constants.MIN_PASS){
+				return "passLength";
+			}
+			else{
+				User user2 = userDAO.login(user.getUser_name(), pass1);
+				if(user2 == null){
+					return "mismatchPass1";
+				}
+				else{
+					return userDAO.modifyUser(user2.getUser_name(), user2.getUser_long_name(), pass2, pass2, (new Integer(user2.getUser_role())).toString(), user2.getId());
+				}
+			}
+		}
+	}
 }

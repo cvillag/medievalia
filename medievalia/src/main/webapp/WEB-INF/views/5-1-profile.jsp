@@ -98,5 +98,207 @@ User u = (User)request.getAttribute("usuario");
 <input type="hidden" id="nameO" value="<%=u.getUser_name()%>">
 <input type="hidden" id="nameLO" value="<%=u.getUser_long_name()%>">
 
+<!-- Diálogos modales de cambio de datos de usuario -->
+
+<div id="modalModUser" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p5-1.modal0"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p5-1.modal1"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalModUser2" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p5-1.modal0"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p5-1.modal2"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalModUser3" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p5-1.modal0"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p5-1.modal3"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalModUser4" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p5-1.modal0"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p5-1.modal4"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Diálogos modales de cambio de contraseña -->
+
+<div id="modalModPass2" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p5-1.modal00"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p5-1.modal5"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalModPass3" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p5-1.modal00"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p5-1.modal6"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalModPass4" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p5-1.modal00"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p5-1.modal7"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalModPass5" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p5-1.modal00"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p5-1.modal8"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalModPass6" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p5-1.modal00"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p5-1.modal9"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <%@ include file="/WEB-INF/views/common/groups-list.jsp"%>
 <%@ include file="/WEB-INF/views/footer.jsp"%>
