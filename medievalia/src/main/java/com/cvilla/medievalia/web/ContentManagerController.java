@@ -18,6 +18,7 @@ import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
+import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.ITemaManager;
 import com.cvilla.medievalia.utils.Constants;
 
@@ -38,6 +39,9 @@ public class ContentManagerController {
 	@Autowired
 	private ITemaManager temaManager;
 	
+	@Autowired
+	private ILoginManager userManager;
+	
 	@RequestMapping(value = "contentManager.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -54,12 +58,14 @@ public class ContentManagerController {
 				int idGroup = (new Integer(request.getParameter("idGroup"))).intValue();
 				String message;
 				Group g = groupManager.getGroupById(idGroup);
+				User director = userManager.getUser(g.getDirector());
 				model = new ModelAndView("2-1-contentManager");
 				if(groupManager.setActiveGroup(user, g, logManager)){
 					sesion.setAttribute("grupoActual", g);
 					message = "p3.1.msg.ok";
 					List<Tema> listaTemas = temaManager.getTemaGrupoByGroup(g);
 					model.addObject("listaTemas", listaTemas);
+					model.addObject("director",director);
 				}
 				else{
 					message = "p3.1.msg.grpNoExiste";

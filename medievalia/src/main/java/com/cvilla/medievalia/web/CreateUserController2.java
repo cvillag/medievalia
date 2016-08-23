@@ -42,11 +42,11 @@ public class CreateUserController2 {
 			if(authManager.isAutorized(Constants.P_CREATE_USER, user)){
 				model = new ModelAndView("1-3-listausuarios");
 				
-				String name = (String)request.getParameter("name");
-				String longname = (String)request.getParameter("longname");
-				String pass = (String)request.getParameter("pass");
-				String role = (String)request.getParameter("role");
-				String pass2 = (String)request.getParameter("pass2");
+				String name = request.getParameter("name");
+				String longname = request.getParameter("longname");
+				String pass = request.getParameter("pass");
+				String role = request.getParameter("role");
+				String pass2 = request.getParameter("pass2");
 				
 				String message = userManager.createUser(name, longname, pass,pass2, role);
 				logManager.log(user.getId(), Constants.P_CREATE_USER, "Inicio crear usuario", Constants.P_OK);

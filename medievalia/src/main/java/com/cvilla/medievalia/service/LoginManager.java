@@ -120,7 +120,7 @@ public class LoginManager implements ILoginManager {
 		}
 		else{
 			User u = userDAO.getUserByName(name);
-			if(u == null){
+			if(u == null || u.getUser_name().equals(user.getUser_name())){
 				return userDAO.modifyUser(name, lname, user.getUser_role(), user.getId());
 			}
 			else{

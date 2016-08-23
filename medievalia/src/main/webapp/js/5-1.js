@@ -73,10 +73,18 @@ $(document).ready(function(){
 	});
 	
 	$("#btnU-guardar").click(function(){
-		if($("#nombre").val().length < 4 || $("#nombreC").val().length < 4){
+		if($("#nombre").val().length < 4){
+			$("#modalModUser4").modal();
+			$("#formNombre").addClass("has-error");
+		}
+		else if($("#nombreC").val().length < 4){
+			$("#formNombre").removeClass("has-error");
+			$("#formNombreC").addClass("has-error");
 			$("#modalModUser4").modal();
 		}
 		else{
+			$("#formNombre").removeClass("has-error");
+			$("#formNombreC").removeClass("has-error");
 			$.post("modifyUserA.do",
 					{nombre : $("#nombre").val(),
 					nombreC : $("#nombreC").val()},
@@ -85,10 +93,13 @@ $(document).ready(function(){
 						if(json.message == "nameRepeat"){
 							$("#nombre").val($("#nameO").val());
 							$("#nombreC").val($("#nameLO").val());
+							$("#formNombre").addClass("has-error");
 							$("#modalModUser").modal();
 						}
 						else if(json.message == "p1.3.modifyok"){
 							$("#modalModUser2").modal();
+							$("#formNombre").removeClass("has-error");
+							$("#formNombreC").removeClass("has-error");
 						}
 						else if(json.message == "p1-3.1.error.nok"){
 							$("#nombre").val($("#nameO").val());
@@ -98,6 +109,8 @@ $(document).ready(function(){
 						else if(json.message == "noLength"){
 							$("#nombre").val($("#nameO").val());
 							$("#nombreC").val($("#nameLO").val());
+							$("#formNombre").addClass("has-error");
+							$("#formNombreC").addClass("has-error");
 							$("#modalModUser4").modal();
 						}
 					}

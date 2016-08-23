@@ -14,7 +14,7 @@ import com.cvilla.medievalia.domain.User;
 @Component
 public interface IGroupManager extends Serializable {
 	public List<Group> getList(User u);
-	public String addGroup(int director, String name);
+	public String addGroup(int director, String name, String description);
 	public boolean removeGroup(int idGroup);
 	public List<Group> getListByDirector(User user, User dir);
 	public List<Teachers> getListByTeacher(User user, User teacher);

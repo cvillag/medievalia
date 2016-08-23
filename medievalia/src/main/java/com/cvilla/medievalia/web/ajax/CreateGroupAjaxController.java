@@ -50,7 +50,8 @@ public class CreateGroupAjaxController {
 		else{
 			if(authManager.isAutorized(Constants.P_CREATE_GROUP, user)){
 				String name = request.getParameter("nombreGrupo");
-				String res = groupManager.addGroup(user.getId(), name);
+				String desc = request.getParameter("descripcionGrupo");
+				String res = groupManager.addGroup(user.getId(), name,desc);
 				if(res.equals("creado")){
 					logManager.log(user.getId(), Constants.P_CREATE_GROUP, "Creación de nuevo grupo", Constants.P_OK);
 				}
@@ -70,6 +71,7 @@ public class CreateGroupAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("nombreGrupo") == null;
+		return request.getParameter("nombreGrupo") == null &&
+				request.getParameter("descripcionGrupo") == null;
 	}
 }

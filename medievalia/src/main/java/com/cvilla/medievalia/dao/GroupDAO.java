@@ -18,13 +18,14 @@ import com.cvilla.medievalia.domain.User;
 public class GroupDAO implements IGroupDAO {
 	
 	private static final String GET_GROUP_LIST = "SELECT * FROM `groups`";
-	private static final String ADD_GROUP = "insert into groups (director,name) values (?,?)";
+	private static final String ADD_GROUP = "insert into groups (director,name,description) values (?,?,?)";
 	private static final String REMOVE_GROUP = "delete from groups where idGroup = ?";
 	private static final String GET_OWN_GROUP_LIST = "select * from groups where director = ? or idGroup in (select idGroup from teachers where idTeacher = ?) group by director";
-	private static final String GET_GROUP_LIST_BY_DIR = "SELECT `idGroup`, `name`, `director` FROM `groups` WHERE director = ?";
-	private static final String GET_GROUP_LIST_BY_TEACHER = "select sel1.name, sel1.idGroup, sel1.idTeacher, sel1.idDirector, users.user_long_name  as directorName from (select groups.name as name, teachers.idGroup as idGroup, teachers.idTeacher as idTeacher, groups.director as idDirector from groups left join teachers on teachers.idGroup = groups.idGroup where idTeacher = ?) as sel1 left join users on sel1.idDirector = users.user_id";
-	private static final String GET_GROUP_LIST_BY_STUDENT = "select idGroup, director as idDirector, name as groupName, idStudent, user_name as directorName from (SELECT groups.idGroup as idGroup, director, name, idStudent from groups left join students on groups.idGroup = students.idGroup where idStudent = ?   ) as s1 left join users on s1.director = users.user_id";
-	private static final String GET_GROUP_BY_ID = "select idGroup, director, name from groups where idGroup = ? ";
+	private static final String GET_GROUP_LIST_BY_DIR = "SELECT `idGroup`, `name`, `director`, `description` FROM `groups` WHERE director = ?";
+	private static final String GET_GROUP_LIST_BY_TEACHER = "select sel1.name, sel1.idGroup, sel1.idTeacher, sel1.idDirector, sel1.description, users.user_long_name  as directorName from (select groups.name as name, teachers.idGroup as idGroup, teachers.idTeacher as idTeacher, groups.director as idDirector, groups.description from groups left join teachers on teachers.idGroup = groups.idGroup where idTeacher = ?) as sel1 left join users on sel1.idDirector = users.user_id";
+	private static final String GET_GROUP_LIST_BY_STUDENT = "select idGroup, director as idDirector, name as groupName, idStudent, user_name as directorName, description from (SELECT groups.idGroup as idGroup, director, description, name, idStudent from groups left join students on groups.idGroup = students.idGroup where idStudent = ?   ) as s1 left join users on s1.director = users.user_id";
+	private static final String GET_GROUP_BY_ID = "select idGroup, director, name, description from groups where idGroup = ? ";
+	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -50,7 +51,7 @@ public class GroupDAO implements IGroupDAO {
 
 	public String addGroup(Group g) {
 		try{
-			int r = jdbcTemplate.update(ADD_GROUP, new Object[]{g.getDirector(),g.getName()});
+			int r = jdbcTemplate.update(ADD_GROUP, new Object[]{g.getDirector(),g.getName(),g.getDescription()});
 			if(r == 1){
 				return "creado";
 			}

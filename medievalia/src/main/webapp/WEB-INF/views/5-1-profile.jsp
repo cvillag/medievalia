@@ -8,7 +8,7 @@ User u = (User)request.getAttribute("usuario");
 %>
 <div class="container">
 	<form class="form-horizontal" role="form" id="modifyForm">
-	<div class="form-group">
+	<div class="form-group" id="formNombre">
 		<label class="col-xs-3" for="nombre"><fmt:message key="p5.1.nombreUser"></fmt:message></label>
 		<div class="col-xs-4">
 			<input type="text" class="form-control" id="nombre" name="nombre" value="<%=u.getUser_name()%>" disabled>
@@ -31,7 +31,7 @@ User u = (User)request.getAttribute("usuario");
 			</div>
 		</div>
 	</div>
-	<div class="form-group">
+	<div class="form-group" id="formNombreC">
 		<label class="col-xs-3" for="nombreC"><fmt:message key="p5.1.nombreCUser"></fmt:message></label>
 		<div class="col-xs-4">
 			<input type="text" class="form-control" id="nombreC" name="nombreC" value="<%=u.getUser_long_name() %>" disabled> 

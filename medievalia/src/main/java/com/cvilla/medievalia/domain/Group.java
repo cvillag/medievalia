@@ -7,31 +7,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name="group")
 public class Group {
 
-	@Id
-	@Column(name="idGrupo")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idGrupo;
 	
-	@Column(name="director")
 	private int director;
 	
-	@Column(name="name")
 	private String name;
 	
-	public Group(int profesor, String nombre) {
+	private String description;
+	
+	public Group(int profesor, String nombre, String description) {
 		super();
 		this.director = profesor;
 		this.name = nombre;
+		this.description = description;
 	}
-	public Group(int idGrupo, int director, String name) {
+	public Group(int idGrupo, int director, String name, String description) {
 		super();
 		this.idGrupo = idGrupo;
 		this.director = director;
 		this.name = name;
+		this.description = description;
 	}
 	public Group() {
 		super();
@@ -53,6 +50,12 @@ public class Group {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	

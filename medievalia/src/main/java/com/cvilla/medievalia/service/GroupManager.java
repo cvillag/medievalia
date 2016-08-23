@@ -67,9 +67,9 @@ public class GroupManager implements IGroupManager {
 		return l;
 	}
 
-	public String addGroup(int director, String name) {
+	public String addGroup(int director, String name, String description) {
 		if(name.length() > 3){
-			Group g = new Group(director, name);
+			Group g = new Group(director, name, description);
 			return groupDAO.addGroup(g);
 		}
 		return "noLength";

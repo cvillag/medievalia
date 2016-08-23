@@ -70,11 +70,14 @@ $(document).ready(function(){
 	
 	$("#createButton").click(function(){
 		if($("#nombreGrupo").val().length < 4){
+			$("#nameGroupForm").addClass("has-error");
 			$("#modalCrearGrupo2").modal();
 		}
 		else{
+			$("#nameGroupForm").removeClass("has-error");
 			$.post("createGroupA.do",{
 				nombreGrupo : $("#nombreGrupo").val(),
+				descripcionGrupo : $("#descripcionGrupo").val()
 			}, function(data){  
 				var json = JSON.parse(data);
 				if(json.message == "creado"){
@@ -96,6 +99,7 @@ $(document).ready(function(){
 					
 				}
 				else if(json.message == "nameRepeat"){
+					$("#nameGroupForm").addClass("has-error");
 					$("#modalCrearGrupo3").modal();
 				}
 			});

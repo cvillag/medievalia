@@ -1,3 +1,4 @@
+<%@page import="com.cvilla.medievalia.domain.User"%>
 <%@page import="com.cvilla.medievalia.domain.Tema"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -8,12 +9,15 @@
 	Group g = (Group) ses.getAttribute("grupoActual");
 	@SuppressWarnings(value="unchecked")
 	List<Tema> listaTemas = (List<Tema>) request.getAttribute("listaTemas");
+	User director = (User)request.getAttribute("director");
 %>
 <div class="container">
 	<%if(message.equals("p3.1.msg.ok") && g != null){ %>
 	<h2>
 		<%= g.getName()%> 
 	</h2>
+	<label><fmt:message key="p2-1.director"></fmt:message>&nbsp;<%=director.getUser_long_name() %></label>
+	<p><%=g.getDescription() %></p>
 	<%} else if (message.equals("p3.1.msg.grpNoExiste")){%>
 	<p>
 		<fmt:message key="p3.1.msg.grpNoExiste"></fmt:message>
@@ -21,19 +25,12 @@
 	<%} %>
 </div>
 <div class="container">
-	<h3>
-		<fmt:message key="p34.listaTemas"></fmt:message>
-	</h3>
-	<%if (listaTemas != null && listaTemas.size() > 0){
-		for(Tema t : listaTemas){		
-		%>
-	<p><%=t.getNombre() %></p>
-	<%
-		}
-	}
-	%>
+	<label><fmt:message key="p2-1.numTemas"></fmt:message>&nbsp;<%=listaTemas.size() %></label>
 </div>
 <div class="container">
-	
+	<label><fmt:message key="p2-1.listaProfesores"></fmt:message></label>
+</div>
+<div class="container">
+	<label><fmt:message key="p2-1.numAlumnos"></fmt:message></label>
 </div>
 <%@ include file="/WEB-INF/views/footer.jsp"%>

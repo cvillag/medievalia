@@ -14,17 +14,17 @@ boolean play = (Boolean)request.getAttribute("play");
 if(lista != null && lista.size() > 0){
 %>
 
-<div class="col-lg-4">
+<div>
 	<table
 		class="table table-hover table-striped table-condensed table-scrollable">
 		<thead>
 			<tr>
 				<!-- TODO: Crear enlaces a detalles del grupo -->
-				<th class="col-lg-1"><fmt:message key="p1-3.2.t5-1"></fmt:message></th>
-				<th class="col-lg-6"><fmt:message key="p1-3.2.t5-2"></fmt:message></th>
-				<th class="col-lg-4"><fmt:message key="p1-3.2.t5-3"></fmt:message></th>
+				<th class="col-xs-1"><fmt:message key="p1-3.2.t5-1"></fmt:message></th>
+				<th class="col-xs-6"><fmt:message key="p1-3.2.t5-2"></fmt:message></th>
+				<th class="col-xs-4"><fmt:message key="p1-3.2.t5-3"></fmt:message></th>
 				<%if (play){ %>
-				<th class="col-lg-1"><fmt:message key="p1-3.2.t5-4"></fmt:message></th>
+				<th class="col-xs-1"><fmt:message key="p1-3.2.t5-4"></fmt:message></th>
 				<%} %>
 			</tr>
 		</thead>
