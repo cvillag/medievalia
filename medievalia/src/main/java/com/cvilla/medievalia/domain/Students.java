@@ -6,6 +6,7 @@ public class Students {
 	private int idDirector;
 	private String groupName;
 	private int idStudent;
+	private String studentName;
 	private String directorName;
 	
 	public Students(int idGroup, int idDirector, String groupName,
@@ -49,5 +50,11 @@ public class Students {
 	}
 	public void setDirectorName(String directorName) {
 		this.directorName = directorName;
+	}
+	public String getStudentName() {
+		return studentName;
+	}
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
 	}
 }

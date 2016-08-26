@@ -17,4 +17,11 @@ public interface IGroupDAO {
 	public List<Teachers> getGroupListByTeacher(User teacher);
 	public List<Students> getGroupListByStudent(User student);
 	public Group getGroup(int idGroup);
+	public String addStudent(int idGroup, User user);
+	public String addTeacher(int idGroup, User user);
+	public boolean isTeacher(int idGroup, User user) throws Exception;
+	public Teachers getTeacher(int idGroup, User user);
+	public boolean isStudent(int idGroup, User user) throws Exception;
+	public Students getStudent(int idGroup, User user);
+	public List<User> getPossibleUsersListToGroup(int idGroup, String filter);
 }

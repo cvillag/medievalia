@@ -32,5 +32,25 @@
 </div>
 <div class="container">
 	<label><fmt:message key="p2-1.numAlumnos"></fmt:message></label>
+	<button type="button" class="btn btn-default" id="btnMatricularAlumnos"><fmt:message key="p2-1.listaUsuarios.title"></fmt:message></button>
+</div>
+<div id="modalMatricularAlumno" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-1.listaUsuarios.title"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body" id="divListaUsers">
+							
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
 </div>
 <%@ include file="/WEB-INF/views/footer.jsp"%>

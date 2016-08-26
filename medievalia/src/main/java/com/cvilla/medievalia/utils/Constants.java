@@ -42,7 +42,10 @@ public class Constants {
 	public static final int P_SUBTOPIC_LIST = 26;
 	public static final int P_RENAME_TOPIC = 27;
 	public static final int P_MODIFY_USER_OWN = 28;
-	public static final int P_MODIFY_USER_PASS_OWN = 29;	
+	public static final int P_MODIFY_USER_PASS_OWN = 29;
+	public static final int P_ADD_STUDENT_TO_GROUP = 30;
+	public static final int P_ADD_TEACHER_TO_GROUP = 31;
+	public static final int P_LIST_USERS_TO_ADD_GROUP = 32;
 	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;

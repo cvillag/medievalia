@@ -72,6 +72,9 @@ public class ContentManagerController {
 				}
 				model.addObject("message", message);
 				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+				List<String> scripts = new ArrayList<String>();
+				scripts.add("js/2-1.js");
+				model.addObject("scripts",scripts);
 			}
 			else{
 				model = Constants.noPrivileges(user,logManager,actionInt,"mensaje",request);

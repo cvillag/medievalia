@@ -22,4 +22,7 @@ public interface IGroupManager extends Serializable {
 	public Group getGroupById(int idGroup);
 	public boolean setActiveGroup (User user, Group group, ILogManager logManager);
 	public boolean isTeacherOrDirector(User user, int idGrupo);
+	public String addStudent(Group group, User student, User user);
+	public String addTeacher(Group group, User teacher, User user);
+	public List<User> getUsersToGroup(Group group, String filter);
 }

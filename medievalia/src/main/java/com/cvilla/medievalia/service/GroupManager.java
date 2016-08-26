@@ -159,6 +159,51 @@ public class GroupManager implements IGroupManager {
 		return enc;
 	}
 	
+	public String addStudent(Group group, User student, User user){
+		if(isTeacherOrDirector(user, group.getIdGrupo())){
+			try {
+				if(groupDAO.isTeacher(group.getIdGrupo(), student)){
+					return "alreadyTeacher";
+				}
+				else{
+					return groupDAO.addStudent(group.getIdGrupo(), student);
+				}
+			} catch (Exception e) {
+				return "error";
+			}
+		}
+		else{
+			return "noDirector";
+		}
+	}
+	
+	public String addTeacher(Group group, User teacher, User user){
+		if(teacher.getUser_role() != Constants.ROLE_PROFESOR){
+			return "noTeacher";
+		}
+		else{
+			try {
+				if(group.getDirector() == user.getId() || groupDAO.isStudent(group.getIdGrupo(), teacher)){
+					if(groupDAO.isStudent(group.getIdGrupo(), teacher)){
+						return "alreadyStudent";
+					}
+					else{
+						return groupDAO.addTeacher(group.getIdGrupo(), teacher);
+					}
+				}
+				else{
+					return "noTeacherOrDirector";
+				}
+			} catch (Exception e) {
+				return "error";
+			}
+		}
+	}
+	
+	public List<User> getUsersToGroup(Group group, String filter){
+		return groupDAO.getPossibleUsersListToGroup(group.getIdGrupo(), filter);
+	}
+	
 	public boolean isTeacherOrDirector(User user, int idGrupo){
 		List<Group> listaDir = getListByDirector(user, user);
 		List<Teachers> listaTeach = getListByTeacher(user, user);
