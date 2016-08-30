@@ -19,9 +19,9 @@ public interface IGroupDAO {
 	public Group getGroup(int idGroup);
 	public String addStudent(int idGroup, User user);
 	public String addTeacher(int idGroup, User user);
-	public boolean isTeacher(int idGroup, User user) throws Exception;
+	public boolean isTeacher(int idGroup, User user);
 	public Teachers getTeacher(int idGroup, User user);
-	public boolean isStudent(int idGroup, User user) throws Exception;
+	public boolean isStudent(int idGroup, User user);
 	public Students getStudent(int idGroup, User user);
-	public List<User> getPossibleUsersListToGroup(int idGroup, String filter);
+	public List<User> getPossibleUsersListToGroup(Group group, String filter);
 }

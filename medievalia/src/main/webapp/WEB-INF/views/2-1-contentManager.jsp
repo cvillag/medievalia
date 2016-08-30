@@ -45,6 +45,12 @@
 			<div class="modal-body" id="divListaUsers">
 							
 			</div>
+			<div id="resultOk" class="modal-body alert alert-success" role="alert" >
+				<fmt:message key="p2.1.listausuarios.resultOk"></fmt:message>
+			</div>
+			<div id="resultNok" class="modal-body alert alert-danger" role="alert" >
+				<fmt:message key="p2.1.listausuarios.resultNok"></fmt:message>
+			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cvilla.medievalia.dao.intfc.IGroupDAO;
+import com.cvilla.medievalia.dao.mappers.UserMapper;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.Students;
 import com.cvilla.medievalia.domain.Teachers;
@@ -12,6 +13,7 @@ import com.cvilla.medievalia.domain.Tema;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
+import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
 
 public class GroupManager implements IGroupManager {
@@ -43,6 +45,9 @@ public class GroupManager implements IGroupManager {
 	public void setLogManager(ILogManager logManager) {
 		this.logManager = logManager;
 	}
+	
+	@Autowired
+	public ILoginManager userManager;
 	
 	public List<Group> getList(User u) {
 		List<Group> l;
@@ -159,49 +164,71 @@ public class GroupManager implements IGroupManager {
 		return enc;
 	}
 	
-	public String addStudent(Group group, User student, User user){
-		if(isTeacherOrDirector(user, group.getIdGrupo())){
-			try {
-				if(groupDAO.isTeacher(group.getIdGrupo(), student)){
-					return "alreadyTeacher";
-				}
-				else{
-					return groupDAO.addStudent(group.getIdGrupo(), student);
-				}
-			} catch (Exception e) {
-				return "error";
-			}
+	public String addStudent(Group group, int idstudent, User user){
+		if(group.getDirector() == idstudent){
+			return "alreadyDirector";
 		}
 		else{
-			return "noDirector";
+			User student = userManager.getUser(idstudent);
+			if(student == null){
+				return "noUser";
+			}
+			else{
+				if(isTeacherOrDirector(user, group.getIdGrupo())){
+					try {
+						if(groupDAO.isTeacher(group.getIdGrupo(), student)){
+							return "alreadyTeacher";
+						}
+						else{
+							return groupDAO.addStudent(group.getIdGrupo(), student);
+						}
+					} catch (Exception e) {
+						return "error";
+					}
+				}
+				else{
+					return "noDirector";
+				}
+			}
 		}
 	}
 	
-	public String addTeacher(Group group, User teacher, User user){
-		if(teacher.getUser_role() != Constants.ROLE_PROFESOR){
-			return "noTeacher";
+	public String addTeacher(Group group, int idteacher, User user){
+		if(group.getDirector() == idteacher){
+			return "alreadyDirector";
 		}
 		else{
-			try {
-				if(group.getDirector() == user.getId() || groupDAO.isStudent(group.getIdGrupo(), teacher)){
-					if(groupDAO.isStudent(group.getIdGrupo(), teacher)){
-						return "alreadyStudent";
-					}
-					else{
-						return groupDAO.addTeacher(group.getIdGrupo(), teacher);
-					}
+			User teacher = userManager.getUser(idteacher);
+			if(teacher == null){
+				return "noUser";
+			}
+			else{
+				if(teacher.getUser_role() != Constants.ROLE_PROFESOR){
+					return "noTeacher";
 				}
 				else{
-					return "noTeacherOrDirector";
+					try {
+						if(group.getDirector() == user.getId() || groupDAO.isStudent(group.getIdGrupo(), teacher)){
+							if(groupDAO.isStudent(group.getIdGrupo(), teacher)){
+								return "alreadyStudent";
+							}
+							else{
+								return groupDAO.addTeacher(group.getIdGrupo(), teacher);
+							}
+						}
+						else{
+							return "noTeacherOrDirector";
+						}
+					} catch (Exception e) {
+						return "error";
+					}
 				}
-			} catch (Exception e) {
-				return "error";
 			}
 		}
 	}
 	
 	public List<User> getUsersToGroup(Group group, String filter){
-		return groupDAO.getPossibleUsersListToGroup(group.getIdGrupo(), filter);
+		return groupDAO.getPossibleUsersListToGroup(group, filter);
 	}
 	
 	public boolean isTeacherOrDirector(User user, int idGrupo){

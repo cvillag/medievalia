@@ -1,3 +1,5 @@
+<%@page import="com.cvilla.medievalia.utils.Constants"%>
+<%@page import="com.cvilla.medievalia.domain.Role"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
 <%@page import="java.util.List"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt"%>
@@ -5,11 +7,20 @@
 <%
 @SuppressWarnings("unchecked")
 List<User> lu = (List<User>)request.getAttribute("list");
+List<Role> lr = (List<Role>)request.getAttribute("roles");
 if(lu == null){%>
 	<p><fmt:message key="p2-1.listaUsuarios.empty"></fmt:message>
 <%}
 else{%>
-<table>
+<p><fmt:message key="p2-1.listaUsuarios.roles"></fmt:message>:
+<select class="form-control" id="roleSelected">
+	<%for(Role r : lr){ 
+		if(Constants.isAcceptedRoleInGroup(r.getRol())){%>
+		<option value="<%=r.getRol()%>" <%if(r.getRol() == Constants.ROLE_ALUMNO){ %> selected <% } %>><%=r.getNombreRol()%></option>
+		<%} %>
+	<%} %>
+</select></p>
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>
@@ -24,8 +35,12 @@ else{%>
 		</tr>
 	</thead>
 	<tbody>
-	<%for(User u : lu){ %>
-		<tr>
+	<%for(User u : lu){ 
+		if(u.getUser_role() == Constants.ROLE_PROFESOR){%>
+		<tr class="profe">
+		<%}else{ %>
+		<tr class="alumno">
+		<%} %>
 			<td><%=u.getUser_long_name() %>
 			</td>
 			<%if(u.getUser_role() == 1){ %>
@@ -46,7 +61,7 @@ else{%>
 			<%} %>
 			<td>
 				<button type="button"
-					class="btn btn-default modifyuser"
+					class="btn btn-default enroll"
 					data-val="<%=u.getId() %>">
 					<fmt:message key="p2-1.listaUsuarios.btn"></fmt:message>
 				</button>

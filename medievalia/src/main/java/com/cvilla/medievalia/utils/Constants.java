@@ -1,6 +1,7 @@
 package com.cvilla.medievalia.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,10 +71,16 @@ public class Constants {
 	public static final int MIN_TEMA_NAME = 4;
 	public static final int MIN_USER_NAME = 4;
 	public static final int MIN_PASS = 6;
-
+	
+	public static final int NUM_ACCEPTED = 2;
+	public static final List<Integer> ROLES_ACCEPTED_IN_GROUP = Arrays.asList(2,3); 
 	
 	public static String getKey(){
 		return PASS_KEY;
+	}
+	
+	public static boolean isAcceptedRoleInGroup(int role){
+		return ROLES_ACCEPTED_IN_GROUP.contains(role);
 	}
 	
 	public static  List<Header> getHeaders(int role, HttpServletRequest req){
