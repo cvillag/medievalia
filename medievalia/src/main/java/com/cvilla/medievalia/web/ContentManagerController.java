@@ -48,27 +48,38 @@ public class ContentManagerController {
 		ModelAndView model;
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
-		if(errorParam(request)){
+		Group activeGroup  = (Group) sesion.getAttribute("grupoActual");
+		if(errorParam(request) && activeGroup==null){
 			model = Constants.paramError(logManager,Constants.P_LOGIN,user.getId());
 			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
-
 		}
 		else{
 			if(authManager.isAutorized(actionInt, user)){
-				int idGroup = (new Integer(request.getParameter("idGroup"))).intValue();
 				String message;
-				Group g = groupManager.getGroupById(idGroup);
-				User director = userManager.getUser(g.getDirector());
 				model = new ModelAndView("2-1-contentManager");
-				if(groupManager.setActiveGroup(user, g, logManager)){
-					sesion.setAttribute("grupoActual", g);
+				User director;
+				if(activeGroup != null && request.getParameter("change") == null){
+					director = userManager.getUser(activeGroup.getDirector());
 					message = "p3.1.msg.ok";
-					List<Tema> listaTemas = temaManager.getTemaGrupoByGroup(g);
+					List<Tema> listaTemas = temaManager.getTemaGrupoByGroup(activeGroup);
 					model.addObject("listaTemas", listaTemas);
 					model.addObject("director",director);
 				}
 				else{
-					message = "p3.1.msg.grpNoExiste";
+					int idGroup = (new Integer(request.getParameter("idGroup"))).intValue();
+					Group g = groupManager.getGroupById(idGroup);
+					director = userManager.getUser(g.getDirector());
+					
+					if(groupManager.setActiveGroup(user, g, logManager)){
+						sesion.setAttribute("grupoActual", g);
+						message = "p3.1.msg.ok";
+						List<Tema> listaTemas = temaManager.getTemaGrupoByGroup(g);
+						model.addObject("listaTemas", listaTemas);
+						model.addObject("director",director);
+					}
+					else{
+						message = "p3.1.msg.grpNoExiste";
+					}
 				}
 				model.addObject("message", message);
 				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));

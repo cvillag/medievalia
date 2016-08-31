@@ -63,7 +63,6 @@ public class TemaManager implements ITemaManager {
 	}
 
 	public String renameTema(String nombre, int idTema, User user, Group g) {
-		// TODO Comprobar que el tema pertenece al usuario
 		if(nombre.length() < Constants.MIN_TEMA_NAME){
 			return "noLength";
 		}

@@ -19,7 +19,6 @@ if(lista != null && lista.size() > 0){
 		class="table table-hover table-striped table-condensed table-scrollable">
 		<thead>
 			<tr>
-				<!-- TODO: Crear enlaces a detalles del grupo -->
 				<th class="col-xs-1"><fmt:message key="p1-3.2.t4-1"></fmt:message></th>
 				<th class="col-xs-6"><fmt:message key="p1-3.2.t4-2"></fmt:message></th>
 				<th class="col-xs-4"><fmt:message key="p1-3.2.t4-3"></fmt:message></th>

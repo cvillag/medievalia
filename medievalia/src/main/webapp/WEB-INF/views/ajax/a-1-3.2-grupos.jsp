@@ -16,7 +16,6 @@ if(lista != null && lista.size() > 0){
 	<table class="table table-hover table-striped table-condensed table-scrollable">
 		<thead>
 			<tr>
-				<!-- TODO: Crear enlaces a detalles del grupo -->
 				<th class="col-xs-1"><fmt:message key="p1-3.2.t3-1"></fmt:message></th>
 				<th class="col-xs-10"><fmt:message key="p1-3.2.t3-2"></fmt:message></th>
 				<%if(play){ %>

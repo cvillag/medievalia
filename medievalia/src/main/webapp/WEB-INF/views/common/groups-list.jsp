@@ -81,7 +81,7 @@ if (ugl.getUser_role() == Constants.ROLE_PROFESOR || ugl.getUser_role() == Const
 </div>
 <div id="group-block3" class="container"></div>
 <form action="contentManager.do" method="post" id="activeGroupForm">
-	<input type="hidden" name="idGroup" id="idGroup"> <input
-		type="hidden" name="groupSelected" id="groupSelected"
-		value="<%=idGr%>" />
+	<input type="hidden" name="idGroup" id="idGroup">
+	<input type="hidden" name="groupSelected" id="groupSelected" value="<%=idGr%>" />
+	<input type="hidden" name="change" value="true">
 </form>

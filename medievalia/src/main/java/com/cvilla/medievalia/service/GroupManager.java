@@ -248,4 +248,14 @@ public class GroupManager implements IGroupManager {
 		return enc;
 	}
 
+	public List<Students> getStudentParticipantList(Group group) {
+		// TODO Tarea actual
+		return null;
+	}
+
+	public List<Teachers> getTeacherParticipantList(Group group) {
+		// TODO Tarea actual
+		return null;
+	}
+
 }

@@ -47,6 +47,8 @@ public class Constants {
 	public static final int P_ADD_STUDENT_TO_GROUP = 30;
 	public static final int P_ADD_TEACHER_TO_GROUP = 31;
 	public static final int P_LIST_USERS_TO_ADD_GROUP = 32;
+	public static final int P_PARTICIPANT_LIST = 33; 
+
 	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;
@@ -73,7 +75,7 @@ public class Constants {
 	public static final int MIN_PASS = 6;
 	
 	public static final int NUM_ACCEPTED = 2;
-	public static final List<Integer> ROLES_ACCEPTED_IN_GROUP = Arrays.asList(2,3); 
+	public static final List<Integer> ROLES_ACCEPTED_IN_GROUP = Arrays.asList(2,3);
 	
 	public static String getKey(){
 		return PASS_KEY;
@@ -107,7 +109,7 @@ public class Constants {
 			}
 			lista.add(new Header("investigacion","Investigación","",new ArrayList<Header>()));
 			index++;
-			lista.get(index).getSons().add(new Header("gestionContenido","Gestión de contenido", "contentManager",null));
+			lista.get(index).getSons().add(new Header("gestionContenido","Gestión de contenido", "contentManager.do",null));
 			lista.get(index).getSons().add(new Header("temas","Temas", "topics.do",null));
 		}
 		lista.add(new Header("profile","Perfil","profile.do",null));

@@ -25,4 +25,6 @@ public interface IGroupManager extends Serializable {
 	public String addStudent(Group group, int idstudent, User user);
 	public String addTeacher(Group group, int idteacher, User user);
 	public List<User> getUsersToGroup(Group group, String filter);
+	public List<Students> getStudentParticipantList(Group group);
+	public List<Teachers> getTeacherParticipantList(Group group);
 }

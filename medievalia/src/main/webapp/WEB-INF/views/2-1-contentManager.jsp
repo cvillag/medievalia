@@ -11,52 +11,48 @@
 	List<Tema> listaTemas = (List<Tema>) request.getAttribute("listaTemas");
 	User director = (User)request.getAttribute("director");
 %>
+<%if(message.equals("p3.1.msg.ok") && g != null){ %>
 <div class="container">
-	<%if(message.equals("p3.1.msg.ok") && g != null){ %>
-	<h2>
-		<%= g.getName()%> 
-	</h2>
-	<label><fmt:message key="p2-1.director"></fmt:message>&nbsp;<%=director.getUser_long_name() %></label>
-	<p><%=g.getDescription() %></p>
-	<%} else if (message.equals("p3.1.msg.grpNoExiste")){%>
-	<p>
-		<fmt:message key="p3.1.msg.grpNoExiste"></fmt:message>
-	</p>
-	<%} %>
-</div>
-<div class="container">
-	<label><fmt:message key="p2-1.numTemas"></fmt:message>&nbsp;<%=listaTemas.size() %></label>
-</div>
-<div class="container">
-	<label><fmt:message key="p2-1.listaProfesores"></fmt:message></label>
-</div>
-<div class="container">
-	<label><fmt:message key="p2-1.numAlumnos"></fmt:message></label>
-	<button type="button" class="btn btn-default" id="btnMatricularAlumnos"><fmt:message key="p2-1.listaUsuarios.title"></fmt:message></button>
-</div>
-<div id="modalMatricularAlumno" class="modal fade" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">
-					<fmt:message key="p2-1.listaUsuarios.title"></fmt:message>
-				</h4>
+	<div class="row">
+		<div class="panel panel-default col-lg-4">
+			
+			<div class="panel-heading">
+				<h3 class="panel-title"><%= g.getName()%></h3>
 			</div>
-			<div class="modal-body" id="divListaUsers">
-							
+			<div class="panel-body">
+				<p><fmt:message key="p2-1.director"></fmt:message>&nbsp;<%=director.getUser_long_name() %></p>
+				<p><%=g.getDescription() %></p>
 			</div>
-			<div id="resultOk" class="modal-body alert alert-success" role="alert" >
-				<fmt:message key="p2.1.listausuarios.resultOk"></fmt:message>
+		</div>
+		<div class="panel panel-default col-lg-4">
+			<div class="panel-heading">
+				<h3 class="panel-title"><fmt:message key="p2-1.numTemas"></fmt:message></h3>
 			</div>
-			<div id="resultNok" class="modal-body alert alert-danger" role="alert" >
-				<fmt:message key="p2.1.listausuarios.resultNok"></fmt:message>
+			<div class="panel-body">
+				<p><%=listaTemas.size() %></p>
+				<p><a href="topicManager.do"><button type="button" class="btn btn-default" id="btnListaTemas"><fmt:message key="p2-1.btnListaTemas"></fmt:message></button></a></p>
 			</div>
-			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
-					<fmt:message key="general.aceptar" ></fmt:message>
-				</button>
+		</div>
+		<div class="panel panel-default col-lg-4">
+			<div class="panel-heading">
+				<h3 class="panel-title"><fmt:message key="p2-1.participantes"></fmt:message></h3>
+			</div>
+			<div class="panel-body">
+				<!-- TODO: Insertar lista de profesores y número de alumnos -->
+				<p>Profe, profe2, profe3</p>
+				<p><fmt:message key="p2-1.numAlumnos"></fmt:message>&nbsp;5</p>
+				<p><button type="button" class="btn btn-default" id="btnMatricularAlumnos"><fmt:message key="p2-1.listaUsuarios.btn"></fmt:message></button></p>
 			</div>
 		</div>
 	</div>
 </div>
+<%} else if (message.equals("p3.1.msg.grpNoExiste")){%>
+	<div class="panel panel-danger">
+		<div class="panel-heading">
+			<p><fmt:message key="p3.1.msg.grpNoExiste"></fmt:message></p>
+		</div>
+	</div>	
+<%} %>
+
+
 <%@ include file="/WEB-INF/views/footer.jsp"%>
