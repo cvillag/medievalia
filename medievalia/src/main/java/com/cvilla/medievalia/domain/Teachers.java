@@ -7,7 +7,8 @@ public class Teachers {
 	private int idTeacher;
 	private int idDirector;
 	private String directorName;
-	
+	private String teacherName;
+
 	public Teachers(String name, int idGroup, int idTeacher) {
 		super();
 		this.name = name;
@@ -57,5 +58,13 @@ public class Teachers {
 
 	public void setDirectorName(String directorName) {
 		this.directorName = directorName;
+	}
+	
+	public String getTeacherName() {
+		return teacherName;
+	}
+
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
 	}
 }

@@ -24,4 +24,6 @@ public interface IGroupDAO {
 	public boolean isStudent(int idGroup, User user);
 	public Students getStudent(int idGroup, User user);
 	public List<User> getPossibleUsersListToGroup(Group group, String filter);
+	public List<Students> getEnrolledStudents(Group group);
+	public List<Teachers> getEnrolledTeachers(Group group);
 }

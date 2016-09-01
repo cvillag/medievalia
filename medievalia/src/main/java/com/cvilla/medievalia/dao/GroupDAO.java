@@ -24,15 +24,17 @@ public class GroupDAO implements IGroupDAO {
 	private static final String REMOVE_GROUP = "delete from groups where idGroup = ?";
 	private static final String GET_OWN_GROUP_LIST = "select * from groups where director = ? or idGroup in (select idGroup from teachers where idTeacher = ?) group by director";
 	private static final String GET_GROUP_LIST_BY_DIR = "SELECT `idGroup`, `name`, `director`, `description` FROM `groups` WHERE director = ?";
-	private static final String GET_GROUP_LIST_BY_TEACHER = "select sel1.name, sel1.idGroup, sel1.idTeacher, sel1.idDirector, sel1.description, users.user_long_name  as directorName from (select groups.name as name, teachers.idGroup as idGroup, teachers.idTeacher as idTeacher, groups.director as idDirector, groups.description from groups left join teachers on teachers.idGroup = groups.idGroup where idTeacher = ?) as sel1 left join users on sel1.idDirector = users.user_id";
+	private static final String GET_GROUP_LIST_BY_TEACHER = "select name, idTeacher, idGroup, idDirector, description, directorName, user_long_name as teacherName from(select sel1.name, sel1.idGroup, sel1.idTeacher, sel1.idDirector, sel1.description, users.user_long_name  as directorName from (select groups.name as name, teachers.idGroup as idGroup, teachers.idTeacher as idTeacher, groups.director as idDirector, groups.description from groups left join teachers on teachers.idGroup = groups.idGroup where idTeacher = ?) as sel1 left join users on sel1.idDirector = users.user_id) as sel2 left join users on idTeacher = user_id";
 	private static final String GET_GROUP_LIST_BY_STUDENT = "select idGroup, idDirector, groupName, idStudent, directorName, description, users.user_name as studentName from (select idGroup, director as idDirector, name as groupName, idStudent, user_name as directorName, description from (SELECT groups.idGroup as idGroup, director, description, name, idStudent from groups left join students on groups.idGroup = students.idGroup where idStudent = ?) as s1 left join users on s1.director = users.user_id) as sel2 left join users on users.user_id = sel2.idStudent";
 	private static final String GET_GROUP_BY_ID = "select idGroup, director, name, description from groups where idGroup = ? ";
 	private static final String ADD_STUDENT = "insert into students(idGroup,idStudent) values (?,?)";
 	private static final String ADD_TEACHER = "insert into teachers (idGroup, idTeacher) values (?,?)";
-	private static final String GET_TEACHER = "select users.user_long_name as name, sel3.idGroup, sel3.idTeacher, sel3.idDirector, sel3.directorName from (select sel2.idGroup, sel2.idTeacher, sel2.director as idDirector, users.user_long_name as directorName from (select sel1.idGroup, sel1.idTeacher, groups.director from (select idGroup, idTeacher from teachers where idGroup = ? and idTeacher = ?) as sel1 left join groups on sel1.idGroup = groups.idGroup) as sel2 left join users on users.user_id = sel2.director) as sel3 left join users on users.user_id = sel3.idTeacher";
+	private static final String GET_TEACHER = "select users.user_long_name as teacherName, sel3.idGroup, sel3.idTeacher, sel3.idDirector, sel3.directorName,  sel3.name from (select sel2.name, sel2.idGroup, sel2.idTeacher, sel2.director as idDirector, users.user_long_name as directorName from (select sel1.idGroup, sel1.idTeacher, groups.director, groups.name as name from (select idGroup, idTeacher from teachers where idGroup = ? and idTeacher = ?) as sel1 left join groups on sel1.idGroup = groups.idGroup) as sel2 left join users on users.user_id = sel2.director) as sel3 left join users on users.user_id = sel3.idTeacher";
 	private static final String GET_STUDENT= "select sel3.idDirector, sel3.idGroup, sel3.groupName, sel3.idStudent, sel3.studentName, users.user_long_name as directorName from (select sel2.idDirector, sel2.idGroup, sel2.groupName, sel2.idStudent, users.user_long_name as studentName from (select groups.director as idDirector, groups.idGroup, groups.name as groupName, sel1.idStudent from (select idGroup, idStudent from students where idStudent = ? and idGroup = ?) as sel1 left join groups on groups.idGroup = sel1.idGroup) as sel2 left join users on users.user_id = sel2.idStudent) as sel3 left join users on sel3.idDirector = users.user_id";
 	private static final String GET_USER_NOT_IN_GROUP = "select user_id, user_name, user_long_name, user_role, ' ' as user_pass from users where user_id not in (select idStudent from students where idGroup = ?) and user_id not in (select idTeacher from teachers where idGroup = ?) and user_id != 0  and (user_role = 2 or user_role = 3) and user_id != ?";
 	private static final String GET_USER_NOT_IN_GROUP_FILTER = "select user_id, user_name, user_long_name, user_role, ' ' as user_pass from users where user_id not in (select idStudent from students where idGroup = ?) and user_id not in (select idTeacher from teachers where idGroup = ?) and user name like '%?%'  and user_id != 0  and (user_role = 2 or user_role = 3) and user_id != ?";
+	private static final String GET_STUDENTS_LIST_BY_GROUP = "select groupName, idStudent, idGroup, idDirector, studentName, user_long_name as directorName from (select groupName, idStudent, idGroup, idDirector, user_long_name as studentName from (select name as groupName, idStudent, sel1.idGroup, director as idDirector from (SELECT * FROM `students` WHERE idGroup = ?) as sel1 left join groups on groups.idGroup = sel1.idGroup) as sel2 left join users on idStudent = user_id) as sel3 left join users on idDirector = user_id";
+	private static final String GET_TEACHERS_LIST_BY_GROUP = "select groupName as name, idTeacher, idGroup, idDirector, teacherName, user_long_name as directorName from (select groupName, idTeacher, idGroup, idDirector, user_long_name as teacherName from (select name as groupName, idTeacher, sel1.idGroup, director as idDirector from (SELECT * FROM `teachers` WHERE idGroup = ?) as sel1 left join groups on groups.idGroup = sel1.idGroup) as sel2 left join users on idTeacher = user_id) as sel3 left join users on idDirector = user_id";
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -229,6 +231,25 @@ public class GroupDAO implements IGroupDAO {
 				list = jdbcTemplate.query(GET_USER_NOT_IN_GROUP_FILTER, new Object[]{group.getIdGrupo(),group.getIdGrupo(),filter,group.getDirector()},new UserMapper());
 			}
 			return list;
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
+
+	public List<Students> getEnrolledStudents(Group group) {
+		try{
+			return jdbcTemplate.query(GET_STUDENTS_LIST_BY_GROUP, new Object[]{group.getIdGrupo()},new StudentsMapper());
+		}
+		catch(Exception e){
+			return null;	
+		}
+		
+	}
+
+	public List<Teachers> getEnrolledTeachers(Group group) {
+		try{
+			return jdbcTemplate.query(GET_TEACHERS_LIST_BY_GROUP, new Object[]{group.getIdGrupo()}, new TeacherMapper());
 		}
 		catch(Exception e){
 			return null;

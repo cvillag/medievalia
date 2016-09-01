@@ -1,6 +1,5 @@
-package com.cvilla.medievalia.web;
+package com.cvilla.medievalia.web.ajax;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.Students;
-import com.cvilla.medievalia.domain.Teachers;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
@@ -22,12 +20,7 @@ import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller
-public class GroupParticipants {
-
-	private int actionInt = Constants.P_PARTICIPANT_LIST;
-	
-	@Autowired
-	private IGroupManager groupManager;
+public class GetEnrolledStudensListAjaxController {
 	
 	@Autowired
 	private IAutorizationManager authManager;
@@ -35,30 +28,31 @@ public class GroupParticipants {
 	@Autowired
 	private ILogManager logManager;
 	
-	@RequestMapping(value = "groupParticipants.do")
+	@Autowired
+	private IGroupManager groupManager;
+	
+	@RequestMapping(value = "getStudentsEnrolled.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView model;
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
-		if(authManager.isAutorized(actionInt, user)){
-			if(groupA.getDirector() == user.getId() || groupManager.isTeacherOrDirector(user, groupA.getIdGrupo())){
-				logManager.log(user.getId(), actionInt, "Ventana de lista de participantes", Constants.P_OK);
-				model = new ModelAndView("4-1.listaParticipantes");
-				model.addObject("group",groupA);
-				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
-				List<String> scripts = new ArrayList<String>();
-				scripts.add("js/4-1.js");
-				model.addObject("scripts",scripts);
-			}
-			else{
-				model = Constants.noPrivileges(user,logManager,actionInt,"Intento de ver lista de participantes de un grupo ajeno",request);
-			}
+		if(groupA == null){
+			model = new ModelAndView("5-2-errorAjax");
+			model.addObject("mensaje2", "p5-2.errorGroup");
 		}
 		else{
-			model = Constants.noPrivileges(user,logManager,actionInt,"mensaje",request);
-		}			
+			if(authManager.isAutorized(Constants.P_PARTICIPANT_LIST, user)){
+				model = new ModelAndView("ajax/4-1-listaSMatriculados");
+				List<Students> listaS = groupManager.getStudentParticipantList(groupA);
+				model.addObject("listaS", listaS);
+			}
+			else{
+				model = Constants.noPrivilegesA(user, logManager, Constants.P_PARTICIPANT_LIST, "Sin permisos para ver la lista de usuarios matriculados en grupo (" + groupA.getName() + ")"  + groupA.getIdGrupo());
+			}
+		}
 		return model;
 	}
+
 }

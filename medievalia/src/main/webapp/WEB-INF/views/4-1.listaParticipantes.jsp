@@ -1,11 +1,26 @@
+<%@page import="com.cvilla.medievalia.domain.Teachers"%>
+<%@page import="com.cvilla.medievalia.domain.Students"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/header.jsp"%>
 
+<% 
+@SuppressWarnings("unchecked")
+List<Students> ls = (List<Students>)request.getAttribute("listaS"); 
+@SuppressWarnings("unchecked")
+List<Teachers> lt = (List<Teachers>)request.getAttribute("listaT");%>
+
 <div class="container">
 	<h2><fmt:message key="p4-1.titulo"></fmt:message> </h2>
-	<div class="modal-body" id="divListaUsers">
-							
+</div>
+<div class="container">
+	<div class="row">
+		<div class="panel panel-default col-lg-6" id="listaAlumnos">
+			
+		</div>
+		<div class="panel panel-default col-lg-6" id="listaProfesores">
+			
+		</div>
 	</div>
 </div>
 

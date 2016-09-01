@@ -14,6 +14,7 @@ public class TeacherMapper implements RowMapper<Teachers> {
 		t.setName(rs.getString("name"));
 		t.setDirectorName(rs.getString("directorName"));
 		t.setIdDirector(rs.getInt("idDirector"));
+		t.setTeacherName(rs.getString("teacherName"));
 		return t;
 	}
 

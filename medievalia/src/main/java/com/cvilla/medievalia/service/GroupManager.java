@@ -249,13 +249,11 @@ public class GroupManager implements IGroupManager {
 	}
 
 	public List<Students> getStudentParticipantList(Group group) {
-		// TODO Tarea actual
-		return null;
+		return groupDAO.getEnrolledStudents(group);
 	}
 
 	public List<Teachers> getTeacherParticipantList(Group group) {
-		// TODO Tarea actual
-		return null;
+		return groupDAO.getEnrolledTeachers(group);
 	}
 
 }

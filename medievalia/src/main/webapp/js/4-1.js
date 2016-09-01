@@ -1,6 +1,16 @@
 $(document).ready(function(){
 	
-	cargaLista();
+	$.post("getStudentsEnrolled.do",{
+		par : "ok"
+	},function(data){
+		$("#listaAlumnos").html(data);
+	});
+	
+	$.post("getTeachersEnrolled.do",{
+		par : "ok"
+	},function(data){
+		$("#listaProfesores").html(data);
+	});
 });
 
 function cargaLista(){
