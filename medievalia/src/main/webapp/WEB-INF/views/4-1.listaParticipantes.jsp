@@ -15,11 +15,15 @@ List<Teachers> lt = (List<Teachers>)request.getAttribute("listaT");%>
 </div>
 <div class="container">
 	<div class="row">
+		<div class="panel panel-default">
+			<button class="button" data-toggle="modal" data-target="#modalMatricularAlumno">Matricular</button>
+		</div>
+	</div>
+	<div class="row">
 		<div class="panel panel-default col-lg-6" id="listaAlumnos">
 			
 		</div>
 		<div class="panel panel-default col-lg-6" id="listaProfesores">
-			
 		</div>
 	</div>
 </div>

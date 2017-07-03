@@ -1,7 +1,8 @@
-	<%@page import="com.cvilla.medievalia.domain.Students"%>
+<%@page import="com.cvilla.medievalia.domain.Students"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt"%>
 <%
 	@SuppressWarnings("unchecked")
 	List<Students> ls = (List<Students>)request.getAttribute("listaS");  %>

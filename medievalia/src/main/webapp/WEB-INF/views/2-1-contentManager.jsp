@@ -1,3 +1,4 @@
+<%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
 <%@page import="com.cvilla.medievalia.domain.Tema"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -10,6 +11,7 @@
 	@SuppressWarnings(value="unchecked")
 	List<Tema> listaTemas = (List<Tema>) request.getAttribute("listaTemas");
 	User director = (User)request.getAttribute("director");
+	User user = (User)request.getAttribute("user");
 %>
 <%if(message.equals("p3.1.msg.ok") && g != null){ %>
 <div class="container">
@@ -41,7 +43,9 @@
 				<!-- TODO: Insertar lista de profesores y número de alumnos -->
 				<p>Profe, profe2, profe3</p>
 				<p><fmt:message key="p2-1.numAlumnos"></fmt:message>&nbsp;5</p>
+				<%if(user.getUser_role() == Constants.ROLE_PROFESOR){ %>
 				<p><button type="button" class="btn btn-default" id="btnMatricularAlumnos"><fmt:message key="p2-1.listaUsuarios.btn"></fmt:message></button></p>
+				<%} %>
 			</div>
 		</div>
 	</div>

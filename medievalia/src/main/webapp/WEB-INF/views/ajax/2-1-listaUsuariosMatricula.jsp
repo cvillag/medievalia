@@ -35,11 +35,12 @@ else{%>
 		</tr>
 	</thead>
 	<tbody>
-	<%for(User u : lu){ 
+	<%
+	for(User u : lu){ 
 		if(u.getUser_role() == Constants.ROLE_PROFESOR){%>
-		<tr class="profe">
+		<tr class="profe" id="enroll<%=u.getId()%>">
 		<%}else{ %>
-		<tr class="alumno">
+		<tr class="alumno" id="enroll<%=u.getId()%>">
 		<%} %>
 			<td><%=u.getUser_long_name() %>
 			</td>

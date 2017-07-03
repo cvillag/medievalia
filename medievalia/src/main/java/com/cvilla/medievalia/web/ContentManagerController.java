@@ -49,12 +49,13 @@ public class ContentManagerController {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		Group activeGroup  = (Group) sesion.getAttribute("grupoActual");
-		if(errorParam(request) && activeGroup==null){
-			model = Constants.paramError(logManager,Constants.P_LOGIN,user.getId());
-			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
-		}
-		else{
-			if(authManager.isAutorized(actionInt, user)){
+		
+		if(authManager.isAutorized(actionInt, user)){
+			if(errorParam(request) && activeGroup==null){
+				model = Constants.paramError(logManager,Constants.P_LOGIN,user.getId());
+				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+			}
+			else{
 				String message;
 				model = new ModelAndView("2-1-contentManager");
 				User director;
@@ -76,21 +77,22 @@ public class ContentManagerController {
 						List<Tema> listaTemas = temaManager.getTemaGrupoByGroup(g);
 						model.addObject("listaTemas", listaTemas);
 						model.addObject("director",director);
+						model.addObject("user",user);
 					}
 					else{
 						message = "p3.1.msg.grpNoExiste";
 					}
+					model.addObject("message", message);
+					model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+					List<String> scripts = new ArrayList<String>();
+					scripts.add("js/2-1.js");
+					model.addObject("scripts",scripts);
 				}
-				model.addObject("message", message);
-				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
-				List<String> scripts = new ArrayList<String>();
-				scripts.add("js/2-1.js");
-				model.addObject("scripts",scripts);
-			}
-			else{
-				model = Constants.noPrivileges(user,logManager,actionInt,"mensaje",request);
-			}			
+			}		
 		}
+		else{
+			model = Constants.noPrivileges(user,logManager,actionInt,"mensaje",request);
+		}	
 		return model;
 	}
 	
