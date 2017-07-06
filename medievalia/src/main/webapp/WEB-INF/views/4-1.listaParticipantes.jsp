@@ -26,6 +26,14 @@ List<Teachers> lt = (List<Teachers>)request.getAttribute("listaT");%>
 		<div class="panel panel-default col-lg-6" id="listaProfesores">
 		</div>
 	</div>
+	<div class="row">
+		<div id="desresultOk" class="modal-body alert alert-success" role="alert" >
+			<fmt:message key="p2.1.desmatricular.resultOk"></fmt:message>
+		</div>
+		<div id="desresultNok" class="modal-body alert alert-danger" role="alert" >
+			<fmt:message key="p2.1.desmatricular.resultNok"></fmt:message>
+		</div>
+	</div>
 </div>
 
 
@@ -57,4 +65,5 @@ List<Teachers> lt = (List<Teachers>)request.getAttribute("listaT");%>
 		</div>
 	</div>
 </div>
+
 <%@ include file="/WEB-INF/views/footer.jsp"%>

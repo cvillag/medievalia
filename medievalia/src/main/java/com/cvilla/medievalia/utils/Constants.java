@@ -47,7 +47,10 @@ public class Constants {
 	public static final int P_ADD_STUDENT_TO_GROUP = 30;
 	public static final int P_ADD_TEACHER_TO_GROUP = 31;
 	public static final int P_LIST_USERS_TO_ADD_GROUP = 32;
-	public static final int P_PARTICIPANT_LIST = 33; 
+	public static final int P_PARTICIPANT_LIST = 33;
+	public static final int P_REMOVE_STUDENT_TO_GROUP = 34;
+	public static final int P_REMOVE_TEACHER_TO_GROUP = 35;
+	public static final int P_DELETE_TOPIC = 36;
 
 	
 	public static final int P_OK = 1;

@@ -34,6 +34,7 @@ public class TemaDAO implements ITemaDAO {
 	private static String GET_TEMA_LIST_BY_GROUP = "select sel2.idTema, sel2.nombre, idGrupo, nombreGrupo, count(idSubtema) as numSubtemas from (select idTema, nombre, idGrupo, name as nombreGrupo from (select idTema, nombre, idGrupo from tema where idGrupo = ?) as sel1 left join groups on groups.idGroup = sel1.idGrupo) as sel2 left join subtema on sel2.idTema = subtema.idTema group by idTema";
 	private static String GET_SUBTEMA_LIST_BY_IDTEMA = "select idSubtema, subtema.idTema, subtema.nombre as nombreSubtema, tema.nombre as nombreTema from subtema left join tema on subtema.idTema = tema.idTema where subtema.idTema = ?";
 	private static String RENAME_TEMA = "update tema set nombre = ? where idTema = ?";
+	private static String DELETE_TEMA = "DELETE FROM `tema` WHERE idTema = ?";
 	
 	
 	public Tema getTemaById(int id) {
@@ -113,6 +114,21 @@ public class TemaDAO implements ITemaDAO {
 		}
 		catch(Exception e){
 			return "noCreado";
+		}
+	}
+
+	public String deleteTema(int idTema) {
+		try{
+			int num = jdbcTemplate.update(DELETE_TEMA, new Object[]{idTema});
+			if(num == 1){
+				return "borrado";
+			}
+			else{
+				return "noBorrado";
+			}
+		}
+		catch(Exception e){
+			return "noBorrado";
 		}
 	}
 }

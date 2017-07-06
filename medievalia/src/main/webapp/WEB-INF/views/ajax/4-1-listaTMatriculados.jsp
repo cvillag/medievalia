@@ -30,7 +30,7 @@
 								<%=s.getTeacherName() %>
 							</td>
 							<td>
-								<button type="button" class="button" data-val="<%=s.getIdTeacher()%>"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+								<button type="button" class="button unenrollT" data-val="<%=s.getIdTeacher()%>"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
 							</td>
 						</tr>
 						<%} %>

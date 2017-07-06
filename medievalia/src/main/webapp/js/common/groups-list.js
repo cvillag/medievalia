@@ -10,7 +10,7 @@ $(document).ready(function(){
 		idDir : userId,
 	}, function(responseText){
 		$("#group-block1").html(responseText);
-		$(".selectgrp").click(function(){
+		$(".selgrp").click(function(){
 			idGroup = $(this).data('val');
 			grSel = idGroup;
 			$("#idGroup").val(grSel);
@@ -23,7 +23,7 @@ $(document).ready(function(){
 		idTeach : userId,
 	}, function(responseText){
 		$("#group-block2").html(responseText);
-		$(".selectgrp").click(function(){
+		$(".selgrp").click(function(){
 			idGroup = $(this).data('val');
 			grSel = idGroup;
 			$("#idGroup").val(grSel);
@@ -35,7 +35,7 @@ $(document).ready(function(){
 		idStud : userId,
 	}, function(responseText){
 		$("#group-block3").html(responseText);
-		$(".selectgrp").click(function(){
+		$(".selgrp").click(function(){
 			idGroup = $(this).data('val');
 			grSel = idGroup;
 			$("#idGroup").val(grSel);

@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	var deleteTopic;
 	$("#secondForm").hide();
 	
 	$.post("topicListA.do",
@@ -75,6 +76,23 @@ $(document).ready(function(){
 			var topicId = $(this).data('val');
 			$("#idTopic").val(topicId);
 			$("#topicDetail").submit();
+		});
+		
+		$(".deleteTopic").click(function(){
+			deleteTopic = $(this).data('val');
+			$("#modalBorrarTema").modal();
+		});
+		
+		$("#modalborrar").click(function(){
+			$.post("topicDeletion.do",{
+				idTopic : deleteTopic
+			},
+			function(data){
+				var json = JSON.parse(data);
+				$("#modalBorrar" + json.message).modal();
+				$("#numSubt").html(json.nsubt);
+				$("#row"+deleteTopic).remove();
+			});
 		});
 	}
 });

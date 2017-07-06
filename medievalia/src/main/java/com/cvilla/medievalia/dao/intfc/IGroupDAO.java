@@ -26,4 +26,6 @@ public interface IGroupDAO {
 	public List<User> getPossibleUsersListToGroup(Group group, String filter);
 	public List<Students> getEnrolledStudents(Group group);
 	public List<Teachers> getEnrolledTeachers(Group group);
+	public String removeStudent(int idGrupo, User student);
+	public String removeTeacher(int idGrupo, User teacher);
 }

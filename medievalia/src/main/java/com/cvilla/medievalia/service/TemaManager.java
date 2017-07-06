@@ -113,4 +113,20 @@ public class TemaManager implements ITemaManager {
 			}
 		}
 	}
+
+	public String deleteTema(int idTema, User user, Group g) {
+		Tema t = getTema(idTema);
+		if(t== null){
+			return "noTopic";
+		}
+		else{
+			List<Tema> li = getTemaGrupoByGroup(g);
+			if(!existeTemaEnGrupo(g, li, t.getNombre())){
+				return "noGroup";
+			}
+			else{
+				return temaDAO.deleteTema(t.getIdTema());
+			}
+		}
+	}
 }

@@ -58,7 +58,7 @@
 				<%}
           	else{
           	%>
-				<a class="navbar-brand" href="main.do">Medievalia / <%=grupoactual.getName()%></a>
+				<a class="navbar-brand" href="main.do">Medievalia </a><a class="navbar-brand" href="contentManager.do">/&nbsp;<%=grupoactual.getName()%></a>
 				<%} %>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">

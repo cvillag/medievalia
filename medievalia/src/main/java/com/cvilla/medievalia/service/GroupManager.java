@@ -256,4 +256,66 @@ public class GroupManager implements IGroupManager {
 		return groupDAO.getEnrolledTeachers(group);
 	}
 
+	public String removeStudent(Group group, int idstudent, User user) {
+		if(group.getDirector() == idstudent){
+			return "alreadyDirector";
+		}
+		else{
+			User student = userManager.getUser(idstudent);
+			if(student== null){
+				return "noUser";
+			}
+			else{
+				if(isTeacherOrDirector(user, group.getIdGrupo())){
+					try {
+						if(groupDAO.isTeacher(group.getIdGrupo(), student)){
+							return "alreadyTeacher";
+						}
+						else{
+							return groupDAO.removeStudent(group.getIdGrupo(), student);
+						}
+					} catch (Exception e) {
+						return "error";
+					}
+				}
+				else{
+					return "noDirector";
+				}
+			}
+		}
+	}
+
+	public String removeTeacher(Group group, int idteacher, User user) {
+		if(group.getDirector() == idteacher){
+			return "alreadyDirector";
+		}
+		else{
+			User teacher = userManager.getUser(idteacher);
+			if(teacher == null){
+				return "noUser";
+			}
+			else{
+				if(teacher.getUser_role() != Constants.ROLE_PROFESOR){
+					return "noTeacher";
+				}
+				else{
+					try {
+						if(group.getDirector() == user.getId() || groupDAO.isStudent(group.getIdGrupo(), teacher)){
+							if(groupDAO.isStudent(group.getIdGrupo(), teacher)){
+								return "alreadyStudent";
+							}
+							else{
+								return groupDAO.removeTeacher(group.getIdGrupo(), teacher);
+							}
+						}
+						else{
+							return "noTeacherOrDirector";
+						}
+					} catch (Exception e) {
+						return "error";
+					}
+				}
+			}
+		}
+	}
 }

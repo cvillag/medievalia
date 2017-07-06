@@ -111,7 +111,172 @@
 		</div>
 	</div>
 </div>
+
+<div id="modalBorrarTema" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<fmt:message key="p2-5.modal6"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p2-5.modal7"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalborrar" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div id="modalBorrarnoId" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<fmt:message key="p2-5.modal6"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p2-5.modal8"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalborrar" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalBorrarnoPrivileges" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<fmt:message key="p2-5.modal6"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p2-5.modal9"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalborrar" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalBorrarnoTopic" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<fmt:message key="p2-5.modal6"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p2-5.modal10"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalborrar" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalBorrarnoGroup" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<fmt:message key="p2-5.modal6"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p2-5.modal9"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalborrar" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalBorrarnoBorrado" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<fmt:message key="p2-5.modal6"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p2-5.modal11"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalborrar" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalBorrarborrado" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<fmt:message key="p2-5.modal6"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p2-5.modal12"></fmt:message><span id="numSubt"></span>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalborrar" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <form id="topicDetail" method="post" action="topicDetail.do">
 	<input type="hidden" name="idTopic" id="idTopic"/>
 </form>
+
 <%@ include file="/WEB-INF/views/footer.jsp"%>

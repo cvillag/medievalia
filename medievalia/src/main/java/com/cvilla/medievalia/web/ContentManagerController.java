@@ -64,7 +64,6 @@ public class ContentManagerController {
 					message = "p3.1.msg.ok";
 					List<Tema> listaTemas = temaManager.getTemaGrupoByGroup(activeGroup);
 					model.addObject("listaTemas", listaTemas);
-					model.addObject("director",director);
 				}
 				else{
 					int idGroup = (new Integer(request.getParameter("idGroup"))).intValue();
@@ -76,18 +75,19 @@ public class ContentManagerController {
 						message = "p3.1.msg.ok";
 						List<Tema> listaTemas = temaManager.getTemaGrupoByGroup(g);
 						model.addObject("listaTemas", listaTemas);
-						model.addObject("director",director);
-						model.addObject("user",user);
+						
 					}
 					else{
 						message = "p3.1.msg.grpNoExiste";
 					}
-					model.addObject("message", message);
-					model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
-					List<String> scripts = new ArrayList<String>();
-					scripts.add("js/2-1.js");
-					model.addObject("scripts",scripts);
 				}
+				model.addObject("message", message);
+				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+				model.addObject("director",director);
+				model.addObject("user",user);
+				List<String> scripts = new ArrayList<String>();
+				scripts.add("js/2-1.js");
+				model.addObject("scripts",scripts);
 			}		
 		}
 		else{

@@ -35,6 +35,8 @@ public class GroupDAO implements IGroupDAO {
 	private static final String GET_USER_NOT_IN_GROUP_FILTER = "select user_id, user_name, user_long_name, user_role, ' ' as user_pass from users where user_id not in (select idStudent from students where idGroup = ?) and user_id not in (select idTeacher from teachers where idGroup = ?) and user name like '%?%'  and user_id != 0  and (user_role = 2 or user_role = 3) and user_id != ?";
 	private static final String GET_STUDENTS_LIST_BY_GROUP = "select groupName, idStudent, idGroup, idDirector, studentName, user_long_name as directorName from (select groupName, idStudent, idGroup, idDirector, user_long_name as studentName from (select name as groupName, idStudent, sel1.idGroup, director as idDirector from (SELECT * FROM `students` WHERE idGroup = ?) as sel1 left join groups on groups.idGroup = sel1.idGroup) as sel2 left join users on idStudent = user_id) as sel3 left join users on idDirector = user_id";
 	private static final String GET_TEACHERS_LIST_BY_GROUP = "select groupName as name, idTeacher, idGroup, idDirector, teacherName, user_long_name as directorName from (select groupName, idTeacher, idGroup, idDirector, user_long_name as teacherName from (select name as groupName, idTeacher, sel1.idGroup, director as idDirector from (SELECT * FROM `teachers` WHERE idGroup = ?) as sel1 left join groups on groups.idGroup = sel1.idGroup) as sel2 left join users on idTeacher = user_id) as sel3 left join users on idDirector = user_id";
+	private static final String REMOVE_STUDENT = "DELETE FROM `students` WHERE `idStudent` = ? and `idGroup`= ?";
+	private static final String REMOVE_TEACHER = "DELETE FROM `teachers` WHERE `idteacher` = ? and `idGroup`= ?";
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -253,6 +255,42 @@ public class GroupDAO implements IGroupDAO {
 		}
 		catch(Exception e){
 			return null;
+		}
+	}
+
+	public String removeStudent(int idGrupo, User student) {
+		try{
+			int r = jdbcTemplate.update(REMOVE_STUDENT, new Object[]{student.getId(),idGrupo});
+			if(r == 1){
+				return "desmatriculado";
+			}
+			else{
+				return "error";
+			}
+		}
+		catch(DataIntegrityViolationException e){
+			return "duplicado";
+		}
+		catch (Exception e){
+			return "error";
+		}
+	}
+
+	public String removeTeacher(int idGrupo, User teacher) {
+		try{
+			int r = jdbcTemplate.update(REMOVE_TEACHER, new Object[]{teacher.getId(),idGrupo});
+			if(r == 1){
+				return "desmatriculado";
+			}
+			else{
+				return "error";
+			}
+		}
+		catch(DataIntegrityViolationException e){
+			return "duplicado";
+		}
+		catch (Exception e){
+			return "error";
 		}
 	}
 }
