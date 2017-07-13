@@ -18,7 +18,7 @@ import com.cvilla.medievalia.service.intf.ITemaManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller 
-public class RenameTopicAjaxController {
+public class RenameSubTopicAjaxController {
 
 	@Autowired
 	private IAutorizationManager authManager;
@@ -29,7 +29,7 @@ public class RenameTopicAjaxController {
 	@Autowired
 	private ITemaManager temaManager;
 	
-	@RequestMapping(value = "renameTopicA.do")
+	@RequestMapping(value = "renameSubtopicA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		HttpSession sesion = request.getSession();
@@ -38,24 +38,26 @@ public class RenameTopicAjaxController {
 		ModelAndView model = new ModelAndView("ajax/empty");
 		JSONObject j = new JSONObject();
 		if(errorParam(request)){
-			model = Constants.paramError(logManager,user.getId(),Constants.P_RENAME_TOPIC);
+			model = Constants.paramError(logManager,user.getId(),Constants.P_RENAME_SUBTOPIC);
 		}
 		else{
-			String nombre = request.getParameter("nombreTema");
-			int idTema = (new Integer(request.getParameter("topicId"))).intValue();
-			if(authManager.isAutorized(Constants.P_RENAME_TOPIC, user)){
-				String message = temaManager.renameTema(nombre,idTema,user,groupA);
+			String nombre = request.getParameter("newName");
+			int idSubTema = (new Integer(request.getParameter("idSubtema"))).intValue();
+			int idTema = (new Integer(request.getParameter("idTema"))).intValue();
+			if(authManager.isAutorized(Constants.P_RENAME_SUBTOPIC, user)){
+				String message = temaManager.renameSubTema(nombre,idTema,idSubTema,user,groupA);
 				j.put("message", message);
+				j.put("id", idSubTema);
 				model.addObject("json", j);
 				if(message.equals("cambiado")){
-					logManager.log(user.getId(), Constants.P_RENAME_TOPIC, "Renombrar tema. Nuevo nombre: " + nombre + " en tema id = " + idTema, Constants.P_OK);
+					logManager.log(user.getId(), Constants.P_RENAME_SUBTOPIC, "Renombrar tema. Nuevo nombre: " + nombre + " en tema id = " + idTema, Constants.P_OK);
 				}
 				else{
-					logManager.log(user.getId(), Constants.P_RENAME_TOPIC, "Renombrar tema. Nuevo nombre: " + nombre + " en tema id = " + idTema + ". Fallido: mensaje = " + message, Constants.P_NOK);
+					logManager.log(user.getId(), Constants.P_RENAME_SUBTOPIC, "Renombrar tema. Nuevo nombre: " + nombre + " en tema id = " + idTema + ". Fallido: mensaje = " + message, Constants.P_NOK);
 				}
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,Constants.P_RENAME_TOPIC,"Intento cambio de nombre de tema con ID: " + idTema);
+				model = Constants.noPrivilegesA(user,logManager,Constants.P_RENAME_SUBTOPIC,"Intento cambio de nombre de tema con ID: " + idTema);
 			}
 		}
 		
@@ -63,7 +65,8 @@ public class RenameTopicAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("topicId") == null &&
-				request.getParameter("nombreTema") == null;
+		return request.getParameter("idTema") == null &&
+				request.getParameter("idSubtema") == null &&
+				request.getParameter("newName") == null;
 	}
 }

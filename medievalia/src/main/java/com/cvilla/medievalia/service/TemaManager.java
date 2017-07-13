@@ -129,4 +129,36 @@ public class TemaManager implements ITemaManager {
 			}
 		}
 	}
+
+	public String renameSubTema(String nombre, int idTema, int idSubTema, User user,Group groupA) {
+		if(nombre.length() < Constants.MIN_TEMA_NAME){
+			return "noLength";
+		}
+		else{
+			Tema t = temaDAO.getTemaById(idTema);
+			SubTema st = temaDAO.getSubTema(idSubTema);
+			//SubTema st = temaDAO.getSubTemaByName(nombre, groupA);
+			if( t == null){
+				return "noTopic";
+			}
+			else{
+				if(st == null){
+					return "noSubTopic";
+				}
+				else{
+					if(t.getIdTema() != st.getIdTema()){
+						return "topicMismatch";
+					}
+					else{
+						if(!groupManager.isTeacherOrDirector(user, t.getIdGroup())){
+							return "noPrivileges";
+						}
+						else{
+							return temaDAO.renameSubTopic(idSubTema,nombre);
+						}
+					}
+				}
+			}
+		}
+	}
 }

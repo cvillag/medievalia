@@ -9,11 +9,55 @@ $(document).ready(function(){
 	$("#firstForm").show();
 	$("#secondForm").hide();
 	
+	
 	$.post("subtopicListA.do",
 			{idTema : idTema},
 			function(data){
 				$("#listasubtemas").html(data);
+				$(".saveNewName").hide();
+				$(".cancelNewName").hide();
+				$(".activarSNombre").click(function(){
+					$("#st" + $(this).data('val')).removeAttr("disabled");
+					$("#saveSt" + $(this).data('val')).show();
+					$("#cancelSt" + $(this).data('val')).show();
+				});
 				//postCarga();
+				
+				$(".cancelNewName").click(function(){
+					$("#cancelSt" + $(this).data('val')).hide();
+					$("#saveSt" + $(this).data('val')).hide();
+					$("#st" + $(this).data('val')).attr("disabled","true");
+				});
+				
+				$(".saveNewName").click(function(){
+					$.post("renameSubtopicA.do",
+						{idTema : $("#idTema").val(),
+						idSubtema : $(this).data('val'),
+						newName : $("#st"+$(this).data('val')).val()},
+						function(data){
+							var json = JSON.parse(data);
+							if(json.message == "cambiado"){
+								$("#modalRenSTema1").modal();
+								$("#cancelSt" + json.id).hide();
+								$("#saveSt" + json.id).hide();
+								$("#st" + json.id).attr("disabled","true");
+							}
+							else if(json.message == "noTopic"){
+								$("#modalRenSTema2").modal();
+							}
+							else if(json.message == "noSubTopic"){
+								$("#modalRenSTema3").modal();
+							}
+							else if(json.message == "topicMismatch"){
+								$("#modalRenSTema4").modal();
+							}
+							else if(json.message == "noPrivileges"){
+								$("#modalRenSTema5").modal();
+							}
+							
+						}
+					);
+				});
 	});
 	
 	$("#showform").click(function(){
@@ -42,7 +86,7 @@ $(document).ready(function(){
 				$("#modalRenTema").modal();
 			}
 			else{
-				$.post("renameUserA.do",
+				$.post("renameTopicA.do",
 					{topicId : $("#idTema").val(),
 					nombreTema : $("#nombreTema").val()},
 					function(data){

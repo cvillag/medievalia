@@ -51,6 +51,7 @@ public class Constants {
 	public static final int P_REMOVE_STUDENT_TO_GROUP = 34;
 	public static final int P_REMOVE_TEACHER_TO_GROUP = 35;
 	public static final int P_DELETE_TOPIC = 36;
+	public static final int P_RENAME_SUBTOPIC = 37;
 
 	
 	public static final int P_OK = 1;

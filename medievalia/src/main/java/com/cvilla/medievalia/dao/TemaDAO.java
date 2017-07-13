@@ -35,6 +35,9 @@ public class TemaDAO implements ITemaDAO {
 	private static String GET_SUBTEMA_LIST_BY_IDTEMA = "select idSubtema, subtema.idTema, subtema.nombre as nombreSubtema, tema.nombre as nombreTema from subtema left join tema on subtema.idTema = tema.idTema where subtema.idTema = ?";
 	private static String RENAME_TEMA = "update tema set nombre = ? where idTema = ?";
 	private static String DELETE_TEMA = "DELETE FROM `tema` WHERE idTema = ?";
+	private static String GET_STEMA_BY_NAME = "select idSubtema, idTema, nombre from subtema where nombre = ? and idTema = ?";
+	private static String GET_STEMA = "select idSubtema, sel1.idTema, nombreSubtema, tema.nombre as nombreTema from (select idSubtema, idTema, nombre as nombreSubtema from subtema where idSubtema = ?) as sel1 left join tema on sel1.idTema = tema.idTema";
+	private static String RENAME_SUBTEMA = "UPDATE `subtema` SET `nombre`= ? WHERE idSubtema = ?";
 	
 	
 	public Tema getTemaById(int id) {
@@ -129,6 +132,39 @@ public class TemaDAO implements ITemaDAO {
 		}
 		catch(Exception e){
 			return "noBorrado";
+		}
+	}
+
+	public SubTema getSubTemaByName(String name, Group g) {
+		try{
+			return jdbcTemplate.queryForObject(GET_STEMA_BY_NAME,new Object[]{name,g.getIdGrupo()}, new SubTemaMapper());
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
+
+	public String renameSubTopic(int idSubTema, String nombre) {
+		try{
+			int num = jdbcTemplate.update(RENAME_SUBTEMA,new Object[]{nombre,idSubTema});
+			if(num == 1){
+				return "cambiado";
+			}
+			else{
+				return "noCambiado";
+			}
+		}
+		catch(Exception e){
+			return "error";
+		}
+	}
+
+	public SubTema getSubTema(int idSubTema) {
+		try{
+			return jdbcTemplate.queryForObject(GET_STEMA,new Object[]{idSubTema}, new SubTemaMapper());
+		}
+		catch(Exception e){
+			return null;
 		}
 	}
 }

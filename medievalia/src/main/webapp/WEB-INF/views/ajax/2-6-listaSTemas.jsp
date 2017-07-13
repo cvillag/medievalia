@@ -15,10 +15,21 @@ List<SubTema> lista = (List<SubTema>)request.getAttribute("listaSubTemas");
 	<tbody>
 		<%for(SubTema t : lista){%>
 		<tr>
-			<td><%=t.getNombreSubtema()%></td>
 			<td>
-				<button type="button" class="btn btn-default topicDetail" data-val="<%=t.getIdTema()%>">
-					<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+				<input type="text" id="st<%=t.getIdSubtema()%>" value="<%=t.getNombreSubtema()%>" disabled>
+				<button type="button" id="saveSt<%=t.getIdSubtema()%>" class="btn btn-default saveNewName" data-val="<%=t.getIdSubtema()%>">
+					<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+				</button>
+				<button type="button" id="cancelSt<%=t.getIdSubtema()%>" class="btn btn-default cancelNewName" data-val="<%=t.getIdSubtema()%>">
+					<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+				</button>
+			</td>
+			<td>
+				<button type="button" class="btn btn-default activarSNombre" data-val="<%=t.getIdSubtema()%>">
+					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+				</button>
+				<button type="button" class="btn btn-default deleteTopic" data-val="<%=t.getIdSubtema()%>">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 				</button>
 			</td>
 		</tr>
