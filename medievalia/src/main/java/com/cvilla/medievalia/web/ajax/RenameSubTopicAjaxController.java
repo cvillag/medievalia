@@ -48,13 +48,18 @@ public class RenameSubTopicAjaxController {
 				String message = temaManager.renameSubTema(nombre,idTema,idSubTema,user,groupA);
 				j.put("message", message);
 				j.put("id", idSubTema);
-				model.addObject("json", j);
+				String oldName = temaManager.getSubTopicName(idSubTema);
+				
 				if(message.equals("cambiado")){
-					logManager.log(user.getId(), Constants.P_RENAME_SUBTOPIC, "Renombrar tema. Nuevo nombre: " + nombre + " en tema id = " + idTema, Constants.P_OK);
+					logManager.log(user.getId(), Constants.P_RENAME_SUBTOPIC, "Renombrar tema " + oldName + ". Nuevo nombre: " + nombre + " en tema id = " + idTema, Constants.P_OK);
 				}
 				else{
-					logManager.log(user.getId(), Constants.P_RENAME_SUBTOPIC, "Renombrar tema. Nuevo nombre: " + nombre + " en tema id = " + idTema + ". Fallido: mensaje = " + message, Constants.P_NOK);
+					logManager.log(user.getId(), Constants.P_RENAME_SUBTOPIC, "Renombrar tema " + oldName + ". Nuevo nombre: " + nombre + " en tema id = " + idTema + ". Fallido: mensaje = " + message, Constants.P_NOK);
+					if(message.equals("nameRepeat")){
+						j.put("oldName", oldName);
+					}
 				}
+				model.addObject("json", j);
 			}
 			else{
 				model = Constants.noPrivilegesA(user,logManager,Constants.P_RENAME_SUBTOPIC,"Intento cambio de nombre de tema con ID: " + idTema);

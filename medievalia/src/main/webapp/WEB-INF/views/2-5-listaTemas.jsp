@@ -36,9 +36,9 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-warning">
 					<fmt:message key="p2-5.modal2"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
@@ -57,9 +57,9 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-success">
 					<fmt:message key="p2-5.modal3"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
@@ -78,9 +78,9 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-warning">
 					<fmt:message key="p2-5.modal4"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
@@ -99,9 +99,9 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-danger">
 					<fmt:message key="p2-5.modal5"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
@@ -122,9 +122,9 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-warning">
 					<fmt:message key="p2-5.modal7"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalborrar" class="btn btn-default" data-dismiss="modal">
@@ -147,9 +147,9 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-danger">
 					<fmt:message key="p2-5.modal8"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalborrar" class="btn btn-default" data-dismiss="modal">
@@ -170,9 +170,9 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-danger">
 					<fmt:message key="p2-5.modal9"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalborrar" class="btn btn-default" data-dismiss="modal">
@@ -193,9 +193,9 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-danger">
 					<fmt:message key="p2-5.modal10"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalborrar" class="btn btn-default" data-dismiss="modal">
@@ -216,9 +216,9 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-danger">
 					<fmt:message key="p2-5.modal9"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalborrar" class="btn btn-default" data-dismiss="modal">
@@ -239,9 +239,9 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-danger">
 					<fmt:message key="p2-5.modal11"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalborrar" class="btn btn-default" data-dismiss="modal">
@@ -262,9 +262,9 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-success">
 					<fmt:message key="p2-5.modal12"></fmt:message><span id="numSubt"></span>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalborrar" class="btn btn-default" data-dismiss="modal">

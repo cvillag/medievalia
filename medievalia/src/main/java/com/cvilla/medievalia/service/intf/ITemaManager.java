@@ -23,5 +23,6 @@ public interface ITemaManager extends Serializable{
 	public String deleteTema(int idTema, User user, Group g);
 	public String renameSubTema(String nombre, int idTema, int idSubTema, User user,Group groupA);
 	public String deleteSubTema(int idTema, int idSubtema);
+	public String getSubTopicName(int idSubTema);
 
 }

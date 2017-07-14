@@ -1,3 +1,82 @@
+function cargaListaSubTemas(data){
+	$("#listasubtemas").html(data);
+	$(".saveNewName").hide();
+	$(".cancelNewName").hide();
+	$(".activarSNombre").click(function(){
+		$("#st" + $(this).data('val')).removeAttr("disabled");
+		$("#saveSt" + $(this).data('val')).show();
+		$("#cancelSt" + $(this).data('val')).show();
+	});
+	//postCarga();
+	
+	$(".cancelNewName").click(function(){
+		$("#cancelSt" + $(this).data('val')).hide();
+		$("#saveSt" + $(this).data('val')).hide();
+		$("#st" + $(this).data('val')).attr("disabled","true");
+	});
+	
+	$(".saveNewName").click(function(){
+		$.post("renameSubtopicA.do",
+			{idTema : $("#idTema").val(),
+			idSubtema : $(this).data('val'),
+			newName : $("#st"+$(this).data('val')).val()},
+			function(data){
+				var json = JSON.parse(data);
+				if(json.message == "cambiado"){
+					$("#modalRenSTema1").modal();
+					$("#cancelSt" + json.id).hide();
+					$("#saveSt" + json.id).hide();
+					$("#st" + json.id).attr("disabled","true");
+				}
+				else if(json.message == "noTopic"){
+					$("#modalRenSTema2").modal();
+				}
+				else if(json.message == "noSubTopic"){
+					$("#modalRenSTema3").modal();
+				}
+				else if(json.message == "topicMismatch"){
+					$("#modalRenSTema4").modal();
+				}
+				else if(json.message == "noPrivileges"){
+					$("#modalRenSTema5").modal();
+				}
+				else if(json.message == "nameRepeat"){
+					$("#st"+json.id).val(json.oldName);
+					$("#modalRenSTema6").modal();
+				}
+				
+			}
+		);
+	});
+	
+	$(".deleteSTopic").click(function(){
+		$.post("subtopicDeletion.do",
+				{idTema : $("#idTema").val(),
+				idSubtema : $(this).data('val')
+				},
+				function(data){
+					var json = JSON.parse(data);
+					if(json.message == "borrado"){
+						$("#strow" + json.idSubtema).remove();
+						$("#modalDelSTema1").modal();
+					}
+					else if(json.message == "noSubTopic"){
+						$("#modalDelSTema2").modal();
+					}
+					else if(json.message == "noTopic"){
+						$("#modalDelSTema3").modal();
+					}
+					else if(json.message == "topicMismatch"){
+						$("#modalDelSTema4").modal();
+					}
+					else{
+						$("#modalDelSTema5").modal();
+					}
+				}
+		);
+	});
+}
+
 $(document).ready(function(){
 	
 	var idTema = $("#idTema").val();
@@ -13,78 +92,7 @@ $(document).ready(function(){
 	$.post("subtopicListA.do",
 			{idTema : idTema},
 			function(data){
-				$("#listasubtemas").html(data);
-				$(".saveNewName").hide();
-				$(".cancelNewName").hide();
-				$(".activarSNombre").click(function(){
-					$("#st" + $(this).data('val')).removeAttr("disabled");
-					$("#saveSt" + $(this).data('val')).show();
-					$("#cancelSt" + $(this).data('val')).show();
-				});
-				//postCarga();
-				
-				$(".cancelNewName").click(function(){
-					$("#cancelSt" + $(this).data('val')).hide();
-					$("#saveSt" + $(this).data('val')).hide();
-					$("#st" + $(this).data('val')).attr("disabled","true");
-				});
-				
-				$(".saveNewName").click(function(){
-					$.post("renameSubtopicA.do",
-						{idTema : $("#idTema").val(),
-						idSubtema : $(this).data('val'),
-						newName : $("#st"+$(this).data('val')).val()},
-						function(data){
-							var json = JSON.parse(data);
-							if(json.message == "cambiado"){
-								$("#modalRenSTema1").modal();
-								$("#cancelSt" + json.id).hide();
-								$("#saveSt" + json.id).hide();
-								$("#st" + json.id).attr("disabled","true");
-							}
-							else if(json.message == "noTopic"){
-								$("#modalRenSTema2").modal();
-							}
-							else if(json.message == "noSubTopic"){
-								$("#modalRenSTema3").modal();
-							}
-							else if(json.message == "topicMismatch"){
-								$("#modalRenSTema4").modal();
-							}
-							else if(json.message == "noPrivileges"){
-								$("#modalRenSTema5").modal();
-							}
-							
-						}
-					);
-				});
-				
-				$(".deleteSTopic").click(function(){
-					$.post("subtopicDeletion.do",
-							{idTema : $("#idTema").val(),
-							idSubtema : $(this).data('val')
-							},
-							function(data){
-								var json = JSON.parse(data);
-								if(json.message == "borrado"){
-									$("#strow" + json.idSubtema).remove();
-									$("#modalDelSTema1").modal();
-								}
-								else if(json.message == "noSubTopic"){
-									$("#modalDelSTema2").modal();
-								}
-								else if(json.message == "noTopic"){
-									$("#modalDelSTema3").modal();
-								}
-								else if(json.message == "topicMismatch"){
-									$("#modalDelSTema4").modal();
-								}
-								else{
-									$("#modalDelSTema5").modal();
-								}
-							}
-					);
-				});
+				cargaListaSubTemas(data);
 	});
 	
 	$("#showform").click(function(){
@@ -153,7 +161,7 @@ $(document).ready(function(){
 		$.post("subtopicListA.do",
 				{idTema : idTema},
 				function(data){
-					$("#listasubtemas").html(data);
+					cargaListaSubTemas(data);
 		});
 		postCarga();
 	});
@@ -173,7 +181,7 @@ $(document).ready(function(){
 					$.post("subtopicListA.do",
 							{idTema : idTema},
 							function(data){
-								$("#listasubtemas").html(data);
+								cargaListaSubTemas(data);
 								//postCarga();
 					});
 					$("#nombreSTema").val("");

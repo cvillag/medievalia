@@ -97,13 +97,7 @@ public class TemaManager implements ITemaManager {
 					return "noGroup";
 				}
 				else{
-					List<SubTema> lista = temaDAO.getSubtemaList(t.getIdTema());
-					boolean enc = false;
-					int i = 0;
-					while (!enc && i < lista.size()){
-						enc = name.equals(lista.get(i++).getNombreSubtema());
-					}
-					if(enc){
+					if(subtemaAlreadyExists(name, temaDAO.getSubtemaList(t.getIdTema()))){
 						return "nameRepeat";
 					}
 					else{
@@ -154,7 +148,12 @@ public class TemaManager implements ITemaManager {
 							return "noPrivileges";
 						}
 						else{
-							return temaDAO.renameSubTopic(idSubTema,nombre);
+							if(subtemaAlreadyExists(nombre, temaDAO.getSubtemaList(t.getIdTema()))){
+								return "nameRepeat";
+							}
+							else{
+								return temaDAO.renameSubTopic(idSubTema,nombre);
+							}
 						}
 					}
 				}
@@ -182,5 +181,21 @@ public class TemaManager implements ITemaManager {
 				}
 			}
 		}
+	}
+	
+	
+	
+	private boolean subtemaAlreadyExists(String name, List<SubTema> lst){
+		boolean enc = false;
+		int i = 0;
+		while (!enc && i < lst.size()){
+			enc = name.equals(lst.get(i++).getNombreSubtema());
+		}
+		return enc;
+	}
+
+	public String getSubTopicName(int idSubTema) {
+		SubTema st = temaDAO.getSubTema(idSubTema);
+		return st.getNombreSubtema();
 	}
 }
