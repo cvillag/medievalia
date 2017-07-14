@@ -58,6 +58,33 @@ $(document).ready(function(){
 						}
 					);
 				});
+				
+				$(".deleteSTopic").click(function(){
+					$.post("subtopicDeletion.do",
+							{idTema : $("#idTema").val(),
+							idSubtema : $(this).data('val')
+							},
+							function(data){
+								var json = JSON.parse(data);
+								if(json.message == "borrado"){
+									$("#strow" + json.idSubtema).remove();
+									$("#modalDelSTema1").modal();
+								}
+								else if(json.message == "noSubTopic"){
+									$("#modalDelSTema2").modal();
+								}
+								else if(json.message == "noTopic"){
+									$("#modalDelSTema3").modal();
+								}
+								else if(json.message == "topicMismatch"){
+									$("#modalDelSTema4").modal();
+								}
+								else{
+									$("#modalDelSTema5").modal();
+								}
+							}
+					);
+				});
 	});
 	
 	$("#showform").click(function(){

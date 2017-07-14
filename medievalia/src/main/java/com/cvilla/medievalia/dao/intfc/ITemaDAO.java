@@ -20,4 +20,5 @@ public interface ITemaDAO {
 	public String deleteTema(int idTema);
 	public String renameSubTopic(int idSubTema, String nombre);
 	public SubTema getSubTema(int idSubTema);
+	public String deleteSubtema(int idSubtema);
 }

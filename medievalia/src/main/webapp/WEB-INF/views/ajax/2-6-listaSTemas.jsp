@@ -14,7 +14,7 @@ List<SubTema> lista = (List<SubTema>)request.getAttribute("listaSubTemas");
 	</thead>
 	<tbody>
 		<%for(SubTema t : lista){%>
-		<tr>
+		<tr id="strow<%=t.getIdSubtema()%>">
 			<td>
 				<input type="text" id="st<%=t.getIdSubtema()%>" value="<%=t.getNombreSubtema()%>" disabled>
 				<button type="button" id="saveSt<%=t.getIdSubtema()%>" class="btn btn-default saveNewName" data-val="<%=t.getIdSubtema()%>">
@@ -28,7 +28,7 @@ List<SubTema> lista = (List<SubTema>)request.getAttribute("listaSubTemas");
 				<button type="button" class="btn btn-default activarSNombre" data-val="<%=t.getIdSubtema()%>">
 					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 				</button>
-				<button type="button" class="btn btn-default deleteTopic" data-val="<%=t.getIdSubtema()%>">
+				<button type="button" class="btn btn-default deleteSTopic" data-val="<%=t.getIdSubtema()%>">
 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 				</button>
 			</td>

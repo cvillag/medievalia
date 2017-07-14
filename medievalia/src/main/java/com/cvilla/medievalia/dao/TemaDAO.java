@@ -38,7 +38,7 @@ public class TemaDAO implements ITemaDAO {
 	private static String GET_STEMA_BY_NAME = "select idSubtema, idTema, nombre from subtema where nombre = ? and idTema = ?";
 	private static String GET_STEMA = "select idSubtema, sel1.idTema, nombreSubtema, tema.nombre as nombreTema from (select idSubtema, idTema, nombre as nombreSubtema from subtema where idSubtema = ?) as sel1 left join tema on sel1.idTema = tema.idTema";
 	private static String RENAME_SUBTEMA = "UPDATE `subtema` SET `nombre`= ? WHERE idSubtema = ?";
-	
+	private static String DELETE_STEMA = "delete from `subtema` where idSubtema = ?";
 	
 	public Tema getTemaById(int id) {
 		try{
@@ -165,6 +165,21 @@ public class TemaDAO implements ITemaDAO {
 		}
 		catch(Exception e){
 			return null;
+		}
+	}
+
+	public String deleteSubtema(int idSubtema) {
+		try{
+			int num = jdbcTemplate.update(DELETE_STEMA, new Object[]{idSubtema});
+			if(num == 1){
+				return "borrado";
+			}
+			else{
+				return "noBorrado";
+			}
+		}
+		catch(Exception e){
+			return "noBorrado";
 		}
 	}
 }

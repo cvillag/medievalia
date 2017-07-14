@@ -161,4 +161,26 @@ public class TemaManager implements ITemaManager {
 			}
 		}
 	}
+
+	public String deleteSubTema(int idTema, int idSubtema) {
+		SubTema st = temaDAO.getSubTema(idSubtema);
+		Tema t = temaDAO.getTemaById(idTema);
+		
+		if(st == null){
+			return "noSubTopic";
+		}
+		else{
+			if( t == null){
+				return "noTopic";
+			}
+			else{
+				if ( st.getIdTema() != t.getIdTema()){
+					return "topicMismatch";
+				}
+				else{
+					return temaDAO.deleteSubtema(idSubtema);
+				}
+			}
+		}
+	}
 }

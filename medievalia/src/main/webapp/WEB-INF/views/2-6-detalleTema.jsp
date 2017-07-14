@@ -334,6 +334,117 @@
 	</div>
 </div>
 
+<!-- Modales de borrado de subtemas -->
+<div id="modalDelSTema1" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-6.modal20"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p2-6.modal21"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalDelSTema2" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-6.modal20"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p2-6.modal22"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalDelSTema3" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-6.modal20"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p2-6.modal23"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalDelSTema4" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-6.modal20"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p2-6.modal24"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalDelSTema5" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-6.modal20"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<fmt:message key="p2-6.modal25"></fmt:message>
+				</p>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <form id="topicDetail" method="post" action="topicDetail.do">
 	<input type="hidden" name="idTopic" id="idTopic"/>
 	<input type="hidden" name="idTema" id="idTema" value="<%=t.getIdTema()%>">
