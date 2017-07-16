@@ -49,6 +49,21 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="panel panel-default col-lg-4">
+			<div class="panel-heading">
+				<h3 class="panel-title"><fmt:message key="p2-1.cargo"></fmt:message></h3>
+			</div>
+			<div class="panel-body">
+				<p><fmt:message key="p2-1.cargo01"></fmt:message></p>
+				<%if(user.getUser_role() == Constants.ROLE_ALUMNO){ %>
+				<p><fmt:message key="p2-1.cargo02"></fmt:message></p>
+				<p><fmt:message key="p2-1.cargo03"></fmt:message></p>
+				<%} %>
+				<p><button type="button" class="btn btn-default" id="btnGestionCargos"><fmt:message key="p2-1.cargo.btn"></fmt:message></button></p>
+			</div>
+		</div>
+	</div>
 </div>
 <%} else if (message.equals("p3.1.msg.grpNoExiste")){%>
 	<div class="panel panel-danger">

@@ -21,6 +21,9 @@
 			<button type="button" class="btn btn-default" id="cambiarNombre">
 				<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 			</button>
+			<button type="button" class="btn btn-default" id="backToTopic">
+				<fmt:message key="general.volver"></fmt:message>
+			</button>
 		</div>
 	</form>
 </div>
@@ -473,5 +476,9 @@
 	<input type="hidden" name="idTopic" id="idTopic"/>
 	<input type="hidden" name="idTema" id="idTema" value="<%=t.getIdTema()%>">
 	<input type="hidden" name="topicName" id="topicName" value="<%=t.getNombre()%>"/>
+</form>
+
+<form id="backToTopicF" method="post" action="topicManager.do">
+	<input type="hidden" name="idTopic" id="idTopic"/>
 </form>
 <%@ include file="/WEB-INF/views/footer.jsp"%>

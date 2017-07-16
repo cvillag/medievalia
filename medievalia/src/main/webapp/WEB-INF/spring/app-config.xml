@@ -39,6 +39,9 @@
 
 	<bean id="temaManager" class="com.cvilla.medievalia.service.TemaManager">
 	</bean>
+	
+	<bean id="chargeManager" class="com.cvilla.medievalia.service.ChargeManager">
+	</bean>
 
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -69,6 +72,10 @@
 	</bean>
 
 	<bean id="temaDAO" class="com.cvilla.medievalia.dao.TemaDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean id="chargeDAO" class="com.cvilla.medievalia.dao.ChargeDAO">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 

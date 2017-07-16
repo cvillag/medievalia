@@ -53,6 +53,7 @@ public class Constants {
 	public static final int P_DELETE_TOPIC = 36;
 	public static final int P_RENAME_SUBTOPIC = 37;
 	public static final int P_DELETE_STOPIC = 38;
+	public static final int P_VIEW_CHARGES = 39;
 
 	
 	public static final int P_OK = 1;
@@ -81,6 +82,7 @@ public class Constants {
 	
 	public static final int NUM_ACCEPTED = 2;
 	public static final List<Integer> ROLES_ACCEPTED_IN_GROUP = Arrays.asList(2,3);
+	
 	
 	public static String getKey(){
 		return PASS_KEY;

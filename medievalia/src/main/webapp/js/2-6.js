@@ -88,11 +88,14 @@ $(document).ready(function(){
 	$("#firstForm").show();
 	$("#secondForm").hide();
 	
-	
 	$.post("subtopicListA.do",
 			{idTema : idTema},
 			function(data){
 				cargaListaSubTemas(data);
+	});
+	
+	$("#backToTopic").click(function(){
+		$("#backToTopicF").submit();
 	});
 	
 	$("#showform").click(function(){
