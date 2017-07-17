@@ -9,7 +9,7 @@ List<Charge> cargos = (List<Charge>) request.getAttribute("listaCargos");
 if (cargos != null && cargos.size() > 0){
 	for(Charge c : cargos){
 		if(type.equals("table")){%>
-			<tr id="cargo<%=c.getIdCharge()%>">
+			<tr class="trcargo" id="cargo<%=c.getIdCharge()%>" data-nom="<%=c.getNombre()%>">
 				<td>
 					<%=c.getNombre() %>
 				</td>

@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cvilla.medievalia.dao.intfc.IChargeDAO;
 import com.cvilla.medievalia.domain.Charge;
+import com.cvilla.medievalia.domain.Group;
+import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IChargeManager;
+import com.cvilla.medievalia.utils.Constants;
 
 public class ChargeManager implements IChargeManager{
 	
@@ -27,5 +30,14 @@ public class ChargeManager implements IChargeManager{
 	
 	public List<Charge> getChargeList() {
 		return chargedao.getChargeList();
+	}
+
+	public String addCharge(String nombre, Group groupA, User user) {
+		if(user.getUser_role() == Constants.ROLE_PROFESOR ){
+			return chargedao.createChargeVal(nombre,groupA,user);
+		}
+		else{
+			return chargedao.createChargeNoVal(nombre,groupA,user);
+		}
 	}
 }

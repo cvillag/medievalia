@@ -44,7 +44,7 @@ List<Charge> cargos =  (List<Charge>) request.getAttribute("listaCargos"); %>
 				<p><fmt:message key="p2.2.cargos.todos"></fmt:message></p>
 			</div>
 			<div class="panel-body">
-				<p><form><input id="busquedaCompleta" type="text"></form></p>
+				<p><form><fmt:message key="p2.2.cargos.filtro"></fmt:message><input id="filtroBusquedaCompleta" type="text"></form></p>
 				<table class="table table-hover table-striped table-condensed table-scrollable">
 					<thead>
 						<tr>
@@ -84,5 +84,48 @@ else if (usr.getUser_role() == Constants.ROLE_PROFESOR){ %>
 			</div>
 		</div>
 <%} %>
+	</div>
+</div>
+
+<div id="modalCreaCargo1" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal0"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-warning">
+					<fmt:message key="p2-2.modal1"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modalCreaCargo2" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal0"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-success">
+					<fmt:message key="p2-2.modal2"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
 	</div>
 </div>
