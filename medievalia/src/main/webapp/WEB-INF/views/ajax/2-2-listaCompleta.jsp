@@ -11,10 +11,24 @@ if (cargos != null && cargos.size() > 0){
 		if(type.equals("table")){%>
 			<tr class="trcargo" id="cargo<%=c.getIdCharge()%>" data-nom="<%=c.getNombre()%>">
 				<td>
-					<%=c.getNombre() %>
+					<input type="text" id="cargoName<%=c.getIdCharge()%>" value="<%=c.getNombre() %>" disabled>
+					<button type="button" id="saveCargo<%=c.getIdCharge()%>" class="btn btn-default saveNewName" data-val="<%=c.getIdCharge()%>">
+						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+					</button>
+					<button type="button" id="cancelCargo<%=c.getIdCharge()%>" class="btn btn-default cancelNewName" data-val="<%=c.getIdCharge()%>">
+						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+					</button>
 				</td>
 				<td>
-					<%=c.getValidado() %>
+					<%=c.getValidado()%>
+				</td>
+				<td>
+					<button type="button" class="btn btn-default activarSNombre" data-val="<%=c.getIdCharge()%>">
+						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default deleteSCargo" data-val="<%=c.getIdCharge()%>">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>
 				</td>
 			</tr>
 <%		

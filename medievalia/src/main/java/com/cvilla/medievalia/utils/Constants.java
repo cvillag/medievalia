@@ -55,6 +55,8 @@ public class Constants {
 	public static final int P_DELETE_STOPIC = 38;
 	public static final int P_VIEW_CHARGES = 39;
 	public static final int P_CREATE_CHARGE = 40;
+	public static final int P_RENAME_CHARGE = 41;
+	public static final int P_RENAME_CHARGE_OWN = 42;
 
 	
 	public static final int P_OK = 1;
@@ -86,9 +88,7 @@ public class Constants {
 	public static final int CARGO_NO_VALIDADO = 0;
 	public static final int CARGO_VALIDADO = 1;
 
-	
-	
-	
+		
 	public static String getKey(){
 		return PASS_KEY;
 	}

@@ -1,5 +1,50 @@
 function postCarga(){
 	//alert("Acciones de botones");
+	
+	$(".saveNewName").hide();
+	$(".cancelNewName").hide();
+	
+	$(".activarSNombre").click(function(){
+		$("#cargoName" + $(this).data('val')).removeAttr("disabled");
+		$("#saveCargo" + $(this).data('val')).show();
+		$("#cancelCargo" + $(this).data('val')).show();
+	});
+	
+	$(".cancelNewName").click(function(){
+		$("#cancelCargo" + $(this).data('val')).hide();
+		$("#saveCargo" + $(this).data('val')).hide();
+		$("#cargoName" + $(this).data('val')).attr("disabled","true");
+	});
+	
+	$(".saveNewName").click(function(){
+		if($("#cargoName" + $(this).data('val')).val().length < 1 ){
+			$("#modalModificaCargo1").modal();
+		}
+		else{
+			$.post("renameChargeA.do",{
+				idCargo : $(this).data('val'),
+				newNombre : $("#cargoName" + $(this).data('val')).val()
+			},
+			function(data){
+				var json = JSON.parse(data);
+				if(json.message == "cambiado"){
+					$("#modalModificaCargo2").modal();
+				}
+				else{
+					$("#cargoName" + json.id).val(json.oldname);
+					if(json.message == "noExist"){
+						$("#modalModificaCargo3").modal();
+					}
+					else if(json.message == "repeated"){
+						$("#modalModificaCargo5").modal();
+					}
+					else{
+						$("#modalModificaCargo4").modal();
+					}
+				}
+			});
+		}
+	});
 }
 
 function cargaListaCompleta(){
@@ -11,7 +56,7 @@ function cargaListaCompleta(){
 		});
 }
 
-var btncreate = 0;
+var btncreate = 1;
 
 $(document).ready(function(){
 	
@@ -22,6 +67,7 @@ $(document).ready(function(){
 	$("#displayCreate").click(function(){
 		if(btncreate == 0){
 			$("#group-block1").slideUp(500);
+			$("#newChargeName").val("");
 			$("#displayCreatei").removeClass();
 			$("#displayCreatei").addClass("glyphicon glyphicon-chevron-down");
 			btncreate = 1;
@@ -37,6 +83,7 @@ $(document).ready(function(){
 	$("#cancelButton").click(function(){
 		if(btncreate == 0){
 			$("#group-block1").slideUp(500);
+			$("#newChargeName").val("");
 			$("#displayCreatei").removeClass();
 			$("#displayCreatei").addClass("glyphicon glyphicon-chevron-down");
 			btncreate = 1;
@@ -74,8 +121,17 @@ $(document).ready(function(){
 			$.post("createChargeA.do",{
 				nombre : $("#newChargeName").val()
 			},function(data){
-				cargaListaCompleta();
-				$("#modalCreaCargo2").modal();
+				var json = JSON.parse(data);
+				if(json.message == "nameRepeated"){
+					$("#modalCreaCargo3").modal();
+				}
+				else if(json.message == "creado"){
+					cargaListaCompleta();
+					$("#modalCreaCargo2").modal();
+				}
+				else if(json.message == "noCreado"){
+					$("#modalCreaCargo4").modal();
+				}
 			});
 		}
 	});
