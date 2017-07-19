@@ -64,7 +64,66 @@ function postCarga(){
 }
 
 function postCarga2(){
+	$(".saveStudentNewName").hide();
+	$(".cancelStudentNewName").hide();
 	
+	$(".activarStudentSNombre").click(function(){
+		$("#cargoStudentName" + $(this).data('val')).removeAttr("disabled");
+		$("#saveStudentCargo" + $(this).data('val')).show();
+		$("#cancelStudentCargo" + $(this).data('val')).show();
+	});
+	
+	$(".cancelStudentNewName").click(function(){
+		$("#cancelStudentCargo" + $(this).data('val')).hide();
+		$("#saveStudentCargo" + $(this).data('val')).hide();
+		$("#cargoStudentName" + $(this).data('val')).attr("disabled","true");
+	});
+	
+	$(".saveStudentNewName").click(function(){
+		if($("#cargoStudentName" + $(this).data('val')).val().length < 1 ){
+			$("#modalModificaCargo1").modal();
+		}
+		else{
+			$.post("renameChargeA.do",{
+				idCargo : $(this).data('val'),
+				newNombre : $("#cargoStudentName" + $(this).data('val')).val()
+			},
+			function(data){
+				var json = JSON.parse(data);
+				if(json.message == "cambiado"){
+					$("#modalModificaCargo2").modal();
+				}
+				else{
+					$("#cargoStudentName" + json.id).val(json.oldname);
+					if(json.message == "noExist"){
+						$("#modalModificaCargo3").modal();
+					}
+					else if(json.message == "repeated"){
+						$("#modalModificaCargo5").modal();
+					}
+					else{
+						$("#modalModificaCargo4").modal();
+					}
+				}
+			});
+		}
+	});
+	
+	$(".deleteStudentSCargo").click(function(){
+		$.post("removeChargeA.do",{
+			idCargo : $(this).data('val')
+		},
+		function(data){
+			var json = JSON.parse(data);
+			if(json.message == "borrado"){
+				$("#modalBorraCargo1").modal();
+				$("#cargoStudent" + json.id).remove();
+			}
+			else{
+				$("#modalBorraCargo2").modal();
+			}
+		});
+	});
 }
 
 function cargaListaCompleta(){
@@ -77,7 +136,8 @@ function cargaListaCompleta(){
 }
 
 function cargaListaAlumno(){
-	$.post("studentChargeListA.do",
+	$.post("studentChargeListA.do",{
+		type : "table"},
 			function(data){
 				$("#listaalumno").html(data);
 				postCarga2();
@@ -85,10 +145,11 @@ function cargaListaAlumno(){
 }
 
 function cargaListaProfe(){
-	$.post("teacherChargeListA.do",
+	$.post("teacherChargeListA.do",{
+		type : "table"},
 			function(data){
 				$("#listaProfe").html(data);
-				postCarga2();
+				postCarga3();
 	});
 }
 

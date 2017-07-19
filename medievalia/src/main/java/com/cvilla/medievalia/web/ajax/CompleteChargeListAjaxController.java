@@ -51,23 +51,23 @@ public class CompleteChargeListAjaxController {
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
 		JSONObject j = new JSONObject();
 		
-		if(authManager.isAutorized(Constants.P_TOPIC_LIST, user)){
+		if(authManager.isAutorized(Constants.P_VIEW_CHARGES, user)){
 			if(errorParam(request)){
 				j.put("message","noType");
-				logManager.log(user.getId(), Constants.P_CREATE_TOPIC, "Fallo en listado de cargos. Parámetros incorrectos. Esquivada seguridad javascript", Constants.P_NOK);
+				logManager.log(user.getId(), Constants.P_VIEW_CHARGES, "Fallo en listado de cargos. Parámetros incorrectos. Esquivada seguridad javascript", Constants.P_NOK);
 			}
 			else{
 				List<Charge> listag = chargeManager.getChargeList();
 				model.addObject("listaCargos", listag);
 				model.addObject("type",request.getParameter("type"));
-				logManager.log(user.getId(), Constants.P_TOPIC_LIST, "Visualización lista de cargos", Constants.P_OK);
+				logManager.log(user.getId(), Constants.P_VIEW_CHARGES, "Visualización lista de cargos", Constants.P_OK);
 				if(authManager.isAutorized(Constants.P_DELETE_CHARGE, user)){
 					model.addObject("permisoborrado","ok");
 				}
 			}
 		}
 		else{
-			model = Constants.noPrivilegesA(user,logManager,Constants.P_TOPIC_LIST,"Visualización de temas no permitida (grupo: " + groupA.getName() + ")");
+			model = Constants.noPrivilegesA(user,logManager,Constants.P_VIEW_CHARGES,"Visualización de temas no permitida (grupo: " + groupA.getName() + ")");
 		}
 		
 		return model;

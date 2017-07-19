@@ -19,4 +19,6 @@ public interface IChargeDAO {
 	public String renameCharge(int idCargo, String nombre);
 
 	public String deleteCharge(int idCargo);
+
+	public List<Charge> getStudentChargeList(User user);
 }

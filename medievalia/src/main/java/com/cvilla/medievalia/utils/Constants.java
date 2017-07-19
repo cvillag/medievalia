@@ -59,6 +59,8 @@ public class Constants {
 	public static final int P_RENAME_CHARGE_OWN = 42;
 	public static final int P_DELETE_CHARGE = 43;
 	public static final int P_VALIDAR_CARGO = 44;
+	public static final int P_VIEW_OWN_CHARGES = 45;
+	public static final int P_DELETE_OWN_CHARGES = 46;
 	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;
@@ -86,8 +88,9 @@ public class Constants {
 	
 	public static final int NUM_ACCEPTED = 2;
 	public static final List<Integer> ROLES_ACCEPTED_IN_GROUP = Arrays.asList(2,3);
-	public static final int CARGO_NO_VALIDADO = 0;
-	public static final int CARGO_VALIDADO = 1;
+	public static final int OBJETO_NO_VALIDADO = 0;
+	public static final int OBJETO_VALIDADO = 1;
+	public static final int OBJETO_DENEGADO = 2;
 		
 	public static String getKey(){
 		return PASS_KEY;

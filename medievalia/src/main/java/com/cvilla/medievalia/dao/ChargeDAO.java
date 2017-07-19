@@ -14,12 +14,13 @@ import com.cvilla.medievalia.utils.Constants;
 
 public class ChargeDAO implements IChargeDAO {
 	
-	private static final String GET_CHARGE_LIST = "SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo`";
+	private static final String GET_CHARGE_LIST = "SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where validado = ?";
 	private static final String ADD_CHARGE = "INSERT INTO `cargo`( `nombre`, `idGroup`, `creador`, `validado`) VALUES (?,?,?,?)";
 	private static final String GET_CHARGE_BY_NAME = "select `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where nombre = ?";
 	private static final String GET_CHARGE = "select `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where idCargo = ?";
 	private static final String UPDATE_CHARGE_NAME = "UPDATE `cargo` SET `nombre`= ? WHERE `idCargo` = ?";
 	private static final String DELETE_CHARGE = "DELETE FROM `cargo` WHERE `idCargo` = ?";
+	private static final String GET_STUDENT_CHARGE_LIST = "SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where creador = ? and validado = ?";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -36,7 +37,7 @@ public class ChargeDAO implements IChargeDAO {
 
 	public List<Charge> getChargeList() {
 		try{
-			List<Charge> g = getJdbcTemplate().query(GET_CHARGE_LIST, new ChargeMapper());
+			List<Charge> g = getJdbcTemplate().query(GET_CHARGE_LIST, new Object[]{Constants.OBJETO_VALIDADO}, new ChargeMapper());
 			return g;
 		}
 		catch(Exception e){
@@ -46,7 +47,7 @@ public class ChargeDAO implements IChargeDAO {
 
 	public String createChargeNoVal(String nombre, Group groupA, User user) {
 		try{
-			int num = jdbcTemplate.update(ADD_CHARGE,new Object[]{nombre,groupA.getIdGrupo(),user.getId(),Constants.CARGO_NO_VALIDADO});
+			int num = jdbcTemplate.update(ADD_CHARGE,new Object[]{nombre,groupA.getIdGrupo(),user.getId(),Constants.OBJETO_NO_VALIDADO});
 			if(num == 1)
 				return "creado";
 			else{
@@ -60,7 +61,7 @@ public class ChargeDAO implements IChargeDAO {
 	
 	public String createChargeVal(String nombre, Group groupA, User user) {
 		try{
-			int num = jdbcTemplate.update(ADD_CHARGE,new Object[]{nombre,groupA.getIdGrupo(),user.getId(),Constants.CARGO_VALIDADO});
+			int num = jdbcTemplate.update(ADD_CHARGE,new Object[]{nombre,groupA.getIdGrupo(),user.getId(),Constants.OBJETO_VALIDADO});
 			if(num == 1)
 				return "creado";
 			else{
@@ -117,6 +118,16 @@ public class ChargeDAO implements IChargeDAO {
 		}
 		catch(Exception e){
 			return "noBorrado";
+		}
+	}
+
+	public List<Charge> getStudentChargeList(User user) {
+		try{
+			List<Charge> g = getJdbcTemplate().query(GET_STUDENT_CHARGE_LIST, new Object[]{user.getId(),Constants.OBJETO_NO_VALIDADO}, new ChargeMapper());
+			return g;
+		}
+		catch(Exception e){
+			return null;
 		}
 	}
 
