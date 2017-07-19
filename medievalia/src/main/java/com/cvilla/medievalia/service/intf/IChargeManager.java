@@ -17,4 +17,5 @@ public interface IChargeManager extends Serializable{
 	public String renameCharge(String nombre, int idCargo, User user,Group groupA);
 	public String renameChargeOwn(String nombre, int idCargo, User user,Group groupA);
 	public Charge getCharge(int idCharge);
+	public String deleteCharge(int idCargo);
 }

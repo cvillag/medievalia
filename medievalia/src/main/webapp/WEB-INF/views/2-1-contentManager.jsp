@@ -16,7 +16,7 @@
 <%if(message.equals("p3.1.msg.ok") && g != null){ %>
 <div class="container">
 	<div class="row">
-		<div class="panel panel-default col-lg-4">
+		<div class="panel panel-default col-sm-4">
 			
 			<div class="panel-heading">
 				<h3 class="panel-title"><%= g.getName()%></h3>
@@ -26,7 +26,7 @@
 				<p><%=g.getDescription() %></p>
 			</div>
 		</div>
-		<div class="panel panel-default col-lg-4">
+		<div class="panel panel-default col-sm-4">
 			<div class="panel-heading">
 				<h3 class="panel-title"><fmt:message key="p2-1.numTemas"></fmt:message></h3>
 			</div>
@@ -35,7 +35,7 @@
 				<p><a href="topicManager.do"><button type="button" class="btn btn-default" id="btnListaTemas"><fmt:message key="p2-1.btnListaTemas"></fmt:message></button></a></p>
 			</div>
 		</div>
-		<div class="panel panel-default col-lg-4">
+		<div class="panel panel-default col-sm-4">
 			<div class="panel-heading">
 				<h3 class="panel-title"><fmt:message key="p2-1.participantes"></fmt:message></h3>
 			</div>
@@ -50,7 +50,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="panel panel-default col-lg-4">
+		<div class="panel panel-default col-sm-4">
 			<div class="panel-heading">
 				<h3 class="panel-title"><fmt:message key="p2-1.cargo"></fmt:message></h3>
 			</div>

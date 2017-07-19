@@ -19,6 +19,7 @@ public class ChargeDAO implements IChargeDAO {
 	private static final String GET_CHARGE_BY_NAME = "select `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where nombre = ?";
 	private static final String GET_CHARGE = "select `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where idCargo = ?";
 	private static final String UPDATE_CHARGE_NAME = "UPDATE `cargo` SET `nombre`= ? WHERE `idCargo` = ?";
+	private static final String DELETE_CHARGE = "DELETE FROM `cargo` WHERE `idCargo` = ?";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -101,6 +102,21 @@ public class ChargeDAO implements IChargeDAO {
 		}
 		catch(Exception e){
 			return "noCambiado";
+		}
+	}
+
+	public String deleteCharge(int idCargo) {
+		try{
+			int num = jdbcTemplate.update(DELETE_CHARGE,new Object[]{idCargo});
+			if(num == 1){
+				return "borrado";
+			}
+			else{
+				return "noBorrado";
+			}
+		}
+		catch(Exception e){
+			return "noBorrado";
 		}
 	}
 

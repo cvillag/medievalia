@@ -8,7 +8,10 @@
 <%	
 User usr = (User)ses.getAttribute("user");
 @SuppressWarnings(value="unchecked")
-List<Charge> cargos =  (List<Charge>) request.getAttribute("listaCargos"); %>
+List<Charge> cargos =  (List<Charge>) request.getAttribute("listaCargos"); 
+@SuppressWarnings(value="unchecked")
+String validar = (String) request.getAttribute("validar");
+%>
 <form id=formUser">
 	<input type="hidden" id="userrole" value="<%=usr.getUser_role()%>">
 </form>
@@ -19,7 +22,7 @@ List<Charge> cargos =  (List<Charge>) request.getAttribute("listaCargos"); %>
 		</h1>
 	</div>
 	<div class="row">
-		<div class="panel panel-default col-lg-12">
+		<div class="panel panel-default col-sm-12">
 			<div class="panel-heading">
 				<button id="displayCreate" class="btn btn-default btn-xs">
 					<span id="displayCreatei" class="glyphicon glyphicon-chevron-down"></span>
@@ -39,7 +42,56 @@ List<Charge> cargos =  (List<Charge>) request.getAttribute("listaCargos"); %>
 		</div>
 	</div>
 	<div class="row">
-		<div class="panel panel-default col-lg-6">
+<%if (validar == null){ %>		
+		<div class="panel panel-default col-sm-6">
+			<div class="panel-heading">
+				<p><fmt:message key="p2.2.cargos.usuario"></fmt:message></p>
+			</div>
+			<div class="panel-body">
+				<p><form><input id="busquedaUsuario" type="text"></form></p>
+				<table class="table table-hover table-striped table-condensed table-scrollable">
+					<thead>
+						<tr>
+							<th>
+								<fmt:message key="p2.2.cargos.tabla01"></fmt:message>
+							</th>
+							<th>
+								<fmt:message key="p2.2.cargos.tabla02"></fmt:message>
+							</th>
+						</tr>
+					</thead>
+					<tbody  id="listaalumno">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	
+<%}
+else{ %>
+		<div class="panel panel-default col-sm-6">
+			<div class="panel-heading">
+				<p><fmt:message key="p2.2.cargos.profe"></fmt:message></p>
+			</div>
+			<div class="panel-body">
+				<p><form><input id="busquedaProfe" type="text"></form></p>
+				<table class="table table-hover table-striped table-condensed table-scrollable">
+					<thead>
+						<tr>
+							<th>
+								<fmt:message key="p2.2.cargos.tabla01"></fmt:message>
+							</th>
+							<th>
+								<fmt:message key="p2.2.cargos.tabla02"></fmt:message>
+							</th>
+						</tr>
+					</thead>
+					<tbody  id="listaProfe">
+					</tbody>
+				</table>
+			</div>
+		</div>
+<%} %>
+		<div class="panel panel-default col-sm-6">
 			<div class="panel-heading">
 				<p><fmt:message key="p2.2.cargos.todos"></fmt:message></p>
 			</div>
@@ -61,29 +113,6 @@ List<Charge> cargos =  (List<Charge>) request.getAttribute("listaCargos"); %>
 				</table>
 			</div>
 		</div>
-<%if (usr.getUser_role() == Constants.ROLE_ALUMNO){ %>		
-		<div class="panel panel-default col-lg-6">
-			<div class="panel-heading">
-				<p><fmt:message key="p2.2.cargos.usuario"></fmt:message></p>
-			</div>
-			<div class="panel-body">
-				<p><form><input id="busquedaUsuario" type="text"></form></p>
-				<div id="listaUsuario"></div>
-			</div>
-		</div>
-	
-<%}
-else if (usr.getUser_role() == Constants.ROLE_PROFESOR){ %>
-		<div class="panel panel-default col-lg-6">
-			<div class="panel-heading">
-				<p><fmt:message key="p2.2.cargos.profe"></fmt:message></p>
-			</div>
-			<div class="panel-body">
-				<p><form><input id="busquedaProfe" type="text"></form></p>
-				<div id="listaProfe"></div>
-			</div>
-		</div>
-<%} %>
 	</div>
 </div>
 
@@ -269,6 +298,50 @@ else if (usr.getUser_role() == Constants.ROLE_PROFESOR){ %>
 			<div class="modal-body">
 				<div class="alert alert-warning">
 					<fmt:message key="p2-2.modal15"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Diálogos modales de borrado de cargos -->
+<div id="modalBorraCargo1" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal20"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-success">
+					<fmt:message key="p2-2.modal21"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modalBorraCargo2" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal20"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger">
+					<fmt:message key="p2-2.modal22"></fmt:message>
 				</div>				
 			</div>
 			<div class="modal-footer">

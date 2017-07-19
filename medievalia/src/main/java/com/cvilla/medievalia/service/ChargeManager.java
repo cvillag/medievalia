@@ -104,4 +104,8 @@ public class ChargeManager implements IChargeManager{
 	public Charge getCharge(int idCharge) {
 		return chargedao.getCharge(idCharge);
 	}
+
+	public String deleteCharge(int idCargo) {
+		return chargedao.deleteCharge(idCargo);
+	}
 }

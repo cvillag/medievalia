@@ -45,6 +45,26 @@ function postCarga(){
 			});
 		}
 	});
+	
+	$(".deleteSCargo").click(function(){
+		$.post("removeChargeA.do",{
+			idCargo : $(this).data('val')
+		},
+		function(data){
+			var json = JSON.parse(data);
+			if(json.message == "borrado"){
+				$("#modalBorraCargo1").modal();
+				$("#cargo" + json.id).remove();
+			}
+			else{
+				$("#modalBorraCargo2").modal();
+			}
+		})
+	});
+}
+
+function postCarga2(){
+	
 }
 
 function cargaListaCompleta(){
@@ -53,7 +73,23 @@ function cargaListaCompleta(){
 		function(data){
 			$("#listaCompleta").html(data);
 			postCarga();
-		});
+	});
+}
+
+function cargaListaAlumno(){
+	$.post("studentChargeListA.do",
+			function(data){
+				$("#listaalumno").html(data);
+				postCarga2();
+	});
+}
+
+function cargaListaProfe(){
+	$.post("teacherChargeListA.do",
+			function(data){
+				$("#listaProfe").html(data);
+				postCarga2();
+	});
 }
 
 var btncreate = 1;
@@ -63,6 +99,13 @@ $(document).ready(function(){
 	$("#group-block1").hide();
 	
 	cargaListaCompleta();
+	
+	if($("#listaalumno").length > 0){
+		cargaListaAlumno();
+	}
+	else if($("#listaProfe").length > 0){
+		cargaListaProfe();
+	}
 	
 	$("#displayCreate").click(function(){
 		if(btncreate == 0){

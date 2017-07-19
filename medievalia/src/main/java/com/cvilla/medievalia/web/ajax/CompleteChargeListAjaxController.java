@@ -61,6 +61,9 @@ public class CompleteChargeListAjaxController {
 				model.addObject("listaCargos", listag);
 				model.addObject("type",request.getParameter("type"));
 				logManager.log(user.getId(), Constants.P_TOPIC_LIST, "Visualización lista de cargos", Constants.P_OK);
+				if(authManager.isAutorized(Constants.P_DELETE_CHARGE, user)){
+					model.addObject("permisoborrado","ok");
+				}
 			}
 		}
 		else{

@@ -48,6 +48,9 @@ public class ChargeController {
 			List<String> scripts = new ArrayList<String>();
 			scripts.add("js/2-2.js");
 			model.addObject("scripts",scripts);
+			if(authManager.isAutorized(Constants.P_VALIDAR_CARGO, user)){
+				model.addObject("validar", "ok");
+			}
 			//model.addObject("listaCargos",chargeManager.getChargeList());
 		}
 		else{

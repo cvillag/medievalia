@@ -17,4 +17,6 @@ public interface IChargeDAO {
 	public Charge getCharge(int id);
 
 	public String renameCharge(int idCargo, String nombre);
+
+	public String deleteCharge(int idCargo);
 }
