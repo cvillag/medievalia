@@ -115,7 +115,7 @@ public class ChargeManager implements IChargeManager{
 
 	public String deleteOwnCharge(int idCargo, User user) {
 		Charge c = chargedao.getCharge(idCargo);
-		if(c.getIdCreator() == user.getId()){
+		if(c.getIdCreator() == user.getId() && c.getValidado() != Constants.OBJETO_VALIDADO){
 			return chargedao.deleteCharge(idCargo);
 		}
 		else{

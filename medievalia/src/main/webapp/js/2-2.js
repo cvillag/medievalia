@@ -1,3 +1,10 @@
+var oldnameCom;
+var activadoCom = 0;
+var oldnameAl;
+var activadoAl = 0;
+var oldnamePr;
+var activadoPr = 0;
+
 function postCarga(){
 	//alert("Acciones de botones");
 	
@@ -5,12 +12,23 @@ function postCarga(){
 	$(".cancelNewName").hide();
 	
 	$(".activarSNombre").click(function(){
+		if(activadoCom != 0){
+			$("#cargoName" + activadoCom).val(oldnameCom);
+			$("#cargoName" + activadoCom).attr("disabled","true");
+			$("#saveCargo" + activadoCom).hide();
+			$("#cancelCargo" + activadoCom).hide();
+			activadoCom = 0;
+		}
+		oldnameCom = $("#cargoName" + $(this).data('val')).val();
+		activadoCom = $(this).data('val');
 		$("#cargoName" + $(this).data('val')).removeAttr("disabled");
 		$("#saveCargo" + $(this).data('val')).show();
 		$("#cancelCargo" + $(this).data('val')).show();
 	});
 	
 	$(".cancelNewName").click(function(){
+		$("#cargoName" + $(this).data('val')).val(oldnameCom);
+		activadoCom = 0;
 		$("#cancelCargo" + $(this).data('val')).hide();
 		$("#saveCargo" + $(this).data('val')).hide();
 		$("#cargoName" + $(this).data('val')).attr("disabled","true");
@@ -29,6 +47,10 @@ function postCarga(){
 				var json = JSON.parse(data);
 				if(json.message == "cambiado"){
 					$("#modalModificaCargo2").modal();
+					$("#cargoName" + activadoCom).attr("disabled","true");
+					$("#saveCargo" + activadoCom).hide();
+					$("#cancelCargo" + activadoCom).hide();
+					activadoCom = 0;
 				}
 				else{
 					$("#cargoName" + json.id).val(json.oldname);
@@ -68,12 +90,23 @@ function postCarga2(){
 	$(".cancelStudentNewName").hide();
 	
 	$(".activarStudentSNombre").click(function(){
+		if(activadoAl != 0){
+			$("#cargoStudentName" + activadoAl).val(oldnameAl);
+			$("#cargoStudentName" + activadoAl).attr("disabled","true");
+			$("#saveStudentCargo" + activadoAl).hide();
+			$("#cancelStudentCargo" + activadoAl).hide();
+			activadoAl = 0;
+		}
+		oldnameAl = $("#cargoStudentName" + $(this).data('val')).val();
+		activadoAl = $(this).data('val');
 		$("#cargoStudentName" + $(this).data('val')).removeAttr("disabled");
 		$("#saveStudentCargo" + $(this).data('val')).show();
 		$("#cancelStudentCargo" + $(this).data('val')).show();
 	});
 	
 	$(".cancelStudentNewName").click(function(){
+		$("#cargoStudentName" + $(this).data('val')).val(oldnameAl);
+		activadoAl = 0;
 		$("#cancelStudentCargo" + $(this).data('val')).hide();
 		$("#saveStudentCargo" + $(this).data('val')).hide();
 		$("#cargoStudentName" + $(this).data('val')).attr("disabled","true");
@@ -231,6 +264,12 @@ $(document).ready(function(){
 				}
 				else if(json.message == "creado"){
 					cargaListaCompleta();
+					if($("#listaalumno").length > 0){
+						cargaListaAlumno();
+					}
+					else if($("#listaProfe").length > 0){
+						cargaListaProfe();
+					}
 					$("#modalCreaCargo2").modal();
 				}
 				else if(json.message == "noCreado"){

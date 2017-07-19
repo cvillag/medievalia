@@ -17,7 +17,7 @@ if (cargos != null && cargos.size() > 0){
 		if(type.equals("table")){%>
 			<tr class="trcargo" id="cargo<%=c.getIdCharge()%>" data-nom="<%=c.getNombre()%>">
 				<td>
-					<input type="text" id="cargoName<%=c.getIdCharge()%>" value="<%=c.getNombre() %>" disabled>
+					<input type="text" id="cargoName<%=c.getIdCharge()%>" value="<%=c.getNombre() %>" disabled class="nombreCom">
 					<button type="button" id="saveCargo<%=c.getIdCharge()%>" class="btn btn-default saveNewName" data-val="<%=c.getIdCharge()%>">
 						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 					</button>
