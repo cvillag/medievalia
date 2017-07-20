@@ -125,6 +125,10 @@ function postCarga2(){
 				var json = JSON.parse(data);
 				if(json.message == "cambiado"){
 					$("#modalModificaCargo2").modal();
+					$("#cargoStudentName" + activadoAl).attr("disabled","true");
+					$("#saveStudentCargo" + activadoAl).hide();
+					$("#cancelStudentCargo" + activadoAl).hide();
+					activadoAl = 0;
 				}
 				else{
 					$("#cargoStudentName" + json.id).val(json.oldname);
@@ -154,6 +158,102 @@ function postCarga2(){
 			}
 			else{
 				$("#modalBorraCargo2").modal();
+			}
+		});
+	});
+}
+
+function postCarga3(){
+	$(".saveProfeNewName").hide();
+	$(".cancelProfeNewName").hide();
+	
+	$(".activarProfeSNombre").click(function(){
+		if(activadoPr != 0){
+			$("#cargoProfeName" + activadoPr).val(oldnamePr);
+			$("#cargoProfeName" + activadoPr).attr("disabled","true");
+			$("#saveProfeCargo" + activadoPr).hide();
+			$("#cancelProfeCargo" + activadoPr).hide();
+			activadoPr = 0;
+		}
+		oldnamePr = $("#cargoProfeName" + $(this).data('val')).val();
+		activadoPr = $(this).data('val');
+		$("#cargoProfeName" + $(this).data('val')).removeAttr("disabled");
+		$("#saveProfeCargo" + $(this).data('val')).show();
+		$("#cancelProfeCargo" + $(this).data('val')).show();
+	});
+	
+	$(".cancelProfeNewName").click(function(){
+		$("#cargoProfeName" + $(this).data('val')).val(oldnamePr);
+		activadoPr = 0;
+		$("#cancelProfeCargo" + $(this).data('val')).hide();
+		$("#saveProfeCargo" + $(this).data('val')).hide();
+		$("#cargoProfeName" + $(this).data('val')).attr("disabled","true");
+	});
+	
+	$(".saveProfeNewName").click(function(){
+		if($("#cargoProfeName" + $(this).data('val')).val().length < 1 ){
+			$("#modalModificaCargo1").modal();
+		}
+		else{
+			$.post("renameChargeA.do",{
+				idCargo : $(this).data('val'),
+				newNombre : $("#cargoProfeName" + $(this).data('val')).val()
+			},
+			function(data){
+				var json = JSON.parse(data);
+				if(json.message == "cambiado"){
+					$("#modalModificaCargo2").modal();
+					$("#cargoProfeName" + activadoPr).attr("disabled","true");
+					$("#saveProfeCargo" + activadoPr).hide();
+					$("#cancelProfeCargo" + activadoPr).hide();
+					activadoPr = 0;
+				}
+				else{
+					$("#cargoProfeName" + json.id).val(json.oldname);
+					if(json.message == "noExist"){
+						$("#modalModificaCargo3").modal();
+					}
+					else if(json.message == "repeated"){
+						$("#modalModificaCargo5").modal();
+					}
+					else{
+						$("#modalModificaCargo4").modal();
+					}
+				}
+			});
+		}
+	});
+	
+	$(".deleteProfeSCargo").click(function(){
+		$.post("removeChargeA.do",{
+			idCargo : $(this).data('val')
+		},
+		function(data){
+			var json = JSON.parse(data);
+			if(json.message == "borrado"){
+				$("#modalBorraCargo1").modal();
+				$("#cargoProfe" + json.id).remove();
+			}
+			else{
+				$("#modalBorraCargo2").modal();
+			}
+		});
+	});
+	
+	$(".validarCargo").click(function(){
+		$.post("validateCharge.do",{
+			idCargo : $(this).data('val')
+		},
+		function(data){
+			var json = JSON.parse(data);
+			if(json.message == "validado"){
+				$("#modalValidaCargo1").modal();
+				$("#validado" + json.id).removeClass();
+				$("#validado" + json.id).addClass("label label-success");
+				$("#validado" + json.id).text($("#textVal").val())
+			}
+			else{
+				$("#modalValidaCargo2").modal();
 			}
 		});
 	});

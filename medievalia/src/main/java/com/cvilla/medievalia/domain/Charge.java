@@ -3,14 +3,16 @@ package com.cvilla.medievalia.domain;
 public class Charge {
 	private int idCharge;
 	private int idCreator;
+	private String nameCreator;
 	private int idGroup;
 	private int validado;
 	private String nombre;
 	public Charge(int idCharge, int idCreator, int idGroup, int validado,
-			String nombre) {
+			String nombre, String nameCreator) {
 		super();
 		this.idCharge = idCharge;
 		this.idCreator = idCreator;
+		this.nameCreator = nameCreator;
 		this.idGroup = idGroup;
 		this.validado = validado;
 		this.nombre = nombre;
@@ -49,5 +51,13 @@ public class Charge {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getNameCreator() {
+		return nameCreator;
+	}
+
+	public void setNameCreator(String nameCreator) {
+		this.nameCreator = nameCreator;
 	}
 }

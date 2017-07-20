@@ -21,4 +21,8 @@ public interface IChargeDAO {
 	public String deleteCharge(int idCargo);
 
 	public List<Charge> getStudentChargeList(User user);
+
+	public List<Charge> getTeacherChargeList(Group groupA);
+
+	public String validateCharge(int idCharge);
 }

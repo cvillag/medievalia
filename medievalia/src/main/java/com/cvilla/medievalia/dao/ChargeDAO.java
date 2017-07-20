@@ -14,13 +14,15 @@ import com.cvilla.medievalia.utils.Constants;
 
 public class ChargeDAO implements IChargeDAO {
 	
-	private static final String GET_CHARGE_LIST = "SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where validado = ?";
+	private static final String GET_CHARGE_LIST = "SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado`, `nameCreator` FROM (SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where validado = ? ) as sel1 left join (select user_name as nameCreator,  user_id from users) as sel2 on sel1.creador = sel2.user_id";
 	private static final String ADD_CHARGE = "INSERT INTO `cargo`( `nombre`, `idGroup`, `creador`, `validado`) VALUES (?,?,?,?)";
-	private static final String GET_CHARGE_BY_NAME = "select `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where nombre = ?";
-	private static final String GET_CHARGE = "select `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where idCargo = ?";
+	private static final String GET_CHARGE_BY_NAME = "SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado`, `nameCreator` FROM ( select `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where nombre = ?) as sel1 left join (select user_name as nameCreator,  user_id from users) as sel2 on sel1.creador = sel2.user_id";
+	private static final String GET_CHARGE = "SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado`, `nameCreator` FROM (select `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where idCargo = ? ) as sel1 left join (select user_name as nameCreator,  user_id from users) as sel2 on sel1.creador = sel2.user_id";
 	private static final String UPDATE_CHARGE_NAME = "UPDATE `cargo` SET `nombre`= ? WHERE `idCargo` = ?";
 	private static final String DELETE_CHARGE = "DELETE FROM `cargo` WHERE `idCargo` = ?";
-	private static final String GET_STUDENT_CHARGE_LIST = "SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where creador = ? and validado = ?";
+	private static final String GET_STUDENT_CHARGE_LIST = "SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado`, `nameCreator` FROM (SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where creador = ? ) as sel1 left join (select user_name as nameCreator,  user_id from users) as sel2 on sel1.creador = sel2.user_id";
+	private static final String GET_TEACHER_CHARGE_LIST = "SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado`, `nameCreator` FROM (SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where idGroup = ? and validado = ?) as sel1 left join (select user_name as nameCreator,  user_id from users) as sel2 on sel1.creador = sel2.user_id";
+	private static final String VALIDATE_CHARGE_NAME = "UPDATE `cargo` SET `validado`= ? WHERE `idCargo` = ?";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -123,11 +125,36 @@ public class ChargeDAO implements IChargeDAO {
 
 	public List<Charge> getStudentChargeList(User user) {
 		try{
-			List<Charge> g = getJdbcTemplate().query(GET_STUDENT_CHARGE_LIST, new Object[]{user.getId(),Constants.OBJETO_NO_VALIDADO}, new ChargeMapper());
+			List<Charge> g = getJdbcTemplate().query(GET_STUDENT_CHARGE_LIST, new Object[]{user.getId()}, new ChargeMapper());
 			return g;
 		}
 		catch(Exception e){
 			return null;
+		}
+	}
+
+	public List<Charge> getTeacherChargeList(Group groupA) {
+		try{
+			List<Charge> g = getJdbcTemplate().query(GET_TEACHER_CHARGE_LIST, new Object[]{groupA.getIdGrupo(),Constants.OBJETO_NO_VALIDADO}, new ChargeMapper());
+			return g;
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
+
+	public String validateCharge(int idCharge) {
+		try{
+			int num = jdbcTemplate.update(VALIDATE_CHARGE_NAME,new Object[]{Constants.OBJETO_VALIDADO,idCharge});
+			if(num == 1){
+				return "validado";
+			}
+			else{
+				return "noValidado";
+			}
+		}
+		catch(Exception e){
+			return "noValidado";
 		}
 	}
 

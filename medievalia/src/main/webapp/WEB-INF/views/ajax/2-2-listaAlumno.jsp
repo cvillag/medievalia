@@ -26,7 +26,17 @@ if (cargos != null && cargos.size() > 0){
 					</button>
 				</td>
 				<td>
-					<%=c.getValidado()%>
+					<%if(c.getValidado() == Constants.OBJETO_VALIDADO){ %>
+					<span class="label label-success"><fmt:message key="general.validado"></fmt:message></span>
+					<%}
+					else{
+						if(c.getValidado() == Constants.OBJETO_NO_VALIDADO){ %>
+					
+					<span class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span>
+						<%}else{ %>
+					<span class="label label-danger"><fmt:message key="general.denegado"></fmt:message></span>
+					<%	}
+					}%>
 				</td>
 				<td>
 					<button type="button" class="btn btn-default activarStudentSNombre" data-val="<%=c.getIdCharge()%>">

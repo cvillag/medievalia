@@ -83,6 +83,9 @@ else{ %>
 							<th>
 								<fmt:message key="p2.2.cargos.tabla02"></fmt:message>
 							</th>
+							<th>
+								<fmt:message key="p2.2.cargos.tabla03"></fmt:message>
+							</th>
 						</tr>
 					</thead>
 					<tbody  id="listaProfe">
@@ -342,6 +345,49 @@ else{ %>
 			<div class="modal-body">
 				<div class="alert alert-danger">
 					<fmt:message key="p2-2.modal22"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Diálogos modales de validación de cargos -->
+<div id="modalValidaCargo1" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal30"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-success">
+					<fmt:message key="p2-2.modal31"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modalValidaCargo2" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal30"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger">
+					<fmt:message key="p2-2.modal32"></fmt:message>
 				</div>				
 			</div>
 			<div class="modal-footer">

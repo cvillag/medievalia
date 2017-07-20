@@ -9,12 +9,16 @@ import com.cvilla.medievalia.domain.Charge;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IChargeManager;
+import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.utils.Constants;
 
 public class ChargeManager implements IChargeManager{
 	
 	private static final long serialVersionUID = 1L;
+	
+	@Autowired
+	private IGroupManager groupManager;
 	
 	@Autowired
 	private IChargeDAO chargedao;
@@ -120,6 +124,34 @@ public class ChargeManager implements IChargeManager{
 		}
 		else{
 			return "noCreator";
+		}
+	}
+
+	public List<Charge> getTeacherChargeList(User user, Group groupA) {
+		if(!groupManager.isTeacherOrDirector(user, groupA.getIdGrupo())){
+			return null;
+		}
+		else{
+			return chargedao.getTeacherChargeList(groupA);
+		}
+	}
+
+	public String validateCharge(Charge c, User user, Group groupA) {
+		if(!groupManager.isTeacherOrDirector(user, groupA.getIdGrupo())){
+			return "noTeacher";
+		}
+		else{
+			if(c == null){
+				return "noCharge";
+			}
+			else{
+				if(groupA.getIdGrupo() != c.getIdGroup()){
+					return "noGroup";
+				}
+				else{
+					return chargedao.validateCharge(c.getIdCharge());
+				}
+			}
 		}
 	}
 }

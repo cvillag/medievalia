@@ -20,4 +20,6 @@ public interface IChargeManager extends Serializable{
 	public String deleteCharge(int idCargo);
 	public List<Charge> getStudentChargeList(User user);
 	public String deleteOwnCharge(int idCargo, User user);
+	public List<Charge> getTeacherChargeList(User user, Group groupA);
+	public String validateCharge(Charge c, User user, Group groupA);
 }
