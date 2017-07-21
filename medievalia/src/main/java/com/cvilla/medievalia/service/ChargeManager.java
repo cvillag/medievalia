@@ -154,4 +154,26 @@ public class ChargeManager implements IChargeManager{
 			}
 		}
 	}
+	
+	public List<User> getUsersToValidateChargeByGroup(User teacher, Group group){
+		if(!groupManager.isTeacherOrDirector(teacher, group.getIdGrupo())){
+			return null;
+		}
+		else{
+			return chargedao.getUsersToValidateByGroup(group.getIdGrupo());
+		}
+	}
+	
+	public int getNumUsersToValidateByGroup(User teacher, Group group){
+		if(!groupManager.isTeacherOrDirector(teacher, group.getIdGrupo())){
+			return -1;
+		}
+		else{
+			return chargedao.getChargesToValidateByGroup(group.getIdGrupo());
+		}
+	}
+	
+	public int getNumChargesToValidateByUser(Group g, User u){
+		return chargedao.getChargesToValidateByGroupAndCreator(u, g.getIdGrupo());
+	}
 }

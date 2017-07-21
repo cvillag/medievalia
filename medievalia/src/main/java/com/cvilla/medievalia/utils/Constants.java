@@ -61,6 +61,8 @@ public class Constants {
 	public static final int P_VALIDAR_CARGO = 44;
 	public static final int P_VIEW_OWN_CHARGES = 45;
 	public static final int P_DELETE_OWN_CHARGES = 46;
+	public static final int P_VIEW_CHARGE_STATISTICS = 47;
+	public static final int P_VIEW_OWN_CHARGE_STATISTICS = 48;
 	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;

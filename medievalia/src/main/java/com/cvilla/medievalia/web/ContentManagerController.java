@@ -16,6 +16,7 @@ import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.Tema;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IChargeManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
@@ -41,6 +42,9 @@ public class ContentManagerController {
 	
 	@Autowired
 	private ILoginManager userManager;
+	
+	@Autowired
+	private IChargeManager chargeManager;
 	
 	@RequestMapping(value = "contentManager.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -75,12 +79,46 @@ public class ContentManagerController {
 						message = "p3.1.msg.ok";
 						List<Tema> listaTemas = temaManager.getTemaGrupoByGroup(g);
 						model.addObject("listaTemas", listaTemas);
-						
+						activeGroup = new Group(g.getIdGrupo(),g.getDirector(),g.getName(),g.getDescription());
 					}
 					else{
 						message = "p3.1.msg.grpNoExiste";
 					}
 				}
+				
+				//Resumen de cargos
+				if(authManager.isAutorized(Constants.P_VIEW_CHARGE_STATISTICS, user) && activeGroup != null){
+					int numVal = chargeManager.getNumUsersToValidateByGroup(user, activeGroup);
+					int numStud = chargeManager.getUsersToValidateChargeByGroup(user, activeGroup).size();
+					model.addObject("profe", "ok");
+					model.addObject("numChargesToValidate",numVal);
+					model.addObject("numStudentsToValidate", numStud);
+					model.addObject("numChargesToValidateS", 0);
+					model.addObject("numChargesByStudent",0);
+				}
+				else{
+					if(authManager.isAutorized(Constants.P_VIEW_OWN_CHARGE_STATISTICS, user) && activeGroup != null){
+						int numCharTotal = chargeManager.getStudentChargeList(user).size();
+						model.addObject("profe", "nok");
+						model.addObject("numChargesToValidate",0);
+						model.addObject("numStudentsToValidate", 0);
+						model.addObject("numChargesToValidateS", chargeManager.getNumChargesToValidateByUser(activeGroup, user));
+						model.addObject("numChargesByStudent",numCharTotal);
+					}
+				}
+				
+				if(activeGroup != null){
+					int numSt = groupManager.getStudentParticipantList(activeGroup).size();
+					int numTe = groupManager.getTeacherParticipantList(activeGroup).size();
+					model.addObject("numStudents",numSt);
+					model.addObject("numTeachers",numTe);
+				}
+				else{
+					model.addObject("numStudents",0);
+					model.addObject("numTeachers",0);
+				}
+				
+				//
 				model.addObject("message", message);
 				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 				model.addObject("director",director);

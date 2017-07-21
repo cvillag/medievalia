@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.cvilla.medievalia.dao.intfc.IChargeDAO;
 import com.cvilla.medievalia.dao.mappers.ChargeMapper;
+import com.cvilla.medievalia.dao.mappers.UserMapper;
 import com.cvilla.medievalia.domain.Charge;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.User;
@@ -21,9 +22,11 @@ public class ChargeDAO implements IChargeDAO {
 	private static final String UPDATE_CHARGE_NAME = "UPDATE `cargo` SET `nombre`= ? WHERE `idCargo` = ?";
 	private static final String DELETE_CHARGE = "DELETE FROM `cargo` WHERE `idCargo` = ?";
 	private static final String GET_STUDENT_CHARGE_LIST = "SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado`, `nameCreator` FROM (SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where creador = ? ) as sel1 left join (select user_name as nameCreator,  user_id from users) as sel2 on sel1.creador = sel2.user_id";
-	private static final String GET_TEACHER_CHARGE_LIST = "SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado`, `nameCreator` FROM (SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where idGroup = ? and validado = ?) as sel1 left join (select user_name as nameCreator,  user_id from users) as sel2 on sel1.creador = sel2.user_id";
+	private static final String GET_TEACHER_CHARGE_LIST = "SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado`, `nameCreator` FROM (SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado` FROM `cargo` where idGroup = ? and validado = ?) as sel1 left join (select user_name as nameCreator,  user_id from users) as sel2 on sel1.creador = sel2.user_id order by creador";
 	private static final String VALIDATE_CHARGE_NAME = "UPDATE `cargo` SET `validado`= ? WHERE `idCargo` = ?";
-	
+	private static final String GET_STUDENTS_TO_VALIDATE = "select user_id, user_long_name, user_name, user_pass, user_role from users where user_id in (SELECT  distinct(`creador`) FROM `cargo` WHERE idGroup = ? and validado = ?)";
+	private static final String GET_NUM_CHARGES_TO_VALIDATE = "SELECT  count(`creador`) FROM `cargo` WHERE idGroup = ? and validado = ?";
+	private static final String GET_NUM_CHARGES_TO_VALIDATE_BY_CREATOR = "SELECT  count(`creador`) FROM `cargo` WHERE idGroup = ? and validado = ? and `creador` = ?";
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -155,6 +158,34 @@ public class ChargeDAO implements IChargeDAO {
 		}
 		catch(Exception e){
 			return "noValidado";
+		}
+	}
+	
+	public List<User> getUsersToValidateByGroup(int idGroup){
+		try{
+			List<User> l = getJdbcTemplate().query(GET_STUDENTS_TO_VALIDATE, new Object[]{idGroup,Constants.OBJETO_NO_VALIDADO},new UserMapper());
+			return l;
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
+	
+	public int getChargesToValidateByGroup(int idGroup){
+		try{
+			return getJdbcTemplate().queryForInt(GET_NUM_CHARGES_TO_VALIDATE, new Object[]{idGroup,Constants.OBJETO_NO_VALIDADO});
+		}
+		catch(Exception e){
+			return -1;
+		}
+	}
+	
+	public int getChargesToValidateByGroupAndCreator(User user, int idGroup){
+		try{
+			return getJdbcTemplate().queryForInt(GET_NUM_CHARGES_TO_VALIDATE_BY_CREATOR, new Object[]{idGroup,Constants.OBJETO_NO_VALIDADO,user.getId()});
+		}
+		catch(Exception e){
+			return -1;
 		}
 	}
 

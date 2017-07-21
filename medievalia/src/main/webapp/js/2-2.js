@@ -350,6 +350,38 @@ $(document).ready(function(){
 		}
 	});
 	
+	$("#busquedaProfe").keyup(function(){
+		if($("#busquedaProfe").val().length > 0){
+			$(".trcargoP").each(function(){
+				if($(this).data("nom").indexOf($("#busquedaProfe").val()) == -1){
+					$(this).hide();
+				}
+				else{
+					$(this).show();
+				}
+			});
+		}
+		else{
+			$(".trcargoP").show();
+		}
+	});
+	
+	$("#busquedaUsuario").keyup(function(){
+		if($("#busquedaUsuario").val().length > 0){
+			$(".trcargoU").each(function(){
+				if($(this).data("nom").indexOf($("#busquedaUsuario").val()) == -1){
+					$(this).hide();
+				}
+				else{
+					$(this).show();
+				}
+			});
+		}
+		else{
+			$(".trcargoU").show();
+		}
+	});
+	
 	$("#createButton").click(function(){
 		if($("#newChargeName").val().length < 1){
 			$("#modalCreaCargo1").modal();
@@ -365,6 +397,19 @@ $(document).ready(function(){
 				else if(json.message == "creado"){
 					cargaListaCompleta();
 					if($("#listaalumno").length > 0){
+						if(btncreate == 0){
+							$("#group-block1").slideUp(500);
+							$("#newChargeName").val("");
+							$("#displayCreatei").removeClass();
+							$("#displayCreatei").addClass("glyphicon glyphicon-chevron-down");
+							btncreate = 1;
+						}
+						else{
+							$("#group-block1").slideDown(500);
+							$("#displayCreatei").removeClass();
+							$("#displayCreatei").addClass("glyphicon glyphicon-chevron-up");
+							btncreate = 0;
+						}
 						cargaListaAlumno();
 					}
 					else if($("#listaProfe").length > 0){

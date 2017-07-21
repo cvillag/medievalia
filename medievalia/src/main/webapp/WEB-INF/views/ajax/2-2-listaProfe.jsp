@@ -19,7 +19,7 @@ String valid = (String) request.getAttribute("permisovalidar");
 if (cargos != null && cargos.size() > 0){
 	for(Charge c : cargos){
 		if(type.equals("table")){%>
-			<tr class="trcargo" id="cargoProfe<%=c.getIdCharge()%>" data-nom="<%=c.getNombre()%>">
+			<tr class="trcargoP" id="cargoProfe<%=c.getIdCharge()%>" data-nom="<%=c.getNombre()%>">
 				<td>
 					<input type="text" id="cargoProfeName<%=c.getIdCharge()%>" value="<%=c.getNombre() %>" disabled class="nombreAl">
 					<button type="button" id="saveProfeCargo<%=c.getIdCharge()%>" class="btn btn-default saveProfeNewName" data-val="<%=c.getIdCharge()%>">
