@@ -118,7 +118,11 @@ public class ContentManagerController {
 					model.addObject("numTeachers",0);
 				}
 				
-				//
+				//Resumen de estudios
+				
+				
+				//Fin resúmenes
+				
 				model.addObject("message", message);
 				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 				model.addObject("director",director);

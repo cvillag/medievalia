@@ -42,6 +42,9 @@
 	
 	<bean id="chargeManager" class="com.cvilla.medievalia.service.ChargeManager">
 	</bean>
+	
+	<bean id="estudioManager" class="com.cvilla.medievalia.service.StudyManager">
+	</bean>
 
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -76,6 +79,10 @@
 	</bean>
 	
 	<bean id="chargeDAO" class="com.cvilla.medievalia.dao.ChargeDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean id="studyDAO" class="com.cvilla.medievalia.dao.StudyDAO">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 

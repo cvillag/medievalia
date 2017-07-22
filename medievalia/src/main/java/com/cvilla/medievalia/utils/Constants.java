@@ -63,6 +63,16 @@ public class Constants {
 	public static final int P_DELETE_OWN_CHARGES = 46;
 	public static final int P_VIEW_CHARGE_STATISTICS = 47;
 	public static final int P_VIEW_OWN_CHARGE_STATISTICS = 48;
+	public static final int P_VIEW_STUDIES = 49;
+	public static final int P_VALIDATE_STUDY = 50;
+	public static final int P_CREATE_STUDY = 51;
+	public static final int P_RENAME_STUDY = 52;
+	public static final int P_RENAME_STUDY_OWN = 53;
+	public static final int P_DELETE_STUDY = 54;
+	public static final int P_VIEW_OWN_STUDY = 55;
+	public static final int P_DELETE_OWN_STUDIES = 56;
+	public static final int P_VIEW_STUDIES_STATISTICS = 47;
+	public static final int P_VIEW_OWN_STUDIES_STATISTICS = 48;
 	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;

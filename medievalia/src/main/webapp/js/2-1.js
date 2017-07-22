@@ -7,4 +7,8 @@ $(document).ready(function(){
 	$("#btnGestionCargos").click(function(){
 		window.location.href="chargeController.do";
 	});
+	
+	$("#btnGestionEstudios").click(function(){
+		window.location.href="studyController.do";
+	});
 });

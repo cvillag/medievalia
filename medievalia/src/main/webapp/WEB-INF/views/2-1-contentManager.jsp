@@ -96,6 +96,18 @@
 				<p><button type="button" class="btn btn-default" id="btnGestionCargos"><fmt:message key="p2-1.cargo.btn"></fmt:message></button></p>
 			</div>
 		</div>
+		<div class="panel panel-default col-sm-4">
+			<div class="panel-heading">
+				<h3 class="panel-title"><fmt:message key="p2-1.estudio"></fmt:message></h3>
+			</div>
+			<div class="panel-body">
+				<p>
+				<fmt:message key="p2-1.estudio02"></fmt:message>
+				<span class="label label-success">0</span>
+				</p>
+				<p><button type="button" class="btn btn-default" id="btnGestionEstudios"><fmt:message key="p2-1.estudio.btn"></fmt:message></button></p>
+			</div>
+		</div>
 	</div>
 </div>
 <%} else if (message.equals("p3.1.msg.grpNoExiste")){%>
