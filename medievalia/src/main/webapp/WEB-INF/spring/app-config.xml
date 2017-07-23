@@ -45,6 +45,9 @@
 	
 	<bean id="estudioManager" class="com.cvilla.medievalia.service.StudyManager">
 	</bean>
+	
+	<bean id="placeManager" class="com.cvilla.medievalia.service.PlaceManager">
+	</bean>
 
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -83,6 +86,10 @@
 	</bean>
 	
 	<bean id="studyDAO" class="com.cvilla.medievalia.dao.StudyDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean id="placeDAO" class="com.cvilla.medievalia.dao.PlaceDAO">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 

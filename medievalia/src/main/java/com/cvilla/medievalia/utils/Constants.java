@@ -63,6 +63,7 @@ public class Constants {
 	public static final int P_DELETE_OWN_CHARGES = 46;
 	public static final int P_VIEW_CHARGE_STATISTICS = 47;
 	public static final int P_VIEW_OWN_CHARGE_STATISTICS = 48;
+	
 	public static final int P_VIEW_STUDIES = 49;
 	public static final int P_VALIDATE_STUDY = 50;
 	public static final int P_CREATE_STUDY = 51;
@@ -73,6 +74,17 @@ public class Constants {
 	public static final int P_DELETE_OWN_STUDIES = 56;
 	public static final int P_VIEW_STUDIES_STATISTICS = 47;
 	public static final int P_VIEW_OWN_STUDIES_STATISTICS = 48;
+	
+	public static final int P_VIEW_PLACES = 57;
+	public static final int P_VALIDATE_PLACE = 58;
+	public static final int P_CREATE_PLACE = 59;
+	public static final int P_RENAME_PLACE = 60;
+	public static final int P_RENAME_PLACE_OWN = 61;
+	public static final int P_DELETE_PLACE = 62;
+	public static final int P_VIEW_OWN_PLACE = 63;
+	public static final int P_DELETE_OWN_PLACES = 64;
+	public static final int P_VIEW_PLACES_STATISTICS = 47;
+	public static final int P_VIEW_OWN_PLACES_STATISTICS = 48;
 	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;

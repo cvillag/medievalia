@@ -138,6 +138,42 @@
 				<p><button type="button" class="btn btn-default" id="btnGestionEstudios"><fmt:message key="p2-1.estudio.btn"></fmt:message></button></p>
 			</div>
 		</div>
+		<div class="panel panel-default col-sm-4">
+			<div class="panel-heading">
+				<h3 class="panel-title"><fmt:message key="p2-1.lugar"></fmt:message></h3>
+			</div>
+			<div class="panel-body">
+				<p>
+				<%if(profe.equals("ok")){ %>
+				<fmt:message key="p2-1.lugar02"></fmt:message>
+					<%if(numStudy == 0){ %>
+				<span class="label label-success"><%=numStudy %></span>
+					<%}else{ %>
+				<span class="label label-warning"><%=numStudy %></span>
+					<%} %>
+				&nbsp;<fmt:message key="p2-1.lugar03"></fmt:message>
+					<%if(numStudStud == 0){ %>
+				<span class="label label-success"><%=numStudStud %></span>
+					<%}else{ %>
+				<span class="label label-warning"><%=numStudStud %></span>
+					<%} %>
+				&nbsp;<fmt:message key="p2-1.lugar04"></fmt:message>
+				<%}
+				else{%>
+				<fmt:message key="p2-1.lugaresPropios"></fmt:message>
+				<span class="label label-info"><%=numSS %></span>
+				</p><p>
+				<fmt:message key="p2-1.lugar02"></fmt:message>
+					<%if(numStStTot == 0){ %>
+					<span class="label label-success"><%=numStStTot %></span>	
+					<%}else{ %>
+					<span class="label label-warning"><%=numStStTot %></span>
+					<%} %>
+				<%} %>
+				</p>
+				<p><button type="button" class="btn btn-default" id="btnGestionLugares"><fmt:message key="p2-1.lugar.btn"></fmt:message></button></p>
+			</div>
+		</div>
 	</div>
 </div>
 <%} else if (message.equals("p3.1.msg.grpNoExiste")){%>
