@@ -64,6 +64,9 @@ public class CompleteChargeListAjaxController {
 				if(authManager.isAutorized(Constants.P_DELETE_CHARGE, user)){
 					model.addObject("permisoborrado","ok");
 				}
+				if(authManager.isAutorized(Constants.P_RENAME_CHARGE, user)){
+					model.addObject("permisoRenombrado", "ok");
+				}
 			}
 		}
 		else{

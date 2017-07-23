@@ -62,6 +62,9 @@ public class CompleteStudyListAjaxController {
 				if(authManager.isAutorized(Constants.P_DELETE_STUDY, user)){
 					model.addObject("permisoborrado","ok");
 				}
+				if(authManager.isAutorized(Constants.P_RENAME_STUDY, user)){
+					model.addObject("permisoRenombrado", "ok");
+				}
 			}
 		}
 		else{

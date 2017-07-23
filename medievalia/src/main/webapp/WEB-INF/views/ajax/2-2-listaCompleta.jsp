@@ -12,6 +12,8 @@ String type= (String) request.getAttribute("type");
 List<Charge> cargos = (List<Charge>) request.getAttribute("listaCargos");
 @SuppressWarnings("unchecked")
 String delete = (String) request.getAttribute("permisoborrado");
+@SuppressWarnings("unckecked")
+String rename = (String) request.getAttribute("permisoRenombrado");
 if (cargos != null && cargos.size() > 0){
 	for(Charge c : cargos){
 		if(type.equals("table")){%>
@@ -29,10 +31,12 @@ if (cargos != null && cargos.size() > 0){
 					<%=c.getValidado()%>
 				</td>
 				<td>
+					<%if(rename != null){ %>
 					<button type="button" class="btn btn-default activarSNombre" data-val="<%=c.getIdCharge()%>">
 						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 					</button>
-					<%if(delete != null){ %>
+					<%}
+					if(delete != null){ %>
 					<button type="button" class="btn btn-default deleteSCargo" data-val="<%=c.getIdCharge()%>">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>

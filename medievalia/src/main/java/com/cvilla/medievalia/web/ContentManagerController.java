@@ -20,6 +20,7 @@ import com.cvilla.medievalia.service.intf.IChargeManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
+import com.cvilla.medievalia.service.intf.IStudyManager;
 import com.cvilla.medievalia.service.intf.ITemaManager;
 import com.cvilla.medievalia.utils.Constants;
 
@@ -45,6 +46,9 @@ public class ContentManagerController {
 	
 	@Autowired
 	private IChargeManager chargeManager;
+	
+	@Autowired
+	private IStudyManager studyManager;
 	
 	@RequestMapping(value = "contentManager.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -107,6 +111,28 @@ public class ContentManagerController {
 					}
 				}
 				
+				//Resumen de estudios
+				if(authManager.isAutorized(Constants.P_VIEW_STUDIES_STATISTICS, user) && activeGroup != null){
+					int numVal = studyManager.getNumUsersToValidateByGroup(user, activeGroup);
+					int numStud = studyManager.getUsersToValidateStudyByGroup(user, activeGroup).size();
+					model.addObject("profe", "ok");
+					model.addObject("numStudiesToValidate",numVal);
+					model.addObject("numStudentsSToValidate", numStud);
+					model.addObject("numStudiesToValidateS", 0);
+					model.addObject("numStudiesByStudent",0);
+				}
+				else{
+					if(authManager.isAutorized(Constants.P_VIEW_OWN_STUDIES_STATISTICS, user) && activeGroup != null){
+						int numCharTotal = studyManager.getStudentStudyList(user).size();
+						model.addObject("profe", "nok");
+						model.addObject("numStudiesToValidate",0);
+						model.addObject("numStudentsSToValidate", 0);
+						model.addObject("numStudiesToValidateS", studyManager.getNumStudysToValidateByUser(activeGroup, user));
+						model.addObject("numStudiesByStudent",numCharTotal);
+					}
+				}
+				
+				//Resumen de participantes
 				if(activeGroup != null){
 					int numSt = groupManager.getStudentParticipantList(activeGroup).size();
 					int numTe = groupManager.getTeacherParticipantList(activeGroup).size();

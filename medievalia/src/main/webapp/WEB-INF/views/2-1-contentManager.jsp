@@ -19,6 +19,12 @@
 	int numS = ((Integer)request.getAttribute("numStudents")).intValue();
 	int numT = ((Integer)request.getAttribute("numTeachers")).intValue();
 	int numChStTot = ((Integer)request.getAttribute("numChargesByStudent")).intValue();
+	
+	int numStudy = ((Integer)request.getAttribute("numStudiesToValidate")).intValue();
+	int numStudStud = ((Integer)request.getAttribute("numStudentsSToValidate")).intValue();
+	int numSS = ((Integer)request.getAttribute("numStudiesToValidateS")).intValue();
+	int numStStTot = ((Integer)request.getAttribute("numStudiesByStudent")).intValue();
+	
 %>
 <%if(message.equals("p3.1.msg.ok") && g != null){ %>
 <div class="container">
@@ -102,8 +108,32 @@
 			</div>
 			<div class="panel-body">
 				<p>
+				<%if(profe.equals("ok")){ %>
 				<fmt:message key="p2-1.estudio02"></fmt:message>
-				<span class="label label-success">0</span>
+					<%if(numStudy == 0){ %>
+				<span class="label label-success"><%=numStudy %></span>
+					<%}else{ %>
+				<span class="label label-warning"><%=numStudy %></span>
+					<%} %>
+				&nbsp;<fmt:message key="p2-1.estudio03"></fmt:message>
+					<%if(numStudStud == 0){ %>
+				<span class="label label-success"><%=numStudStud %></span>
+					<%}else{ %>
+				<span class="label label-warning"><%=numStudStud %></span>
+					<%} %>
+				&nbsp;<fmt:message key="p2-1.estudio04"></fmt:message>
+				<%}
+				else{%>
+				<fmt:message key="p2-1.estudiosPropios"></fmt:message>
+				<span class="label label-info"><%=numSS %></span>
+				</p><p>
+				<fmt:message key="p2-1.estudio02"></fmt:message>
+					<%if(numStStTot == 0){ %>
+					<span class="label label-success"><%=numStStTot %></span>	
+					<%}else{ %>
+					<span class="label label-warning"><%=numStStTot %></span>
+					<%} %>
+				<%} %>
 				</p>
 				<p><button type="button" class="btn btn-default" id="btnGestionEstudios"><fmt:message key="p2-1.estudio.btn"></fmt:message></button></p>
 			</div>

@@ -12,6 +12,8 @@ String type= (String) request.getAttribute("type");
 List<Study> estudios = (List<Study>) request.getAttribute("listaEstudios");
 @SuppressWarnings("unchecked")
 String delete = (String) request.getAttribute("permisoborrado");
+@SuppressWarnings("unckecked")
+String rename = (String) request.getAttribute("permisoRenombrado");
 if (estudios != null && estudios.size() > 0){
 	for(Study c : estudios){
 		if(type.equals("table")){%>
@@ -29,10 +31,12 @@ if (estudios != null && estudios.size() > 0){
 					<%=c.getValidado()%>
 				</td>
 				<td>
+					<%if(rename != null){ %>
 					<button type="button" class="btn btn-default activarSNombre" data-val="<%=c.getIdStudy()%>">
 						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 					</button>
-					<%if(delete != null){ %>
+					<%}
+					if(delete != null){ %>
 					<button type="button" class="btn btn-default deleteSEstudio" data-val="<%=c.getIdStudy()%>">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>
