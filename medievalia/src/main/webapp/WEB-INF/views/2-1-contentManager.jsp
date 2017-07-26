@@ -25,6 +25,15 @@
 	int numSS = ((Integer)request.getAttribute("numStudiesToValidateS")).intValue();
 	int numStStTot = ((Integer)request.getAttribute("numStudiesByStudent")).intValue();
 	
+	int numLugar = ((Integer)request.getAttribute("numPlaceToValidate")).intValue();
+	int numLugarStud = ((Integer)request.getAttribute("numPlaceSToValidate")).intValue();
+	int numLS = ((Integer)request.getAttribute("numPlacesToValidateS")).intValue();
+	int numStLgTot = ((Integer)request.getAttribute("numPlacesByStudent")).intValue();
+	
+	int numAuthor = ((Integer)request.getAttribute("numAuthorsToValidate")).intValue();
+	int numAuthorStud = ((Integer)request.getAttribute("numAuthorsSToValidate")).intValue();
+	int numAS = ((Integer)request.getAttribute("numAuthorsToValidateS")).intValue();
+	int numStAsTot = ((Integer)request.getAttribute("numAuthorsByStudent")).intValue();
 %>
 <%if(message.equals("p3.1.msg.ok") && g != null){ %>
 <div class="container">
@@ -146,32 +155,70 @@
 				<p>
 				<%if(profe.equals("ok")){ %>
 				<fmt:message key="p2-1.lugar02"></fmt:message>
-					<%if(numStudy == 0){ %>
-				<span class="label label-success"><%=numStudy %></span>
+					<%if(numLugar == 0){ %>
+				<span class="label label-success"><%=numLugar %></span>
 					<%}else{ %>
-				<span class="label label-warning"><%=numStudy %></span>
+				<span class="label label-warning"><%=numLugar %></span>
 					<%} %>
 				&nbsp;<fmt:message key="p2-1.lugar03"></fmt:message>
-					<%if(numStudStud == 0){ %>
-				<span class="label label-success"><%=numStudStud %></span>
+					<%if(numAuthorStud == 0){ %>
+				<span class="label label-success"><%=numAuthorStud %></span>
 					<%}else{ %>
-				<span class="label label-warning"><%=numStudStud %></span>
+				<span class="label label-warning"><%=numAuthorStud %></span>
 					<%} %>
 				&nbsp;<fmt:message key="p2-1.lugar04"></fmt:message>
 				<%}
 				else{%>
 				<fmt:message key="p2-1.lugaresPropios"></fmt:message>
-				<span class="label label-info"><%=numSS %></span>
+				<span class="label label-info"><%=numLS %></span>
 				</p><p>
 				<fmt:message key="p2-1.lugar02"></fmt:message>
-					<%if(numStStTot == 0){ %>
-					<span class="label label-success"><%=numStStTot %></span>	
+					<%if(numStLgTot == 0){ %>
+					<span class="label label-success"><%=numStLgTot %></span>	
 					<%}else{ %>
-					<span class="label label-warning"><%=numStStTot %></span>
+					<span class="label label-warning"><%=numStLgTot %></span>
 					<%} %>
 				<%} %>
 				</p>
 				<p><button type="button" class="btn btn-default" id="btnGestionLugares"><fmt:message key="p2-1.lugar.btn"></fmt:message></button></p>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="panel panel-default col-sm-4">
+			<div class="panel-heading">
+				<h3 class="panel-title"><fmt:message key="p2-1.autor"></fmt:message></h3>
+			</div>
+			<div class="panel-body">
+				<p>
+				<%if(profe.equals("ok")){ %>
+				<fmt:message key="p2-1.lugar02"></fmt:message>
+					<%if(numAuthor == 0){ %>
+				<span class="label label-success"><%=numAuthor %></span>
+					<%}else{ %>
+				<span class="label label-warning"><%=numAuthor %></span>
+					<%} %>
+				&nbsp;<fmt:message key="p2-1.lugar03"></fmt:message>
+					<%if(numAuthorStud == 0){ %>
+				<span class="label label-success"><%=numAuthorStud %></span>
+					<%}else{ %>
+				<span class="label label-warning"><%=numAuthorStud %></span>
+					<%} %>
+				&nbsp;<fmt:message key="p2-1.lugar04"></fmt:message>
+				<%}
+				else{%>
+				<fmt:message key="p2-1.autoresPropios"></fmt:message>
+				<span class="label label-info"><%=numAS %></span>
+				</p><p>
+				<fmt:message key="p2-1.lugar02"></fmt:message>
+					<%if(numStAsTot == 0){ %>
+					<span class="label label-success"><%=numStAsTot %></span>	
+					<%}else{ %>
+					<span class="label label-warning"><%=numStAsTot %></span>
+					<%} %>
+				<%} %>
+				</p>
+				<p><button type="button" class="btn btn-default" id="btnGestionAutores"><fmt:message key="p2-1.autor.btn"></fmt:message></button></p>
 			</div>
 		</div>
 	</div>

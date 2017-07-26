@@ -15,11 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.Tema;
 import com.cvilla.medievalia.domain.User;
+import com.cvilla.medievalia.service.intf.IAuthorManager;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IChargeManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
+import com.cvilla.medievalia.service.intf.IPlaceManager;
 import com.cvilla.medievalia.service.intf.IStudyManager;
 import com.cvilla.medievalia.service.intf.ITemaManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -49,6 +51,12 @@ public class ContentManagerController {
 	
 	@Autowired
 	private IStudyManager studyManager;
+	
+	@Autowired
+	private IPlaceManager placeManager;
+	
+	@Autowired
+	private IAuthorManager authorManager;
 	
 	@RequestMapping(value = "contentManager.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -144,7 +152,47 @@ public class ContentManagerController {
 					model.addObject("numTeachers",0);
 				}
 				
-				//Resumen de estudios
+				//Resumen de lugares
+				if(authManager.isAutorized(Constants.P_VIEW_PLACES_STATISTICS, user) && activeGroup != null){
+					int numVal = placeManager.getNumUsersToValidateByGroup(user, activeGroup);
+					int numStud = placeManager.getUsersToValidatePlaceByGroup(user, activeGroup).size();
+					model.addObject("profe", "ok");
+					model.addObject("numPlaceToValidate",numVal);
+					model.addObject("numPlaceSToValidate", numStud);
+					model.addObject("numPlacesToValidateS", 0);
+					model.addObject("numPlacesByStudent",0);
+				}
+				else{
+					if(authManager.isAutorized(Constants.P_VIEW_OWN_AUTHORS_STATISTICS, user) && activeGroup != null){
+						int numCharTotal = authorManager.getStudentAuthorList(user).size();
+						model.addObject("profe", "nok");
+						model.addObject("numPlaceToValidate",0);
+						model.addObject("numPlaceSToValidate", 0);
+						model.addObject("numPlacesToValidateS", authorManager.getNumAuthorsToValidateByUser(activeGroup, user));
+						model.addObject("numPlacesByStudent",numCharTotal);
+					}
+				}
+				
+				//Resumen de autores
+				if(authManager.isAutorized(Constants.P_VIEW_AUTHORS_STATISTICS, user) && activeGroup != null){
+					int numVal = authorManager.getNumUsersToValidateByGroup(user, activeGroup);
+					int numStud = authorManager.getUsersToValidateAuthorByGroup(user, activeGroup).size();
+					model.addObject("profe", "ok");
+					model.addObject("numAuthorsToValidate",numVal);
+					model.addObject("numAuthorsSToValidate", numStud);
+					model.addObject("numAuthorsToValidateS", 0);
+					model.addObject("numAuthorsByStudent",0);
+				}
+				else{
+					if(authManager.isAutorized(Constants.P_VIEW_OWN_AUTHORS_STATISTICS, user) && activeGroup != null){
+						int numCharTotal = authorManager.getStudentAuthorList(user).size();
+						model.addObject("profe", "nok");
+						model.addObject("numAuthorsToValidate",0);
+						model.addObject("numAuthorsSToValidate", 0);
+						model.addObject("numAuthorsToValidateS", authorManager.getNumAuthorsToValidateByUser(activeGroup, user));
+						model.addObject("numAuthorsByStudent",numCharTotal);
+					}
+				}
 				
 				
 				//Fin resúmenes

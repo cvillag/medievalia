@@ -86,6 +86,17 @@ public class Constants {
 	public static final int P_VIEW_PLACES_STATISTICS = 47;
 	public static final int P_VIEW_OWN_PLACES_STATISTICS = 48;
 	
+	public static final int P_VIEW_AUTHORS = 65;
+	public static final int P_VALIDATE_AUTHOR = 66;
+	public static final int P_CREATE_AUTHOR = 67;
+	public static final int P_RENAME_AUTHOR = 68;
+	public static final int P_RENAME_AUTHOR_OWN = 69;
+	public static final int P_DELETE_AUTHOR = 70;
+	public static final int P_VIEW_OWN_AUTHOR = 71;
+	public static final int P_DELETE_OWN_AUTHORS = 72;
+	public static final int P_VIEW_AUTHORS_STATISTICS = 47;
+	public static final int P_VIEW_OWN_AUTHORS_STATISTICS = 48;
+	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;
 	public static final int P_NOUSER = 0;
@@ -115,6 +126,7 @@ public class Constants {
 	public static final int OBJETO_NO_VALIDADO = 0;
 	public static final int OBJETO_VALIDADO = 1;
 	public static final int OBJETO_DENEGADO = 2;
+	
 		
 	public static String getKey(){
 		return PASS_KEY;

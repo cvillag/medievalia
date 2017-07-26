@@ -48,6 +48,9 @@
 	
 	<bean id="placeManager" class="com.cvilla.medievalia.service.PlaceManager">
 	</bean>
+	
+	<bean id="authorManager" class="com.cvilla.medievalia.service.AuthorManager">
+	</bean>
 
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -90,6 +93,10 @@
 	</bean>
 	
 	<bean id="placeDAO" class="com.cvilla.medievalia.dao.PlaceDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean id="authorDAO" class="com.cvilla.medievalia.dao.AuthorDAO">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 

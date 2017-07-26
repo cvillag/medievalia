@@ -15,4 +15,8 @@ $(document).ready(function(){
 	$("#btnGestionLugares").click(function(){
 		window.location.href="placeController.do";
 	});
+	
+	$("#btnGestionAutores").click(function(){
+		window.location.href="authorController.do";
+	});
 });
