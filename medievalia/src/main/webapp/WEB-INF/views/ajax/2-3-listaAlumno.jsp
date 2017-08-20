@@ -18,10 +18,10 @@ if (estudios != null && estudios.size() > 0){
 			<tr class="trestudioU" id="estudioStudent<%=c.getIdStudy()%>" data-nom="<%=c.getNombre()%>">
 				<td>
 					<input type="text" id="estudioStudentName<%=c.getIdStudy()%>" value="<%=c.getNombre() %>" disabled class="nombreAl">
-					<button type="button" id="saveStudentEstudio<%=c.getIdStudy()%>" class="btn btn-default saveStudentNewName" data-val="<%=c.getIdStudy()%>">
+					<button type="button" id="saveStudentEstudio<%=c.getIdStudy()%>" class="btn btn-sm btn-default saveStudentNewName" data-val="<%=c.getIdStudy()%>">
 						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 					</button>
-					<button type="button" id="cancelStudentEstudio<%=c.getIdStudy()%>" class="btn btn-default cancelStudentNewName" data-val="<%=c.getIdStudy()%>">
+					<button type="button" id="cancelStudentEstudio<%=c.getIdStudy()%>" class="btn btn-sm btn-default cancelStudentNewName" data-val="<%=c.getIdStudy()%>">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 					</button>
 				</td>
@@ -39,11 +39,11 @@ if (estudios != null && estudios.size() > 0){
 					}%>
 				</td>
 				<td>
-					<button type="button" class="btn btn-default activarStudentSNombre" data-val="<%=c.getIdStudy()%>">
+					<button type="button" class="btn btn-sm btn-default activarStudentSNombre" data-val="<%=c.getIdStudy()%>">
 						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 					</button>
 					<%if(delete != null){ %>
-					<button type="button" class="btn btn-default deleteStudentSEstudio" data-val="<%=c.getIdStudy()%>">
+					<button type="button" class="btn btn-sm btn-default deleteStudentSEstudio" data-val="<%=c.getIdStudy()%>">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>
 					<%} %>

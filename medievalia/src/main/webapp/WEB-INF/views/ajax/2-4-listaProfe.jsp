@@ -22,10 +22,10 @@ if (lugares != null && lugares.size() > 0){
 			<tr class="trlugarP" id="lugarProfe<%=c.getIdPlace()%>" data-nom="<%=c.getNombre()%>">
 				<td>
 					<input type="text" id="lugarProfeName<%=c.getIdPlace()%>" value="<%=c.getNombre() %>" disabled class="nombreAl">
-					<button type="button" id="saveProfeLugar<%=c.getIdPlace()%>" class="btn btn-default saveProfeNewName" data-val="<%=c.getIdPlace()%>">
+					<button type="button" id="saveProfeLugar<%=c.getIdPlace()%>" class="btn btn-sm btn-default saveProfeNewName" data-val="<%=c.getIdPlace()%>">
 						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 					</button>
-					<button type="button" id="cancelProfeLugar<%=c.getIdPlace()%>" class="btn btn-default cancelProfeNewName" data-val="<%=c.getIdPlace()%>">
+					<button type="button" id="cancelProfeLugar<%=c.getIdPlace()%>" class="btn btn-sm btn-default cancelProfeNewName" data-val="<%=c.getIdPlace()%>">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 					</button>
 				</td>
@@ -48,15 +48,15 @@ if (lugares != null && lugares.size() > 0){
 				<td>
 					
 					<%if(valid != null){%>
-					<button type="button" id="validarProfeLugar<%=c.getIdPlace()%>" class="btn btn-default validarLugar" data-val="<%=c.getIdPlace()%>">
+					<button type="button" id="validarProfeLugar<%=c.getIdPlace()%>" class="btn btn-sm btn-default validarLugar" data-val="<%=c.getIdPlace()%>">
 						<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
 					</button>
 					<%} %>
-					<button type="button" class="btn btn-default activarProfeSNombre" data-val="<%=c.getIdPlace()%>">
+					<button type="button" class="btn btn-sm btn-default activarProfeSNombre" data-val="<%=c.getIdPlace()%>">
 						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 					</button>
 					<%if(delete != null){ %>
-					<button type="button" class="btn btn-default deleteProfeSLugar" data-val="<%=c.getIdPlace()%>">
+					<button type="button" class="btn btn-sm btn-default deleteProfeSLugar" data-val="<%=c.getIdPlace()%>">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>
 					<%} %>

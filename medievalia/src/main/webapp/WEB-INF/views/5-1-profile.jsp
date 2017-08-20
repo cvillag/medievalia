@@ -16,16 +16,16 @@ User u = (User)request.getAttribute("usuario");
 		<div class="col-xs-3">
 			<div id="modificarUser">
 				<label><fmt:message key="p5.1.btn1"></fmt:message></label>
-				<button class="btn btn-default" id="btnU-modificar">
+				<button class="btn btn-sm btn-default" id="btnU-modificar">
 					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 				</button>
 			</div>
 			<div id="modificarUser2">
 				<label><fmt:message key="p5.1.btn1"></fmt:message></label>
-				<button class="btn btn-default" id="btnU-cancel">
+				<button class="btn btn-sm btn-default" id="btnU-cancel">
 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 				</button>
-				<button class="btn btn-default" id="btnU-guardar">
+				<button class="btn btn-sm btn-default" id="btnU-guardar">
 					<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 				</button>
 			</div>
@@ -58,7 +58,7 @@ User u = (User)request.getAttribute("usuario");
 		<div class="form-group" id="modificarPass">
 		<label class="col-xs-3"><fmt:message key="p5.1.btn2"></fmt:message></label>
 		<div class="col-xs-4">
-			<button class="btn btn-default" id="btnP-modificar">
+			<button class="btn btn-sm btn-default" id="btnP-modificar">
 				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 			</button>
 		</div>
@@ -84,10 +84,10 @@ User u = (User)request.getAttribute("usuario");
 	<div class="form-group" id="modificarPass2">
 		<label class="col-xs-3"><fmt:message key="p5.1.btn2"></fmt:message></label>
 		<div class="col-xs-4">
-			<button class="btn btn-default" id="btnP-cancel">
+			<button class="btn btn-sm btn-default" id="btnP-cancel">
 				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 			</button>
-			<button class="btn btn-default" id="btnP-guardar">
+			<button class="btn btn-sm btn-default" id="btnP-guardar">
 				<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 			</button>
 		</div>
@@ -114,7 +114,7 @@ User u = (User)request.getAttribute("usuario");
 				</p>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -136,7 +136,7 @@ User u = (User)request.getAttribute("usuario");
 				</p>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -158,7 +158,7 @@ User u = (User)request.getAttribute("usuario");
 				</p>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -180,7 +180,7 @@ User u = (User)request.getAttribute("usuario");
 				</p>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -204,7 +204,7 @@ User u = (User)request.getAttribute("usuario");
 				</p>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -226,7 +226,7 @@ User u = (User)request.getAttribute("usuario");
 				</p>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -248,7 +248,7 @@ User u = (User)request.getAttribute("usuario");
 				</p>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -270,7 +270,7 @@ User u = (User)request.getAttribute("usuario");
 				</p>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -292,7 +292,7 @@ User u = (User)request.getAttribute("usuario");
 				</p>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>

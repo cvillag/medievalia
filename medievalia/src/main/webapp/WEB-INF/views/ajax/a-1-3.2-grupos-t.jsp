@@ -38,14 +38,14 @@ if(lista != null && lista.size() > 0){
 				<%
 				if(play){
 					if (g == null || g.getIdGrupo() != t.getIdGroup()){ %>
-				<td><button class="btn btn-default btn-xs selectgrp selgrp"
+				<td><button class="btn btn-sm btn-default btn-xs selectgrp selgrp"
 						data-val="<%=t.getIdGroup()%>">
 						<span class="glyphicon glyphicon-play"
 							id="selectgrp<%=t.getIdGroup()%>"></span>
 					</button></td>
 					<%}
 					else{%>
-				<td><button class="btn btn-default btn-xs selectedgrp selgrp"
+				<td><button class="btn btn-sm btn-default btn-xs selectedgrp selgrp"
 						data-val="<%=t.getIdGroup()%>">
 						<span class="glyphicon glyphicon-check"
 							id="selectgrp<%=t.getIdGroup()%>"></span>

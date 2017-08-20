@@ -20,10 +20,10 @@ if (lugares != null && lugares.size() > 0){
 			<tr class="trlugar" id="lugar<%=c.getIdPlace()%>" data-nom="<%=c.getNombre()%>">
 				<td>
 					<input type="text" id="lugarName<%=c.getIdPlace()%>" value="<%=c.getNombre() %>" disabled class="nombreCom">
-					<button type="button" id="saveLugar<%=c.getIdPlace()%>" class="btn btn-default saveNewName" data-val="<%=c.getIdPlace()%>">
+					<button type="button" id="saveLugar<%=c.getIdPlace()%>" class="btn btn-sm btn-default saveNewName" data-val="<%=c.getIdPlace()%>">
 						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 					</button>
-					<button type="button" id="cancelLugar<%=c.getIdPlace()%>" class="btn btn-default cancelNewName" data-val="<%=c.getIdPlace()%>">
+					<button type="button" id="cancelLugar<%=c.getIdPlace()%>" class="btn btn-sm btn-default cancelNewName" data-val="<%=c.getIdPlace()%>">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 					</button>
 				</td>
@@ -32,12 +32,12 @@ if (lugares != null && lugares.size() > 0){
 				</td>
 				<td>
 					<%if(rename != null){ %>
-					<button type="button" class="btn btn-default activarSNombre" data-val="<%=c.getIdPlace()%>">
+					<button type="button" class="btn btn-sm btn-default activarSNombre" data-val="<%=c.getIdPlace()%>">
 						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 					</button>
 					<%}
 					if(delete != null){ %>
-					<button type="button" class="btn btn-default deleteSLugar" data-val="<%=c.getIdPlace()%>">
+					<button type="button" class="btn btn-sm btn-default deleteSLugar" data-val="<%=c.getIdPlace()%>">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>
 					<%} %>

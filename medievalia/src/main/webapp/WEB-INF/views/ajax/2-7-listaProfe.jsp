@@ -22,10 +22,10 @@ if (autores != null && autores.size() > 0){
 			<tr class="trautorP" id="autorProfe<%=c.getIdAuthor()%>" data-nom="<%=c.getNombre()%>">
 				<td>
 					<input type="text" id="autorProfeName<%=c.getIdAuthor()%>" value="<%=c.getNombre() %>" disabled class="nombreAl">
-					<button type="button" id="saveProfeAutor<%=c.getIdAuthor()%>" class="btn btn-default saveProfeNewName" data-val="<%=c.getIdAuthor()%>">
+					<button type="button" id="saveProfeAutor<%=c.getIdAuthor()%>" class="btn btn-sm btn-default saveProfeNewName" data-val="<%=c.getIdAuthor()%>">
 						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 					</button>
-					<button type="button" id="cancelProfeAutor<%=c.getIdAuthor()%>" class="btn btn-default cancelProfeNewName" data-val="<%=c.getIdAuthor()%>">
+					<button type="button" id="cancelProfeAutor<%=c.getIdAuthor()%>" class="btn btn-sm btn-default cancelProfeNewName" data-val="<%=c.getIdAuthor()%>">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 					</button>
 				</td>
@@ -48,15 +48,15 @@ if (autores != null && autores.size() > 0){
 				<td>
 					
 					<%if(valid != null){%>
-					<button type="button" id="validarProfeAutor<%=c.getIdAuthor()%>" class="btn btn-default validarAutor" data-val="<%=c.getIdAuthor()%>">
+					<button type="button" id="validarProfeAutor<%=c.getIdAuthor()%>" class="btn btn-sm btn-default validarAutor" data-val="<%=c.getIdAuthor()%>">
 						<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
 					</button>
 					<%} %>
-					<button type="button" class="btn btn-default activarProfeSNombre" data-val="<%=c.getIdAuthor()%>">
+					<button type="button" class="btn btn-sm btn-default activarProfeSNombre" data-val="<%=c.getIdAuthor()%>">
 						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 					</button>
 					<%if(delete != null){ %>
-					<button type="button" class="btn btn-default deleteProfeSAutor" data-val="<%=c.getIdAuthor()%>">
+					<button type="button" class="btn btn-sm btn-default deleteProfeSAutor" data-val="<%=c.getIdAuthor()%>">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>
 					<%} %>

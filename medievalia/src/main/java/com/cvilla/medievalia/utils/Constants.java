@@ -97,6 +97,11 @@ public class Constants {
 	public static final int P_VIEW_AUTHORS_STATISTICS = 47;
 	public static final int P_VIEW_OWN_AUTHORS_STATISTICS = 48;
 	
+	public static final int P_VIEW_CHARACTER_LIST = 73;
+	public static final int P_VALIDATE_CHARACTER = 74;
+	public static final int P_DELETE_CHARACTER = 75;
+	public static final int P_RENAME_CHARACTER = 76;
+	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;
 	public static final int P_NOUSER = 0;
@@ -126,6 +131,7 @@ public class Constants {
 	public static final int OBJETO_NO_VALIDADO = 0;
 	public static final int OBJETO_VALIDADO = 1;
 	public static final int OBJETO_DENEGADO = 2;
+	
 	
 		
 	public static String getKey(){

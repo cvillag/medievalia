@@ -18,10 +18,10 @@ if (lugares != null && lugares.size() > 0){
 			<tr class="trlugarU" id="lugarStudent<%=c.getIdPlace()%>" data-nom="<%=c.getNombre()%>">
 				<td>
 					<input type="text" id="lugarStudentName<%=c.getIdPlace()%>" value="<%=c.getNombre() %>" disabled class="nombreAl">
-					<button type="button" id="saveStudentLugar<%=c.getIdPlace()%>" class="btn btn-default saveStudentNewName" data-val="<%=c.getIdPlace()%>">
+					<button type="button" id="saveStudentLugar<%=c.getIdPlace()%>" class="btn btn-sm btn-default saveStudentNewName" data-val="<%=c.getIdPlace()%>">
 						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 					</button>
-					<button type="button" id="cancelStudentLugar<%=c.getIdPlace()%>" class="btn btn-default cancelStudentNewName" data-val="<%=c.getIdPlace()%>">
+					<button type="button" id="cancelStudentLugar<%=c.getIdPlace()%>" class="btn btn-sm btn-default cancelStudentNewName" data-val="<%=c.getIdPlace()%>">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 					</button>
 				</td>
@@ -39,11 +39,11 @@ if (lugares != null && lugares.size() > 0){
 					}%>
 				</td>
 				<td>
-					<button type="button" class="btn btn-default activarStudentSNombre" data-val="<%=c.getIdPlace()%>">
+					<button type="button" class="btn btn-sm btn-default activarStudentSNombre" data-val="<%=c.getIdPlace()%>">
 						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 					</button>
 					<%if(delete != null){ %>
-					<button type="button" class="btn btn-default deleteStudentSLugar" data-val="<%=c.getIdPlace()%>">
+					<button type="button" class="btn btn-sm btn-default deleteStudentSLugar" data-val="<%=c.getIdPlace()%>">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>
 					<%} %>

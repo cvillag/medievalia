@@ -20,10 +20,10 @@ if (autores != null && autores.size() > 0){
 			<tr class="trautor" id="autor<%=c.getIdAuthor()%>" data-nom="<%=c.getNombre()%>">
 				<td>
 					<input type="text" id="autorName<%=c.getIdAuthor()%>" value="<%=c.getNombre() %>" disabled class="nombreCom">
-					<button type="button" id="saveAutor<%=c.getIdAuthor()%>" class="btn btn-default saveNewName" data-val="<%=c.getIdAuthor()%>">
+					<button type="button" id="saveAutor<%=c.getIdAuthor()%>" class="btn btn-sm btn-default saveNewName" data-val="<%=c.getIdAuthor()%>">
 						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 					</button>
-					<button type="button" id="cancelAutor<%=c.getIdAuthor()%>" class="btn btn-default cancelNewName" data-val="<%=c.getIdAuthor()%>">
+					<button type="button" id="cancelAutor<%=c.getIdAuthor()%>" class="btn btn-sm btn-default cancelNewName" data-val="<%=c.getIdAuthor()%>">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 					</button>
 				</td>
@@ -32,12 +32,12 @@ if (autores != null && autores.size() > 0){
 				</td>
 				<td>
 					<%if(rename != null){ %>
-					<button type="button" class="btn btn-default activarSNombre" data-val="<%=c.getIdAuthor()%>">
+					<button type="button" class="btn btn-sm btn-default activarSNombre" data-val="<%=c.getIdAuthor()%>">
 						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 					</button>
 					<%}
 					if(delete != null){ %>
-					<button type="button" class="btn btn-default deleteSAutor" data-val="<%=c.getIdAuthor()%>">
+					<button type="button" class="btn btn-sm btn-default deleteSAutor" data-val="<%=c.getIdAuthor()%>">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>
 					<%} %>

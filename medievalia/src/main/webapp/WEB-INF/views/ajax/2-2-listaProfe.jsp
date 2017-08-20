@@ -22,10 +22,10 @@ if (cargos != null && cargos.size() > 0){
 			<tr class="trcargoP" id="cargoProfe<%=c.getIdCharge()%>" data-nom="<%=c.getNombre()%>">
 				<td>
 					<input type="text" id="cargoProfeName<%=c.getIdCharge()%>" value="<%=c.getNombre() %>" disabled class="nombreAl">
-					<button type="button" id="saveProfeCargo<%=c.getIdCharge()%>" class="btn btn-default saveProfeNewName" data-val="<%=c.getIdCharge()%>">
+					<button type="button" id="saveProfeCargo<%=c.getIdCharge()%>" class="btn btn-sm btn-default saveProfeNewName" data-val="<%=c.getIdCharge()%>">
 						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 					</button>
-					<button type="button" id="cancelProfeCargo<%=c.getIdCharge()%>" class="btn btn-default cancelProfeNewName" data-val="<%=c.getIdCharge()%>">
+					<button type="button" id="cancelProfeCargo<%=c.getIdCharge()%>" class="btn btn-sm btn-default cancelProfeNewName" data-val="<%=c.getIdCharge()%>">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 					</button>
 				</td>
@@ -48,15 +48,15 @@ if (cargos != null && cargos.size() > 0){
 				<td>
 					
 					<%if(valid != null){%>
-					<button type="button" id="validarProfeCargo<%=c.getIdCharge()%>" class="btn btn-default validarCargo" data-val="<%=c.getIdCharge()%>">
+					<button type="button" id="validarProfeCargo<%=c.getIdCharge()%>" class="btn btn-sm btn-default validarCargo" data-val="<%=c.getIdCharge()%>">
 						<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
 					</button>
 					<%} %>
-					<button type="button" class="btn btn-default activarProfeSNombre" data-val="<%=c.getIdCharge()%>">
+					<button type="button" class="btn btn-sm btn-default activarProfeSNombre" data-val="<%=c.getIdCharge()%>">
 						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 					</button>
 					<%if(delete != null){ %>
-					<button type="button" class="btn btn-default deleteProfeSCargo" data-val="<%=c.getIdCharge()%>">
+					<button type="button" class="btn btn-sm btn-default deleteProfeSCargo" data-val="<%=c.getIdCharge()%>">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>
 					<%} %>

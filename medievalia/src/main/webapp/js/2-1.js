@@ -19,4 +19,8 @@ $(document).ready(function(){
 	$("#btnGestionAutores").click(function(){
 		window.location.href="authorController.do";
 	});
+	
+	$("#btnGestionPersonajes").click(function(){
+		window.location.href="characterController.do";
+	});
 });

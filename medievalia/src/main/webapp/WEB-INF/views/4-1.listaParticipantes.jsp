@@ -58,7 +58,7 @@ List<Teachers> lt = (List<Teachers>)request.getAttribute("listaT");%>
 				<fmt:message key="p2.1.listausuarios.resultNok"></fmt:message>
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>

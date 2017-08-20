@@ -89,7 +89,7 @@
 			<div class="form-group">
 				<div class="col-md-4"></div>
 				<div class="col-md-4">
-					<button id="createUser" name="createUser" class="btn btn-primary">
+					<button id="createUser" name="createUser" class="btn btn-smbtn-primary">
 						<fmt:message key="p1-2.form.button" />
 					</button>
 				</div>

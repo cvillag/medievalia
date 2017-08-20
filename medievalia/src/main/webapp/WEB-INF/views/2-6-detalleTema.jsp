@@ -12,16 +12,16 @@
 			<div class="col-xs-4">
 				<input class="form-control" type="text" id="nombreTema" name="nombreTema" value="<%=t.getNombre()%>" disabled/>
 			</div>
-			<button type="button" class="btn btn-default" id="activarNombre">
+			<button type="button" class="btn btn-sm btn-default" id="activarNombre">
 				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 			</button>
-			<button type="button" class="btn btn-default" id="desactivarNombre">
+			<button type="button" class="btn btn-sm btn-default" id="desactivarNombre">
 				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 			</button>
-			<button type="button" class="btn btn-default" id="cambiarNombre">
+			<button type="button" class="btn btn-sm btn-default" id="cambiarNombre">
 				<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 			</button>
-			<button type="button" class="btn btn-default" id="backToTopic">
+			<button type="button" class="btn btn-sm btn-default" id="backToTopic">
 				<fmt:message key="general.volver"></fmt:message>
 			</button>
 		</div>
@@ -36,17 +36,17 @@
 <div class="container">
 	<div id="firstForm">
 		<label class="control-label formTopic" for="showform"><fmt:message key="p2-6.crearSTema"></fmt:message></label>
-		<button type="button" class="btn btn-default" id="showform">
+		<button type="button" class="btn btn-sm btn-default" id="showform">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 		</button>
 	</div>
 	<div id="secondForm">
 		<label class="control-label formGroup" for="showform"><fmt:message key="p2-6.nombreSTema"></fmt:message></label>
 		<input type="text" name="nombreSTema" id="nombreSTema">
-		<button type="button" class="btn btn-default" id="createButton">
+		<button type="button" class="btn btn-sm btn-default" id="createButton">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 		</button>
-		<button type="button" class="btn btn-default" id="cancelButton">
+		<button type="button" class="btn btn-sm btn-default" id="cancelButton">
 			<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 		</button>
 	</div>
@@ -67,7 +67,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -88,7 +88,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -109,7 +109,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -130,7 +130,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -154,7 +154,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -175,7 +175,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -196,7 +196,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -217,7 +217,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -241,7 +241,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -263,7 +263,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -285,7 +285,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -307,7 +307,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -329,7 +329,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -351,7 +351,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -376,7 +376,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -398,7 +398,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -420,7 +420,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -442,7 +442,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -464,7 +464,7 @@
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-default" data-dismiss="modal">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>

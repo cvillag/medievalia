@@ -54,7 +54,7 @@
 			</div>
 			<div class="panel-body">
 				<p><fmt:message key="p2-1.numTemas"></fmt:message>&nbsp;<span class="label label-info"><%=listaTemas.size() %></span></p>
-				<p><a href="topicManager.do"><button type="button" class="btn btn-default" id="btnListaTemas"><fmt:message key="p2-1.btnListaTemas"></fmt:message></button></a></p>
+				<p><a href="topicManager.do"><button type="button" class="btn btn-sm btn-default" id="btnListaTemas"><fmt:message key="p2-1.btnListaTemas"></fmt:message></button></a></p>
 			</div>
 		</div>
 		<div class="panel panel-default col-sm-4">
@@ -66,7 +66,7 @@
 				<p><fmt:message key="p2-1.numAlumnos"></fmt:message>&nbsp;<span class="label label-info"><%=numS %></span></p>
 				<p><fmt:message key="p2-1.numTeachers"></fmt:message>&nbsp;<span class="label label-info"><%=numT %></span></p>
 				<%if(user.getUser_role() == Constants.ROLE_PROFESOR){ %>
-				<p><button type="button" class="btn btn-default" id="btnMatricularAlumnos"><fmt:message key="p2-1.listaUsuarios.btn"></fmt:message></button></p>
+				<p><button type="button" class="btn btn-sm btn-default" id="btnMatricularAlumnos"><fmt:message key="p2-1.listaUsuarios.btn"></fmt:message></button></p>
 				<%} %>
 			</div>
 		</div>
@@ -108,7 +108,7 @@
 					}
 				} %>
 				</p>
-				<p><button type="button" class="btn btn-default" id="btnGestionCargos"><fmt:message key="p2-1.cargo.btn"></fmt:message></button></p>
+				<p><button type="button" class="btn btn-sm btn-default" id="btnGestionCargos"><fmt:message key="p2-1.cargo.btn"></fmt:message></button></p>
 			</div>
 		</div>
 		<div class="panel panel-default col-sm-4">
@@ -144,7 +144,7 @@
 					<%} %>
 				<%} %>
 				</p>
-				<p><button type="button" class="btn btn-default" id="btnGestionEstudios"><fmt:message key="p2-1.estudio.btn"></fmt:message></button></p>
+				<p><button type="button" class="btn btn-sm btn-default" id="btnGestionEstudios"><fmt:message key="p2-1.estudio.btn"></fmt:message></button></p>
 			</div>
 		</div>
 		<div class="panel panel-default col-sm-4">
@@ -180,7 +180,7 @@
 					<%} %>
 				<%} %>
 				</p>
-				<p><button type="button" class="btn btn-default" id="btnGestionLugares"><fmt:message key="p2-1.lugar.btn"></fmt:message></button></p>
+				<p><button type="button" class="btn btn-sm btn-default" id="btnGestionLugares"><fmt:message key="p2-1.lugar.btn"></fmt:message></button></p>
 			</div>
 		</div>
 	</div>
@@ -192,25 +192,25 @@
 			<div class="panel-body">
 				<p>
 				<%if(profe.equals("ok")){ %>
-				<fmt:message key="p2-1.lugar02"></fmt:message>
+				<fmt:message key="p2-1.autor02"></fmt:message>
 					<%if(numAuthor == 0){ %>
 				<span class="label label-success"><%=numAuthor %></span>
 					<%}else{ %>
 				<span class="label label-warning"><%=numAuthor %></span>
 					<%} %>
-				&nbsp;<fmt:message key="p2-1.lugar03"></fmt:message>
+				&nbsp;<fmt:message key="p2-1.autor03"></fmt:message>
 					<%if(numAuthorStud == 0){ %>
 				<span class="label label-success"><%=numAuthorStud %></span>
 					<%}else{ %>
 				<span class="label label-warning"><%=numAuthorStud %></span>
 					<%} %>
-				&nbsp;<fmt:message key="p2-1.lugar04"></fmt:message>
+				&nbsp;<fmt:message key="p2-1.autor04"></fmt:message>
 				<%}
 				else{%>
 				<fmt:message key="p2-1.autoresPropios"></fmt:message>
 				<span class="label label-info"><%=numAS %></span>
 				</p><p>
-				<fmt:message key="p2-1.lugar02"></fmt:message>
+				<fmt:message key="p2-1.autor02"></fmt:message>
 					<%if(numStAsTot == 0){ %>
 					<span class="label label-success"><%=numStAsTot %></span>	
 					<%}else{ %>
@@ -218,7 +218,44 @@
 					<%} %>
 				<%} %>
 				</p>
-				<p><button type="button" class="btn btn-default" id="btnGestionAutores"><fmt:message key="p2-1.autor.btn"></fmt:message></button></p>
+				<p><button type="button" class="btn btn-sm btn-default" id="btnGestionAutores"><fmt:message key="p2-1.autor.btn"></fmt:message></button></p>
+			</div>
+		</div>
+		
+		<div class="panel panel-default col-sm-4">
+			<div class="panel-heading">
+				<h3 class="panel-title"><fmt:message key="p2-1.personaje"></fmt:message></h3>
+			</div>
+			<div class="panel-body">
+				<p>
+				<%if(profe.equals("ok")){ %>
+				<fmt:message key="p2-1.personaje02"></fmt:message>
+					<%if(numAuthor == 0){ %>
+				<span class="label label-success">23</span>
+					<%}else{ %>
+				<span class="label label-warning">23</span>
+					<%} %>
+				&nbsp;<fmt:message key="p2-1.personaje03"></fmt:message>
+					<%if(numAuthorStud == 0){ %>
+				<span class="label label-success">23</span>
+					<%}else{ %>
+				<span class="label label-warning">23</span>
+					<%} %>
+				&nbsp;<fmt:message key="p2-1.personaje04"></fmt:message>
+				<%}
+				else{%>
+				<fmt:message key="p2-1.autoresPropios"></fmt:message>
+				<span class="label label-info">23</span>
+				</p><p>
+				<fmt:message key="p2-1.personaje02"></fmt:message>
+					<%if(numStAsTot == 0){ %>
+					<span class="label label-success">23</span>	
+					<%}else{ %>
+					<span class="label label-warning">23</span>
+					<%} %>
+				<%} %>
+				</p>
+				<p><button type="button" class="btn btn-sm btn-default" id="btnGestionPersonajes"><fmt:message key="p2-1.personaje.btn"></fmt:message></button></p>
 			</div>
 		</div>
 	</div>

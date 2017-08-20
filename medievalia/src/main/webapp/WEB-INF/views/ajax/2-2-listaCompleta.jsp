@@ -20,10 +20,10 @@ if (cargos != null && cargos.size() > 0){
 			<tr class="trcargo" id="cargo<%=c.getIdCharge()%>" data-nom="<%=c.getNombre()%>">
 				<td>
 					<input type="text" id="cargoName<%=c.getIdCharge()%>" value="<%=c.getNombre() %>" disabled class="nombreCom">
-					<button type="button" id="saveCargo<%=c.getIdCharge()%>" class="btn btn-default saveNewName" data-val="<%=c.getIdCharge()%>">
+					<button type="button" id="saveCargo<%=c.getIdCharge()%>" class="btn btn-sm btn-default saveNewName" data-val="<%=c.getIdCharge()%>">
 						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 					</button>
-					<button type="button" id="cancelCargo<%=c.getIdCharge()%>" class="btn btn-default cancelNewName" data-val="<%=c.getIdCharge()%>">
+					<button type="button" id="cancelCargo<%=c.getIdCharge()%>" class="btn btn-sm btn-default cancelNewName" data-val="<%=c.getIdCharge()%>">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 					</button>
 				</td>
@@ -32,12 +32,12 @@ if (cargos != null && cargos.size() > 0){
 				</td>
 				<td>
 					<%if(rename != null){ %>
-					<button type="button" class="btn btn-default activarSNombre" data-val="<%=c.getIdCharge()%>">
+					<button type="button" class="btn btn-sm btn-default activarSNombre" data-val="<%=c.getIdCharge()%>">
 						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 					</button>
 					<%}
 					if(delete != null){ %>
-					<button type="button" class="btn btn-default deleteSCargo" data-val="<%=c.getIdCharge()%>">
+					<button type="button" class="btn btn-sm btn-default deleteSCargo" data-val="<%=c.getIdCharge()%>">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>
 					<%} %>

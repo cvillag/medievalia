@@ -97,7 +97,7 @@
 			<div class="form-group">
 				<div class="col-md-4"></div>
 				<div class="col-md-4">
-					<button id="saveChanges" name="saveChanges" class="btn btn-primary">
+					<button id="saveChanges" name="saveChanges" class="btn btn-smbtn-primary">
 						<fmt:message key="p1-3.1.form.button" />
 					</button>
 				</div>

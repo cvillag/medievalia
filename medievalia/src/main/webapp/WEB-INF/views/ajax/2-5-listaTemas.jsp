@@ -19,10 +19,10 @@ List<Tema> lista = (List<Tema>)request.getAttribute("listaTemas");
 			<td><%=t.getNombre() %></td>
 			<td><%=t.getNumSubtemas() %></td>
 			<td>
-				<button type="button" class="btn btn-default topicDetail" data-val="<%=t.getIdTema()%>">
+				<button type="button" class="btn btn-sm btn-default topicDetail" data-val="<%=t.getIdTema()%>">
 					<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
 				</button>
-				<button type="button" class="btn btn-default deleteTopic" data-val="<%=t.getIdTema()%>">
+				<button type="button" class="btn btn-sm btn-default deleteTopic" data-val="<%=t.getIdTema()%>">
 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 				</button>
 			</td>
