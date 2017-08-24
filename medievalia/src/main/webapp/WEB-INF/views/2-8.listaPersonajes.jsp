@@ -22,22 +22,12 @@ String validar = (String) request.getAttribute("validar");
 	<div class="row">
 		<div class="panel panel-default col-sm-12">
 			<div class="panel-heading">
-				<button id="displayCreate" class="btn btn-sm btn-default btn-xs">
-					<span id="displayCreatei" class="glyphicon glyphicon-chevron-down"></span>
+				<button type="button" class="btn btn-sm btn-default" id="createButton">
+				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 				</button>
 				&nbsp;
 				<fmt:message key="p2-8.crear"/>
 			</div>	
-			<div id="group-block1" class="panel-body">
-				<p><fmt:message key="p2.8.personajes.nombre"></fmt:message><input type="text" id="newPersonageName"></p>
-				<p><fmt:message key="p2.8.personajes.otro"></fmt:message><input type="text" id="newPersonageDesc">
-				<button type="button" class="btn btn-sm btn-default" id="createButton">
-				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-				</button>
-				<button type="button" class="btn btn-sm btn-default" id="cancelButton">
-					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-				</button></p>
-			</div>
 		</div>
 	</div>
 	<div class="row">
@@ -63,5 +53,163 @@ String validar = (String) request.getAttribute("validar");
 					</table>
 				</div>
 			</div>
+	</div>
+</div>
+
+<!-- Diálogos modales de modificación -->
+
+<div id="modalCambiarDatos" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-8.modal.datos.01"></fmt:message> <span id="modalDatosNombre"></span>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group row">
+						<div class="col-xs-12">
+							<label for="modalOtros"><fmt:message key="p2-8.modal.datos.02"></fmt:message></label>
+							<textarea class="form-control rows="3" id="modalOtros"></textarea>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<label><fmt:message key="p2-8.modal.datos.09"></fmt:message></label>
+						</div>
+					</div>
+					<div class="row">
+						
+						<div class="col-xs-3 form-group">
+							<input type="checkbox" id="knowDN" checked="checked">
+							<label for="modalDiaNac"><fmt:message key="p2-8.modal.datos.03"></fmt:message></label>
+							<input type="number" id="modalDiaNac" size="2" min="1" max="31" class="inputDays form-control">
+						</div>
+						<div class="col-xs-3 form-group">
+							<input type="checkbox" id="knowMN" checked="checked">
+							<label for="modalMesNac"><fmt:message key="p2-8.modal.datos.04"></fmt:message></label>
+							<input type="number" id="modalMesNac" size="2" min="1" max="12" class="inputDays form-control">
+						</div>
+						<div class="col-xs-3 form-group">
+							<input type="checkbox" id="knowAN" checked="checked">
+							<label for="modalAnioNac"><fmt:message key="p2-8.modal.datos.05"></fmt:message></label>
+							<input type="number" id="modalAnioNac" size="3" max="9999" class="inputYears form-control">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<label><fmt:message key="p2-8.modal.datos.00"></fmt:message></label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-3 form-group">
+							<input type="checkbox" id="knowDF" checked="checked">
+							<label for="modalDiaFal"><fmt:message key="p2-8.modal.datos.06"></fmt:message></label>
+							<input type="number" id="modalDiaFal" size="2" min="1" max="31" class="inputDays form-control">
+						</div>
+						<div class="col-xs-3 form-group">
+							<input type="checkbox" id="knowMF" checked="checked">
+							<label for="modalMesFal"><fmt:message key="p2-8.modal.datos.07"></fmt:message></label>
+							<input type="number" id="modalMesFal" size="2" min="1" max="12" class="inputDays form-control">
+						</div>
+						<div class="col-xs-3 form-group">
+							<input type="checkbox" id="knowAF" checked="checked">
+							<label for="modalAnioFal"><fmt:message key="p2-8.modal.datos.08"></fmt:message></label>
+							<input type="number" id="modalAnioFal" size="4" max="9999" class="inputYears form-control">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalDatosOk" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+				<button type="button" id="modalDatosCancel" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.cancelar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalCrear" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-8.modal.crear.01"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group row">
+						<div class="col-xs-12">
+							<label for="crearNombre"><fmt:message key="p2-8.modal.crear.11"></fmt:message></label>
+							<input type="text" id="crearNombre" class="form-control">
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-xs-12">
+							<label for="crearOtros"><fmt:message key="p2-8.modal.crear.02"></fmt:message></label>
+							<textarea class="form-control rows="3" id="modalOtros"></textarea>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<label><fmt:message key="p2-8.modal.crear.09"></fmt:message></label>
+						</div>
+					</div>
+					<div class="row">
+						
+						<div class="col-xs-3 form-group">
+							<input type="checkbox" id="knowDN2" checked="checked">
+							<label for="modalDiaNac2"><fmt:message key="p2-8.modal.crear.03"></fmt:message></label>
+							<input type="number" id="modalDiaNac2" size="2" min="1" max="31" class="inputDays form-control">
+						</div>
+						<div class="col-xs-3 form-group">
+							<input type="checkbox" id="knowMN2" checked="checked">
+							<label for="modalMesNac2"><fmt:message key="p2-8.modal.crear.04"></fmt:message></label>
+							<input type="number" id="modalMesNac2" size="2" min="1" max="12" class="inputDays form-control">
+						</div>
+						<div class="col-xs-3 form-group">
+							<input type="checkbox" id="knowAN2" checked="checked">
+							<label for="modalAnioNac2"><fmt:message key="p2-8.modal.crear.05"></fmt:message></label>
+							<input type="number" id="modalAnioNac2" size="3" max="9999" class="inputYears form-control">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<label><fmt:message key="p2-8.modal.crear.00"></fmt:message></label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-3 form-group">
+							<input type="checkbox" id="knowDF2" checked="checked">
+							<label for="modalDiaFal2"><fmt:message key="p2-8.modal.crear.06"></fmt:message></label>
+							<input type="number" id="modalDiaFal2" size="2" min="1" max="31" class="inputDays form-control">
+						</div>
+						<div class="col-xs-3 form-group">
+							<input type="checkbox" id="knowMF2" checked="checked">
+							<label for="modalMesFal2"><fmt:message key="p2-8.modal.crear.07"></fmt:message></label>
+							<input type="number" id="modalMesFal2" size="2" min="1" max="12" class="inputDays form-control">
+						</div>
+						<div class="col-xs-3 form-group">
+							<input type="checkbox" id="knowAF2" checked="checked">
+							<label for="modalAnioFal2"><fmt:message key="p2-8.modal.crear.08"></fmt:message></label>
+							<input type="number" id="modalAnioFal2" size="4" max="9999" class="inputYears form-control">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalCrearOk" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+				<button type="button" id="modalCrearCancel" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.cancelar" ></fmt:message>
+				</button>
+			</div>
+		</div>
 	</div>
 </div>

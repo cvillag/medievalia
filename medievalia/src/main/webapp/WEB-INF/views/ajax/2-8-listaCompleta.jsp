@@ -32,7 +32,7 @@ if (personajes != null && personajes.size() > 0){
 				</td>
 				<td>
 					<div class="row">
-						<div class="col-xs-6">
+						<div class="col-xs-2">
 							<div class="dropdown">
 								<button class="btn btn-sm bnt-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-val="<%=c.getIdPersonaje()%>" id="otheract<%=c.getIdPersonaje()%>">
 								<fmt:message key="p2.8.personajes.otraaccion"></fmt:message>
@@ -65,6 +65,19 @@ if (personajes != null && personajes.size() > 0){
 				</td>
 			</tr>
 <%		
+			for(Personage c2 : personajes){
+				%>
+				<input type="hidden" id="pnom<%=c2.getIdPersonaje() %>" value="<%=c2.getNombre()%>">
+				<input type="hidden" id="pafal<%=c2.getIdPersonaje() %>" value="<%=c2.getAfallecimiento()%>">
+				<input type="hidden" id="panac<%=c2.getIdPersonaje() %>" value="<%=c2.getAnacimiento()%>">
+				<input type="hidden" id="pcreat<%=c2.getIdPersonaje() %>" value="<%=c2.getCreador()%>">
+				<input type="hidden" id="pdfal<%=c2.getIdPersonaje() %>" value="<%=c2.getDfallecimiento()%>">
+				<input type="hidden" id="pdnac<%=c2.getIdPersonaje() %>" value="<%=c2.getDnacimiento()%>">
+				<input type="hidden" id="pmfal<%=c2.getIdPersonaje() %>" value="<%=c2.getMfallecimiento()%>">
+				<input type="hidden" id="pmnac<%=c2.getIdPersonaje() %>" value="<%=c2.getMnacimiento()%>">
+				<input type="hidden" id="potros<%=c2.getIdPersonaje() %>" value="<%=c2.getOtros()%>">
+				<%
+			}
 		}
 		else if(type.equals("select")){
 			%>

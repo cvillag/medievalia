@@ -20,3 +20,11 @@ html, body {
    height: 45px;
    clear: both;
 }
+
+.inputDays{
+	width: 60px;
+}
+
+.inputYears{
+	width: 100px;
+}

@@ -5,6 +5,8 @@ var activadoAl = 0;
 var oldnamePr;
 var activadoPr = 0;
 
+//Carga de lista de personajes completa
+
 function postPersonaje(){
 	//alert("Acciones de botones");
 	
@@ -90,7 +92,17 @@ function postPersonaje(){
 
 	$(".oacdatos").click(function(){
 		id=$(this).data('val');
-		alert("Cambiar datos de " + id);
+		$("#modalDatosNombre").val($("#pnom" + id).val());
+		$("#modalOtros").val($("#potros" + id).val());
+		$("#modalDiaNac").val($("#pdnac" + id).val());
+		$("#modalMesNac").val($("#pmnac" + id).val());
+		$("#modalAnioNac").val($("#panac" + id).val());
+		$("#modalDiaFal").val($("#pdfal" + id).val());
+		$("#modalMesFal").val($("#pmfal" + id).val());
+		$("#modalAnioFal").val($("#pafal" + id).val());
+		$("#modalDatosNombre").html($("#pnom" + id).val());
+		
+		$("#modalCambiarDatos").modal();
 	});
 	
 	$(".oaclnac").click(function(){
@@ -112,6 +124,8 @@ function postPersonaje(){
 	});
 	
 }
+
+//Carga de lista de personajes de estudiante
 
 function postPersonaje2(){
 	$(".saveStudentNewName").hide();
@@ -329,36 +343,8 @@ $(document).ready(function(){
 		cargaListaProfe();
 	}
 	
-	$("#displayCreate").click(function(){
-		if(btncreate == 0){
-			$("#group-block1").slideUp(500);
-			$("#newCharacterName").val("");
-			$("#displayCreatei").removeClass();
-			$("#displayCreatei").addClass("glyphicon glyphicon-chevron-down");
-			btncreate = 1;
-		}
-		else{
-			$("#group-block1").slideDown(500);
-			$("#displayCreatei").removeClass();
-			$("#displayCreatei").addClass("glyphicon glyphicon-chevron-up");
-			btncreate = 0;
-		}
-	});
-	
-	$("#cancelButton").click(function(){
-		if(btncreate == 0){
-			$("#group-block1").slideUp(500);
-			$("#newCharacterName").val("");
-			$("#displayCreatei").removeClass();
-			$("#displayCreatei").addClass("glyphicon glyphicon-chevron-down");
-			btncreate = 1;
-		}
-		else{
-			$("#group-block1").slideDown(500);
-			$("#displayCreatei").removeClass();
-			$("#displayCreatei").addClass("glyphicon glyphicon-chevron-up");
-			btncreate = 0;
-		}
+	$("#createButton").click(function(){
+		$("#modalCrear").modal();
 	});
 	
 	//Filtro de personajees por fila según se rellena el campo imput
@@ -410,7 +396,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#createButton").click(function(){
+	$("#createButton2").click(function(){
 		if($("#newCharacterName").val().length < 1){
 			$("#modalCreaPersonaje1").modal();
 		}
@@ -450,5 +436,157 @@ $(document).ready(function(){
 				}
 			});
 		}
+	});
+	
+	//////////////////////////////
+	//Funciones de modal de fechas
+	//////////////////////////////
+	
+	$("#knowDN").click(function(){
+		if($("#knowDN").is(':checked')) {  
+            $("#modalDiaNac").attr("disabled", false);
+            $("#modalAnioNac").attr("disabled", false);
+            $("#modalMesNac").attr("disabled", false);
+            $("#knowMN").prop("checked",true);
+            $("#knowAN").prop("checked",true);
+        } else {  
+        	$("#modalDiaNac").attr("disabled", true);  
+        }  
+	});
+	
+	$("#knowMN").click(function(){
+		if($("#knowMN").is(':checked')) {  
+            $("#modalAnioNac").attr("disabled", false);
+            $("#modalMesNac").attr("disabled", false);
+            $("#knowAN").prop("checked",true);
+        } else {  
+        	$("#modalDiaNac").attr("disabled", true);
+            $("#modalMesNac").attr("disabled", true);
+            $("#knowDN").prop("checked",false);
+        }  
+	});
+	
+	$("#knowAN").click(function(){
+		if($("#knowAN").is(':checked')) {  
+            $("#modalAnioNac").attr("disabled", false);
+        } else {  
+        	$("#modalDiaNac").attr("disabled", true);
+            $("#modalMesNac").attr("disabled", true);
+            $("#modalAnioNac").attr("disabled", true);
+            $("#knowDN").prop("checked",false);
+            $("#knowMN").prop("checked",false);
+        }  
+	});
+	
+	$("#knowDF").click(function(){
+		if($("#knowDF").is(':checked')) {  
+            $("#modalDiaFal").attr("disabled", false);
+            $("#modalAnioFal").attr("disabled", false);
+            $("#modalMesFal").attr("disabled", false);
+            $("#knowAF").prop("checked",true);
+            $("#knowMF").prop("checked",true);
+        } else {  
+        	$("#modalDiaFal").attr("disabled", true);  
+        }  
+	});
+	
+	$("#knowMF").click(function(){
+		if($("#knowMF").is(':checked')) {  
+            $("#modalAnioFal").attr("disabled", false);
+            $("#modalMesFal").attr("disabled", false);
+            $("#knowAF").prop("checked",true);
+        } else {  
+        	$("#modalDiaFal").attr("disabled", true);
+            $("#modalMesFal").attr("disabled", true);
+            $("#knowDF").prop("checked",false);
+        }  
+	});
+	
+	$("#knowAF").click(function(){
+		if($("#knowAF").is(':checked')) {  
+            $("#modalAnioFal").attr("disabled", false);
+        } else {  
+        	$("#modalDiaFal").attr("disabled", true);
+            $("#modalMesFal").attr("disabled", true);
+            $("#modalAnioFal").attr("disabled", true);
+            $("#knowDF").prop("checked",false);
+            $("#knowMF").prop("checked",false);
+        }  
+	});
+	
+	//////////////////////////////
+	//Funciones de modal de creación
+	//////////////////////////////
+	
+	$("#knowDN2").click(function(){
+		if($("#knowDN2").is(':checked')) {  
+            $("#modalDiaNac2").attr("disabled", false);
+            $("#modalAnioNac2").attr("disabled", false);
+            $("#modalMesNac2").attr("disabled", false);
+            $("#knowMN2").prop("checked",true);
+            $("#knowAN2").prop("checked",true);
+        } else {  
+        	$("#modalDiaNac2").attr("disabled", true);  
+        }  
+	});
+	
+	$("#knowMN2").click(function(){
+		if($("#knowMN2").is(':checked')) {  
+            $("#modalAnioNac2").attr("disabled", false);
+            $("#modalMesNac2").attr("disabled", false);
+            $("#knowAN2").prop("checked",true);
+        } else {  
+        	$("#modalDiaNac2").attr("disabled", true);
+            $("#modalMesNac2").attr("disabled", true);
+            $("#knowDN2").prop("checked",false);
+        }  
+	});
+	
+	$("#knowAN2").click(function(){
+		if($("#knowAN2").is(':checked')) {  
+            $("#modalAnioNac2").attr("disabled", false);
+        } else {  
+        	$("#modalDiaNac2").attr("disabled", true);
+            $("#modalMesNac2").attr("disabled", true);
+            $("#modalAnioNac2").attr("disabled", true);
+            $("#knowDN2").prop("checked",false);
+            $("#knowMN2").prop("checked",false);
+        }  
+	});
+	
+	$("#knowDF2").click(function(){
+		if($("#knowDF2").is(':checked')) {  
+            $("#modalDiaFal2").attr("disabled", false);
+            $("#modalAnioFal2").attr("disabled", false);
+            $("#modalMesFal2").attr("disabled", false);
+            $("#knowAF2").prop("checked",true);
+            $("#knowMF2").prop("checked",true);
+        } else {  
+        	$("#modalDiaFal2").attr("disabled", true);  
+        }  
+	});
+	
+	$("#knowMF2").click(function(){
+		if($("#knowMF2").is(':checked')) {  
+            $("#modalAnioFal2").attr("disabled", false);
+            $("#modalMesFal2").attr("disabled", false);
+            $("#knowAF2").prop("checked",true);
+        } else {  
+        	$("#modalDiaFal2").attr("disabled", true);
+            $("#modalMesFal2").attr("disabled", true);
+            $("#knowDF2").prop("checked",false);
+        }  
+	});
+	
+	$("#knowAF2").click(function(){
+		if($("#knowAF2").is(':checked')) {  
+            $("#modalAnioFal2").attr("disabled", false);
+        } else {  
+        	$("#modalDiaFal2").attr("disabled", true);
+            $("#modalMesFal2").attr("disabled", true);
+            $("#modalAnioFal2").attr("disabled", true);
+            $("#knowDF2").prop("checked",false);
+            $("#knowMF2").prop("checked",false);
+        }  
 	});
 });
