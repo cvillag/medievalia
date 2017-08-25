@@ -95,11 +95,23 @@ function postPersonaje(){
 		$("#modalDatosNombre").val($("#pnom" + id).val());
 		$("#modalOtros").val($("#potros" + id).val());
 		$("#modalDiaNac").val($("#pdnac" + id).val());
+			$("#knowDN").prop("checked",!($("#pdnac" + id).val()==0));
+			$("#modalDiaNac").attr("disabled",($("#pdnac" + id).val()==0));
 		$("#modalMesNac").val($("#pmnac" + id).val());
+			$("#knowMN").prop("checked",!($("#pmnac" + id).val()==0));
+			$("#modalMesNac").attr("disabled",($("#pmnac" + id).val()==0));
 		$("#modalAnioNac").val($("#panac" + id).val());
+			$("#knowAN").prop("checked",!($("#panac" + id).val()==0));
+			$("#modalAnioNac").attr("disabled",($("#panac" + id).val()==0));
 		$("#modalDiaFal").val($("#pdfal" + id).val());
+			$("#knowDF").prop("checked",!($("#pdfal" + id).val()==0));
+			$("#modalDiaFal").attr("disabled",($("#pdfal" + id).val()==0));
 		$("#modalMesFal").val($("#pmfal" + id).val());
+			$("#knowMF").prop("checked",!($("#pmfal" + id).val()==0));
+			$("#modalMesFal").attr("disabled",($("#pmfal" + id).val()==0));
 		$("#modalAnioFal").val($("#pafal" + id).val());
+			$("#knowAF").prop("checked",!($("#pafal" + id).val()==0));
+			$("#modalAnioFal").attr("disabled",($("#pafal" + id).val()==0));
 		$("#modalDatosNombre").html($("#pnom" + id).val());
 		
 		$("#modalCambiarDatos").modal();
@@ -445,19 +457,24 @@ $(document).ready(function(){
 	$("#knowDN").click(function(){
 		if($("#knowDN").is(':checked')) {  
             $("#modalDiaNac").attr("disabled", false);
+            validaDia("#modalDiaNac");
             $("#modalAnioNac").attr("disabled", false);
+            validaAnio("#modalAnioNac");
+            validaMes("#modalMesNac");
             $("#modalMesNac").attr("disabled", false);
             $("#knowMN").prop("checked",true);
             $("#knowAN").prop("checked",true);
         } else {  
-        	$("#modalDiaNac").attr("disabled", true);  
+        	$("#modalDiaNac").attr("disabled", true);
         }  
 	});
 	
 	$("#knowMN").click(function(){
 		if($("#knowMN").is(':checked')) {  
             $("#modalAnioNac").attr("disabled", false);
+            validaAnio("#modalAnioNac");
             $("#modalMesNac").attr("disabled", false);
+            validaMes("#modalMesNac");
             $("#knowAN").prop("checked",true);
         } else {  
         	$("#modalDiaNac").attr("disabled", true);
@@ -469,6 +486,7 @@ $(document).ready(function(){
 	$("#knowAN").click(function(){
 		if($("#knowAN").is(':checked')) {  
             $("#modalAnioNac").attr("disabled", false);
+            validaAnio("#modalAnioNac");
         } else {  
         	$("#modalDiaNac").attr("disabled", true);
             $("#modalMesNac").attr("disabled", true);
@@ -481,19 +499,24 @@ $(document).ready(function(){
 	$("#knowDF").click(function(){
 		if($("#knowDF").is(':checked')) {  
             $("#modalDiaFal").attr("disabled", false);
-            $("#modalAnioFal").attr("disabled", false);
+            validaDia("#modalDiaFal");
             $("#modalMesFal").attr("disabled", false);
+            validaMes("#modalMesFal");
+            $("#modalAnioFal").attr("disabled", false);
+            validaAnio("#modalAnioFal");
             $("#knowAF").prop("checked",true);
             $("#knowMF").prop("checked",true);
         } else {  
-        	$("#modalDiaFal").attr("disabled", true);  
+        	$("#modalDiaFal").attr("disabled", true);
         }  
 	});
 	
 	$("#knowMF").click(function(){
 		if($("#knowMF").is(':checked')) {  
             $("#modalAnioFal").attr("disabled", false);
+            validaAnio("#modalAnioFal");
             $("#modalMesFal").attr("disabled", false);
+            validaMes("#modalMesFal");
             $("#knowAF").prop("checked",true);
         } else {  
         	$("#modalDiaFal").attr("disabled", true);
@@ -505,6 +528,7 @@ $(document).ready(function(){
 	$("#knowAF").click(function(){
 		if($("#knowAF").is(':checked')) {  
             $("#modalAnioFal").attr("disabled", false);
+            validaAnio("#modalAnioFal");
         } else {  
         	$("#modalDiaFal").attr("disabled", true);
             $("#modalMesFal").attr("disabled", true);
@@ -521,19 +545,25 @@ $(document).ready(function(){
 	$("#knowDN2").click(function(){
 		if($("#knowDN2").is(':checked')) {  
             $("#modalDiaNac2").attr("disabled", false);
+            validaDia("#modalDiaNac2");
             $("#modalAnioNac2").attr("disabled", false);
+            validaAnio("#modalAnioNac2");
             $("#modalMesNac2").attr("disabled", false);
+            validaMes("#modalMesNac2");
             $("#knowMN2").prop("checked",true);
             $("#knowAN2").prop("checked",true);
         } else {  
-        	$("#modalDiaNac2").attr("disabled", true);  
+        	$("#modalDiaNac2").attr("disabled", true);
+        	
         }  
 	});
 	
 	$("#knowMN2").click(function(){
 		if($("#knowMN2").is(':checked')) {  
             $("#modalAnioNac2").attr("disabled", false);
+            validaAnio("#modalAnioNac2");
             $("#modalMesNac2").attr("disabled", false);
+            validaMes("#modalMesNac2");
             $("#knowAN2").prop("checked",true);
         } else {  
         	$("#modalDiaNac2").attr("disabled", true);
@@ -545,6 +575,7 @@ $(document).ready(function(){
 	$("#knowAN2").click(function(){
 		if($("#knowAN2").is(':checked')) {  
             $("#modalAnioNac2").attr("disabled", false);
+            validaAnio("#modalAnioNac2");
         } else {  
         	$("#modalDiaNac2").attr("disabled", true);
             $("#modalMesNac2").attr("disabled", true);
@@ -557,19 +588,24 @@ $(document).ready(function(){
 	$("#knowDF2").click(function(){
 		if($("#knowDF2").is(':checked')) {  
             $("#modalDiaFal2").attr("disabled", false);
+            validaDia("#modalDiaFal2");
             $("#modalAnioFal2").attr("disabled", false);
+            validaAnio("#modalAnioFal2");
             $("#modalMesFal2").attr("disabled", false);
+            validaMes("#modalMesFal2");
             $("#knowAF2").prop("checked",true);
             $("#knowMF2").prop("checked",true);
         } else {  
-        	$("#modalDiaFal2").attr("disabled", true);  
+        	$("#modalDiaFal2").attr("disabled", true);
         }  
 	});
 	
 	$("#knowMF2").click(function(){
 		if($("#knowMF2").is(':checked')) {  
             $("#modalAnioFal2").attr("disabled", false);
+            validaAnio("#modalAnioFal2");
             $("#modalMesFal2").attr("disabled", false);
+            validaMes("#modalMesFal2");
             $("#knowAF2").prop("checked",true);
         } else {  
         	$("#modalDiaFal2").attr("disabled", true);
@@ -581,6 +617,7 @@ $(document).ready(function(){
 	$("#knowAF2").click(function(){
 		if($("#knowAF2").is(':checked')) {  
             $("#modalAnioFal2").attr("disabled", false);
+            validaAnio("#modalAnioFal2");
         } else {  
         	$("#modalDiaFal2").attr("disabled", true);
             $("#modalMesFal2").attr("disabled", true);
@@ -589,4 +626,71 @@ $(document).ready(function(){
             $("#knowMF2").prop("checked",false);
         }  
 	});
+	
+	$(".inputDays").keyup(function(){
+		validaDia(this);
+	});
+	
+	$(".inputMonths").keyup(function(){
+		validaMes(this);
+	});
+	
+	$("#modalCrearOk").click(function(){
+		$.post("createPersonageA.do",
+			{
+			crearNombre : $("#crearNombre").val(),
+			modalOtros2 : $("#modalOtros2").val(),
+			knowDN2 : $("#knowDN2").is(':checked'),
+			modalDiaNac2 : $("#modalDiaNac2").val(),
+			knowMN2 : $("#knowMN2").is(':checked'),
+			modalMesNac2 : $("#modalMesNac2").val(),
+			knowAN2 : $("#knowAN2").is(':checked'),
+			modalAnioNac2 : $("#modalAnioNac2").val(),
+			knowDF2 : $("#knowDF2").is(':checked'),
+			modalDiaFal2 : $("#modalDiaFal2").val(),
+			knowMF2 : $("#knowMF2").is(':checked'),
+			modalMesFal2 : $("#modalMesFal2").val(),
+			knowAF2 : $("#knowAF2").is(':checked'),
+			modalAnioFal2 : $("#modalAnioFal2").val()
+			},
+			function(data){
+				var json = JSON.parse(data);
+				if(json.message == "creado"){
+					$("#modalCrearPersonaje1").modal();
+					cargaListaCompleta();
+				}
+				else if(json.message == "fechaIncorrecta"){
+					$("#modalCrearPersonaje2").modal();
+				}
+				else if(json.message == "nombreRepetido"){
+					$("#modalCrearPersonaje3").modal();
+				}
+			}
+		);
+	});
+	
 });
+
+function validaDia(o){
+	if($(o).val() > 31){
+		$(o).val(31);
+	}
+	else if($(o).val() < 1){
+		$(o).val(1);
+	}
+}
+
+function validaMes(o){
+	if($(o).val() > 12){
+		$(o).val(12);
+	}
+	else if($(o).val() < 1){
+		$(o).val(1);
+	}
+}
+
+function validaAnio(o){
+	if($(o).val() == 0){
+		$(o).val(1);
+	}
+}

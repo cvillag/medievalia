@@ -11,12 +11,12 @@ public class Personage {
 	private int validado;
 	private int lugarNacimiento;
 	private int lugarFallecimiento;
-	private int anacimiento;
-	private int mnacimiento;
-	private int dnacimiento;
-	private int afallecimiento;
-	private int mfallecimiento;
-	private int dfallecimiento;
+	private Integer anacimiento;
+	private Integer mnacimiento;
+	private Integer dnacimiento;
+	private Integer afallecimiento;
+	private Integer mfallecimiento;
+	private Integer dfallecimiento;
 	
 	public Personage() {
 		super();
@@ -75,40 +75,40 @@ public class Personage {
 	public void setLugarFallecimiento(int lugarFallecimiento) {
 		this.lugarFallecimiento = lugarFallecimiento;
 	}
-	public int getAnacimiento() {
+	public Integer getAnacimiento() {
 		return anacimiento;
 	}
-	public void setAnacimiento(int anacimiento) {
+	public void setAnacimiento(Integer anacimiento) {
 		this.anacimiento = anacimiento;
 	}
-	public int getMnacimiento() {
+	public Integer getMnacimiento() {
 		return mnacimiento;
 	}
-	public void setMnacimiento(int mnacimiento) {
+	public void setMnacimiento(Integer mnacimiento) {
 		this.mnacimiento = mnacimiento;
 	}
-	public int getDnacimiento() {
+	public Integer getDnacimiento() {
 		return dnacimiento;
 	}
-	public void setDnacimiento(int dnacimiento) {
+	public void setDnacimiento(Integer dnacimiento) {
 		this.dnacimiento = dnacimiento;
 	}
-	public int getAfallecimiento() {
+	public Integer getAfallecimiento() {
 		return afallecimiento;
 	}
-	public void setAfallecimiento(int afallecimiento) {
+	public void setAfallecimiento(Integer afallecimiento) {
 		this.afallecimiento = afallecimiento;
 	}
-	public int getMfallecimiento() {
+	public Integer getMfallecimiento() {
 		return mfallecimiento;
 	}
-	public void setMfallecimiento(int mfallecimiento) {
+	public void setMfallecimiento(Integer mfallecimiento) {
 		this.mfallecimiento = mfallecimiento;
 	}
-	public int getDfallecimiento() {
+	public Integer getDfallecimiento() {
 		return dfallecimiento;
 	}
-	public void setDfallecimiento(int dfallecimiento) {
+	public void setDfallecimiento(Integer dfallecimiento) {
 		this.dfallecimiento = dfallecimiento;
 	}
 	public void setFallecimiento(int a, int m, int d){

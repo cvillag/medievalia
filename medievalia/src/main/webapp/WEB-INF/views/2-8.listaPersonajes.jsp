@@ -89,7 +89,7 @@ String validar = (String) request.getAttribute("validar");
 						<div class="col-xs-3 form-group">
 							<input type="checkbox" id="knowMN" checked="checked">
 							<label for="modalMesNac"><fmt:message key="p2-8.modal.datos.04"></fmt:message></label>
-							<input type="number" id="modalMesNac" size="2" min="1" max="12" class="inputDays form-control">
+							<input type="number" id="modalMesNac" size="2" min="1" max="12" class="inputMonths form-control">
 						</div>
 						<div class="col-xs-3 form-group">
 							<input type="checkbox" id="knowAN" checked="checked">
@@ -111,7 +111,7 @@ String validar = (String) request.getAttribute("validar");
 						<div class="col-xs-3 form-group">
 							<input type="checkbox" id="knowMF" checked="checked">
 							<label for="modalMesFal"><fmt:message key="p2-8.modal.datos.07"></fmt:message></label>
-							<input type="number" id="modalMesFal" size="2" min="1" max="12" class="inputDays form-control">
+							<input type="number" id="modalMesFal" size="2" min="1" max="12" class="inputMonths form-control">
 						</div>
 						<div class="col-xs-3 form-group">
 							<input type="checkbox" id="knowAF" checked="checked">
@@ -152,7 +152,7 @@ String validar = (String) request.getAttribute("validar");
 					<div class="form-group row">
 						<div class="col-xs-12">
 							<label for="crearOtros"><fmt:message key="p2-8.modal.crear.02"></fmt:message></label>
-							<textarea class="form-control rows="3" id="modalOtros"></textarea>
+							<textarea class="form-control rows="3" id="modalOtros2"></textarea>
 						</div>
 					</div>
 					<div class="row">
@@ -163,19 +163,19 @@ String validar = (String) request.getAttribute("validar");
 					<div class="row">
 						
 						<div class="col-xs-3 form-group">
-							<input type="checkbox" id="knowDN2" checked="checked">
+							<input type="checkbox" id="knowDN2">
 							<label for="modalDiaNac2"><fmt:message key="p2-8.modal.crear.03"></fmt:message></label>
-							<input type="number" id="modalDiaNac2" size="2" min="1" max="31" class="inputDays form-control">
+							<input type="number" id="modalDiaNac2" size="2" min="1" max="31" class="inputDays form-control" disabled>
 						</div>
 						<div class="col-xs-3 form-group">
-							<input type="checkbox" id="knowMN2" checked="checked">
+							<input type="checkbox" id="knowMN2">
 							<label for="modalMesNac2"><fmt:message key="p2-8.modal.crear.04"></fmt:message></label>
-							<input type="number" id="modalMesNac2" size="2" min="1" max="12" class="inputDays form-control">
+							<input type="number" id="modalMesNac2" size="2" min="1" max="12" class="inputDays form-control" disabled>
 						</div>
 						<div class="col-xs-3 form-group">
-							<input type="checkbox" id="knowAN2" checked="checked">
+							<input type="checkbox" id="knowAN2">
 							<label for="modalAnioNac2"><fmt:message key="p2-8.modal.crear.05"></fmt:message></label>
-							<input type="number" id="modalAnioNac2" size="3" max="9999" class="inputYears form-control">
+							<input type="number" id="modalAnioNac2" size="3" max="9999" class="inputYears form-control" disabled>
 						</div>
 					</div>
 					<div class="row">
@@ -185,19 +185,19 @@ String validar = (String) request.getAttribute("validar");
 					</div>
 					<div class="row">
 						<div class="col-xs-3 form-group">
-							<input type="checkbox" id="knowDF2" checked="checked">
+							<input type="checkbox" id="knowDF2" >
 							<label for="modalDiaFal2"><fmt:message key="p2-8.modal.crear.06"></fmt:message></label>
-							<input type="number" id="modalDiaFal2" size="2" min="1" max="31" class="inputDays form-control">
+							<input type="number" id="modalDiaFal2" size="2" min="1" max="31" class="inputDays form-control" disabled>
 						</div>
 						<div class="col-xs-3 form-group">
-							<input type="checkbox" id="knowMF2" checked="checked">
+							<input type="checkbox" id="knowMF2">
 							<label for="modalMesFal2"><fmt:message key="p2-8.modal.crear.07"></fmt:message></label>
-							<input type="number" id="modalMesFal2" size="2" min="1" max="12" class="inputDays form-control">
+							<input type="number" id="modalMesFal2" size="2" min="1" max="12" class="inputDays form-control" disabled>
 						</div>
 						<div class="col-xs-3 form-group">
-							<input type="checkbox" id="knowAF2" checked="checked">
+							<input type="checkbox" id="knowAF2">
 							<label for="modalAnioFal2"><fmt:message key="p2-8.modal.crear.08"></fmt:message></label>
-							<input type="number" id="modalAnioFal2" size="4" max="9999" class="inputYears form-control">
+							<input type="number" id="modalAnioFal2" size="4" max="9999" class="inputYears form-control" disabled>
 						</div>
 					</div>
 				</form>
@@ -208,6 +208,74 @@ String validar = (String) request.getAttribute("validar");
 				</button>
 				<button type="button" id="modalCrearCancel" class="btn btn-sm btn-default" data-dismiss="modal">
 					<fmt:message key="general.cancelar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Diálogos modales de resultados -->
+
+<div id="modalCrearPersonaje1" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-8.modal.crear.10"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-success">
+					<fmt:message key="p2-8.modal.crear.11"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalCrearPersonaje2" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-8.modal.crear.10"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-warning">
+					<fmt:message key="p2-8.modal.crear.12"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalCrearPersonaje3" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-8.modal.crear.10"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-warning">
+					<fmt:message key="p2-8.modal.crear.13"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
 		</div>

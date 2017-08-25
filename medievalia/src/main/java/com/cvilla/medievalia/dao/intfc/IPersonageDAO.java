@@ -8,6 +8,7 @@ public interface IPersonageDAO {
 	
 	public List<Personage> getPersonageList();
 	public Personage getPersonage(int idPersonage);
-	public void addPersonage(Personage p);
+	public String addPersonage(Personage p);
+	public boolean nameRepeat(String name);
 
 }
