@@ -105,6 +105,7 @@ public class Constants {
 	public static final int P_MODIFY_CHARACTER = 78;
 	
 	public static final int P_DELETE_OWN_CHARACTER = 79;
+	public static final int P_RENAME_CHARACTER_OWN = 80;
 	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;
@@ -128,6 +129,7 @@ public class Constants {
 	
 	public static final int MIN_TEMA_NAME = 4;
 	public static final int MIN_USER_NAME = 4;
+	public static final int MIN_PERSONAGE_NAME = 3;
 	public static final int MIN_PASS = 6;
 	
 	public static final int NUM_ACCEPTED = 2;

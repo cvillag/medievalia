@@ -11,5 +11,7 @@ public interface IPersonageDAO {
 	public String addPersonage(Personage p);
 	public boolean nameRepeat(String name);
 	public String deleteCharacter(Personage c);
+	public Personage getPersonage(String name);
+	public String renamePersonage(int idPers, String nombre);
 
 }

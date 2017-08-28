@@ -11,11 +11,13 @@ import com.cvilla.medievalia.domain.Personage;
 
 public class PersonageDAO implements IPersonageDAO {
 	
-	private static final String DELETE_CHARACTER = "DELETE FROM `personaje` WHERE idPersonaje = ?";
-	private static final String GET_PERSONAGE_BY_ID = "SELECT `idPersonaje` ,  `idGrupo` ,  `creador` ,  `user_name` AS  `nombreCreador` ,  `nombre` ,  `otros` ,  `validado` ,  `lugarNacimiento` ,  `lugarFallecimiento` ,  `anacimiento` ,  `mnacimiento` , `dnacimiento` ,  `afallecimiento` ,  `mfallecimiento` ,  `dfallecimiento` FROM `personaje` LEFT JOIN users ON user_id = creador WHERE idPersonaje = ? ";
+	private final String DELETE_CHARACTER = "DELETE FROM `personaje` WHERE idPersonaje = ?";
+	private final String GET_PERSONAGE_BY_ID = "SELECT `idPersonaje` ,  `idGrupo` ,  `creador` ,  `user_name` AS  `nombreCreador` ,  `nombre` ,  `otros` ,  `validado` ,  `lugarNacimiento` ,  `lugarFallecimiento` ,  `anacimiento` ,  `mnacimiento` , `dnacimiento` ,  `afallecimiento` ,  `mfallecimiento` ,  `dfallecimiento` FROM `personaje` LEFT JOIN users ON user_id = creador WHERE idPersonaje = ? ";
+	private final String GET_PERSONAGE_BY_NAME = "SELECT `idPersonaje` ,  `idGrupo` ,  `creador` ,  `user_name` AS  `nombreCreador` ,  `nombre` ,  `otros` ,  `validado` ,  `lugarNacimiento` ,  `lugarFallecimiento` ,  `anacimiento` ,  `mnacimiento` , `dnacimiento` ,  `afallecimiento` ,  `mfallecimiento` ,  `dfallecimiento` FROM `personaje` LEFT JOIN users ON user_id = creador WHERE nombre = ? ";
 	private final String GET_PERSONAGE_LIST = "SELECT  `idPersonaje` ,  `idGrupo` ,  `creador` ,  `user_name` AS  `nombreCreador` ,  `nombre` ,  `otros` ,  `validado` ,  `lugarNacimiento` ,  `lugarFallecimiento` ,  `anacimiento` ,  `mnacimiento` , `dnacimiento` ,  `afallecimiento` ,  `mfallecimiento` ,  `dfallecimiento` FROM  `personaje` LEFT JOIN users ON user_id = creador";
 	private final String ADD_CHARACTER = "INSERT INTO `personaje`(`idGrupo`, `creador`, `nombre`, `otros`, `validado`, `lugarNacimiento`, `lugarFallecimiento`, `anacimiento`, `mnacimiento`, `dnacimiento`, `afallecimiento`, `mfallecimiento`, `dfallecimiento`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private final String NAME_REPEAT = "select count(*) from personaje where nombre = ?";
+	private final String RENAME_PERSONAGE = "UPDATE `personaje` SET `nombre`= ? WHERE idPersonaje = ?";
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -76,6 +78,29 @@ public class PersonageDAO implements IPersonageDAO {
 		try{
 			if(jdbcTemplate.update(DELETE_CHARACTER, new Object[]{c.getIdPersonaje()}) == 1){
 				return "borrado";
+			}
+			else{
+				return "error";
+			}
+		}
+		catch(Exception e){
+			return "error"; 
+		}
+	}
+
+	public Personage getPersonage(String name) {
+		try{
+			return getJdbcTemplate().queryForObject(GET_PERSONAGE_BY_NAME,new Object[]{name}, new CharacterMapper());
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
+
+	public String renamePersonage(int idPers, String nombre) {
+		try{
+			if(jdbcTemplate.update(RENAME_PERSONAGE, new Object[]{nombre,idPers}) == 1){
+				return "cambiado";
 			}
 			else{
 				return "error";

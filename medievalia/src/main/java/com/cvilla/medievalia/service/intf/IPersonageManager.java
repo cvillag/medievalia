@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.cvilla.medievalia.domain.Charge;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.Personage;
 import com.cvilla.medievalia.domain.User;
@@ -17,4 +18,7 @@ public interface IPersonageManager extends Serializable{
 	public String addPersonage(Personage p, Group groupA, User user);
 	public String deleteCharacter(Personage c, User user, Group groupA);
 	public String deleteOwnCharacter(Personage c, User user, Group groupA);
+	public String renameCharacter(String nombre, int idPers, User user, Group groupA);
+	public String renameCharacterOwn(String nombre, int idPers, User user, Group groupA);
+	public Personage getPersonageByName(String name);
 }

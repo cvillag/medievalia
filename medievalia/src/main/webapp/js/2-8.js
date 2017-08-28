@@ -50,7 +50,7 @@ function postPersonaje(){
 			function(data){
 				var json = JSON.parse(data);
 				if(json.message == "cambiado"){
-					$("#modalModificaPersonaje2").modal();
+					$("#modalModificaPersonaje1").modal();
 					$("#personajeName" + activadoCom).attr("disabled","true");
 					$("#savePersonaje" + activadoCom).hide();
 					$("#cancelPersonaje" + activadoCom).hide();
@@ -58,14 +58,20 @@ function postPersonaje(){
 				}
 				else{
 					$("#personajeName" + json.id).val(json.oldname);
-					if(json.message == "noExist"){
+					if(json.message == "noGroup"){
+						$("#modalModificaPersonaje2").modal();
+					}
+					else if(json.message == "noExist"){
 						$("#modalModificaPersonaje3").modal();
 					}
-					else if(json.message == "repeated"){
+					else if(json.message == "nombreCorto"){
+						$("#modalModificaPersonaje4").modal();
+					}
+					else if(json.message == "noPrivileges"){
 						$("#modalModificaPersonaje5").modal();
 					}
-					else{
-						$("#modalModificaPersonaje4").modal();
+					else if(json.message == "nameExist"){
+						$("#modalModificaPersonaje6").modal();
 					}
 				}
 			});
@@ -678,6 +684,9 @@ $(document).ready(function(){
 				}
 				else if(json.message == "nombreRepetido"){
 					$("#modalCrearPersonaje3").modal();
+				}
+				else if(json.message == "nombreCorto"){
+					$("#modalCrearPersonaje4").modal();
 				}
 			}
 		);

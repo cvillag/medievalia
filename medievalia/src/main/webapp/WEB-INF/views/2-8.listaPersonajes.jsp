@@ -282,6 +282,29 @@ String validar = (String) request.getAttribute("validar");
 	</div>
 </div>
 
+<div id="modalCrearPersonaje4" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-8.modal.crear.10"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-warning">
+					<fmt:message key="p2-8.modal.crear.14"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <div id="modalBorrarPersonajePrev" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -291,7 +314,7 @@ String validar = (String) request.getAttribute("validar");
 				</h4>
 			</div>
 			<div class="modal-body">
-				<div class="alert alert-success">
+				<div class="alert alert-info">
 					<fmt:message key="p2-8.modal.borrar.05"></fmt:message>
 				</div>				
 			</div>
@@ -384,6 +407,137 @@ String validar = (String) request.getAttribute("validar");
 			<div class="modal-body">
 				<div class="alert alert-danger">
 					<fmt:message key="p2-8.modal.borrar.04"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalModificaPersonaje1" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-8.modal.ren.00"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-success">
+					<fmt:message key="p2-8.modal.ren.01"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalModificaPersonaje2" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-8.modal.ren.00"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger">
+					<fmt:message key="p2-8.modal.ren.02"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalModificaPersonaje3" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-8.modal.ren.00"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger">
+					<fmt:message key="p2-8.modal.ren.03"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalModificaPersonaje4" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-8.modal.ren.00"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-warning">
+					<fmt:message key="p2-8.modal.ren.04"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modalModificaPersonaje5" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-8.modal.ren.00"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-warning">
+					<fmt:message key="p2-8.modal.ren.05"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalModificaPersonaje6" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-8.modal.ren.00"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-warning">
+					<fmt:message key="p2-8.modal.ren.06"></fmt:message>
 				</div>				
 			</div>
 			<div class="modal-footer">

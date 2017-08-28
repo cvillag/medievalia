@@ -30,6 +30,10 @@ public class PersonageManager implements IPersonageManager {
 	public Personage getPersonage(int idPers) {
 		return persdao.getPersonage(idPers);
 	}
+	
+	public Personage getPersonageByName(String name) {
+		return persdao.getPersonage(name);
+	}
 
 	public String addPersonage(Personage p, Group groupA, User user) {
 		if(persdao.nameRepeat(p.getNombre())){
@@ -43,14 +47,19 @@ public class PersonageManager implements IPersonageManager {
 				if(Fechas.fechaIncorrecta(p.getDfallecimiento() ,p.getMfallecimiento(), p.getAfallecimiento())){
 					return "fechaIncorrecta";
 				}
-				else{					
-					if(user.getUser_role() == Constants.ROLE_PROFESOR){
-						p.setValidado(Constants.OBJETO_VALIDADO);
+				else{
+					if(p.getNombre().length() < Constants.MIN_PERSONAGE_NAME){
+						return "nombreCorto";
 					}
 					else{
-						p.setValidado(Constants.OBJETO_NO_VALIDADO);
+						if(user.getUser_role() == Constants.ROLE_PROFESOR){
+							p.setValidado(Constants.OBJETO_VALIDADO);
+						}
+						else{
+							p.setValidado(Constants.OBJETO_NO_VALIDADO);
+						}
+						return persdao.addPersonage(p);
 					}
-					return persdao.addPersonage(p);
 				}
 			}
 		}
@@ -70,5 +79,35 @@ public class PersonageManager implements IPersonageManager {
 		return null;
 	}
 
-	
+	public String renameCharacter(String nombre, int idPers, User user,
+			Group groupA) {
+		Personage p = persdao.getPersonage(idPers);
+		if(p == null){
+			return "noExist";
+		}
+		else{
+			if(p.getIdGrupo() != groupA.getIdGrupo()){
+				return "noGroup";
+			}
+			else{
+				if(nombre.length() < Constants.MIN_PERSONAGE_NAME){
+					return "nombreCorto";
+				}
+				else{
+					if(persdao.nameRepeat(nombre)){
+						return "nameExist";
+					}
+					else{
+						return persdao.renamePersonage(idPers, nombre);
+					}
+				}
+			}
+		}
+	}
+
+	public String renameCharacterOwn(String nombre, int idPers, User user,
+			Group groupA) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
