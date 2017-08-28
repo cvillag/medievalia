@@ -8,8 +8,10 @@ import com.cvilla.medievalia.dao.intfc.IPersonageDAO;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.Personage;
 import com.cvilla.medievalia.domain.User;
+import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.IPersonageManager;
 import com.cvilla.medievalia.utils.Constants;
+import com.cvilla.medievalia.utils.Fechas;
 
 public class PersonageManager implements IPersonageManager {
 	
@@ -17,14 +19,16 @@ public class PersonageManager implements IPersonageManager {
 	
 	@Autowired
 	private IPersonageDAO persdao;
+	
+	@Autowired
+	private IGroupManager groupManager;
 
 	public List<Personage> getPersonageList() {
 		return persdao.getPersonageList();
 	}
 
 	public Personage getPersonage(int idPers) {
-		// TODO Auto-generated method stub
-		return null;
+		return persdao.getPersonage(idPers);
 	}
 
 	public String addPersonage(Personage p, Group groupA, User user) {
@@ -32,44 +36,39 @@ public class PersonageManager implements IPersonageManager {
 			return "nombreRepetido";
 		}
 		else{
-			if(p.getDnacimiento() != null && (p.getDnacimiento() < 1 ||  p.getDnacimiento() > 31 )){
+			if(Fechas.fechaIncorrecta(p.getDnacimiento(),p.getMnacimiento(), p.getAnacimiento())){
 				return "fechaIncorrecta";
 			}
 			else{
-				if(p.getDfallecimiento() != null && (p.getDfallecimiento() < 1 || p.getDfallecimiento() > 31)){
+				if(Fechas.fechaIncorrecta(p.getDfallecimiento() ,p.getMfallecimiento(), p.getAfallecimiento())){
 					return "fechaIncorrecta";
 				}
-				else{
-					if(p.getMnacimiento() != null && (p.getMnacimiento() < 1 ||  p.getMnacimiento() > 12 )){
-						return "fechaIncorrecta";
+				else{					
+					if(user.getUser_role() == Constants.ROLE_PROFESOR){
+						p.setValidado(Constants.OBJETO_VALIDADO);
 					}
 					else{
-						if(p.getMfallecimiento() != null && (p.getMfallecimiento() < 1 || p.getMfallecimiento() > 12)){
-							return "fechaIncorrecta";
-						}
-						else{
-							if(p.getAfallecimiento() != null && p.getAfallecimiento() == 0){
-								return "fechaIncorrecta";
-							}
-							else{
-								if(p.getAnacimiento() != null && p.getAnacimiento() == 0){
-									return "fechaIncorrecta";
-								}
-								else{
-									if(user.getUser_role() == Constants.ROLE_PROFESOR){
-										p.setValidado(Constants.OBJETO_VALIDADO);
-									}
-									else{
-										p.setValidado(Constants.OBJETO_NO_VALIDADO);
-									}
-									return persdao.addPersonage(p);
-								}
-							}
-						}
+						p.setValidado(Constants.OBJETO_NO_VALIDADO);
 					}
+					return persdao.addPersonage(p);
 				}
 			}
 		}
 	}
 
+	public String deleteCharacter(Personage c, User user, Group groupA) {
+		if(c.getIdGrupo() != groupA.getIdGrupo() || !groupManager.isTeacherOrDirector(user, c.getIdGrupo())){
+			return "noGroup";
+		}
+		else{
+			return persdao.deleteCharacter(c);
+		}
+	}
+
+	public String deleteOwnCharacter(Personage c, User user, Group groupA) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }

@@ -65,6 +65,9 @@ public class CompleteCharacterListAjaxController {
 				if(authManager.isAutorized(Constants.P_RENAME_CHARACTER, user)){
 					model.addObject("permisoRenombrado", "ok");
 				}
+				if(authManager.isAutorized(Constants.P_MODIFY_CHARACTER, user)){
+					model.addObject("permisoModificado", "ok");
+				}
 			}
 		}
 		else{

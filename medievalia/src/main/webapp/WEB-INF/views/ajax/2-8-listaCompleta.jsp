@@ -14,6 +14,9 @@ List<Personage> personajes = (List<Personage>) request.getAttribute("listaPerson
 String delete = (String) request.getAttribute("permisoborrado");
 @SuppressWarnings("unckecked")
 String rename = (String) request.getAttribute("permisoRenombrado");
+@SuppressWarnings("unckecked")
+String modify = (String) request.getAttribute("permisoModificado");
+
 if (personajes != null && personajes.size() > 0){
 	for(Personage c : personajes){
 		if(type.equals("table")){%>
@@ -39,28 +42,25 @@ if (personajes != null && personajes.size() > 0){
 								 <span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu" aria-labelledby="otheract<%=c.getIdPersonaje()%>">
+									<%if(rename != null){ %>
+									<li><a class="activarSNombre" data-val="<%=c.getIdPersonaje()%>"><fmt:message key="p2.8.personajes.cnom"></fmt:message></a></li>
+									<%}
+									if(delete != null){ %>
+									<li><a class="deleteSPersonaje" data-val="<%=c.getIdPersonaje()%>"><fmt:message key="p2.8.personajes.delete"></fmt:message></a></li>
+									<%} %>
+									<li><a class="oacdatos" data-val="<%=c.getIdPersonaje()%>"><fmt:message key="p2.8.personajes.vdatos"></fmt:message></a></li>
+									<%
+									if(modify != null){
+									%>
 								    <li><a class="oacdatos" data-val="<%=c.getIdPersonaje()%>"><fmt:message key="p2.8.personajes.cdatos"></fmt:message></a></li>
 								    <li><a class="oaclnac" data-val="<%=c.getIdPersonaje()%>"><fmt:message key="p2.8.personajes.clnac"></fmt:message></a></li>
 								    <li><a class="oaclfal" data-val="<%=c.getIdPersonaje()%>"><fmt:message key="p2.8.personajes.clfal"></fmt:message></a></li>
 								    <li><a class="oacest" data-val="<%=c.getIdPersonaje()%>"><fmt:message key="p2.8.personajes.cest"></fmt:message></a></li>
 								    <li><a class="oaccarg" data-val="<%=c.getIdPersonaje()%>"><fmt:message key="p2.8.personajes.ccarg"></fmt:message></a></li>
+								    <%} %>
 								  </ul>
 							</div>
 						</div>
-						<%if(rename != null){ %>
-						<div class="col-xs-2">
-							<button type="button" class="btn btn-sm btn-default activarSNombre" data-val="<%=c.getIdPersonaje()%>">
-								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-							</button>
-						</div>
-						<%}
-						if(delete != null){ %>
-						<div class="col-xs-2">
-							<button type="button" class="btn btn-sm btn-default deleteSPersonaje" data-val="<%=c.getIdPersonaje()%>">
-								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-							</button>
-						</div>
-						<%} %>
 					</div>
 				</td>
 			</tr>

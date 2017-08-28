@@ -5,6 +5,8 @@ var activadoAl = 0;
 var oldnamePr;
 var activadoPr = 0;
 
+var idBorrar = 0;
+
 //Carga de lista de personajes completa
 
 function postPersonaje(){
@@ -71,8 +73,14 @@ function postPersonaje(){
 	});
 	
 	$(".deleteSPersonaje").click(function(){
+		idBorrar = $(this).data('val');
+		$("#modalBorrarPersonajePrev").modal();
+	});
+	
+	$("#modalConfirmarBorrado").click(function(){
+		$("#modalBorrarPersonajePrev").modal("hide");
 		$.post("removeCharacterA.do",{
-			idPersonaje : $(this).data('val')
+			idPersonaje : idBorrar
 		},
 		function(data){
 			var json = JSON.parse(data);
@@ -80,8 +88,14 @@ function postPersonaje(){
 				$("#modalBorraPersonaje1").modal();
 				$("#personaje" + json.id).remove();
 			}
-			else{
+			else if(json.message == "noExist"){
 				$("#modalBorraPersonaje2").modal();
+			}
+			else if(json.message = "error"){
+				$("#modalBorraPersonaje3").modal();
+			}
+			else if(json.message = "noGroup"){
+				$("#modalBorraPersonaje4").modal();
 			}
 		})
 	});

@@ -10,5 +10,6 @@ public interface IPersonageDAO {
 	public Personage getPersonage(int idPersonage);
 	public String addPersonage(Personage p);
 	public boolean nameRepeat(String name);
+	public String deleteCharacter(Personage c);
 
 }

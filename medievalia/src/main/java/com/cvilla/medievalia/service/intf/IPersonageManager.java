@@ -15,4 +15,6 @@ public interface IPersonageManager extends Serializable{
 	public List<Personage> getPersonageList();
 	public Personage getPersonage(int idPers);
 	public String addPersonage(Personage p, Group groupA, User user);
+	public String deleteCharacter(Personage c, User user, Group groupA);
+	public String deleteOwnCharacter(Personage c, User user, Group groupA);
 }

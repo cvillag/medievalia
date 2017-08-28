@@ -8,10 +8,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.cvilla.medievalia.dao.intfc.IPersonageDAO;
 import com.cvilla.medievalia.dao.mappers.CharacterMapper;
 import com.cvilla.medievalia.domain.Personage;
-import com.cvilla.medievalia.utils.Constants;
 
 public class PersonageDAO implements IPersonageDAO {
 	
+	private static final String DELETE_CHARACTER = "DELETE FROM `personaje` WHERE idPersonaje = ?";
+	private static final String GET_PERSONAGE_BY_ID = "SELECT `idPersonaje` ,  `idGrupo` ,  `creador` ,  `user_name` AS  `nombreCreador` ,  `nombre` ,  `otros` ,  `validado` ,  `lugarNacimiento` ,  `lugarFallecimiento` ,  `anacimiento` ,  `mnacimiento` , `dnacimiento` ,  `afallecimiento` ,  `mfallecimiento` ,  `dfallecimiento` FROM `personaje` LEFT JOIN users ON user_id = creador WHERE idPersonaje = ? ";
 	private final String GET_PERSONAGE_LIST = "SELECT  `idPersonaje` ,  `idGrupo` ,  `creador` ,  `user_name` AS  `nombreCreador` ,  `nombre` ,  `otros` ,  `validado` ,  `lugarNacimiento` ,  `lugarFallecimiento` ,  `anacimiento` ,  `mnacimiento` , `dnacimiento` ,  `afallecimiento` ,  `mfallecimiento` ,  `dfallecimiento` FROM  `personaje` LEFT JOIN users ON user_id = creador";
 	private final String ADD_CHARACTER = "INSERT INTO `personaje`(`idGrupo`, `creador`, `nombre`, `otros`, `validado`, `lugarNacimiento`, `lugarFallecimiento`, `anacimiento`, `mnacimiento`, `dnacimiento`, `afallecimiento`, `mfallecimiento`, `dfallecimiento`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private final String NAME_REPEAT = "select count(*) from personaje where nombre = ?";
@@ -39,8 +40,12 @@ public class PersonageDAO implements IPersonageDAO {
 	}
 
 	public Personage getPersonage(int idPersonage) {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			return getJdbcTemplate().queryForObject(GET_PERSONAGE_BY_ID,new Object[]{idPersonage}, new CharacterMapper());
+		}
+		catch(Exception e){
+			return null;
+		}
 	}
 
 	public String addPersonage(Personage p) {
@@ -64,6 +69,20 @@ public class PersonageDAO implements IPersonageDAO {
 		}
 		catch(Exception e){
 			return true;
+		}
+	}
+
+	public String deleteCharacter(Personage c) {
+		try{
+			if(jdbcTemplate.update(DELETE_CHARACTER, new Object[]{c.getIdPersonaje()}) == 1){
+				return "borrado";
+			}
+			else{
+				return "error";
+			}
+		}
+		catch(Exception e){
+			return "error"; 
 		}
 	}
 
