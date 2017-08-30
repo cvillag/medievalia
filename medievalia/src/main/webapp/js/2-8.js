@@ -6,7 +6,7 @@ var oldnamePr;
 var activadoPr = 0;
 
 var idBorrar = 0;
-
+var idCambiar = 0;
 //Carga de lista de personajes completa
 
 function postPersonaje(){
@@ -111,28 +111,28 @@ function postPersonaje(){
 	/////////////////////////////////////////////////////////
 
 	$(".oacdatos").click(function(){
-		id=$(this).data('val');
-		$("#modalDatosNombre").val($("#pnom" + id).val());
-		$("#modalOtros").val($("#potros" + id).val());
-		$("#modalDiaNac").val($("#pdnac" + id).val());
-			$("#knowDN").prop("checked",!($("#pdnac" + id).val()==0));
-			$("#modalDiaNac").attr("disabled",($("#pdnac" + id).val()==0));
-		$("#modalMesNac").val($("#pmnac" + id).val());
-			$("#knowMN").prop("checked",!($("#pmnac" + id).val()==0));
-			$("#modalMesNac").attr("disabled",($("#pmnac" + id).val()==0));
-		$("#modalAnioNac").val($("#panac" + id).val());
-			$("#knowAN").prop("checked",!($("#panac" + id).val()==0));
-			$("#modalAnioNac").attr("disabled",($("#panac" + id).val()==0));
-		$("#modalDiaFal").val($("#pdfal" + id).val());
-			$("#knowDF").prop("checked",!($("#pdfal" + id).val()==0));
-			$("#modalDiaFal").attr("disabled",($("#pdfal" + id).val()==0));
-		$("#modalMesFal").val($("#pmfal" + id).val());
-			$("#knowMF").prop("checked",!($("#pmfal" + id).val()==0));
-			$("#modalMesFal").attr("disabled",($("#pmfal" + id).val()==0));
-		$("#modalAnioFal").val($("#pafal" + id).val());
-			$("#knowAF").prop("checked",!($("#pafal" + id).val()==0));
-			$("#modalAnioFal").attr("disabled",($("#pafal" + id).val()==0));
-		$("#modalDatosNombre").html($("#pnom" + id).val());
+		idCambiar =$(this).data('val');
+		$("#modalDatosNombre").val($("#pnom" + idCambiar).val());
+		$("#modalOtros").val($("#potros" + idCambiar).val());
+		$("#modalDiaNac").val($("#pdnac" + idCambiar).val());
+			$("#knowDN").prop("checked",!($("#pdnac" + idCambiar).val()==0));
+			$("#modalDiaNac").attr("disabled",($("#pdnac" + idCambiar).val()==0));
+		$("#modalMesNac").val($("#pmnac" + idCambiar).val());
+			$("#knowMN").prop("checked",!($("#pmnac" + idCambiar).val()==0));
+			$("#modalMesNac").attr("disabled",($("#pmnac" + idCambiar).val()==0));
+		$("#modalAnioNac").val($("#panac" + idCambiar).val());
+			$("#knowAN").prop("checked",!($("#panac" + idCambiar).val()==0));
+			$("#modalAnioNac").attr("disabled",($("#panac" + idCambiar).val()==0));
+		$("#modalDiaFal").val($("#pdfal" + idCambiar).val());
+			$("#knowDF").prop("checked",!($("#pdfal" + idCambiar).val()==0));
+			$("#modalDiaFal").attr("disabled",($("#pdfal" + idCambiar).val()==0));
+		$("#modalMesFal").val($("#pmfal" + idCambiar).val());
+			$("#knowMF").prop("checked",!($("#pmfal" + idCambiar).val()==0));
+			$("#modalMesFal").attr("disabled",($("#pmfal" + idCambiar).val()==0));
+		$("#modalAnioFal").val($("#pafal" + idCambiar).val());
+			$("#knowAF").prop("checked",!($("#pafal" + idCambiar).val()==0));
+			$("#modalAnioFal").attr("disabled",($("#pafal" + idCambiar).val()==0));
+		$("#modalDatosNombre").html($("#pnom" + idCambiar).val());
 		
 		$("#modalCambiarDatos").modal();
 	});
@@ -690,6 +690,47 @@ $(document).ready(function(){
 				}
 			}
 		);
+	});
+	
+	$("#modalDatosOk").click(function(){
+		$.post("modifyCharacterA.do",
+				{
+				idPersonaje : idCambiar,
+				modalDatosNombre : $("#modalDatosNombre").val(),
+				modalOtros : $("#modalOtros").val(),
+				knowDN : $("#knowDN").is(':checked'),
+				modalDiaNac : $("#modalDiaNac").val(),
+				knowMN : $("#knowMN").is(':checked'),
+				modalMesNac : $("#modalMesNac").val(),
+				knowAN : $("#knowAN").is(':checked'),
+				modalAnioNac : $("#modalAnioNac").val(),
+				knowDF : $("#knowDF").is(':checked'),
+				modalDiaFal : $("#modalDiaFal").val(),
+				knowMF : $("#knowMF").is(':checked'),
+				modalMesFal : $("#modalMesFal").val(),
+				knowAF : $("#knowAF").is(':checked'),
+				modalAnioFal : $("#modalAnioFal").val()
+				},
+				function(data){
+					var json = JSON.parse(data);
+					if(json.message == "cambiado"){
+						$("#modalModPersonaje1").modal();
+						cargaListaCompleta();
+					}
+					else if(json.message == "fechaIncorrecta"){
+						$("#modalModPersonaje2").modal();
+					}
+					else if(json.message == "nombreRepetido"){
+						$("#modalModPersonaje3").modal();
+					}
+					else if(json.message == "nombreCorto"){
+						$("#modalModPersonaje4").modal();
+					}
+					else {
+						$("#modalModPersonaje5").modal();
+					}
+				}
+			);
 	});
 	
 });

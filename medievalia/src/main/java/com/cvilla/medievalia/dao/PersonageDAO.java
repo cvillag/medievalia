@@ -11,6 +11,7 @@ import com.cvilla.medievalia.domain.Personage;
 
 public class PersonageDAO implements IPersonageDAO {
 	
+	private final String UPDATE_PERSONAGE = "UPDATE `personaje` SET `otros`=?,`anacimiento`=?,`mnacimiento`=?,`dnacimiento`=?,`afallecimiento`=?,`mfallecimiento`=?,`dfallecimiento`=? WHERE idPersonaje = ?";
 	private final String DELETE_CHARACTER = "DELETE FROM `personaje` WHERE idPersonaje = ?";
 	private final String GET_PERSONAGE_BY_ID = "SELECT `idPersonaje` ,  `idGrupo` ,  `creador` ,  `user_name` AS  `nombreCreador` ,  `nombre` ,  `otros` ,  `validado` ,  `lugarNacimiento` ,  `lugarFallecimiento` ,  `anacimiento` ,  `mnacimiento` , `dnacimiento` ,  `afallecimiento` ,  `mfallecimiento` ,  `dfallecimiento` FROM `personaje` LEFT JOIN users ON user_id = creador WHERE idPersonaje = ? ";
 	private final String GET_PERSONAGE_BY_NAME = "SELECT `idPersonaje` ,  `idGrupo` ,  `creador` ,  `user_name` AS  `nombreCreador` ,  `nombre` ,  `otros` ,  `validado` ,  `lugarNacimiento` ,  `lugarFallecimiento` ,  `anacimiento` ,  `mnacimiento` , `dnacimiento` ,  `afallecimiento` ,  `mfallecimiento` ,  `dfallecimiento` FROM `personaje` LEFT JOIN users ON user_id = creador WHERE nombre = ? ";
@@ -108,6 +109,20 @@ public class PersonageDAO implements IPersonageDAO {
 		}
 		catch(Exception e){
 			return "error"; 
+		}
+	}
+
+	public String updatePersonage(Personage p, int idPersonaje) {
+		try{
+			if(getJdbcTemplate().update(UPDATE_PERSONAGE, new Object[]{p.getOtros(),p.getAnacimiento(),p.getMnacimiento(),p.getDnacimiento(),p.getAfallecimiento(),p.getMfallecimiento(),p.getDfallecimiento(),idPersonaje})   	 == 1){
+				return "cambiado";
+			}
+			else{
+				return "error";
+			}
+		}
+		catch(Exception e){
+			return "error";
 		}
 	}
 

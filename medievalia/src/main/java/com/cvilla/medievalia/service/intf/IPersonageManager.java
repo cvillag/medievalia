@@ -21,4 +21,6 @@ public interface IPersonageManager extends Serializable{
 	public String renameCharacter(String nombre, int idPers, User user, Group groupA);
 	public String renameCharacterOwn(String nombre, int idPers, User user, Group groupA);
 	public Personage getPersonageByName(String name);
+	public String modifyCharacter(Personage p, int idPersonaje, User user, Group groupA);
+	public String modifyCharacterOwn(Personage p, int idPersonaje, User user, Group groupA);
 }

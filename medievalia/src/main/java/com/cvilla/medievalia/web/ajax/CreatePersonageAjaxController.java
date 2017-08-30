@@ -99,17 +99,17 @@ public class CreatePersonageAjaxController {
 	private boolean errorParam(HttpServletRequest request){
 		return request.getParameter("crearNombre") == null &&
 				request.getParameter("modalOtros2") == null &&
-//				request.getParameter("knowDN2") == null &&
+				request.getParameter("knowDN2") == null &&
 				request.getParameter("modalDiaNac2") == null &&
-//				request.getParameter("knowMN2") == null &&
+				request.getParameter("knowMN2") == null &&
 				request.getParameter("modalMesNac2") == null &&
-//				request.getParameter("knowAN2") == null &&
+				request.getParameter("knowAN2") == null &&
 				request.getParameter("modalAnioNac2") == null &&
-//				request.getParameter("knowDF2") == null &&
+				request.getParameter("knowDF2") == null &&
 				request.getParameter("modalDiaFal2") == null &&
-//				request.getParameter("knowMF2") == null &&
+				request.getParameter("knowMF2") == null &&
 				request.getParameter("modalMesFal2") == null &&
-//				request.getParameter("knowAF2") == null &&
+				request.getParameter("knowAF2") == null &&
 				request.getParameter("modalAnioFal2") == null;
 	}	
 }

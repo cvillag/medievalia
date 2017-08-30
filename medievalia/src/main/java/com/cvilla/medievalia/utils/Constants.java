@@ -106,6 +106,7 @@ public class Constants {
 	
 	public static final int P_DELETE_OWN_CHARACTER = 79;
 	public static final int P_RENAME_CHARACTER_OWN = 80;
+	public static final int P_MODIFY_DATA_CHARACTER_OWN = 82;
 	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;

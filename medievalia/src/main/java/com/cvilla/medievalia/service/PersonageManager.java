@@ -110,4 +110,34 @@ public class PersonageManager implements IPersonageManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public String modifyCharacter(Personage p, int idPersonaje, User user, Group groupA) {
+		Personage p2 = persdao.getPersonage(idPersonaje);
+		if(p2 == null){
+			return "noExist";
+		}
+		else{
+			if(p.getNombre().length() < Constants.MIN_PERSONAGE_NAME){
+				return "nombreCorto";
+			}
+			else{
+				if(!p.getNombre().equals(p2.getNombre()) && persdao.nameRepeat(p.getNombre())){
+					return "nombreRepetido";
+				}
+				else{
+					if(Fechas.fechaIncorrecta(p.getDnacimiento(), p.getMnacimiento(), p.getAnacimiento()) || Fechas.fechaIncorrecta(p.getDfallecimiento(), p.getMfallecimiento(), p.getAfallecimiento())){
+						return "fechaIncorrecta";
+					}
+					else{
+						return persdao.updatePersonage(p,idPersonaje);
+					}
+				}
+			}
+		}
+	}
+
+	public String modifyCharacterOwn(Personage p, int idPersonaje, User user, Group groupA) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
