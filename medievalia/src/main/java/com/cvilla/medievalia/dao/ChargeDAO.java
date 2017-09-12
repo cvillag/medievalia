@@ -27,6 +27,7 @@ public class ChargeDAO implements IChargeDAO {
 	private static final String GET_STUDENTS_TO_VALIDATE = "select user_id, user_long_name, user_name, user_pass, user_role from users where user_id in (SELECT  distinct(`creador`) FROM `cargo` WHERE idGroup = ? and validado = ?)";
 	private static final String GET_NUM_CHARGES_TO_VALIDATE = "SELECT  count(`creador`) FROM `cargo` WHERE idGroup = ? and validado = ?";
 	private static final String GET_NUM_CHARGES_TO_VALIDATE_BY_CREATOR = "SELECT  count(`creador`) FROM `cargo` WHERE idGroup = ? and validado = ? and `creador` = ?";
+	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	

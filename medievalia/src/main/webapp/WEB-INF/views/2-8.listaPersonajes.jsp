@@ -658,3 +658,45 @@ String validar = (String) request.getAttribute("validar");
 		</div>
 	</div>
 </div>
+
+<div id="modalCargos" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="modal-title">
+					<h4>
+						<fmt:message key="p.2-8.modal.cargo.tit"></fmt:message>
+					</h4>
+				</div>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-6">
+						<h6><fmt:message key="p.2-8.modal.cargo.00"></fmt:message></h6>
+					</div>
+					<div class="col-xs-6">
+						<h6><fmt:message key="p.2-8.modal.cargo.01"></fmt:message></h6>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<ul class="list-group" id="listaCargosActual">
+						</ul>
+					</div>
+					<div class="col-xs-6">
+						<ul class="list-group" id="listaCargosDisponibles">
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalConfirmarCargos" class="btn btn-sm btn-default">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+				<button type="button" id="modalCancelCargos" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.cancelar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

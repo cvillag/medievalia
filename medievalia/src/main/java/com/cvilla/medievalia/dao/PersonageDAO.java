@@ -7,7 +7,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.cvilla.medievalia.dao.intfc.IPersonageDAO;
 import com.cvilla.medievalia.dao.mappers.CharacterMapper;
+import com.cvilla.medievalia.dao.mappers.ChargeMapper;
+import com.cvilla.medievalia.domain.Charge;
 import com.cvilla.medievalia.domain.Personage;
+import com.cvilla.medievalia.utils.Constants;
 
 public class PersonageDAO implements IPersonageDAO {
 	
@@ -19,6 +22,9 @@ public class PersonageDAO implements IPersonageDAO {
 	private final String ADD_CHARACTER = "INSERT INTO `personaje`(`idGrupo`, `creador`, `nombre`, `otros`, `validado`, `lugarNacimiento`, `lugarFallecimiento`, `anacimiento`, `mnacimiento`, `dnacimiento`, `afallecimiento`, `mfallecimiento`, `dfallecimiento`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private final String NAME_REPEAT = "select count(*) from personaje where nombre = ?";
 	private final String RENAME_PERSONAGE = "UPDATE `personaje` SET `nombre`= ? WHERE idPersonaje = ?";
+	private static final String GET_CHARGES_NOT_IN_PERSONAGE = "SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado`, null as `nameCreator` FROM cargo where idCargo not in (select idCargo from rel_personaje_cargo where idPersonaje = ? and validado = ?) and validado = ?";
+	private static final String GET_CHARGES_IN_PERSONAGE = "SELECT `idCargo`, `idGroup`, `nombre`, `creador`, `validado`, null as `nameCreator` FROM cargo where idCargo in (select idCargo from rel_personaje_cargo where idPersonaje = ? and validado = ?) and validado = ?";
+	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -123,6 +129,24 @@ public class PersonageDAO implements IPersonageDAO {
 		}
 		catch(Exception e){
 			return "error";
+		}
+	}
+	
+	public List<Charge> getChargeListNotInPersonage(int idPersonaje) {
+		try{
+			return getJdbcTemplate().query(GET_CHARGES_NOT_IN_PERSONAGE, new Object[]{idPersonaje,Constants.OBJETO_VALIDADO,Constants.OBJETO_VALIDADO},new ChargeMapper());
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
+
+	public List<Charge> getChargeListInPersonage(int idPersonaje) {
+		try{
+			return getJdbcTemplate().query(GET_CHARGES_IN_PERSONAGE, new Object[]{idPersonaje,Constants.OBJETO_VALIDADO,Constants.OBJETO_VALIDADO},new ChargeMapper());
+		}
+		catch(Exception e){
+			return null;
 		}
 	}
 

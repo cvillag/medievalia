@@ -1,6 +1,6 @@
 <%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
-<%@page import="com.cvilla.medievalia.domain.Charge"%>
+<%@page import="com.cvilla.medievalia.domain.ObjetoDOM"%>
 <%@page import="java.util.List"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt"%>
 <%
@@ -9,24 +9,24 @@ User user = (User) session.getAttribute("user");
 @SuppressWarnings("unchecked")
 String type= (String) request.getAttribute("type");
 @SuppressWarnings("unchecked")
-List<Charge> cargos = (List<Charge>) request.getAttribute("listaCargos");
+List<ObjetoDOM> objetos = (List<ObjetoDOM>) request.getAttribute("listaObjetos");
 @SuppressWarnings("unchecked")
 String delete = (String) request.getAttribute("permisoborrado");
-if (cargos != null && cargos.size() > 0){
-	for(Charge c : cargos){
+if (objetos != null && objetos.size() > 0){
+	for(ObjetoDOM c : objetos){
 		if(type.equals("table")){%>
-			<tr class="trcargoU" id="cargoStudent<%=c.getIdCharge()%>" data-nom="<%=c.getNombre()%>">
+			<tr class="trobjetoU" id="objetoStudent<%=c.getIdObjetoDOM()%>" data-nom="<%=c.getNombre()%>">
 				<td>
-					<input type="text" id="cargoStudentName<%=c.getIdCharge()%>" value="<%=c.getNombre() %>" disabled class="nombreAl">
-					<button type="button" id="saveStudentCargo<%=c.getIdCharge()%>" class="btn btn-sm btn-default saveStudentNewName" data-val="<%=c.getIdCharge()%>">
+					<input type="text" id="objetoStudentName<%=c.getIdObjetoDOM()%>" value="<%=c.getNombre() %>" disabled class="nombreAl">
+					<button type="button" id="saveStudentObjeto<%=c.getIdObjetoDOM()%>" class="btn btn-sm btn-default saveStudentNewName" data-val="<%=c.getIdObjetoDOM()%>">
 						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 					</button>
-					<button type="button" id="cancelStudentCargo<%=c.getIdCharge()%>" class="btn btn-sm btn-default cancelStudentNewName" data-val="<%=c.getIdCharge()%>">
+					<button type="button" id="cancelStudentObjeto<%=c.getIdObjetoDOM()%>" class="btn btn-sm btn-default cancelStudentNewName" data-val="<%=c.getIdObjetoDOM()%>">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 					</button>
 				</td>
 				<td>
-					<%if(c.getValidado() == Constants.OBJETO_VALIDADO){ %>
+					<%if(c.isValidado()){ %>
 					<span class="label label-success"><fmt:message key="general.validado"></fmt:message></span>
 					<%}
 					else{
@@ -39,11 +39,11 @@ if (cargos != null && cargos.size() > 0){
 					}%>
 				</td>
 				<td>
-					<button type="button" class="btn btn-sm btn-default activarStudentSNombre" data-val="<%=c.getIdCharge()%>">
+					<button type="button" class="btn btn-sm btn-default activarStudentSNombre" data-val="<%=c.getIdObjetoDOM()%>">
 						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 					</button>
 					<%if(delete != null){ %>
-					<button type="button" class="btn btn-sm btn-default deleteStudentSCargo" data-val="<%=c.getIdCharge()%>">
+					<button type="button" class="btn btn-sm btn-default deleteStudentSObjeto" data-val="<%=c.getIdObjetoDOM()%>">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>
 					<%} %>
@@ -53,7 +53,7 @@ if (cargos != null && cargos.size() > 0){
 		}
 		else if(type.equals("select")){
 			%>
-			<option value="<%=c.getIdCharge()%>"><%=c.getNombre() %></option>
+			<option value="<%=c.getIdObjetoDOM()%>"><%=c.getNombre() %></option>
 			<%
 		}
 	}

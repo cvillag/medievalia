@@ -25,4 +25,5 @@ public interface IChargeManager extends Serializable{
 	public List<User> getUsersToValidateChargeByGroup(User teacher, Group group);
 	public int getNumUsersToValidateByGroup(User teacher, Group group);
 	public int getNumChargesToValidateByUser(Group g, User u);
+	
 }

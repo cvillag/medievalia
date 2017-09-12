@@ -20,4 +20,5 @@ public interface IChargeDAO {
 	public List<User> getUsersToValidateByGroup(int idGroup);
 	public int getChargesToValidateByGroup(int idGroup);
 	public int getChargesToValidateByGroupAndCreator(User user, int idGroup);
+
 }

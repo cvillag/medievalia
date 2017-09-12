@@ -13,73 +13,73 @@ function postCarga(){
 	
 	$(".activarSNombre").click(function(){
 		if(activadoCom != 0){
-			$("#cargoName" + activadoCom).val(oldnameCom);
-			$("#cargoName" + activadoCom).attr("disabled","true");
-			$("#saveCargo" + activadoCom).hide();
-			$("#cancelCargo" + activadoCom).hide();
+			$("#objetoName" + activadoCom).val(oldnameCom);
+			$("#objetoName" + activadoCom).attr("disabled","true");
+			$("#saveObjeto" + activadoCom).hide();
+			$("#cancelObjeto" + activadoCom).hide();
 			activadoCom = 0;
 		}
-		oldnameCom = $("#cargoName" + $(this).data('val')).val();
+		oldnameCom = $("#objetoName" + $(this).data('val')).val();
 		activadoCom = $(this).data('val');
-		$("#cargoName" + $(this).data('val')).removeAttr("disabled");
-		$("#saveCargo" + $(this).data('val')).show();
-		$("#cancelCargo" + $(this).data('val')).show();
+		$("#objetoName" + $(this).data('val')).removeAttr("disabled");
+		$("#saveObjeto" + $(this).data('val')).show();
+		$("#cancelObjeto" + $(this).data('val')).show();
 	});
 	
 	$(".cancelNewName").click(function(){
-		$("#cargoName" + $(this).data('val')).val(oldnameCom);
+		$("#objetoName" + $(this).data('val')).val(oldnameCom);
 		activadoCom = 0;
-		$("#cancelCargo" + $(this).data('val')).hide();
-		$("#saveCargo" + $(this).data('val')).hide();
-		$("#cargoName" + $(this).data('val')).attr("disabled","true");
+		$("#cancelObjeto" + $(this).data('val')).hide();
+		$("#saveObjeto" + $(this).data('val')).hide();
+		$("#objetoName" + $(this).data('val')).attr("disabled","true");
 	});
 	
 	$(".saveNewName").click(function(){
-		if($("#cargoName" + $(this).data('val')).val().length < 1 ){
-			$("#modalModificaCargo1").modal();
+		if($("#objetoName" + $(this).data('val')).val().length < 1 ){
+			$("#modalModificaObjeto1").modal();
 		}
 		else{
-			$.post("renameChargeA.do",{
-				idCargo : $(this).data('val'),
-				newNombre : $("#cargoName" + $(this).data('val')).val()
+			$.post("renameObjectA.do",{
+				idObjeto : $(this).data('val'),
+				newNombre : $("#objetoName" + $(this).data('val')).val()
 			},
 			function(data){
 				var json = JSON.parse(data);
 				if(json.message == "cambiado"){
-					$("#modalModificaCargo2").modal();
-					$("#cargoName" + activadoCom).attr("disabled","true");
-					$("#saveCargo" + activadoCom).hide();
-					$("#cancelCargo" + activadoCom).hide();
+					$("#modalModificaObjeto2").modal();
+					$("#objetoName" + activadoCom).attr("disabled","true");
+					$("#saveObjeto" + activadoCom).hide();
+					$("#cancelObjeto" + activadoCom).hide();
 					activadoCom = 0;
 				}
 				else{
-					$("#cargoName" + json.id).val(json.oldname);
+					$("#objetoName" + json.id).val(json.oldname);
 					if(json.message == "noExist"){
-						$("#modalModificaCargo3").modal();
+						$("#modalModificaObjeto3").modal();
 					}
 					else if(json.message == "repeated"){
-						$("#modalModificaCargo5").modal();
+						$("#modalModificaObjeto5").modal();
 					}
 					else{
-						$("#modalModificaCargo4").modal();
+						$("#modalModificaObjeto4").modal();
 					}
 				}
 			});
 		}
 	});
 	
-	$(".deleteSCargo").click(function(){
-		$.post("removeChargeA.do",{
-			idCargo : $(this).data('val')
+	$(".deleteSObjeto").click(function(){
+		$.post("removeObjectA.do",{
+			idObjeto : $(this).data('val')
 		},
 		function(data){
 			var json = JSON.parse(data);
 			if(json.message == "borrado"){
-				$("#modalBorraCargo1").modal();
-				$("#cargo" + json.id).remove();
+				$("#modalBorraObjeto1").modal();
+				$("#objeto" + json.id).remove();
 			}
 			else{
-				$("#modalBorraCargo2").modal();
+				$("#modalBorraObjeto2").modal();
 			}
 		})
 	});
@@ -91,73 +91,73 @@ function postCarga2(){
 	
 	$(".activarStudentSNombre").click(function(){
 		if(activadoAl != 0){
-			$("#cargoStudentName" + activadoAl).val(oldnameAl);
-			$("#cargoStudentName" + activadoAl).attr("disabled","true");
-			$("#saveStudentCargo" + activadoAl).hide();
-			$("#cancelStudentCargo" + activadoAl).hide();
+			$("#objetoStudentName" + activadoAl).val(oldnameAl);
+			$("#objetoStudentName" + activadoAl).attr("disabled","true");
+			$("#saveStudentObjeto" + activadoAl).hide();
+			$("#cancelStudentObjeto" + activadoAl).hide();
 			activadoAl = 0;
 		}
-		oldnameAl = $("#cargoStudentName" + $(this).data('val')).val();
+		oldnameAl = $("#objetoStudentName" + $(this).data('val')).val();
 		activadoAl = $(this).data('val');
-		$("#cargoStudentName" + $(this).data('val')).removeAttr("disabled");
-		$("#saveStudentCargo" + $(this).data('val')).show();
-		$("#cancelStudentCargo" + $(this).data('val')).show();
+		$("#objetoStudentName" + $(this).data('val')).removeAttr("disabled");
+		$("#saveStudentObjeto" + $(this).data('val')).show();
+		$("#cancelStudentObjeto" + $(this).data('val')).show();
 	});
 	
 	$(".cancelStudentNewName").click(function(){
-		$("#cargoStudentName" + $(this).data('val')).val(oldnameAl);
+		$("#objetoStudentName" + $(this).data('val')).val(oldnameAl);
 		activadoAl = 0;
-		$("#cancelStudentCargo" + $(this).data('val')).hide();
-		$("#saveStudentCargo" + $(this).data('val')).hide();
-		$("#cargoStudentName" + $(this).data('val')).attr("disabled","true");
+		$("#cancelStudentObjeto" + $(this).data('val')).hide();
+		$("#saveStudentObjeto" + $(this).data('val')).hide();
+		$("#objetoStudentName" + $(this).data('val')).attr("disabled","true");
 	});
 	
 	$(".saveStudentNewName").click(function(){
-		if($("#cargoStudentName" + $(this).data('val')).val().length < 1 ){
-			$("#modalModificaCargo1").modal();
+		if($("#objetoStudentName" + $(this).data('val')).val().length < 1 ){
+			$("#modalModificaObjeto1").modal();
 		}
 		else{
-			$.post("renameChargeA.do",{
-				idCargo : $(this).data('val'),
-				newNombre : $("#cargoStudentName" + $(this).data('val')).val()
+			$.post("renameObjectA.do",{
+				idObjeto : $(this).data('val'),
+				newNombre : $("#objetoStudentName" + $(this).data('val')).val()
 			},
 			function(data){
 				var json = JSON.parse(data);
 				if(json.message == "cambiado"){
-					$("#modalModificaCargo2").modal();
-					$("#cargoStudentName" + activadoAl).attr("disabled","true");
-					$("#saveStudentCargo" + activadoAl).hide();
-					$("#cancelStudentCargo" + activadoAl).hide();
+					$("#modalModificaObjeto2").modal();
+					$("#objetoStudentName" + activadoAl).attr("disabled","true");
+					$("#saveStudentObjeto" + activadoAl).hide();
+					$("#cancelStudentObjeto" + activadoAl).hide();
 					activadoAl = 0;
 				}
 				else{
-					$("#cargoStudentName" + json.id).val(json.oldname);
+					$("#objetoStudentName" + json.id).val(json.oldname);
 					if(json.message == "noExist"){
-						$("#modalModificaCargo3").modal();
+						$("#modalModificaObjeto3").modal();
 					}
 					else if(json.message == "repeated"){
-						$("#modalModificaCargo5").modal();
+						$("#modalModificaObjeto5").modal();
 					}
 					else{
-						$("#modalModificaCargo4").modal();
+						$("#modalModificaObjeto4").modal();
 					}
 				}
 			});
 		}
 	});
 	
-	$(".deleteStudentSCargo").click(function(){
-		$.post("removeChargeA.do",{
-			idCargo : $(this).data('val')
+	$(".deleteStudentSObjeto").click(function(){
+		$.post("removeObjectA.do",{
+			idObjeto : $(this).data('val')
 		},
 		function(data){
 			var json = JSON.parse(data);
 			if(json.message == "borrado"){
-				$("#modalBorraCargo1").modal();
-				$("#cargoStudent" + json.id).remove();
+				$("#modalBorraObjeto1").modal();
+				$("#objetoStudent" + json.id).remove();
 			}
 			else{
-				$("#modalBorraCargo2").modal();
+				$("#modalBorraObjeto2").modal();
 			}
 		});
 	});
@@ -169,98 +169,98 @@ function postCarga3(){
 	
 	$(".activarProfeSNombre").click(function(){
 		if(activadoPr != 0){
-			$("#cargoProfeName" + activadoPr).val(oldnamePr);
-			$("#cargoProfeName" + activadoPr).attr("disabled","true");
-			$("#saveProfeCargo" + activadoPr).hide();
-			$("#cancelProfeCargo" + activadoPr).hide();
+			$("#objetoProfeName" + activadoPr).val(oldnamePr);
+			$("#objetoProfeName" + activadoPr).attr("disabled","true");
+			$("#saveProfeObjeto" + activadoPr).hide();
+			$("#cancelProfeObjeto" + activadoPr).hide();
 			activadoPr = 0;
 		}
-		oldnamePr = $("#cargoProfeName" + $(this).data('val')).val();
+		oldnamePr = $("#objetoProfeName" + $(this).data('val')).val();
 		activadoPr = $(this).data('val');
-		$("#cargoProfeName" + $(this).data('val')).removeAttr("disabled");
-		$("#saveProfeCargo" + $(this).data('val')).show();
-		$("#cancelProfeCargo" + $(this).data('val')).show();
+		$("#objetoProfeName" + $(this).data('val')).removeAttr("disabled");
+		$("#saveProfeObjeto" + $(this).data('val')).show();
+		$("#cancelProfeObjeto" + $(this).data('val')).show();
 	});
 	
 	$(".cancelProfeNewName").click(function(){
-		$("#cargoProfeName" + $(this).data('val')).val(oldnamePr);
+		$("#objetoProfeName" + $(this).data('val')).val(oldnamePr);
 		activadoPr = 0;
-		$("#cancelProfeCargo" + $(this).data('val')).hide();
-		$("#saveProfeCargo" + $(this).data('val')).hide();
-		$("#cargoProfeName" + $(this).data('val')).attr("disabled","true");
+		$("#cancelProfeObjeto" + $(this).data('val')).hide();
+		$("#saveProfeObjeto" + $(this).data('val')).hide();
+		$("#objetoProfeName" + $(this).data('val')).attr("disabled","true");
 	});
 	
 	$(".saveProfeNewName").click(function(){
-		if($("#cargoProfeName" + $(this).data('val')).val().length < 1 ){
-			$("#modalModificaCargo1").modal();
+		if($("#objetoProfeName" + $(this).data('val')).val().length < 1 ){
+			$("#modalModificaObjeto1").modal();
 		}
 		else{
-			$.post("renameChargeA.do",{
-				idCargo : $(this).data('val'),
-				newNombre : $("#cargoProfeName" + $(this).data('val')).val()
+			$.post("renameObjectA.do",{
+				idObjeto : $(this).data('val'),
+				newNombre : $("#objetoProfeName" + $(this).data('val')).val()
 			},
 			function(data){
 				var json = JSON.parse(data);
 				if(json.message == "cambiado"){
-					$("#modalModificaCargo2").modal();
-					$("#cargoProfeName" + activadoPr).attr("disabled","true");
-					$("#saveProfeCargo" + activadoPr).hide();
-					$("#cancelProfeCargo" + activadoPr).hide();
+					$("#modalModificaObjeto2").modal();
+					$("#objetoProfeName" + activadoPr).attr("disabled","true");
+					$("#saveProfeObjeto" + activadoPr).hide();
+					$("#cancelProfeObjeto" + activadoPr).hide();
 					activadoPr = 0;
 				}
 				else{
-					$("#cargoProfeName" + json.id).val(json.oldname);
+					$("#objetoProfeName" + json.id).val(json.oldname);
 					if(json.message == "noExist"){
-						$("#modalModificaCargo3").modal();
+						$("#modalModificaObjeto3").modal();
 					}
 					else if(json.message == "repeated"){
-						$("#modalModificaCargo5").modal();
+						$("#modalModificaObjeto5").modal();
 					}
 					else{
-						$("#modalModificaCargo4").modal();
+						$("#modalModificaObjeto4").modal();
 					}
 				}
 			});
 		}
 	});
 	
-	$(".deleteProfeSCargo").click(function(){
-		$.post("removeChargeA.do",{
-			idCargo : $(this).data('val')
+	$(".deleteProfeSObjeto").click(function(){
+		$.post("removeObjectA.do",{
+			idObjeto : $(this).data('val')
 		},
 		function(data){
 			var json = JSON.parse(data);
 			if(json.message == "borrado"){
-				$("#modalBorraCargo1").modal();
-				$("#cargoProfe" + json.id).remove();
+				$("#modalBorraObjeto1").modal();
+				$("#objetoProfe" + json.id).remove();
 			}
 			else{
-				$("#modalBorraCargo2").modal();
+				$("#modalBorraObjeto2").modal();
 			}
 		});
 	});
 	
-	$(".validarCargo").click(function(){
-		$.post("validateCharge.do",{
-			idCargo : $(this).data('val')
+	$(".validarObjeto").click(function(){
+		$.post("validateObject.do",{
+			idObjeto : $(this).data('val')
 		},
 		function(data){
 			var json = JSON.parse(data);
 			if(json.message == "validado"){
-				$("#modalValidaCargo1").modal();
+				$("#modalValidaObjeto1").modal();
 				$("#validado" + json.id).removeClass();
 				$("#validado" + json.id).addClass("label label-success");
 				$("#validado" + json.id).text($("#textVal").val())
 			}
 			else{
-				$("#modalValidaCargo2").modal();
+				$("#modalValidaObjeto2").modal();
 			}
 		});
 	});
 }
 
 function cargaListaCompleta(){
-	$.post("completeChargeList.do",{
+	$.post("completeObjectList.do",{
 		type : "table"},
 		function(data){
 			$("#listaCompleta").html(data);
@@ -269,7 +269,7 @@ function cargaListaCompleta(){
 }
 
 function cargaListaAlumno(){
-	$.post("studentChargeListA.do",{
+	$.post("studentObjectListA.do",{
 		type : "table"},
 			function(data){
 				$("#listaalumno").html(data);
@@ -278,7 +278,7 @@ function cargaListaAlumno(){
 }
 
 function cargaListaProfe(){
-	$.post("teacherChargeListA.do",{
+	$.post("teacherObjectListA.do",{
 		type : "table"},
 			function(data){
 				$("#listaProfe").html(data);
@@ -294,17 +294,17 @@ $(document).ready(function(){
 	
 	cargaListaCompleta();
 	
-	if($("#listaalumno").length > 0){
-		cargaListaAlumno();
-	}
-	else if($("#listaProfe").length > 0){
-		cargaListaProfe();
-	}
+//	if($("#listaalumno").length > 0){
+//		cargaListaAlumno();
+//	}
+//	else if($("#listaProfe").length > 0){
+//		cargaListaProfe();
+//	}
 	
 	$("#displayCreate").click(function(){
 		if(btncreate == 0){
 			$("#group-block1").slideUp(500);
-			$("#newChargeName").val("");
+			$("#newObjectName").val("");
 			$("#displayCreatei").removeClass();
 			$("#displayCreatei").addClass("glyphicon glyphicon-chevron-down");
 			btncreate = 1;
@@ -320,7 +320,7 @@ $(document).ready(function(){
 	$("#cancelButton").click(function(){
 		if(btncreate == 0){
 			$("#group-block1").slideUp(500);
-			$("#newChargeName").val("");
+			$("#newObjectName").val("");
 			$("#displayCreatei").removeClass();
 			$("#displayCreatei").addClass("glyphicon glyphicon-chevron-down");
 			btncreate = 1;
@@ -333,10 +333,10 @@ $(document).ready(function(){
 		}
 	});
 	
-	//Filtro de cargos por fila según se rellena el campo imput
+	//Filtro de objetos por fila según se rellena el campo imput
 	$("#filtroBusquedaCompleta").keyup(function(){
 		if($("#filtroBusquedaCompleta").val().length > 0){
-			$(".trcargo").each(function(){
+			$(".trobjeto").each(function(){
 				if($(this).data("nom").indexOf($("#filtroBusquedaCompleta").val()) == -1){
 					$(this).hide();
 				}
@@ -346,13 +346,13 @@ $(document).ready(function(){
 			});
 		}
 		else{
-			$(".trcargo").show();
+			$(".trobjeto").show();
 		}
 	});
 	
 	$("#busquedaProfe").keyup(function(){
 		if($("#busquedaProfe").val().length > 0){
-			$(".trcargoP").each(function(){
+			$(".trobjetoP").each(function(){
 				if($(this).data("nom").indexOf($("#busquedaProfe").val()) == -1){
 					$(this).hide();
 				}
@@ -362,13 +362,13 @@ $(document).ready(function(){
 			});
 		}
 		else{
-			$(".trcargoP").show();
+			$(".trobjetoP").show();
 		}
 	});
 	
 	$("#busquedaUsuario").keyup(function(){
 		if($("#busquedaUsuario").val().length > 0){
-			$(".trcargoU").each(function(){
+			$(".trobjetoU").each(function(){
 				if($(this).data("nom").indexOf($("#busquedaUsuario").val()) == -1){
 					$(this).hide();
 				}
@@ -378,28 +378,28 @@ $(document).ready(function(){
 			});
 		}
 		else{
-			$(".trcargoU").show();
+			$(".trobjetoU").show();
 		}
 	});
 	
 	$("#createButton").click(function(){
-		if($("#newChargeName").val().length < 1){
-			$("#modalCreaCargo1").modal();
+		if($("#newObjectName").val().length < 1){
+			$("#modalCreaObjeto1").modal();
 		}
 		else{
-			$.post("createChargeA.do",{
-				nombre : $("#newChargeName").val()
+			$.post("createObjectA.do",{
+				nombre : $("#newObjectName").val()
 			},function(data){
 				var json = JSON.parse(data);
 				if(json.message == "nameRepeated"){
-					$("#modalCreaCargo3").modal();
+					$("#modalCreaObjeto3").modal();
 				}
 				else if(json.message == "creado"){
 					cargaListaCompleta();
 					if($("#listaalumno").length > 0){
 						if(btncreate == 0){
 							$("#group-block1").slideUp(500);
-							$("#newChargeName").val("");
+							$("#newObjectName").val("");
 							$("#displayCreatei").removeClass();
 							$("#displayCreatei").addClass("glyphicon glyphicon-chevron-down");
 							btncreate = 1;
@@ -415,10 +415,10 @@ $(document).ready(function(){
 					else if($("#listaProfe").length > 0){
 						cargaListaProfe();
 					}
-					$("#modalCreaCargo2").modal();
+					$("#modalCreaObjeto2").modal();
 				}
 				else if(json.message == "noCreado"){
-					$("#modalCreaCargo4").modal();
+					$("#modalCreaObjeto4").modal();
 				}
 			});
 		}

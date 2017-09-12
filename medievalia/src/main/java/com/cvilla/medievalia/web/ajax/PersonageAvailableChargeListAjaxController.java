@@ -21,11 +21,14 @@ import com.cvilla.medievalia.service.intf.IChargeManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
+import com.cvilla.medievalia.service.intf.IPersonageManager;
 import com.cvilla.medievalia.service.intf.ITemaManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller
-public class CompleteChargeListAjaxController {
+public class PersonageAvailableChargeListAjaxController {
+	
+	private int actionId = Constants.P_VIEW_CHARGES_BY_CHARACTER; 
 	
 	@Autowired
 	private IAutorizationManager authManager;
@@ -40,44 +43,45 @@ public class CompleteChargeListAjaxController {
 	private ILoginManager loginManager;
 	
 	@Autowired
-	private IChargeManager chargeManager;
+	private IPersonageManager personageManager;
 	
-	@RequestMapping(value = "completeChargeListAjaxController.do")
+	@RequestMapping(value = "availableChargeList.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		ModelAndView model = new ModelAndView("ajax/2-8-listaCargosAsignar");
+		ModelAndView model = new ModelAndView("ajax/empty");
+		//FIXME: jsp vacío
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
 		JSONObject j = new JSONObject();
 		
-		if(authManager.isAutorized(Constants.P_VIEW_CHARGES, user)){
+		if(authManager.isAutorized(actionId, user)){
 			if(errorParam(request)){
 				j.put("message","noType");
-				logManager.log(user.getId(), Constants.P_VIEW_CHARGES, "Fallo en listado de cargos disponibles para asignar. Parámetros incorrectos. Esquivada seguridad javascript", Constants.P_NOK);
+				logManager.log(user.getId(), actionId, "Fallo en listado de cargos de personaje. Parámetros incorrectos. Esquivada seguridad javascript", Constants.P_NOK);
 			}
 			else{
 				int idPersonaje = (new Integer(request.getParameter("idPersonaje"))).intValue();
-				List<Charge> listag = chargeManager.getChargeList();
-				model.addObject("listaCargos", listag);
-				model.addObject("type",request.getParameter("type"));
-				logManager.log(user.getId(), Constants.P_VIEW_CHARGES, "Visualización lista de cargos", Constants.P_OK);
-				if(authManager.isAutorized(Constants.P_DELETE_CHARGE, user)){
-					model.addObject("permisoborrado","ok");
+				List<Charge> listaDisponible = personageManager.getChargeListAvailable(idPersonaje);
+				model.addObject("listaDisponible", listaDisponible);
+				List<Charge> listaActual= personageManager.getChargeListOfPersonage(idPersonaje);
+				model.addObject("listaActual", listaActual);
+				model.addObject("message","ok");
+				//FIXME: Meter las listas por json y con javascript crear los elementos. En caso contrario dividir en dos esta petición una para lista disponible y otra la actual
+				if(authManager.isAutorized(Constants.P_VALIDATE_CHARGE_CHARACTER,user)){
+					model.addObject("permisoAsignar","ok");
 				}
-				if(authManager.isAutorized(Constants.P_RENAME_CHARGE, user)){
-					model.addObject("permisoRenombrado", "ok");
-				}
+				logManager.log(user.getId(), actionId, "Visualización lista de cargos de personaje y disponibles", Constants.P_OK);
 			}
 		}
 		else{
-			model = Constants.noPrivilegesA(user,logManager,Constants.P_VIEW_CHARGES,"Visualización de cargos disponibles para asignar no permitida (grupo: " + groupA.getName() + ")");
+			model = Constants.noPrivilegesA(user,logManager,actionId,"Visualización de cargos de personaje no permitida (grupo: " + groupA.getName() + ")");
 		}
 		
 		return model;
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idPersonage") == null;
+		return request.getParameter("idPersonaje") == null;
 	}
 }

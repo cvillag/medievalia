@@ -54,6 +54,9 @@
 	
 	<bean id="personageManager" class="com.cvilla.medievalia.service.PersonageManager">
 	</bean>
+	
+	<bean id="objectManager" class="com.cvilla.medievalia.service.ObjectManager">
+	</bean>
 
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -104,6 +107,10 @@
 	</bean>
 	
 	<bean id="personageDAO" class="com.cvilla.medievalia.dao.PersonageDAO">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean id="objetoDAO" class="com.cvilla.medievalia.dao.ObjetoDAO">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 

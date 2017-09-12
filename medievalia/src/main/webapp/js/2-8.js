@@ -152,7 +152,22 @@ function postPersonaje(){
 	});
 	$(".oaccarg").click(function(){
 		id=$(this).data('val');
-		alert("Cambiar cargos de " + id);
+		$("#modalCargos").modal();
+		$.post("availableChargeList.do",{
+			idPersonaje : id
+		},
+		function(data){
+			var json = JSON.parse(data);
+			if(json.message == "ok"){
+				$("#listaCargosActual").html(json.listaActual);
+				$("#listaCargosDisponibles").html(json.listaDisponible);
+			}
+			else if(json.message == "error"){
+				$("#modalCargos").modal("hide");
+				$("#modalAsignaCargo1").modal();
+				
+			}
+		})
 	});
 	
 }

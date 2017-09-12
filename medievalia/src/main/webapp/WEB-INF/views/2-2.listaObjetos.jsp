@@ -1,15 +1,12 @@
 <%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
-<%@page import="com.cvilla.medievalia.domain.Charge"%>
+<%@page import="com.cvilla.medievalia.domain.ObjetoDOM"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/header.jsp"%>
 
 <%	
 User usr = (User)ses.getAttribute("user");
-@SuppressWarnings(value="unchecked")
-List<Charge> cargos =  (List<Charge>) request.getAttribute("listaCargos"); 
-@SuppressWarnings(value="unchecked")
 String validar = (String) request.getAttribute("validar");
 %>
 <form id=formUser">
@@ -18,7 +15,7 @@ String validar = (String) request.getAttribute("validar");
 <div class="container">
 	<div class="row">
 		<h1>
-			<fmt:message key="p2.2.cargos.titulo"></fmt:message>
+			<fmt:message key="p2.2.objetos.titulo"></fmt:message>
 		</h1>
 	</div>
 	<div class="row">
@@ -31,7 +28,7 @@ String validar = (String) request.getAttribute("validar");
 				<fmt:message key="p2-2.crear" />
 			</div>	
 			<div id="group-block1" class="panel-body">
-				<p><fmt:message key="p2.2.cargos.nombre"></fmt:message><input type="text" id="newChargeName">
+				<p><fmt:message key="p2.2.objetos.nombre"></fmt:message><input type="text" id="newObjectName">
 				<button type="button" class="btn btn-sm btn-default" id="createButton">
 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 				</button>
@@ -45,7 +42,7 @@ String validar = (String) request.getAttribute("validar");
 <%if (validar == null){ %>		
 		<div class="panel panel-default col-sm-6">
 			<div class="panel-heading">
-				<p><fmt:message key="p2.2.cargos.usuario"></fmt:message></p>
+				<p><fmt:message key="p2.2.objetos.usuario"></fmt:message></p>
 			</div>
 			<div class="panel-body">
 				<p><form><input id="busquedaUsuario" type="text"></form></p>
@@ -53,10 +50,10 @@ String validar = (String) request.getAttribute("validar");
 					<thead>
 						<tr>
 							<th>
-								<fmt:message key="p2.2.cargos.tabla01"></fmt:message>
+								<fmt:message key="p2.2.objetos.tabla01"></fmt:message>
 							</th>
 							<th>
-								<fmt:message key="p2.2.cargos.tabla02"></fmt:message>
+								<fmt:message key="p2.2.objetos.tabla02"></fmt:message>
 							</th>
 						</tr>
 					</thead>
@@ -70,7 +67,7 @@ String validar = (String) request.getAttribute("validar");
 else{ %>
 		<div class="panel panel-default col-sm-6">
 			<div class="panel-heading">
-				<p><fmt:message key="p2.2.cargos.profe"></fmt:message></p>
+				<p><fmt:message key="p2.2.objetos.profe"></fmt:message></p>
 			</div>
 			<div class="panel-body">
 				<p><form><input id="busquedaProfe" type="text"></form></p>
@@ -78,13 +75,13 @@ else{ %>
 					<thead>
 						<tr>
 							<th>
-								<fmt:message key="p2.2.cargos.tabla01"></fmt:message>
+								<fmt:message key="p2.2.objetos.tabla01"></fmt:message>
 							</th>
 							<th>
-								<fmt:message key="p2.2.cargos.tabla02"></fmt:message>
+								<fmt:message key="p2.2.objetos.tabla02"></fmt:message>
 							</th>
 							<th>
-								<fmt:message key="p2.2.cargos.tabla03"></fmt:message>
+								<fmt:message key="p2.2.objetos.tabla03"></fmt:message>
 							</th>
 						</tr>
 					</thead>
@@ -96,18 +93,18 @@ else{ %>
 <%} %>
 		<div class="panel panel-default col-sm-6">
 			<div class="panel-heading">
-				<p><fmt:message key="p2.2.cargos.todos"></fmt:message></p>
+				<p><fmt:message key="p2.2.objetos.todos"></fmt:message></p>
 			</div>
 			<div class="panel-body">
-				<p><form><fmt:message key="p2.2.cargos.filtro"></fmt:message><input id="filtroBusquedaCompleta" type="text"></form></p>
+				<p><form><fmt:message key="p2.2.objetos.filtro"></fmt:message><input id="filtroBusquedaCompleta" type="text"></form></p>
 				<table class="table table-hover table-striped table-condensed table-scrollable">
 					<thead>
 						<tr>
 							<th>
-								<fmt:message key="p2.2.cargos.tabla01"></fmt:message>
+								<fmt:message key="p2.2.objetos.tabla01"></fmt:message>
 							</th>
 							<th>
-								<fmt:message key="p2.2.cargos.tabla02"></fmt:message>
+								<fmt:message key="p2.2.objetos.tabla02"></fmt:message>
 							</th>
 						</tr>
 					</thead>
@@ -119,8 +116,8 @@ else{ %>
 	</div>
 </div>
 
-<!-- Diálogos modales de creación de cargos -->
-<div id="modalCreaCargo1" class="modal fade" role="dialog">
+<!-- Diálogos modales de creación de objetos -->
+<div id="modalCreaObjeto1" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -141,7 +138,7 @@ else{ %>
 		</div>
 	</div>
 </div>
-<div id="modalCreaCargo2" class="modal fade" role="dialog">
+<div id="modalCreaObjeto2" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -162,7 +159,7 @@ else{ %>
 		</div>
 	</div>
 </div>
-<div id="modalCreaCargo3" class="modal fade" role="dialog">
+<div id="modalCreaObjeto3" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -183,7 +180,7 @@ else{ %>
 		</div>
 	</div>
 </div>
-<div id="modalCreaCargo4" class="modal fade" role="dialog">
+<div id="modalCreaObjeto4" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -205,8 +202,8 @@ else{ %>
 	</div>
 </div>
 
-<!-- Diálogos modales de modificación de cargos -->
-<div id="modalModificaCargo1" class="modal fade" role="dialog">
+<!-- Diálogos modales de modificación de objetos -->
+<div id="modalModificaObjeto1" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -227,7 +224,7 @@ else{ %>
 		</div>
 	</div>
 </div>
-<div id="modalModificaCargo2" class="modal fade" role="dialog">
+<div id="modalModificaObjeto2" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -248,7 +245,7 @@ else{ %>
 		</div>
 	</div>
 </div>
-<div id="modalModificaCargo3" class="modal fade" role="dialog">
+<div id="modalModificaObjeto3" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -269,7 +266,7 @@ else{ %>
 		</div>
 	</div>
 </div>
-<div id="modalModificaCargo4" class="modal fade" role="dialog">
+<div id="modalModificaObjeto4" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -290,7 +287,7 @@ else{ %>
 		</div>
 	</div>
 </div>
-<div id="modalModificaCargo5" class="modal fade" role="dialog">
+<div id="modalModificaObjeto5" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -312,8 +309,8 @@ else{ %>
 	</div>
 </div>
 
-<!-- Diálogos modales de borrado de cargos -->
-<div id="modalBorraCargo1" class="modal fade" role="dialog">
+<!-- Diálogos modales de borrado de objetos -->
+<div id="modalBorraObjeto1" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -334,7 +331,7 @@ else{ %>
 		</div>
 	</div>
 </div>
-<div id="modalBorraCargo2" class="modal fade" role="dialog">
+<div id="modalBorraObjeto2" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -355,8 +352,8 @@ else{ %>
 		</div>
 	</div>
 </div>
-<!-- Diálogos modales de validación de cargos -->
-<div id="modalValidaCargo1" class="modal fade" role="dialog">
+<!-- Diálogos modales de validación de objetos -->
+<div id="modalValidaObjeto1" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -377,7 +374,7 @@ else{ %>
 		</div>
 	</div>
 </div>
-<div id="modalValidaCargo2" class="modal fade" role="dialog">
+<div id="modalValidaObjeto2" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">

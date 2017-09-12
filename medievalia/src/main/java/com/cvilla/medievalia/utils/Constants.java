@@ -35,13 +35,7 @@ public class Constants {
 	public static final int P_GENERAL_LOG = 18;
 	public static final int P_SELECT_ACTIVE_GROUP = 19;
 	public static final int P_CREATE_GROUP  = 20;
-	public static final int P_TOPIC_LIST = 21;
-	public static final int P_TOPIC_MANAGER = 22;
-	public static final int P_CREATE_TOPIC = 23;
-	public static final int P_TOPIC_DETAIL = 24;
-	public static final int P_CREATE_SUB_TOPIC = 25;
-	public static final int P_SUBTOPIC_LIST = 26;
-	public static final int P_RENAME_TOPIC = 27;
+	
 	public static final int P_MODIFY_USER_OWN = 28;
 	public static final int P_MODIFY_USER_PASS_OWN = 29;
 	public static final int P_ADD_STUDENT_TO_GROUP = 30;
@@ -50,6 +44,20 @@ public class Constants {
 	public static final int P_PARTICIPANT_LIST = 33;
 	public static final int P_REMOVE_STUDENT_TO_GROUP = 34;
 	public static final int P_REMOVE_TEACHER_TO_GROUP = 35;
+	
+	public static final int P_OBJECT_TYPE_LIST = 36;
+	public static final int P_VALIDATE_OBJECT = 37;
+	public static final int P_OBJECT_LIST_BY_TYPE = 38;
+	
+	//TODO: Permisos a eliminar tras la refactorización
+	public static final int P_TOPIC_LIST = 21;
+	public static final int P_TOPIC_MANAGER = 22;
+	public static final int P_CREATE_TOPIC = 23;
+	public static final int P_TOPIC_DETAIL = 24;
+	public static final int P_CREATE_SUB_TOPIC = 25;
+	public static final int P_SUBTOPIC_LIST = 26;
+	public static final int P_RENAME_TOPIC = 27;
+	
 	public static final int P_DELETE_TOPIC = 36;
 	public static final int P_RENAME_SUBTOPIC = 37;
 	public static final int P_DELETE_STOPIC = 38;
@@ -106,7 +114,11 @@ public class Constants {
 	
 	public static final int P_DELETE_OWN_CHARACTER = 79;
 	public static final int P_RENAME_CHARACTER_OWN = 80;
-	public static final int P_MODIFY_DATA_CHARACTER_OWN = 82;
+	public static final int P_MODIFY_DATA_CHARACTER_OWN = 81;
+	public static final int P_VIEW_CHARGES_BY_CHARACTER = 82;
+	public static final int P_VALIDATE_CHARGE_CHARACTER = 83;
+	
+	//FIN PERMISOS A BORRAR
 	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;

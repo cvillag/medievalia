@@ -23,4 +23,6 @@ public interface IPersonageManager extends Serializable{
 	public Personage getPersonageByName(String name);
 	public String modifyCharacter(Personage p, int idPersonaje, User user, Group groupA);
 	public String modifyCharacterOwn(Personage p, int idPersonaje, User user, Group groupA);
+	public List<Charge> getChargeListAvailable(int idPersonaje);
+	public List<Charge> getChargeListOfPersonage(int idPersonaje);
 }

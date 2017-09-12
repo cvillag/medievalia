@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cvilla.medievalia.dao.intfc.IPersonageDAO;
+import com.cvilla.medievalia.domain.Charge;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.Personage;
 import com.cvilla.medievalia.domain.User;
@@ -139,5 +140,13 @@ public class PersonageManager implements IPersonageManager {
 	public String modifyCharacterOwn(Personage p, int idPersonaje, User user, Group groupA) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public List<Charge> getChargeListAvailable(int idPersonaje) {
+		return persdao.getChargeListNotInPersonage(idPersonaje);
+	}
+
+	public List<Charge> getChargeListOfPersonage(int idPersonaje) {
+		return persdao.getChargeListInPersonage(idPersonaje);
 	}
 }
