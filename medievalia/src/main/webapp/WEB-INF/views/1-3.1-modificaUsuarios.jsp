@@ -5,6 +5,7 @@
 <%@ include file="/WEB-INF/views/header.jsp"%>
 
 <%
+	@SuppressWarnings("unchecked")
 	List<Role> roles = (List<Role>)request.getAttribute("roles");
 	User user = (User)request.getAttribute("targetUser");
 	String message = (String)request.getAttribute("message");

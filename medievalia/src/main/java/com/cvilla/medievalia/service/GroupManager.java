@@ -9,7 +9,6 @@ import com.cvilla.medievalia.dao.mappers.UserMapper;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.Students;
 import com.cvilla.medievalia.domain.Teachers;
-import com.cvilla.medievalia.domain.Tema;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILogManager;

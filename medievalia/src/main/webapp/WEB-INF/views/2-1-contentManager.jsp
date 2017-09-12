@@ -1,7 +1,6 @@
 <%@page import="com.cvilla.medievalia.domain.TipoObjetoDOM"%>
 <%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
-<%@page import="com.cvilla.medievalia.domain.Tema"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/header.jsp"%>

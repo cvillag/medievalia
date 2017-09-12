@@ -36,24 +36,6 @@
 
 	<bean id="groupManager" class="com.cvilla.medievalia.service.GroupManager">
 	</bean>
-
-	<bean id="temaManager" class="com.cvilla.medievalia.service.TemaManager">
-	</bean>
-	
-	<bean id="chargeManager" class="com.cvilla.medievalia.service.ChargeManager">
-	</bean>
-	
-	<bean id="estudioManager" class="com.cvilla.medievalia.service.StudyManager">
-	</bean>
-	
-	<bean id="placeManager" class="com.cvilla.medievalia.service.PlaceManager">
-	</bean>
-	
-	<bean id="authorManager" class="com.cvilla.medievalia.service.AuthorManager">
-	</bean>
-	
-	<bean id="personageManager" class="com.cvilla.medievalia.service.PersonageManager">
-	</bean>
 	
 	<bean id="objectManager" class="com.cvilla.medievalia.service.ObjectManager">
 	</bean>
@@ -83,30 +65,6 @@
 	</bean>
 
 	<bean id="groupDAO" class="com.cvilla.medievalia.dao.GroupDAO">
-		<property name="jdbcTemplate" ref="jdbcTemplate" />
-	</bean>
-
-	<bean id="temaDAO" class="com.cvilla.medievalia.dao.TemaDAO">
-		<property name="jdbcTemplate" ref="jdbcTemplate" />
-	</bean>
-	
-	<bean id="chargeDAO" class="com.cvilla.medievalia.dao.ChargeDAO">
-		<property name="jdbcTemplate" ref="jdbcTemplate" />
-	</bean>
-	
-	<bean id="studyDAO" class="com.cvilla.medievalia.dao.StudyDAO">
-		<property name="jdbcTemplate" ref="jdbcTemplate" />
-	</bean>
-	
-	<bean id="placeDAO" class="com.cvilla.medievalia.dao.PlaceDAO">
-		<property name="jdbcTemplate" ref="jdbcTemplate" />
-	</bean>
-	
-	<bean id="authorDAO" class="com.cvilla.medievalia.dao.AuthorDAO">
-		<property name="jdbcTemplate" ref="jdbcTemplate" />
-	</bean>
-	
-	<bean id="personageDAO" class="com.cvilla.medievalia.dao.PersonageDAO">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 	

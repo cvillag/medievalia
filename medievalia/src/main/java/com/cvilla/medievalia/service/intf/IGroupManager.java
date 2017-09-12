@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.Students;
 import com.cvilla.medievalia.domain.Teachers;
-import com.cvilla.medievalia.domain.Tema;
 import com.cvilla.medievalia.domain.User;
 
 @Component

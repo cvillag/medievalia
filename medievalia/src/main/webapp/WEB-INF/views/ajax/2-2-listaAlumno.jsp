@@ -4,13 +4,10 @@
 <%@page import="java.util.List"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt"%>
 <%
-@SuppressWarnings("unchecked")
 User user = (User) session.getAttribute("user");
-@SuppressWarnings("unchecked")
 String type= (String) request.getAttribute("type");
 @SuppressWarnings("unchecked")
 List<ObjetoDOM> objetos = (List<ObjetoDOM>) request.getAttribute("listaObjetos");
-@SuppressWarnings("unchecked")
 String delete = (String) request.getAttribute("permisoborrado");
 if (objetos != null && objetos.size() > 0){
 	for(ObjetoDOM c : objetos){
