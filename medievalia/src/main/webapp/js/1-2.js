@@ -11,8 +11,6 @@ $(document).ready(function(){
 		}
 		else{
 			$("#formusuario").submit();
-			alert("creando " + $("#name").val() + " " + $("#longname").val() + " " + $("input:radio[name=role]:checked").val() + " " + $("#pass").val() );
-
 		}
 	});
 });

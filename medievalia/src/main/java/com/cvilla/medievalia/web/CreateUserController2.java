@@ -31,6 +31,7 @@ public class CreateUserController2 {
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView model = null;
+		request.setCharacterEncoding("UTF-8");
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		if(errorParam(request)){
