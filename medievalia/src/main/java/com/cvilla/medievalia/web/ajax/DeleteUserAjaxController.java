@@ -40,12 +40,12 @@ public class DeleteUserAjaxController {
 		User user = (User) sesion.getAttribute("user");
 		ModelAndView model = new ModelAndView("ajax/empty");
 		JSONObject j = new JSONObject();
-		if(errorParam(request)){
-			model = Constants.paramError(logManager,user.getId(),Constants.P_DELETE_USER);
-			return model;
-		}
-		else{
-			if(authManager.isAutorized(Constants.P_DELETE_USER, user)){
+		if(authManager.isAutorized(Constants.P_DELETE_USER, user)){
+			if(errorParam(request)){
+				model = Constants.paramError(logManager,user.getId(),Constants.P_DELETE_USER);
+				return model;
+			}
+			else{
 				int idUs = (new Integer(request.getParameter("deleteId"))).intValue();
 				String message = userManager.deleteUser(idUs, user);
 				logManager.log(user.getId(), Constants.P_DELETE_USER , "Borrado de usuario. Id: " 
@@ -54,9 +54,9 @@ public class DeleteUserAjaxController {
 				+ ". Nombre completo: " + user.getUser_long_name() , Constants.P_OK);
 				j.put("message", message);
 			}
-			else{
-				model = Constants.noPrivilegesA(user,logManager,Constants.P_DELETE_USER,"Intento de borrado de usuario con ID: " + request.getParameter("deleteId"));
-			}
+		}
+		else{
+			model = Constants.noPrivilegesJ(user,logManager,Constants.P_DELETE_USER,"Intento de borrado de usuario con ID: " + request.getParameter("deleteId"));
 		}
 		model.addObject("json", j);
 		return model;

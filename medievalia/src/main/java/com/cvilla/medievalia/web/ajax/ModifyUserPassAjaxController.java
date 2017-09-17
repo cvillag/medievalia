@@ -40,12 +40,12 @@ public class ModifyUserPassAjaxController {
 		User user = (User) sesion.getAttribute("user");
 		ModelAndView model = new ModelAndView("ajax/empty");
 		JSONObject j = new JSONObject();
-		if(errorParam(request)){
-			model = Constants.paramError(logManager,user.getId(),Constants.P_MODIFY_USER_PASS_OWN);
-			return model;
-		}
-		else{
-			if(authManager.isAutorized(Constants.P_MODIFY_USER_PASS_OWN, user)){
+		if(authManager.isAutorized(Constants.P_MODIFY_USER_PASS_OWN, user)){
+			if(errorParam(request)){
+				model = Constants.paramError(logManager,user.getId(),Constants.P_MODIFY_USER_PASS_OWN);
+				return model;
+			}
+			else{
 				String pass1 = request.getParameter("pass1");
 				String pass2 = request.getParameter("pass2");
 				String pass3 = request.getParameter("pass3");
@@ -58,10 +58,10 @@ public class ModifyUserPassAjaxController {
 					logManager.log(user.getId(), Constants.P_MODIFY_USER_PASS_OWN, "Modificación de contraseña propia fallida. Mensaje: " + message, Constants.P_OK);
 				}
 			}
-			else{
-				j.put("message", "noPrivileges");
-				logManager.log(user.getId(), Constants.P_MODIFY_USER_PASS_OWN, "Intento de modificación contraseña sin permisos", Constants.P_NOK);
-			}
+		}
+		else{
+			j.put("message", "noPrivileges");
+			logManager.log(user.getId(), Constants.P_MODIFY_USER_PASS_OWN, "Intento de modificación contraseña sin permisos", Constants.P_NOK);
 		}
 		model.addObject("json", j);
 		return model;

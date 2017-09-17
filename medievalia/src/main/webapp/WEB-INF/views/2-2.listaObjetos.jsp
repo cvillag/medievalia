@@ -1,3 +1,4 @@
+<%@page import="com.cvilla.medievalia.domain.TipoObjetoDOM"%>
 <%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
 <%@page import="com.cvilla.medievalia.domain.ObjetoDOM"%>
@@ -8,6 +9,9 @@
 <%	
 User usr = (User)ses.getAttribute("user");
 String validar = (String) request.getAttribute("validar");
+
+@SuppressWarnings("unchecked")
+TipoObjetoDOM tipo = (TipoObjetoDOM) request.getAttribute("tipo");
 %>
 <form id=formUser">
 	<input type="hidden" id="userrole" value="<%=usr.getUser_role()%>">
@@ -104,7 +108,7 @@ else{ %>
 								<fmt:message key="p2.2.objetos.tabla01"></fmt:message>
 							</th>
 							<th>
-								<fmt:message key="p2.2.objetos.tabla02"></fmt:message>
+								<fmt:message key="p2.2.objetos.tabla04"></fmt:message>
 							</th>
 						</tr>
 					</thead>
@@ -116,13 +120,35 @@ else{ %>
 	</div>
 </div>
 
+<div id="modalDetalleObjeto" class="modal fade modal-lg" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal110"></fmt:message>&nbsp;<span id="nombreObjetoDetalle"></span>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div id="contenidoDetalle">
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <!-- Diálogos modales de creación de objetos -->
 <div id="modalCreaObjeto1" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">
-					<fmt:message key="p2-2.modal0"></fmt:message>
+					<fmt:message key="p2-2.modal0"></fmt:message>&nbsp;<%=tipo.getNombreDOM() %>
 				</h4>
 			</div>
 			<div class="modal-body">
@@ -143,12 +169,12 @@ else{ %>
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">
-					<fmt:message key="p2-2.modal0"></fmt:message>
+					<fmt:message key="p2-2.modal0"></fmt:message>&nbsp;<%=tipo.getNombreDOM() %>
 				</h4>
 			</div>
 			<div class="modal-body">
 				<div class="alert alert-success">
-					<fmt:message key="p2-2.modal2"></fmt:message>
+					<%=tipo.getNombreDOM() %>&nbsp;<fmt:message key="p2-2.modal2"></fmt:message>
 				</div>				
 			</div>
 			<div class="modal-footer">
@@ -164,7 +190,7 @@ else{ %>
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">
-					<fmt:message key="p2-2.modal0"></fmt:message>
+					<fmt:message key="p2-2.modal0"></fmt:message>&nbsp;<%=tipo.getNombreDOM() %>
 				</h4>
 			</div>
 			<div class="modal-body">
@@ -185,7 +211,7 @@ else{ %>
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">
-					<fmt:message key="p2-2.modal0"></fmt:message>
+					<fmt:message key="p2-2.modal0"></fmt:message>&nbsp;<%=tipo.getNombreDOM() %>
 				</h4>
 			</div>
 			<div class="modal-body">
@@ -385,6 +411,29 @@ else{ %>
 			<div class="modal-body">
 				<div class="alert alert-danger">
 					<fmt:message key="p2-2.modal32"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modales de error -->
+<div id="modalNoPrivilegios" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal40"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger">
+					<fmt:message key="p2-2.modal41"></fmt:message>
 				</div>				
 			</div>
 			<div class="modal-footer">

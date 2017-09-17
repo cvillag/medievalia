@@ -43,11 +43,12 @@ public class ObjectController {
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
 		TipoObjetoDOM tipo = (TipoObjetoDOM) sesion.getAttribute("tipoObjeto");
 		
-		if((errorParam(request) && tipo == null) || groupA == null){
-			return Constants.paramError(logManager, actionInt, user.getId());
-		}
-		else{
-			if(authManager.isAutorized(actionInt, user)){
+		
+		if(authManager.isAutorized(actionInt, user)){
+			if((errorParam(request) && tipo == null) || groupA == null){
+				return Constants.paramError(logManager, actionInt, user.getId());
+			}
+			else{
 				int idTipoObjeto = (new Integer(request.getParameter("idTipo"))).intValue();
 				TipoObjetoDOM tipoNuevo = objectManager.getTipoObjetoDOM(idTipoObjeto);
 				if(tipoNuevo == null){
@@ -58,20 +59,21 @@ public class ObjectController {
 						sesion.setAttribute("tipoObjeto", tipoNuevo);
 					}
 					model = new ModelAndView("2-2.listaObjetos");
+					model.addObject("tipo", tipoNuevo);
 					logManager.log(user.getId(), actionInt, "Pantalla de gestión de " + tipoNuevo.getNombreDOM(), Constants.P_OK);
 					model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 					List<String> scripts = new ArrayList<String>();
 					scripts.add("js/2-2.js");
 					model.addObject("scripts",scripts);
-					if(authManager.isAutorized(Constants.P_VALIDATE_OBJECT, user)){
+					if(authManager.isAutorized(Constants.P_VALIDATE_OBJECT_INSTANCE, user)){
 						model.addObject("validar", "ok");
 					}
 				}
 			}
-			else{
-				model = Constants.noPrivileges(user,logManager,actionInt,"mensaje",request);
-			}	
 		}
+		else{
+			model = Constants.noPrivileges(user,logManager,actionInt,"mensaje",request);
+		}	
 		return model;
 	}
 	private boolean errorParam(HttpServletRequest request){

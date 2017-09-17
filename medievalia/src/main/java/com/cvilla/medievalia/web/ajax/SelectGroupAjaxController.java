@@ -40,20 +40,22 @@ public class SelectGroupAjaxController {
 		JSONObject j = new JSONObject();
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
-		if(errorParam(request)){
-			
-		}
 		if(authManager.isAutorized(Constants.P_SELECT_ACTIVE_GROUP, user)){
-			int idGroup = (new Integer(request.getParameter("idGroup"))).intValue();
-			Group g = groupManager.getGroupById(idGroup);
-			if(g != null){
-				logManager.log(user.getId(), Constants.P_SELECT_ACTIVE_GROUP, "Selección de grupo " + g.getName(), Constants.P_OK);
-				sesion.setAttribute("grupoActual", g);
-				j.put("message", "ok");
+			if(errorParam(request)){
+				return Constants.noPrivilegesJ(user, logManager, Constants.P_SELECT_ACTIVE_GROUP, "Error al seleccionar grupo activo");
 			}
 			else{
-				logManager.log(user.getId(), Constants.P_SELECT_ACTIVE_GROUP, "Intento de selección de grupo con id " + idGroup, Constants.P_NOK);
-				j.put("message", "nok");
+				int idGroup = (new Integer(request.getParameter("idGroup"))).intValue();
+				Group g = groupManager.getGroupById(idGroup);
+				if(g != null){
+					logManager.log(user.getId(), Constants.P_SELECT_ACTIVE_GROUP, "Selección de grupo " + g.getName(), Constants.P_OK);
+					sesion.setAttribute("grupoActual", g);
+					j.put("message", "ok");
+				}
+				else{
+					logManager.log(user.getId(), Constants.P_SELECT_ACTIVE_GROUP, "Intento de selección de grupo con id " + idGroup, Constants.P_NOK);
+					j.put("message", "nok");
+				}
 			}
 		}
 		model.addObject("json", j);

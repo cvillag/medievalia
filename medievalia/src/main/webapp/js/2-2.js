@@ -5,6 +5,9 @@ var activadoAl = 0;
 var oldnamePr;
 var activadoPr = 0;
 
+var modDetAct = 0;
+var oldModDetAct = 0;
+
 function postCarga(){
 	//alert("Acciones de botones");
 	
@@ -82,6 +85,35 @@ function postCarga(){
 				$("#modalBorraObjeto2").modal();
 			}
 		})
+	});
+	
+	$(".detalleObjeto").click(function(){
+		oldModDetAct = 0;
+		modDetAct = 0;
+		id = $(this).data("val");
+		name = $(this).data("name");
+		$("#nombreObjetoDetalle").html(name);
+		$("#modalDetalleObjeto").modal();
+		$.post("objectDetail.do",{
+			idInstancia : id
+		},
+		function(data){
+			$("#contenidoDetalle").html(data);
+			postCargaDetalle();
+		});
+	});
+}
+
+function postCargaDetalle(){
+	$("#modDetAtributos0").show();
+	$(".modDetAtributosC").hide();
+	$(".listaA").click(function(){
+		oldModDetAct = modDetAct;
+		modDetAct = $(this).data("val");
+		$(".listaA").removeClass("active");
+		$(this).addClass("active");
+		$("#modDetAtributos" + modDetAct).show();
+		$("#modDetAtributos" + oldModDetAct).hide();
 	});
 }
 
@@ -301,7 +333,7 @@ $(document).ready(function(){
 //		cargaListaProfe();
 //	}
 	
-	$("#displayCreate").click(function(){
+	function swipBotonCrear(){
 		if(btncreate == 0){
 			$("#group-block1").slideUp(500);
 			$("#newObjectName").val("");
@@ -315,22 +347,14 @@ $(document).ready(function(){
 			$("#displayCreatei").addClass("glyphicon glyphicon-chevron-up");
 			btncreate = 0;
 		}
+	}
+	
+	$("#displayCreate").click(function(){
+		swipBotonCrear();
 	});
 	
 	$("#cancelButton").click(function(){
-		if(btncreate == 0){
-			$("#group-block1").slideUp(500);
-			$("#newObjectName").val("");
-			$("#displayCreatei").removeClass();
-			$("#displayCreatei").addClass("glyphicon glyphicon-chevron-down");
-			btncreate = 1;
-		}
-		else{
-			$("#group-block1").slideDown(500);
-			$("#displayCreatei").removeClass();
-			$("#displayCreatei").addClass("glyphicon glyphicon-chevron-up");
-			btncreate = 0;
-		}
+		swipBotonCrear();
 	});
 	
 	//Filtro de objetos por fila según se rellena el campo imput
@@ -391,7 +415,7 @@ $(document).ready(function(){
 				nombre : $("#newObjectName").val()
 			},function(data){
 				var json = JSON.parse(data);
-				if(json.message == "nameRepeated"){
+				if(json.message == "nombreRepetido"){
 					$("#modalCreaObjeto3").modal();
 				}
 				else if(json.message == "creado"){
@@ -416,9 +440,16 @@ $(document).ready(function(){
 						cargaListaProfe();
 					}
 					$("#modalCreaObjeto2").modal();
+					swipBotonCrear();
 				}
-				else if(json.message == "noCreado"){
+				else if(json.message == "errorDB"){
 					$("#modalCreaObjeto4").modal();
+				}
+				else if(json.message == "sinPrivilegios"){
+					$("#modalNoPrivilegios").modal();
+				}
+				else if(json.message == "sinSesion"){
+					window.location.href="hello.do";
 				}
 			});
 		}

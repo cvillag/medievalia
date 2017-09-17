@@ -40,12 +40,12 @@ public class ModifyUserAjaxController {
 		User user = (User) sesion.getAttribute("user");
 		ModelAndView model = new ModelAndView("ajax/empty");
 		JSONObject j = new JSONObject();
-		if(errorParam(request)){
-			model = Constants.paramError(logManager,user.getId(),Constants.P_MODIFY_USER_OWN);
-			return model;
-		}
-		else{
-			if(authManager.isAutorized(Constants.P_MODIFY_USER_OWN, user)){
+		if(authManager.isAutorized(Constants.P_MODIFY_USER_OWN, user)){
+			if(errorParam(request)){
+				model = Constants.paramError(logManager,user.getId(),Constants.P_MODIFY_USER_OWN);
+				return model;
+			}
+			else{
 				String name = request.getParameter("nombre");
 				String lname = request.getParameter("nombreC");
 				String message = userManager.modifyUser(name, lname, user);
@@ -60,10 +60,10 @@ public class ModifyUserAjaxController {
 					logManager.log(user.getId(), Constants.P_MODIFY_USER_OWN, "Modificación de datos personales fallida. Mensaje:" + message, Constants.P_OK);
 				}
 			}
-			else{
-				j.put("message", "noPrivileges");
-				logManager.log(user.getId(), Constants.P_MODIFY_USER_OWN, "Intento de modificación de datos personales sin permisos", Constants.P_NOK);
-			}
+		}
+		else{
+			j.put("message", "noPrivileges");
+			logManager.log(user.getId(), Constants.P_MODIFY_USER_OWN, "Intento de modificación de datos personales sin permisos", Constants.P_NOK);
 		}
 		model.addObject("json", j);
 		return model;

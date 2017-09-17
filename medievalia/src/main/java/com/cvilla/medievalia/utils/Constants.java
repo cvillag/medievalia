@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.User;
@@ -46,8 +47,10 @@ public class Constants {
 	public static final int P_REMOVE_TEACHER_TO_GROUP = 35;
 	
 	public static final int P_OBJECT_TYPE_LIST = 36;
-	public static final int P_VALIDATE_OBJECT = 37;
+	public static final int P_VALIDATE_OBJECT_INSTANCE = 37;
 	public static final int P_OBJECT_LIST_BY_TYPE = 38;
+	public static final int P_VIEW_OBJECT_INSTANCE_DETAIL = 39;
+	public static final int P_CREATE_OBJECT_INSTANCE = 40;
 	
 	//TODO: Permisos a eliminar tras la refactorización
 	public static final int P_TOPIC_LIST = 21;
@@ -150,6 +153,15 @@ public class Constants {
 	public static final int OBJETO_NO_VALIDADO = 0;
 	public static final int OBJETO_VALIDADO = 1;
 	public static final int OBJETO_DENEGADO = 2;
+	
+	public static final int TIPO_ATRIBUTO_FECHA = 1;
+	public static final int TIPO_ATRIBUTO_DOUBLE = 2;
+	public static final int TIPO_ATRIBUTO_INT = 3;
+	public static final int TIPO_ATRIBUTO_STRING = 4;
+	public static final int TIPO_ATRIBUTO_TEXT = 5;
+	
+	public static final String TEXTO_VALIDACION_PROFESOR = "Creado ya validado";
+	public static final String TEXTO_SIN_VALIDAR = "";
 		
 	public static String getKey(){
 		return PASS_KEY;
@@ -229,6 +241,23 @@ public class Constants {
 			model.addObject("mensaje2", "test.noSesion");
 			return model;
 		}
+	}
+	
+	public static ModelAndView noPrivilegesJ(User user, ILogManager logManager, int action, String message){
+		ModelAndView model = new ModelAndView("ajax/empty");
+		JSONObject j = new JSONObject();
+		String m;
+		if(user != null){
+			logManager.log(user.getId(), action, message, Constants.P_NOK);
+			m = "sinPrivilegios";
+		}
+		else{
+			logManager.log(Constants.P_NOUSER, action, "Sesión posiblemente expirada (usuario nulo)", Constants.P_NOK);
+			m = "sinSesion";
+		}
+		j.put("message", m);
+		model.addObject("json", j);
+		return model;
 	}
 	
 	public static ModelAndView paramError(ILogManager log,int idaction,int iduser){

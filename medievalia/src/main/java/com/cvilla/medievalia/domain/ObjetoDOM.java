@@ -10,7 +10,7 @@ public class ObjetoDOM {
 	private TipoObjetoDOM tipo;
 	private String nombre;
 	private List<AtributoSencilloDOM> atributosSencillos;
-	private List<ObjetoDOM> atributosComplejos;
+	private List<AtributoComplejoDOM> atributosComplejos;
 	private int validado;
 	private int creador;
 	private String textoValidacion;
@@ -20,60 +20,12 @@ public class ObjetoDOM {
 		super();
 	}
 
-		public int getIdInstancia() {
+	public int getIdInstancia() {
 		return idInstancia;
-	}
-		
-	public int getGrupo() {
-		return grupo;
-	}
-
-	public void setGrupo(int grupo) {
-		this.grupo = grupo;
-	}
-
-	public int getCreador() {
-			return creador;
-	}
-
-	public void setCreador(int creador) {
-		this.creador = creador;
-	}
-
-	public String getTextoValidacion() {
-		return textoValidacion;
-	}
-
-	public void setTextoValidacion(String textoValidacion) {
-		this.textoValidacion = textoValidacion;
 	}
 
 	public void setIdInstancia(int idInstancia) {
 		this.idInstancia = idInstancia;
-	}
-
-	public int getIdObjetoDOM() {
-		return idInstancia;
-	}
-
-	public void setIdObjetoDOM(int idObjetoDOM) {
-		this.idInstancia = idObjetoDOM;
-	}
-
-	public List<AtributoSencilloDOM> getAtributosSencillos() {
-		return atributosSencillos;
-	}
-
-	public void setAtributosSencillos(List<AtributoSencilloDOM> atributosSencillos) {
-		this.atributosSencillos = atributosSencillos;
-	}
-
-	public List<ObjetoDOM> getAtributosComplejos() {
-		return atributosComplejos;
-	}
-
-	public void setAtributosComplejos(List<ObjetoDOM> atributosComplejos) {
-		this.atributosComplejos = atributosComplejos;
 	}
 
 	public TipoObjetoDOM getTipo() {
@@ -92,6 +44,22 @@ public class ObjetoDOM {
 		this.nombre = nombre;
 	}
 
+	public List<AtributoSencilloDOM> getAtributosSencillos() {
+		return atributosSencillos;
+	}
+
+	public void setAtributosSencillos(List<AtributoSencilloDOM> atributosSencillos) {
+		this.atributosSencillos = atributosSencillos;
+	}
+
+	public List<AtributoComplejoDOM> getAtributosComplejos() {
+		return atributosComplejos;
+	}
+
+	public void setAtributosComplejos(List<AtributoComplejoDOM> atributosComplejos) {
+		this.atributosComplejos = atributosComplejos;
+	}
+
 	public int getValidado() {
 		return validado;
 	}
@@ -99,7 +67,31 @@ public class ObjetoDOM {
 	public void setValidado(int validado) {
 		this.validado = validado;
 	}
-	
+
+	public int getCreador() {
+		return creador;
+	}
+
+	public void setCreador(int creador) {
+		this.creador = creador;
+	}
+
+	public String getTextoValidacion() {
+		return textoValidacion;
+	}
+
+	public void setTextoValidacion(String textoValidacion) {
+		this.textoValidacion = textoValidacion;
+	}
+
+	public int getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(int grupo) {
+		this.grupo = grupo;
+	}
+
 	public boolean isValidado(){
 		return this.validado == Constants.OBJETO_VALIDADO;
 	}

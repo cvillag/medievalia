@@ -1,19 +1,21 @@
 package com.cvilla.medievalia.domain;
 
 public class AtributoSencilloDOM {
-	private int tipo;
+	private int tipoAtributo;
 	private Object valor;
+	private String nombreTipoAtributo;
+	private int idAtributo;
 	
 	public AtributoSencilloDOM() {
 		super();
 	}
 
-	public int getTipo() {
-		return tipo;
+	public int getTipoAtributo() {
+		return tipoAtributo;
 	}
 
-	public void setTipo(int tipo) {
-		this.tipo = tipo;
+	public void setTipoAtributo(int tipo) {
+		this.tipoAtributo = tipo;
 	}
 
 	public Object getValor() {
@@ -22,6 +24,22 @@ public class AtributoSencilloDOM {
 
 	public void setValor(Object valor) {
 		this.valor = valor;
+	}
+
+	public String getNombreTipoAtributo() {
+		return nombreTipoAtributo;
+	}
+
+	public void setNombreTipoAtributo(String nombreTipoAtributo) {
+		this.nombreTipoAtributo = nombreTipoAtributo;
+	}
+
+	public int getIdAtributo() {
+		return idAtributo;
+	}
+
+	public void setIdAtributo(int idAtributo) {
+		this.idAtributo = idAtributo;
 	}
 	
 }

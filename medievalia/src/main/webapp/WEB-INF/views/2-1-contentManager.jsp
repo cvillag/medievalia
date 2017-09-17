@@ -98,7 +98,7 @@
 	<%}
 	}%>
 </div>
-<form id="formOC" action="objectController.do">
+<form id="formOC" method="post" action="objectController.do">
 	<input type="hidden" name="idTipo" id="idTipo">
 </form>
 <%} else if (message.equals("p3.1.msg.grpNoExiste")){%>

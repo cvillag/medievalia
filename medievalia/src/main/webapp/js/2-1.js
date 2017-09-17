@@ -6,7 +6,6 @@ $(document).ready(function(){
 	
 	$(".btnGestionObjetos").click(function(){
 		tipo = $(this).data('val');
-		alert(tipo);
 		$("#idTipo").val(tipo);
 		$("#formOC").submit();
 	});

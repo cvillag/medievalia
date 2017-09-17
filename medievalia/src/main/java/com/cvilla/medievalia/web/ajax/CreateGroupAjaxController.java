@@ -43,12 +43,12 @@ public class CreateGroupAjaxController {
 		User user = (User) sesion.getAttribute("user");
 		ModelAndView model = new ModelAndView("ajax/empty");
 		JSONObject j = new JSONObject();
-		if(errorParam(request)){
-			model = Constants.paramError(logManager,user.getId(),Constants.P_CREATE_GROUP);
-			return model;
-		}
-		else{
-			if(authManager.isAutorized(Constants.P_CREATE_GROUP, user)){
+		if(authManager.isAutorized(Constants.P_CREATE_GROUP, user)){
+			if(errorParam(request)){
+				model = Constants.paramError(logManager,user.getId(),Constants.P_CREATE_GROUP);
+				return model;
+			}
+			else{
 				String name = request.getParameter("nombreGrupo");
 				String desc = request.getParameter("descripcionGrupo");
 				String res = groupManager.addGroup(user.getId(), name,desc);
@@ -60,11 +60,11 @@ public class CreateGroupAjaxController {
 				}
 				j.put("message",res);
 			}
-			else{
-				model = Constants.noPrivilegesA(user,logManager,Constants.P_DELETE_USER,"Intento de borrado de usuario con ID: " + request.getParameter("deleteId"));
-				logManager.log(user.getId(), Constants.P_CREATE_GROUP, "Creación de nuevo grupo no permitida", Constants.P_NOK);
-				j.put("message", "noPrivileges");
-			}
+		}
+		else{
+			model = Constants.noPrivilegesJ(user,logManager,Constants.P_DELETE_USER,"Intento de borrado de usuario con ID: " + request.getParameter("deleteId"));
+			logManager.log(user.getId(), Constants.P_CREATE_GROUP, "Creación de nuevo grupo no permitida", Constants.P_NOK);
+			j.put("message", "noPrivileges");
 		}
 		model.addObject("json", j);
 		return model;

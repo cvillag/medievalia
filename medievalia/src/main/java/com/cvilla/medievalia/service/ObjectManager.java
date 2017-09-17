@@ -10,7 +10,9 @@ import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.ObjetoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
+import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
+import com.cvilla.medievalia.utils.Constants;
 
 public class ObjectManager implements IObjectManager {
 
@@ -18,6 +20,9 @@ public class ObjectManager implements IObjectManager {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@Autowired
+	private IAutorizationManager authManager;
 	
 	@Autowired
 	private IObjetoDAO objetoDAO;
@@ -50,20 +55,33 @@ public class ObjectManager implements IObjectManager {
 		return null;
 	}
 
-	public ObjetoDOM getObjetoDOM(TipoObjetoDOM tipo, int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public ObjetoDOM getObjetoDOM(TipoObjetoDOM tipoObj, int idInstancia) {
+		ObjetoDOM o = objetoDAO.getObjectInstance(tipoObj,idInstancia);
+		if(o != null){
+			o.setAtributosSencillos(objetoDAO.getAtributosSencillos(tipoObj,idInstancia));
+			o.setAtributosComplejos(objetoDAO.getAtributosComplejos(tipoObj,idInstancia));
+		}
+		return o;
 	}
 
 	public List<ObjetoDOM> getObjetoDOMListByType(TipoObjetoDOM tipo) {
-		// TODO Tras conseguir los nombres con ObjetoDOM hay que conseguir los atributos
 		return objetoDAO.getObjectListByTipe(tipo);
 	}
 
-	public String addObjetoDOM(TipoObjetoDOM tipo, ObjetoDOM o, Group groupA,
-			User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public String addObjetoDOM(TipoObjetoDOM tipo, ObjetoDOM o, Group groupA, User user) {
+		o.setCreador(user.getId());
+		o.setGrupo(groupA.getIdGrupo());
+		o.setTipo(tipo);
+		if(authManager.isAutorized(Constants.P_VALIDATE_OBJECT_INSTANCE, user)){
+			o.setValidado(Constants.OBJETO_VALIDADO);
+			o.setTextoValidacion(Constants.TEXTO_VALIDACION_PROFESOR);
+			
+		}
+		else{
+			o.setValidado(Constants.OBJETO_NO_VALIDADO);
+			o.setTextoValidacion(Constants.TEXTO_SIN_VALIDAR);
+		}
+		return objetoDAO.createObjectInstance(o);
 	}
 
 	public String renameObjetoDOM(TipoObjetoDOM tipo, String nombre, int id,
