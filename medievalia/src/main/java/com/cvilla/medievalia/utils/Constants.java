@@ -51,75 +51,79 @@ public class Constants {
 	public static final int P_OBJECT_LIST_BY_TYPE = 38;
 	public static final int P_VIEW_OBJECT_INSTANCE_DETAIL = 39;
 	public static final int P_CREATE_OBJECT_INSTANCE = 40;
+	public static final int P_DELETE_OBJECT_INSTANCE = 41;
+	public static final int P_RENAME_OBJECT_INSTANCE = 42;
+	public static final int P_MODIFY_OBJECT_INSTANCE = 43;
+	public static final int P_VALIDATE_COMPLEX_ATTRIBUTE = 44;
 	
 	//TODO: Permisos a eliminar tras la refactorización
-	public static final int P_TOPIC_LIST = 21;
-	public static final int P_TOPIC_MANAGER = 22;
-	public static final int P_CREATE_TOPIC = 23;
-	public static final int P_TOPIC_DETAIL = 24;
-	public static final int P_CREATE_SUB_TOPIC = 25;
-	public static final int P_SUBTOPIC_LIST = 26;
-	public static final int P_RENAME_TOPIC = 27;
-	
-	public static final int P_DELETE_TOPIC = 36;
-	public static final int P_RENAME_SUBTOPIC = 37;
-	public static final int P_DELETE_STOPIC = 38;
-	public static final int P_VIEW_CHARGES = 39;
-	public static final int P_CREATE_CHARGE = 40;
-	public static final int P_RENAME_CHARGE = 41;
-	public static final int P_RENAME_CHARGE_OWN = 42;
-	public static final int P_DELETE_CHARGE = 43;
-	public static final int P_VALIDAR_CARGO = 44;
-	public static final int P_VIEW_OWN_CHARGES = 45;
-	public static final int P_DELETE_OWN_CHARGES = 46;
-	public static final int P_VIEW_CHARGE_STATISTICS = 47;
-	public static final int P_VIEW_OWN_CHARGE_STATISTICS = 48;
-	
-	public static final int P_VIEW_STUDIES = 49;
-	public static final int P_VALIDATE_STUDY = 50;
-	public static final int P_CREATE_STUDY = 51;
-	public static final int P_RENAME_STUDY = 52;
-	public static final int P_RENAME_STUDY_OWN = 53;
-	public static final int P_DELETE_STUDY = 54;
-	public static final int P_VIEW_OWN_STUDY = 55;
-	public static final int P_DELETE_OWN_STUDIES = 56;
-	public static final int P_VIEW_STUDIES_STATISTICS = 47;
-	public static final int P_VIEW_OWN_STUDIES_STATISTICS = 48;
-	
-	public static final int P_VIEW_PLACES = 57;
-	public static final int P_VALIDATE_PLACE = 58;
-	public static final int P_CREATE_PLACE = 59;
-	public static final int P_RENAME_PLACE = 60;
-	public static final int P_RENAME_PLACE_OWN = 61;
-	public static final int P_DELETE_PLACE = 62;
-	public static final int P_VIEW_OWN_PLACE = 63;
-	public static final int P_DELETE_OWN_PLACES = 64;
-	public static final int P_VIEW_PLACES_STATISTICS = 47;
-	public static final int P_VIEW_OWN_PLACES_STATISTICS = 48;
-	
-	public static final int P_VIEW_AUTHORS = 65;
-	public static final int P_VALIDATE_AUTHOR = 66;
-	public static final int P_CREATE_AUTHOR = 67;
-	public static final int P_RENAME_AUTHOR = 68;
-	public static final int P_RENAME_AUTHOR_OWN = 69;
-	public static final int P_DELETE_AUTHOR = 70;
-	public static final int P_VIEW_OWN_AUTHOR = 71;
-	public static final int P_DELETE_OWN_AUTHORS = 72;
-	public static final int P_VIEW_AUTHORS_STATISTICS = 47;
-	public static final int P_VIEW_OWN_AUTHORS_STATISTICS = 48;
-	
-	public static final int P_VIEW_CHARACTER_LIST = 73;
-	public static final int P_VALIDATE_CHARACTER = 74;
-	public static final int P_DELETE_CHARACTER = 75;
-	public static final int P_RENAME_CHARACTER = 76;
-	public static final int P_CREATE_CHARACTER = 77;
-	public static final int P_MODIFY_CHARACTER = 78;
-	
-	public static final int P_DELETE_OWN_CHARACTER = 79;
-	public static final int P_RENAME_CHARACTER_OWN = 80;
-	public static final int P_MODIFY_DATA_CHARACTER_OWN = 81;
-	public static final int P_VIEW_CHARGES_BY_CHARACTER = 82;
-	public static final int P_VALIDATE_CHARGE_CHARACTER = 83;
+//	public static final int P_TOPIC_LIST = 21;
+//	public static final int P_TOPIC_MANAGER = 22;
+//	public static final int P_CREATE_TOPIC = 23;
+//	public static final int P_TOPIC_DETAIL = 24;
+//	public static final int P_CREATE_SUB_TOPIC = 25;
+//	public static final int P_SUBTOPIC_LIST = 26;
+//	public static final int P_RENAME_TOPIC = 27;
+//	
+//	public static final int P_DELETE_TOPIC = 36;
+//	public static final int P_RENAME_SUBTOPIC = 37;
+//	public static final int P_DELETE_STOPIC = 38;
+//	public static final int P_VIEW_CHARGES = 39;
+//	public static final int P_CREATE_CHARGE = 40;
+//	public static final int P_RENAME_CHARGE = 41;
+//	public static final int P_RENAME_CHARGE_OWN = 42;
+//	public static final int P_DELETE_CHARGE = 43;
+//	public static final int P_VALIDAR_CARGO = 44;
+//	public static final int P_VIEW_OWN_CHARGES = 45;
+//	public static final int P_DELETE_OWN_CHARGES = 46;
+//	public static final int P_VIEW_CHARGE_STATISTICS = 47;
+//	public static final int P_VIEW_OWN_CHARGE_STATISTICS = 48;
+//	
+//	public static final int P_VIEW_STUDIES = 49;
+//	public static final int P_VALIDATE_STUDY = 50;
+//	public static final int P_CREATE_STUDY = 51;
+//	public static final int P_RENAME_STUDY = 52;
+//	public static final int P_RENAME_STUDY_OWN = 53;
+//	public static final int P_DELETE_STUDY = 54;
+//	public static final int P_VIEW_OWN_STUDY = 55;
+//	public static final int P_DELETE_OWN_STUDIES = 56;
+//	public static final int P_VIEW_STUDIES_STATISTICS = 47;
+//	public static final int P_VIEW_OWN_STUDIES_STATISTICS = 48;
+//	
+//	public static final int P_VIEW_PLACES = 57;
+//	public static final int P_VALIDATE_PLACE = 58;
+//	public static final int P_CREATE_PLACE = 59;
+//	public static final int P_RENAME_PLACE = 60;
+//	public static final int P_RENAME_PLACE_OWN = 61;
+//	public static final int P_DELETE_PLACE = 62;
+//	public static final int P_VIEW_OWN_PLACE = 63;
+//	public static final int P_DELETE_OWN_PLACES = 64;
+//	public static final int P_VIEW_PLACES_STATISTICS = 47;
+//	public static final int P_VIEW_OWN_PLACES_STATISTICS = 48;
+//	
+//	public static final int P_VIEW_AUTHORS = 65;
+//	public static final int P_VALIDATE_AUTHOR = 66;
+//	public static final int P_CREATE_AUTHOR = 67;
+//	public static final int P_RENAME_AUTHOR = 68;
+//	public static final int P_RENAME_AUTHOR_OWN = 69;
+//	public static final int P_DELETE_AUTHOR = 70;
+//	public static final int P_VIEW_OWN_AUTHOR = 71;
+//	public static final int P_DELETE_OWN_AUTHORS = 72;
+//	public static final int P_VIEW_AUTHORS_STATISTICS = 47;
+//	public static final int P_VIEW_OWN_AUTHORS_STATISTICS = 48;
+//	
+//	public static final int P_VIEW_CHARACTER_LIST = 73;
+//	public static final int P_VALIDATE_CHARACTER = 74;
+//	public static final int P_DELETE_CHARACTER = 75;
+//	public static final int P_RENAME_CHARACTER = 76;
+//	public static final int P_CREATE_CHARACTER = 77;
+//	public static final int P_MODIFY_CHARACTER = 78;
+//	
+//	public static final int P_DELETE_OWN_CHARACTER = 79;
+//	public static final int P_RENAME_CHARACTER_OWN = 80;
+//	public static final int P_MODIFY_DATA_CHARACTER_OWN = 81;
+//	public static final int P_VIEW_CHARGES_BY_CHARACTER = 82;
+//	public static final int P_VALIDATE_CHARGE_CHARACTER = 83;
 	
 	//FIN PERMISOS A BORRAR
 	

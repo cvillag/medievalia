@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.cvilla.medievalia.domain.AtributoComplejoDOM;
 import com.cvilla.medievalia.domain.AtributoSencilloDOM;
 import com.cvilla.medievalia.domain.ObjetoDOM;
 import com.cvilla.medievalia.domain.Group;
+import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 
@@ -19,6 +21,8 @@ public interface IObjectManager extends Serializable{
 	public TipoObjetoDOM getTipoObjetoDOM(int idType);
 	/**/public List<TipoObjetoDOM> getAtributosCObjetoDOM(TipoObjetoDOM tipo);
 	/**/public List<AtributoSencilloDOM> getAtributosSObjetoDOM(TipoObjetoDOM tipo);
+	
+	public List<TipoAtributoComplejoDOM> getTiposAtributosCompleos(TipoObjetoDOM tipo);
 	
 	//Lista de objetos completa, ACCION 1
 	public ObjetoDOM getObjetoDOM(TipoObjetoDOM tipo, int id);
@@ -53,7 +57,7 @@ public interface IObjectManager extends Serializable{
 	//Ver lista de objetosDOM-atributo de un objetoDOM concreto, ACCION 1
 	/**/public List<ObjetoDOM> getObjetoDOMAtributeByType(TipoObjetoDOM tipoPadre, TipoObjetoDOM tipoHijo);
 	//Añadir objetoDOM-atributo de un objetoDOM concreto, ACCION 8
-	/**/public String addObjetoDOMAttributeByType(ObjetoDOM padre, ObjetoDOM hijo, User user, Group groupA);
+	/**/public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA);
 	//Eliminar objetoDOM-atributo de un objetoDOM concreto, ACCION 8
 	/**/public String deleteObjetoDOMAttributeByType(ObjetoDOM padre, ObjetoDOM hijo, User user, Group groupA);
 	
@@ -63,4 +67,7 @@ public interface IObjectManager extends Serializable{
 	/**/public String addStudentObjetoDOMAttributeByType(ObjetoDOM padre, ObjetoDOM hijo, User user, Group groupA);
 	//Eliminar objetoDOM-atributo de un objetoDOM concreto, ACCION 10
 	/**/public String deleteStudentObjetoDOMAttributeByType(ObjetoDOM padre, ObjetoDOM hijo, User user, Group groupA);
+	
+	//Lista de atributos complejos disponibles para una instancia de objeto
+	public List<AtributoComplejoDOM> getAtributosCDisponiblesObjetoDOM(	TipoObjetoDOM tipo, ObjetoDOM obj);
 }

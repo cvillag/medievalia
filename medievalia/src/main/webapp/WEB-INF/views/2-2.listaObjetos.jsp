@@ -10,10 +10,9 @@
 User usr = (User)ses.getAttribute("user");
 String validar = (String) request.getAttribute("validar");
 
-@SuppressWarnings("unchecked")
 TipoObjetoDOM tipo = (TipoObjetoDOM) request.getAttribute("tipo");
 %>
-<form id=formUser">
+<form id="formUser">
 	<input type="hidden" id="userrole" value="<%=usr.getUser_role()%>">
 </form>
 <div class="container">
@@ -49,7 +48,7 @@ TipoObjetoDOM tipo = (TipoObjetoDOM) request.getAttribute("tipo");
 				<p><fmt:message key="p2.2.objetos.usuario"></fmt:message></p>
 			</div>
 			<div class="panel-body">
-				<p><form><input id="busquedaUsuario" type="text"></form></p>
+				<p><form><input id="busquedaUsuario" type="text"/></form></p>
 				<table class="table table-hover table-striped table-condensed table-scrollable">
 					<thead>
 						<tr>
@@ -74,7 +73,7 @@ else{ %>
 				<p><fmt:message key="p2.2.objetos.profe"></fmt:message></p>
 			</div>
 			<div class="panel-body">
-				<p><form><input id="busquedaProfe" type="text"></form></p>
+				<p><form><input id="busquedaProfe" type="text"/></form></p>
 				<table class="table table-hover table-striped table-condensed table-scrollable">
 					<thead>
 						<tr>
@@ -227,6 +226,120 @@ else{ %>
 		</div>
 	</div>
 </div>
+
+<!-- Diálogos modales de adición de atributos complejos -->
+
+<div id="modalAddAtributoC1" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal50"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-success">
+					<fmt:message key="p2-2.modal51"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalAddAtributoC2" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal50"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger">
+					<fmt:message key="p2-2.modal52"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalAddAtributoC3" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal50"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger">
+					<fmt:message key="p2-2.modal53"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalAddAtributoC4" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal54"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-warning">
+					<fmt:message key="p2-2.modal52"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalAddAtributoC5" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal50"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger">
+					<fmt:message key="p2-2.modal55"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- SIN USO AUN -->
 
 <!-- Diálogos modales de modificación de objetos -->
 <div id="modalModificaObjeto1" class="modal fade" role="dialog">

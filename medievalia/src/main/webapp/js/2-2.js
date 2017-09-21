@@ -8,6 +8,9 @@ var activadoPr = 0;
 var modDetAct = 0;
 var oldModDetAct = 0;
 
+var idInstanciaModificar = 0;
+var pag = 0;
+
 function postCarga(){
 	//alert("Acciones de botones");
 	
@@ -43,7 +46,7 @@ function postCarga(){
 		}
 		else{
 			$.post("renameObjectA.do",{
-				idObjeto : $(this).data('val'),
+				idInstancia : $(this).data('val'),
 				newNombre : $("#objetoName" + $(this).data('val')).val()
 			},
 			function(data){
@@ -73,7 +76,7 @@ function postCarga(){
 	
 	$(".deleteSObjeto").click(function(){
 		$.post("removeObjectA.do",{
-			idObjeto : $(this).data('val')
+			idInstancia : $(this).data('val')
 		},
 		function(data){
 			var json = JSON.parse(data);
@@ -87,6 +90,23 @@ function postCarga(){
 		})
 	});
 	
+	$(".modifySObjeto").click(function(){
+		oldModDetAct = 0;
+		modDetAct = 0;
+		name = $(this).data("name");
+		$("#nombreObjetoDetalle").html(name);
+		$("#modalDetalleObjeto").modal();
+		idInstanciaModificar = $(this).data('val');
+		$.post("objectDetail.do",{
+			idInstancia : $(this).data('val'),
+			modo : 2
+		},
+		function(data){
+			$("#contenidoDetalle").html(data);
+			postCargaDetalle();
+		})
+	});
+	
 	$(".detalleObjeto").click(function(){
 		oldModDetAct = 0;
 		modDetAct = 0;
@@ -95,7 +115,8 @@ function postCarga(){
 		$("#nombreObjetoDetalle").html(name);
 		$("#modalDetalleObjeto").modal();
 		$.post("objectDetail.do",{
-			idInstancia : id
+			idInstancia : id,
+			modo : 1
 		},
 		function(data){
 			$("#contenidoDetalle").html(data);
@@ -115,6 +136,47 @@ function postCargaDetalle(){
 		$("#modDetAtributos" + modDetAct).show();
 		$("#modDetAtributos" + oldModDetAct).hide();
 	});
+	 $(".remComplexAttribute").click(function(){
+		 inst = $(this).data('inst');
+		 tipo = $(this).data('tipo');
+		 alert("Quitar " + tipo + " id " + inst + " de objeto" + idInstanciaModificar);
+	 });
+	 
+	 $(".addComplexAttribute").click(function(){
+		 inst = $(this).data('inst');
+		 tipo = $(this).data('tipo');
+		 pag = $(this).data('pag');
+		 name = $(this).data('name');
+		 $.post("addComplexAttribute.do",
+				 {
+			 		idInstPadre : idInstanciaModificar,
+			 		idTipoAttr : tipo,
+			 		idInstHijo : inst
+				 },
+				 function(data){
+					 var json = JSON.parse(data);
+						if(json.message == "añadido"){
+							$("#modalAddAtributoC1").modal();
+							$("#list" + pag).append("<li class='list-group-item' id='ulI"+ tipo + "-"+inst+"'><button type='button' id='addAtC" + tipo + "-" + inst + " class='btn btn-sm btn-default remComplexAttribute' data-tipo='"+tipo+"' data-inst='"+inst+"'><span class='glyphicon glyphicon-arrow-right'></span></button>"+ name + "</li>");
+							$("#ulD" + tipo + "-" + inst).remove();
+						}
+						else if(json.message == "noType"){
+							$("#modalAddAtributoC3").modal();
+						}
+						else if(json.message == "sinPrivilegios"){
+							$("#modalAddAtributoC4").modal();
+						}
+						else if(json.message == "sinSesion"){
+							window.location.href="hello.do";
+						}
+						else if(json.message == "errorDB"){
+							$("#modalAddAtributoC5").modal();
+						}
+						else{
+							$("#modalAddAtributoC2").modal();
+						}
+				 });
+	 });
 }
 
 function postCarga2(){

@@ -12,10 +12,12 @@ import com.cvilla.medievalia.dao.mappers.DoubleDOMMapper;
 import com.cvilla.medievalia.dao.mappers.ObjetoDOMMapper;
 import com.cvilla.medievalia.dao.mappers.SpecialDateDOMMapper;
 import com.cvilla.medievalia.dao.mappers.StringDOMMapper;
+import com.cvilla.medievalia.dao.mappers.TipoAtributoComplejoDOMMapper;
 import com.cvilla.medievalia.dao.mappers.TipoObjetoDOMMapper;
 import com.cvilla.medievalia.domain.AtributoComplejoDOM;
 import com.cvilla.medievalia.domain.AtributoSencilloDOM;
 import com.cvilla.medievalia.domain.ObjetoDOM;
+import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.utils.Constants;
 import com.cvilla.medievalia.utils.SpecialDate;
@@ -55,6 +57,8 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String ADD_OBJECT_INSTANCE = "INSERT INTO `InstanciaObjeto`(`idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`) VALUES (?,?,?,?,?,?,?)";
 	private static final String GET_MAX_INSTANCE_ID_BY_OBJECT = "select max(idInstancia) from InstanciaObjeto where idObjeto = ?";
 	private static final String GET_OBJECT_INSTANCE_BY_NAME ="SELECT count(*) FROM `InstanciaObjeto` WHERE idObjeto = ? and nombreInstancia = ?";
+	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES_TYPES = "SELECT `idObjetoPadre`, `idObjetoHijo`, `NombreAtributo` FROM `AtributoComplejoObjeto` WHERE idObjetoPadre = ?";
+	private static final String ADD_COMPLEX_ATTRIBUTE = "INSERT INTO `InstanciaAtributoComplejo`(`idObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`) VALUES (?,?,?,?,?,?,?,?)";
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -177,6 +181,28 @@ public class ObjetoDAO implements IObjetoDAO {
 			else{
 				return "nombreRepetido";
 			}
+		}
+		catch(Exception e){
+			return "errorDB";
+		}
+	}
+
+	public List<TipoAtributoComplejoDOM> getTiposAtributosCompleos(TipoObjetoDOM tipo) {
+		try{
+			return jdbcTemplate.query(GET_OBJECT_COMPLEX_ATTRIBUTES_TYPES, new Object[]{tipo.getTipoDOM()}, new TipoAtributoComplejoDOMMapper());
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
+
+	public String addComplexAttribute(AtributoComplejoDOM ao, int idInstanciaPadre) {
+		try{
+			int i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador()});
+			if(i == 1)
+				return "añadido";
+			else
+				return "errorDB";
 		}
 		catch(Exception e){
 			return "errorDB";

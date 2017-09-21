@@ -10,6 +10,7 @@ String type= (String) request.getAttribute("type");
 List<ObjetoDOM> objetos = (List<ObjetoDOM>) request.getAttribute("listaObjetos");
 String delete = (String) request.getAttribute("permisoborrado");
 String rename = (String) request.getAttribute("permisoRenombrado");
+String modify = (String) request.getAttribute("permisoModificar");
 if (objetos != null && objetos.size() > 0){
 	for(ObjetoDOM c : objetos){
 		if(type.equals("table")){%>
@@ -29,19 +30,28 @@ if (objetos != null && objetos.size() > 0){
 					</button>
 				</td>
 				<td>
-					<button type="button" class="btn btn-sm btn-default detalleObjeto" data-val="<%=c.getIdInstancia()%>" data-name="<%=c.getNombre()%>">
-						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					</button>
-					<%if(rename != null){ %>
-					<button type="button" class="btn btn-sm btn-default activarSNombre" data-val="<%=c.getIdInstancia()%>">
-						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-					</button>
-					<%}
-					if(delete != null){ %>
-					<button type="button" class="btn btn-sm btn-default deleteSObjeto" data-val="<%=c.getIdInstancia()%>">
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-					</button>
-					<%} %>
+					<div class="btn-group">
+						<button type="button" class="btn btn-sm btn-default detalleObjeto" data-val="<%=c.getIdInstancia()%>" data-name="<%=c.getNombre()%>">
+							<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+						</button>
+						<div class="btn-group">
+							<button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownAcciones" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+								<span class="glyphicon glyphicon-collapse-down" aria-hidden="true"></span>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownAcciones" role="menu">
+								<%if(rename != null){ %>
+								<li class="activarSNombre" data-val="<%=c.getIdInstancia()%>"><fmt:message key="p2.2.objetos.acciones.cnombre"></fmt:message></li>
+								<%} 
+								if(modify != null){ %>
+								<li class="modifySObjeto" data-val="<%=c.getIdInstancia()%>" data-name="<%=c.getNombre()%>"><fmt:message key="p2.2.objetos.acciones.modify"></fmt:message></li>
+								<%} 
+								if(delete != null){ %>
+								<li role="separator" class="divider"></li>
+								<li class="deleteSObjeto" data-val="<%=c.getIdInstancia()%>"><fmt:message key="p2.2.objetos.acciones.delete"></fmt:message></li>
+								<%} %>
+							</ul>
+						</div>
+					</div>
 				</td>
 			</tr>
 <%		

@@ -1,13 +1,16 @@
 package com.cvilla.medievalia.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cvilla.medievalia.dao.intfc.IObjetoDAO;
+import com.cvilla.medievalia.domain.AtributoComplejoDOM;
 import com.cvilla.medievalia.domain.AtributoSencilloDOM;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.ObjetoDOM;
+import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
@@ -149,10 +152,51 @@ public class ObjectManager implements IObjectManager {
 		return null;
 	}
 
-	public String addObjetoDOMAttributeByType(ObjetoDOM padre, ObjetoDOM hijo,
-			User user, Group groupA) {
-		// TODO Auto-generated method stub
-		return null;
+	public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA) {
+		String message = "";
+		ObjetoDOM op = objetoDAO.getObjectInstance(tipoP, padre);
+		TipoAtributoComplejoDOM tac  = null;
+		if(op == null){
+			message = "noType";
+		}
+		else{
+			List<TipoAtributoComplejoDOM> tacl = objetoDAO.getTiposAtributosCompleos(tipoP);
+			boolean enc = false;
+			int i = 0;
+			while(!enc && i < tacl.size()){
+				enc = tacl.get(i).getIdTipoHijo() == tipoH;
+				if(enc)
+					tac = tacl.get(i);
+				i++;
+			}
+			if(!enc){
+				message = "noType";
+			}
+			else{
+				TipoObjetoDOM tipoHijo = new TipoObjetoDOM();
+				tipoHijo.setTipoDOM(tac.getIdTipoHijo());
+				ObjetoDOM oh = objetoDAO.getObjectInstance(tipoHijo, hijo);
+				if(oh == null){
+					message = "noType";
+				}
+				else{
+					AtributoComplejoDOM ao = new AtributoComplejoDOM();
+					ao.setCreador(user.getId());
+					ao.setIdGrupo(groupA.getIdGrupo());
+					ao.setInstanciaHijo(oh);
+					ao.setNombreAtributo(tac.getNombreAtributo());
+					ao.setTipoHijo(tipoHijo);
+					ao.setTipoPadre(tipoP);
+					ao.setValidado(val);
+					if(val == Constants.OBJETO_VALIDADO){
+						ao.setTextoValidacion(Constants.TEXTO_VALIDACION_PROFESOR);
+					}
+					return objetoDAO.addComplexAttribute(ao,padre);
+				}
+			}
+			
+		}
+		return message;
 	}
 
 	public String deleteObjetoDOMAttributeByType(ObjetoDOM padre,
@@ -178,5 +222,37 @@ public class ObjectManager implements IObjectManager {
 			ObjetoDOM hijo, User user, Group groupA) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public List<TipoAtributoComplejoDOM> getTiposAtributosCompleos(TipoObjetoDOM tipo) {
+		return objetoDAO.getTiposAtributosCompleos(tipo);
+	}
+
+	public List<AtributoComplejoDOM> getAtributosCDisponiblesObjetoDOM(TipoObjetoDOM tipo, ObjetoDOM obj) {
+		List<AtributoComplejoDOM> listaret = new ArrayList<AtributoComplejoDOM>();
+		List<TipoAtributoComplejoDOM> tipos = getTiposAtributosCompleos(tipo);
+		for(TipoAtributoComplejoDOM t : tipos){
+			TipoObjetoDOM d = new TipoObjetoDOM();
+			d.setTipoDOM(t.getIdTipoHijo());
+			List<ObjetoDOM> lista = getObjetoDOMListByType(d);
+			for(ObjetoDOM o : lista){
+				boolean enc = false;
+				int i = 0;
+				while(!enc && i < obj.getAtributosComplejos().size()){
+					enc = o.getIdInstancia() == obj.getAtributosComplejos().get(i).getInstanciaHijo().getIdInstancia() &&
+							o.getTipo().getTipoDOM() == obj.getAtributosComplejos().get(i).getTipoHijo().getTipoDOM();
+					i++;
+				}
+				if(!enc){
+					AtributoComplejoDOM atr = new AtributoComplejoDOM();
+					atr.setInstanciaHijo(o);
+					atr.setNombreAtributo(t.getNombreAtributo());
+					atr.setTipoHijo(o.getTipo());
+					atr.setTipoPadre(tipo);
+					listaret.add(atr);
+				}
+			}
+		}
+		return listaret;
 	}
 }

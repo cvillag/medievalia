@@ -1,7 +1,5 @@
 package com.cvilla.medievalia.web.ajax;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cvilla.medievalia.domain.AtributoComplejoDOM;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.ObjetoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
@@ -24,9 +23,10 @@ import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller
-public class CompleteObjectListAjaxController {
+public class AddComplexAttributeAjaxController {
 	
-	private int actionInt = Constants.P_OBJECT_LIST_BY_TYPE;
+	private int actionInt = Constants.P_MODIFY_OBJECT_INSTANCE;
+	private int actionInt2 = Constants.P_VALIDATE_COMPLEX_ATTRIBUTE;
 	
 	@Autowired
 	private IAutorizationManager authManager;
@@ -43,50 +43,46 @@ public class CompleteObjectListAjaxController {
 	@Autowired
 	private IObjectManager objectManager;
 	
-	@RequestMapping(value = "completeObjectList.do")
+	@RequestMapping(value = "addComplexAttribute.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		ModelAndView model = new ModelAndView("ajax/2-2-listaCompleta");
+		ModelAndView model = new ModelAndView("ajax/empty");
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
 		TipoObjetoDOM tipo = (TipoObjetoDOM) sesion.getAttribute("tipoObjeto");
 		JSONObject j = new JSONObject();
 		
-		if((errorParam(request) && tipo == null) || groupA == null){
-			return Constants.paramError(logManager, actionInt, user.getId());
-		}
-		else{
-			if(authManager.isAutorized(actionInt, user)){
-				if(errorParam(request)){
-					j.put("message","noType");
-					logManager.log(user.getId(), actionInt, "Fallo en listado de autores. Parámetros incorrectos.", Constants.P_NOK);
-				}
-				else{
-					List<ObjetoDOM> listag = objectManager.getObjetoDOMListByType(tipo);
-					model.addObject("listaObjetos", listag);
-					model.addObject("type",request.getParameter("type"));
-					logManager.log(user.getId(), actionInt, "Visualización lista de instancias de objeto", Constants.P_OK);
-					if(authManager.isAutorized(Constants.P_DELETE_OBJECT_INSTANCE, user)){
-						model.addObject("permisoborrado","ok");
-					}
-					if(authManager.isAutorized(Constants.P_RENAME_OBJECT_INSTANCE, user)){
-						model.addObject("permisoRenombrado", "ok");
-					}
-					if(authManager.isAutorized(Constants.P_MODIFY_OBJECT_INSTANCE, user)){
-						model.addObject("permisoModificar","ok");
-					}
-				}
+		if(authManager.isAutorized(actionInt, user)){
+			if((errorParam(request) && tipo == null) || groupA == null){
+				j.put("message","noType");
+				logManager.log(user.getId(), actionInt, "Fallo en creación de instancia de objeto. Parámetros o sesión incorrectos.", Constants.P_NOK);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,actionInt,"Visualización de autores no permitida (grupo: " + groupA.getName() + ")");
+				int idInstPadre = (new Integer(request.getParameter("idInstPadre"))).intValue();
+				int idTipoAttr = (new Integer(request.getParameter("idTipoAttr"))).intValue();
+				int idInstHijo = (new Integer(request.getParameter("idInstHijo"))).intValue();
+				int val;
+				if(authManager.isAutorized(actionInt2, user)){
+					val = Constants.OBJETO_VALIDADO;
+				}
+				else{
+					val = Constants.OBJETO_NO_VALIDADO;
+				}
+				String message = objectManager.addObjetoDOMAttributeByType(idInstPadre, idInstHijo, tipo, idTipoAttr, val, user, groupA);
+				j.put("message", message);
 			}
+			model.addObject("json", j);
 		}
-		
+		else{
+			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Creación de objeto no permitida ");
+		}
 		return model;
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("type") == null;
+		return request.getParameter("idInstPadre") == null &&
+				request.getParameter("idTipoAttr") == null &&
+				request.getParameter("idInstHijo") == null;
 	}
 }
