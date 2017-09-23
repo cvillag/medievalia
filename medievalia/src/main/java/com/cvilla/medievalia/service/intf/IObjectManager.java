@@ -59,7 +59,7 @@ public interface IObjectManager extends Serializable{
 	//Añadir objetoDOM-atributo de un objetoDOM concreto, ACCION 8
 	/**/public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA);
 	//Eliminar objetoDOM-atributo de un objetoDOM concreto, ACCION 8
-	/**/public String deleteObjetoDOMAttributeByType(ObjetoDOM padre, ObjetoDOM hijo, User user, Group groupA);
+	/**/public String deleteObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA);
 	
 	//Ver lista de objetosDOM-atributo de un objetoDOM concreto sin validar, ACCION 3
 	/**/public List<ObjetoDOM> getStudentObjetoDOMAtributeByType(TipoObjetoDOM tipoPadre, TipoObjetoDOM tipoHijo, User user, Group groupA);

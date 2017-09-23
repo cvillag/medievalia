@@ -147,7 +147,7 @@ if(objeto != null){
 						if(tipo == act.getIdTipoHijo()){
 					%>
 					<li class="list-group-item" id="ulI<%=tipo%>-<%=idAC %>">
-						<button type="button" id="addAtC<%=tipo%>-<%=idAC %>" class="btn btn-sm btn-default remComplexAttribute" data-tipo="<%=tipo%>" data-inst="<%=idAC%> data-pag="<%=idPag %>" data-name="<%=ac.getInstanciaHijo().getNombre() %>">
+						<button type="button" id="remAtC<%=tipo%>-<%=idAC %>" class="btn btn-sm btn-default remComplexAttribute" data-tipo="<%=tipo%>" data-inst="<%=idAC%>" data-pag="<%=idPag %>" data-name="<%=ac.getInstanciaHijo().getNombre() %>">
 							<span class="glyphicon glyphicon-arrow-right"></span>
 						</button>
 						<%=ac.getInstanciaHijo().getNombre() %>

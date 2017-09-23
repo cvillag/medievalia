@@ -136,10 +136,43 @@ function postCargaDetalle(){
 		$("#modDetAtributos" + modDetAct).show();
 		$("#modDetAtributos" + oldModDetAct).hide();
 	});
-	 $(".remComplexAttribute").click(function(){
+	 $(".remComplexAttribute").click();
+	 
+	 //FIXME: Pasar la carga de la lista de objetos a un ajax particular. Hacer recarga de listas tras añadir o borrar.
+	 function remComplex(){
 		 inst = $(this).data('inst');
 		 tipo = $(this).data('tipo');
-		 alert("Quitar " + tipo + " id " + inst + " de objeto" + idInstanciaModificar);
+		 pag = $(this).data('pag');
+		 name = $(this).data('name');
+		 $.post("remComplexAttribute.do",
+				 {
+			 		idInstPadre : idInstanciaModificar,
+			 		idTipoAttr : tipo,
+			 		idInstHijo : inst
+				 },
+				 function(data){
+					 var json = JSON.parse(data);
+						if(json.message == "borrado"){
+							$("#listD" + pag).append('<li class="list-group-item" id="ulD'+ tipo + '-'+inst+'"><button type="button" id="addAtC' + tipo + '-' + inst + '" class="btn btn-sm btn-default addComplexAttribute" data-tipo="'+tipo+'" data-inst="'+inst+'"  data-pag="'+ pag +'"><span class="glyphicon glyphicon-arrow-left"></span></button>'+ name + '</li>');
+							$("#ulI" + tipo + "-" + inst).remove();
+							$("#modalRemAtributoC1").modal();
+						}
+						else if(json.message == "noType"){
+							$("#modalRemAtributoC3").modal();
+						}
+						else if(json.message == "sinPrivilegios"){
+							$("#modalRemAtributoC4").modal();
+						}
+						else if(json.message == "sinSesion"){
+							window.location.href="hello.do";
+						}
+						else if(json.message == "errorDB"){
+							$("#modalRemAtributoC5").modal();
+						}
+						else{
+							$("#modalRemAtributoC2").modal();
+						}
+				 });
 	 });
 	 
 	 $(".addComplexAttribute").click(function(){
@@ -157,7 +190,7 @@ function postCargaDetalle(){
 					 var json = JSON.parse(data);
 						if(json.message == "añadido"){
 							$("#modalAddAtributoC1").modal();
-							$("#list" + pag).append("<li class='list-group-item' id='ulI"+ tipo + "-"+inst+"'><button type='button' id='addAtC" + tipo + "-" + inst + " class='btn btn-sm btn-default remComplexAttribute' data-tipo='"+tipo+"' data-inst='"+inst+"'><span class='glyphicon glyphicon-arrow-right'></span></button>"+ name + "</li>");
+							$("#list" + pag).append('<li class="list-group-item" id="ulI'+ tipo + '-'+inst+'"><button type="button" id="remAtC' + tipo + '-' + inst + '" class="btn btn-sm btn-default remComplexAttribute" data-tipo="'+tipo+'" data-inst="'+inst+'"  data-pag="'+ pag +'"><span class="glyphicon glyphicon-arrow-right"></span></button>'+ name + '</li>');
 							$("#ulD" + tipo + "-" + inst).remove();
 						}
 						else if(json.message == "noType"){

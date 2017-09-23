@@ -18,4 +18,8 @@ public interface IObjetoDAO {
 	public String createObjectInstance(ObjetoDOM o);
 	public List<TipoAtributoComplejoDOM> getTiposAtributosCompleos(TipoObjetoDOM tipo);
 	public String addComplexAttribute(AtributoComplejoDOM ao, int padre);
+	public AtributoComplejoDOM getAtributoComplejo(int tipoDOM, int padre,int tipoHijo, int hijo);
+	public AtributoComplejoDOM getAtributoComplejoNotVal(int tipoDOM, int padre,int tipoHijo, int hijo);
+	public List<AtributoComplejoDOM> getAtributosComplejosNotVal(TipoObjetoDOM tipo, int id);
+	public String remAtributoComplejo(AtributoComplejoDOM acd, int padre);
 }
