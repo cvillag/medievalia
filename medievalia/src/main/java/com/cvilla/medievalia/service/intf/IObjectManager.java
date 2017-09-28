@@ -69,5 +69,7 @@ public interface IObjectManager extends Serializable{
 	/**/public String deleteStudentObjetoDOMAttributeByType(ObjetoDOM padre, ObjetoDOM hijo, User user, Group groupA);
 	
 	//Lista de atributos complejos disponibles para una instancia de objeto
-	public List<AtributoComplejoDOM> getAtributosCDisponiblesObjetoDOM(	TipoObjetoDOM tipo, ObjetoDOM obj);
+	public List<AtributoComplejoDOM> getAtributosCDisponiblesObjetoDOM(	TipoObjetoDOM tipo, ObjetoDOM obj, int pag);
+	
+	public List<AtributoComplejoDOM> getAtributosCPorTipo(ObjetoDOM obj, int pag);
 }

@@ -270,31 +270,41 @@ public class ObjectManager implements IObjectManager {
 		return objetoDAO.getTiposAtributosCompleos(tipo);
 	}
 
-	public List<AtributoComplejoDOM> getAtributosCDisponiblesObjetoDOM(TipoObjetoDOM tipo, ObjetoDOM obj) {
+	public List<AtributoComplejoDOM> getAtributosCDisponiblesObjetoDOM(TipoObjetoDOM tipo, ObjetoDOM obj, int pag) {
 		List<AtributoComplejoDOM> listaret = new ArrayList<AtributoComplejoDOM>();
-		List<TipoAtributoComplejoDOM> tipos = getTiposAtributosCompleos(tipo);
-		for(TipoAtributoComplejoDOM t : tipos){
-			TipoObjetoDOM d = new TipoObjetoDOM();
-			d.setTipoDOM(t.getIdTipoHijo());
-			List<ObjetoDOM> lista = getObjetoDOMListByType(d);
-			for(ObjetoDOM o : lista){
-				boolean enc = false;
-				int i = 0;
-				while(!enc && i < obj.getAtributosComplejos().size()){
-					enc = o.getIdInstancia() == obj.getAtributosComplejos().get(i).getInstanciaHijo().getIdInstancia() &&
-							o.getTipo().getTipoDOM() == obj.getAtributosComplejos().get(i).getTipoHijo().getTipoDOM();
-					i++;
-				}
-				if(!enc){
-					AtributoComplejoDOM atr = new AtributoComplejoDOM();
-					atr.setInstanciaHijo(o);
-					atr.setNombreAtributo(t.getNombreAtributo());
-					atr.setTipoHijo(o.getTipo());
-					atr.setTipoPadre(tipo);
-					listaret.add(atr);
-				}
+		
+		TipoObjetoDOM d = new TipoObjetoDOM();
+		d.setTipoDOM(pag);
+		List<ObjetoDOM> lista = getObjetoDOMListByType(d);
+		for(ObjetoDOM o : lista){
+			boolean enc = false;
+			int i = 0;
+			while(!enc && i < obj.getAtributosComplejos().size()){
+				enc=o.getIdInstancia() == obj.getAtributosComplejos().get(i).getInstanciaHijo().getIdInstancia() && o.getTipo().getTipoDOM() == obj.getAtributosComplejos().get(i).getTipoHijo().getTipoDOM();
+				i++;
+			}
+			if(!enc){
+				AtributoComplejoDOM atr = new AtributoComplejoDOM();
+				atr.setInstanciaHijo(o);
+				atr.setTipoHijo(o.getTipo());
+				atr.setTipoPadre(tipo);
+				listaret.add(atr);
 			}
 		}
 		return listaret;
+	}
+
+	public List<AtributoComplejoDOM> getAtributosCPorTipo(ObjetoDOM obj, int pag) {
+		List<AtributoComplejoDOM> retl = new ArrayList<AtributoComplejoDOM>();
+		if(obj == null)
+			return null;
+		else{
+			for(AtributoComplejoDOM ac : obj.getAtributosComplejos()){
+				if(ac.getTipoHijo().getTipoDOM() == pag){
+					retl.add(ac);
+				}
+			}
+			return retl;
+		}
 	}
 }

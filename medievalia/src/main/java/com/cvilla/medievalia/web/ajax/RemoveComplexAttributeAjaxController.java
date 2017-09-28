@@ -71,6 +71,7 @@ public class RemoveComplexAttributeAjaxController {
 				}
 				String message = objectManager.deleteObjetoDOMAttributeByType(idInstPadre, idInstHijo, tipo, idTipoAttr, val, user, groupA);
 				j.put("message", message);
+				j.put("pag", idTipoAttr);
 			}
 			model.addObject("json", j);
 		}

@@ -136,47 +136,7 @@ if(objeto != null){
 		for(TipoAtributoComplejoDOM act : listaTipos){
 			idPag++;	
 			%>
-	<div id="modDetAtributos<%=idPag %>" class="modDetAtributosC">
-		<div class="row">
-			<div class="col-xs-6 form-group">
-				<label><fmt:message key="p2.2.detalle.actual"></fmt:message></label>
-				<ul class="list-group" id="list<%=idPag%>">
-				<%	for(AtributoComplejoDOM ac : acl){
-						int tipo = ac.getTipoHijo().getTipoDOM();
-						int idAC = ac.getInstanciaHijo().getIdInstancia();
-						if(tipo == act.getIdTipoHijo()){
-					%>
-					<li class="list-group-item" id="ulI<%=tipo%>-<%=idAC %>">
-						<button type="button" id="remAtC<%=tipo%>-<%=idAC %>" class="btn btn-sm btn-default remComplexAttribute" data-tipo="<%=tipo%>" data-inst="<%=idAC%>" data-pag="<%=idPag %>" data-name="<%=ac.getInstanciaHijo().getNombre() %>">
-							<span class="glyphicon glyphicon-arrow-right"></span>
-						</button>
-						<%=ac.getInstanciaHijo().getNombre() %>
-					</li>
-				<%
-						}
-					} %>
-				</ul>
-			</div>
-			<div class="col-xs-6">
-				<label><fmt:message key="p2.2.detalle.disponible"></fmt:message></label>
-				<ul class="list-group" id="listD<%=idPag%>">
-				<%	for(AtributoComplejoDOM ac2 : disp){
-						if(ac2.getTipoHijo().getTipoDOM() == act.getIdTipoHijo()){
-							int tipo = ac2.getTipoHijo().getTipoDOM();
-							int idAC = ac2.getInstanciaHijo().getIdInstancia();
-					%>
-					<li class="list-group-item" id="ulD<%=tipo%>-<%=idAC %>">
-						<button type="button" id="addAtC<%=tipo%>-<%=idAC %>" class="btn btn-sm btn-default addComplexAttribute" data-tipo="<%=tipo%>" data-inst="<%=idAC%>" data-pag="<%=idPag %>" data-name="<%=ac2.getInstanciaHijo().getNombre() %>">
-							<span class="glyphicon glyphicon-arrow-left"></span>
-						</button>
-						<%=ac2.getInstanciaHijo().getNombre() %>
-					</li>
-				<%
-						}
-					} %>
-				</ul>
-			</div>
-		</div>
+	<div id="modDetAtributos<%=idPag %>" class="modDetAtributosC" data-num="<%=idPag%>">
 	</div>
 	
 	<%

@@ -10,6 +10,7 @@ var oldModDetAct = 0;
 
 var idInstanciaModificar = 0;
 var pag = 0;
+var pagCarga = 0;
 
 function postCarga(){
 	//alert("Acciones de botones");
@@ -103,8 +104,13 @@ function postCarga(){
 		},
 		function(data){
 			$("#contenidoDetalle").html(data);
-			postCargaDetalle();
-		})
+			$(".modDetAtributosC").each(function(){
+				//La variable pagCarga no puede ser javascript, debe venir en data. Pasar data a JSON con la página y los objetos. Construir botones y luego postCargaDetalle()
+				pagCarga = $(this).data('num');
+				postCargaDetalle();
+				cargaAtributosComplejosPorPagina(pagCarga);
+			});
+		});
 	});
 	
 	$(".detalleObjeto").click(function(){
@@ -125,6 +131,40 @@ function postCarga(){
 	});
 }
 
+function cargaAtributosComplejosPorPagina(pag2){
+	$("#modDetAtributos" + pag2).empty();
+	$.post("objectDetailComplexAttributes.do",{
+		idInstancia : idInstanciaModificar,
+		modo : 2,
+		pag : pag2
+	},
+	function(data){
+		var json = JSON.parse(data);
+		var pagina = json.pag;
+		var obj = json.actual;
+		var disp = json.disponibles;
+		$("#modDetAtributos" + pagina).append('<div class="row" id="rowPag'+pagina+'"></div>');
+		$("#rowPag"+pagina).append('<div class="col-xs-6 form-group"><label>Actual</fmt:message></label><ul class="list-group" id="list'+pagina+'"></ul></div>');
+		for(var d in obj){
+			var nom = obj[d].instanciaHijo.nombre;
+			var tipo = obj[d].instanciaHijo.tipo.tipoDOM;
+			var idInst = obj[d].instanciaHijo.idInstancia;
+			$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-sm btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'"><span class="glyphicon glyphicon-arrow-right"></span></button>'+nom+'</li>');
+		}
+		
+		$("#rowPag"+pagina).append('<div class="col-xs-6 form-group"><label>Disponible</fmt:message></label><ul class="list-group" id="listD'+pagina+'"></ul></div>');
+		for(var d in disp){
+			var nom = disp[d].instanciaHijo.nombre;
+			var tipo = disp[d].instanciaHijo.tipo.tipoDOM;
+			var idInst = disp[d].instanciaHijo.idInstancia;
+			$("#listD"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="addAtC'+tipo+'-'+idInst+'" class="btn btn-sm btn-default addComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'"><span class="glyphicon glyphicon-arrow-left"></span></button>'+nom+'</li>');
+		}
+		postCargaDetalle2();
+	}
+);
+}
+
+//Esta función únicamente se llama la primera vez que se construye el modal
 function postCargaDetalle(){
 	$("#modDetAtributos0").show();
 	$(".modDetAtributosC").hide();
@@ -133,16 +173,19 @@ function postCargaDetalle(){
 		modDetAct = $(this).data("val");
 		$(".listaA").removeClass("active");
 		$(this).addClass("active");
-		$("#modDetAtributos" + modDetAct).show();
 		$("#modDetAtributos" + oldModDetAct).hide();
+		$("#modDetAtributos" + modDetAct).show();
 	});
-	 $(".remComplexAttribute").click();
-	 
+	postCargaDetalle2();
+}
+
+//Esta función se llama cada vez que se ha de recargar el modal (sin cerrarlo) por adición o borrado de atributo complejo
+function postCargaDetalle2(){	 
 	 //FIXME: Pasar la carga de la lista de objetos a un ajax particular. Hacer recarga de listas tras añadir o borrar.
-	 function remComplex(){
+	 $(".remComplexAttribute").click(function(){
 		 inst = $(this).data('inst');
 		 tipo = $(this).data('tipo');
-		 pag = $(this).data('pag');
+		 pagina3 = $(this).data('pag');
 		 name = $(this).data('name');
 		 $.post("remComplexAttribute.do",
 				 {
@@ -153,8 +196,7 @@ function postCargaDetalle(){
 				 function(data){
 					 var json = JSON.parse(data);
 						if(json.message == "borrado"){
-							$("#listD" + pag).append('<li class="list-group-item" id="ulD'+ tipo + '-'+inst+'"><button type="button" id="addAtC' + tipo + '-' + inst + '" class="btn btn-sm btn-default addComplexAttribute" data-tipo="'+tipo+'" data-inst="'+inst+'"  data-pag="'+ pag +'"><span class="glyphicon glyphicon-arrow-left"></span></button>'+ name + '</li>');
-							$("#ulI" + tipo + "-" + inst).remove();
+							cargaAtributosComplejosPorPagina(json.pag);
 							$("#modalRemAtributoC1").modal();
 						}
 						else if(json.message == "noType"){
@@ -190,8 +232,7 @@ function postCargaDetalle(){
 					 var json = JSON.parse(data);
 						if(json.message == "añadido"){
 							$("#modalAddAtributoC1").modal();
-							$("#list" + pag).append('<li class="list-group-item" id="ulI'+ tipo + '-'+inst+'"><button type="button" id="remAtC' + tipo + '-' + inst + '" class="btn btn-sm btn-default remComplexAttribute" data-tipo="'+tipo+'" data-inst="'+inst+'"  data-pag="'+ pag +'"><span class="glyphicon glyphicon-arrow-right"></span></button>'+ name + '</li>');
-							$("#ulD" + tipo + "-" + inst).remove();
+							cargaAtributosComplejosPorPagina(json.pag);
 						}
 						else if(json.message == "noType"){
 							$("#modalAddAtributoC3").modal();

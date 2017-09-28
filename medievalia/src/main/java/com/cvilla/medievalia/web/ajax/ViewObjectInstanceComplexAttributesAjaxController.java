@@ -24,7 +24,7 @@ import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller 
-public class ViewObjectInstanceDetailAjaxController {
+public class ViewObjectInstanceComplexAttributesAjaxController {
 	
 	final static int actionId = Constants.P_VIEW_OBJECT_INSTANCE_DETAIL; 
 	final static int actionId2 = Constants.P_MODIFY_OBJECT_INSTANCE;
@@ -38,7 +38,7 @@ public class ViewObjectInstanceDetailAjaxController {
 	@Autowired
 	private IObjectManager objectManager;
 	
-	@RequestMapping(value = "objectDetail.do")
+	@RequestMapping(value = "objectDetailComplexAttributes.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		HttpSession sesion = request.getSession();
@@ -46,42 +46,41 @@ public class ViewObjectInstanceDetailAjaxController {
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
 		TipoObjetoDOM tipo = (TipoObjetoDOM) sesion.getAttribute("tipoObjeto");
 		ModelAndView model;
-//		JSONObject j = new JSONObject();
-		String message;
+		JSONObject j = new JSONObject();
 		if(errorParam(request) || groupA == null || tipo == null){
 			return Constants.paramError(logManager, actionId, user.getId());
 		}
 		else{
 			int idInstancia = (new Integer(request.getParameter("idInstancia"))).intValue();
 			int modo = (new Integer(request.getParameter("modo"))).intValue();
+			int pag = (new Integer(request.getParameter("pag"))).intValue();
 			if(authManager.isAutorized(actionId, user)){
-				message = "ok";
 				ObjetoDOM obj = objectManager.getObjetoDOM(tipo, idInstancia);
-				List<TipoAtributoComplejoDOM> ac = objectManager.getTiposAtributosCompleos(tipo);
-				if(modo == 1){
-					model = new ModelAndView("ajax/2-2-detalleObjeto");
-					logManager.log(user.getId(), actionId, "Visualización de detalle de objeto ", Constants.P_OK);
-				}
-				else if(modo == 2){
-					model = new ModelAndView("ajax/2-2-modificaObjeto");
+				if(obj != null){
+					model = new ModelAndView("ajax/empty");
 					logManager.log(user.getId(), actionId2, "Visualización de detalle de objeto a modificar ", Constants.P_OK);
+					List<AtributoComplejoDOM> ac2 = objectManager.getAtributosCDisponiblesObjetoDOM(tipo,obj,pag);
+					j.put("disponibles", ac2);
 				}
 				else{
 					return Constants.paramError(logManager, actionId, user.getId());
 				}
-				model.addObject("object", obj);
-				model.addObject("tatributoc",ac);
+				List<AtributoComplejoDOM> actual = objectManager.getAtributosCPorTipo(obj,pag);
+				j.put("actual", actual);
+				j.put("modo",modo);
+				j.put("pag",pag);
 			}
 			else{
-				return Constants.noPrivilegesA(user, logManager, actionId, "Visualización de detalle de objeto");
+				return Constants.noPrivilegesJ(user, logManager, actionId, "Visualización de detalle de objeto");
 			}
 		}
-		model.addObject("message", message);
+		model.addObject("json", j);
 		return model;
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
 		return request.getParameter("idInstancia") == null &&
-				request.getParameter("modo") == null;
+				request.getParameter("modo") == null &&
+				request.getParameter("pag") == null;
 	}
 }
