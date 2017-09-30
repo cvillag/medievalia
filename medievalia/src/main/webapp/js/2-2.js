@@ -11,6 +11,8 @@ var oldModDetAct = 0;
 var idInstanciaModificar = 0;
 var pag = 0;
 var pagCarga = 0;
+var cambioAtrSim = 0;
+var firstC = 0;
 
 function postCarga(){
 	//alert("Acciones de botones");
@@ -92,18 +94,19 @@ function postCarga(){
 	});
 	
 	$(".modifySObjeto").click(function(){
+		$("#contenidoDetalle").empty();
 		oldModDetAct = 0;
 		modDetAct = 0;
 		name = $(this).data("name");
-		$("#nombreObjetoDetalle").html(name);
-		$("#modalDetalleObjeto").modal();
+		$("#nombreObjetoDetalle2").html(name);
+		$("#modalDetalleObjeto2").modal();
 		idInstanciaModificar = $(this).data('val');
 		$.post("objectDetail.do",{
 			idInstancia : $(this).data('val'),
 			modo : 2
 		},
 		function(data){
-			$("#contenidoDetalle").html(data);
+			$("#contenidoDetalle2").html(data);
 			var i = 0;
 			var s = $(".modDetAtributosC").size();
 			$(".modDetAtributosC").each(function(){
@@ -117,11 +120,12 @@ function postCarga(){
 				}
 			});
 			//postCargaDetalle2();
-			postCargaDetalle();
+			postCargaDetalle(1);
 		});
 	});
 	
 	$(".detalleObjeto").click(function(){
+		$("#contenidoDetalle2").empty();
 		oldModDetAct = 0;
 		modDetAct = 0;
 		id = $(this).data("val");
@@ -134,7 +138,7 @@ function postCarga(){
 		},
 		function(data){
 			$("#contenidoDetalle").html(data);
-			postCargaDetalle();
+			postCargaDetalle(0);
 		});
 	});
 }
@@ -159,7 +163,7 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 			var nom = obj[d].instanciaHijo.nombre;
 			var tipo = obj[d].instanciaHijo.tipo.tipoDOM;
 			var idInst = obj[d].instanciaHijo.idInstancia;
-			$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-sm btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'"><span class="glyphicon glyphicon-arrow-right"></span></button>'+nom+'</li>');
+			$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'">&nbsp;<span class="glyphicon glyphicon-arrow-right"></span></button>'+nom+'</li>');
 		}
 		
 		$("#rowPag"+pagina).append('<div class="col-xs-6 form-group"><label>Disponible</fmt:message></label><ul class="list-group" id="listD'+pagina+'"></ul></div>');
@@ -167,7 +171,7 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 			var nom = disp[d].instanciaHijo.nombre;
 			var tipo = disp[d].instanciaHijo.tipo.tipoDOM;
 			var idInst = disp[d].instanciaHijo.idInstancia;
-			$("#listD"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="addAtC'+tipo+'-'+idInst+'" class="btn btn-sm btn-default addComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'"><span class="glyphicon glyphicon-arrow-left"></span></button>'+nom+'</li>');
+			$("#listD"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="addAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default addComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'">&nbsp;<span class="glyphicon glyphicon-arrow-left"></span></button>'+nom+'</li>');
 		}
 		if(recarga == 1){
 			postCargaDetalle2();
@@ -177,7 +181,7 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 }
 
 //Esta función únicamente se llama la primera vez que se construye el modal
-function postCargaDetalle(){
+function postCargaDetalle(mod){
 	$("#modDetAtributos0").show();
 	$(".modDetAtributosC").hide();
 	$(".listaA").click(function(){
@@ -189,7 +193,28 @@ function postCargaDetalle(){
 		$("#modDetAtributos" + modDetAct).show();
 	});
 	//postCargaDetalle2();
+	if(mod == 1){
+		if(firstC == 0){
+			$("#modalsave").click(function(){
+				if(cambioAtrSim == 1){
+					alert("guardamos");
+				}
+				cambioAtrSim = 0;
+				$("#modalDetalleObjeto2").modal("hide");
+			});
+			$("#modalcanc").click(function(){
+				cambioAtrSim = 0;
+				$("#modalDetalleObjeto2").modal("hide");
+			});
+			firstC = 1;
+		}
+		
+		$(".atrSim").change(function(){
+			cambioAtrSim = 1;
+		});
+	}
 }
+
 
 //Esta función se llama cada vez que se ha de recargar el modal (sin cerrarlo) por adición o borrado de atributo complejo
 function postCargaDetalle2(){

@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cvilla.medievalia.domain.AtributoComplejoDOM;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.ObjetoDOM;
-import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;

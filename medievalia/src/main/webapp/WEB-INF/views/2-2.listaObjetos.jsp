@@ -141,6 +141,31 @@ else{ %>
 </div>
 
 
+<div id="modalDetalleObjeto2" class="modal fade modal-lg" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal110"></fmt:message>&nbsp;<span id="nombreObjetoDetalle2"></span>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div id="contenidoDetalle2">
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalcanc" class="btn btn-sm btn-default">
+					<fmt:message key="general.cancelar" ></fmt:message>
+				</button>
+				<button type="button" id="modalsave" class="btn btn-sm btn-default">
+					<fmt:message key="general.guardar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <!-- Diálogos modales de creación de objetos -->
 <div id="modalCreaObjeto1" class="modal fade" role="dialog">
 	<div class="modal-dialog">

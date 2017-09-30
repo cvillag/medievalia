@@ -11,6 +11,7 @@
 User user = (User) session.getAttribute("user");
 String type= (String) request.getAttribute("message");
 ObjetoDOM objeto = (ObjetoDOM) request.getAttribute("object");
+boolean disabled = ((Integer) request.getAttribute("modo")).intValue() == 1;
 @SuppressWarnings("unchecked")
 List<TipoAtributoComplejoDOM> listaTipos = (List<TipoAtributoComplejoDOM>) request.getAttribute("tatributoc");
 List<AtributoComplejoDOM> acl = objeto.getAtributosComplejos();
@@ -46,15 +47,15 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-3 form-group">
 							<label for="dia"><fmt:message key="p2.2.detalle.dia"></fmt:message></label>
-							<input type="number" id="dia<%=as.getIdAtributo() %>" value="<%=((SpecialDate)as.getValor()).getDia()%>" size="2" min="1" max="12" class="inputDays form-control">
+							<input type="number" <%=disabled?"disabled":"" %> id="dia<%=as.getIdAtributo() %>" value="<%=((SpecialDate)as.getValor()).getDia()%>" size="2" min="1" max="12" class="inputDays form-control">
 						</div>
 						<div class="col-xs-3 form-group">
 							<label for="mes"><fmt:message key="p2.2.detalle.mes"></fmt:message></label>
-							<input type="number" id="mes<%=as.getIdAtributo() %>" value="<%=((SpecialDate) as.getValor()).getMes()%>" size="2" min="1" max="12" class="inputMonths form-control">
+							<input type="number" <%=disabled?"disabled":"" %> id="mes<%=as.getIdAtributo() %>" value="<%=((SpecialDate) as.getValor()).getMes()%>" size="2" min="1" max="12" class="inputMonths form-control">
 						</div>
 						<div class="col-xs-3 form-group">
 							<label for="anio"><fmt:message key="p2.2.detalle.anio"></fmt:message></label>
-							<input type="number" id="anio<%=as.getIdAtributo() %>" value="<%=((SpecialDate) as.getValor()).getAnio()%>"  size="2" min="1" max="12" class="inputYears form-control"	>
+							<input type="number" <%=disabled?"disabled":"" %> id="anio<%=as.getIdAtributo() %>" value="<%=((SpecialDate) as.getValor()).getAnio()%>"  size="2" min="1" max="12" class="inputYears form-control"	>
 						</div>
 					</div>
 					<%
@@ -65,7 +66,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="double"><%=as.getNombreTipoAtributo() %></label>
-							<input type="number" id="double<%=as.getIdAtributo() %>" value="<fmt:formatNumber type="number" maxFractionDigits="3" value="${d}"></fmt:formatNumber>" class="form-control">
+							<input type="number" <%=disabled?"disabled":"" %> id="double<%=as.getIdAtributo() %>" value="<fmt:formatNumber type="number" maxFractionDigits="3" value="${d}"></fmt:formatNumber>" class="form-control">
 						</div>
 					</div>
 					<%
@@ -76,7 +77,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="int"><%=as.getNombreTipoAtributo() %></label>
-							<input type="number" id="int<%=as.getIdAtributo() %>" value="<%=i%>" class="form-control">
+							<input type="number" <%=disabled?"disabled":"" %> id="int<%=as.getIdAtributo() %>" value="<%=i%>" class="form-control">
 						</div>
 					</div>
 					<%
@@ -87,7 +88,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="st"><%=as.getNombreTipoAtributo() %></label>
-							<input type="text" id="string<%=as.getIdAtributo() %>" value="<%=s%>" class="form-control">
+							<input type="text" <%=disabled?"disabled":"" %> id="string<%=as.getIdAtributo() %>" value="<%=s%>" class="form-control">
 						</div>
 					</div>
 					<%
@@ -98,7 +99,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="st"><%=as.getNombreTipoAtributo() %></label>
-							<textarea id="text<%=as.getIdAtributo() %>" class="form-control"><%=s%></textarea>
+							<textarea <%=disabled?"disabled":"" %> id="text<%=as.getIdAtributo() %>" class="form-control"><%=s%></textarea>
 						</div>
 					</div>
 					<%

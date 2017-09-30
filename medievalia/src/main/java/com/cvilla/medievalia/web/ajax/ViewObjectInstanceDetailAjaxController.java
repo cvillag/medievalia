@@ -69,6 +69,7 @@ public class ViewObjectInstanceDetailAjaxController {
 				else{
 					return Constants.paramError(logManager, actionId, user.getId());
 				}
+				model.addObject("modo",modo);
 				model.addObject("object", obj);
 				model.addObject("tatributoc",ac);
 			}

@@ -48,15 +48,15 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-3 form-group">
 							<label for="dia"><fmt:message key="p2.2.detalle.dia"></fmt:message></label>
-							<input type="number" id="dia<%=as.getIdAtributo() %>" value="<%=as.getValor()!=null?((SpecialDate)as.getValor()).getDia():""%>" size="2" min="1" max="12" class="inputDays form-control">
+							<input type="number" id="dia<%=as.getIdAtributo() %>" value="<%=as.getValor()!=null?((SpecialDate)as.getValor()).getDia():""%>" size="2" min="1" max="12" class="inputDays form-control atrSim">
 						</div>
 						<div class="col-xs-3 form-group">
 							<label for="mes"><fmt:message key="p2.2.detalle.mes"></fmt:message></label>
-							<input type="number" id="mes<%=as.getIdAtributo() %>" value="<%=as.getValor()!=null?((SpecialDate) as.getValor()).getMes():""%>" size="2" min="1" max="12" class="inputMonths form-control">
+							<input type="number" id="mes<%=as.getIdAtributo() %>" value="<%=as.getValor()!=null?((SpecialDate) as.getValor()).getMes():""%>" size="2" min="1" max="12" class="inputMonths form-control atrSim">
 						</div>
 						<div class="col-xs-3 form-group">
 							<label for="anio"><fmt:message key="p2.2.detalle.anio"></fmt:message></label>
-							<input type="number" id="anio<%=as.getIdAtributo() %>" value="<%=as.getValor()!=null?((SpecialDate) as.getValor()).getAnio():""%>"  size="2" min="1" max="12" class="inputYears form-control"	>
+							<input type="number" id="anio<%=as.getIdAtributo() %>" value="<%=as.getValor()!=null?((SpecialDate) as.getValor()).getAnio():""%>"  size="2" min="1" max="12" class="inputYears form-control atrSim"	>
 						</div>
 					</div>
 					<%
@@ -72,7 +72,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="double"><%=as.getNombreTipoAtributo() %></label>
-							<input type="number" id="double<%=as.getIdAtributo() %>" value="<%if(!nulo){ %><fmt:formatNumber type="number" maxFractionDigits="3" value="${d}"></fmt:formatNumber><%} %>" class="form-control">
+							<input type="number" id="double<%=as.getIdAtributo() %>" value="<%if(!nulo){ %><fmt:formatNumber type="number" maxFractionDigits="3" value="${d}"></fmt:formatNumber><%} %>" class="form-control atrSim">
 						</div>
 					</div>
 					<%
@@ -88,7 +88,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="int"><%=as.getNombreTipoAtributo() %></label>
-							<input type="number" id="int<%=as.getIdAtributo() %>" value="<%=nulo?i:""%>" class="form-control">
+							<input type="number" id="int<%=as.getIdAtributo() %>" value="<%=nulo?i:""%>" class="form-control atrSim">
 						</div>
 					</div>
 					<%
@@ -99,7 +99,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="st"><%=as.getNombreTipoAtributo() %></label>
-							<input type="text" id="string<%=as.getIdAtributo() %>" value="<%=s==null?s:""%>" class="form-control">
+							<input type="text" id="string<%=as.getIdAtributo() %>" value="<%=s==null?s:""%>" class="form-control atrSim">
 						</div>
 					</div>
 					<%
@@ -110,7 +110,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="st"><%=as.getNombreTipoAtributo() %></label>
-							<textarea id="text<%=as.getIdAtributo() %>" class="form-control"><%=s==null?s:""%></textarea>
+							<textarea id="text<%=as.getIdAtributo() %>" class="form-control atrSim"><%=s==null?s:""%></textarea>
 						</div>
 					</div>
 					<%
