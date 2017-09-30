@@ -54,6 +54,8 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 			int idInstancia = (new Integer(request.getParameter("idInstancia"))).intValue();
 			int modo = (new Integer(request.getParameter("modo"))).intValue();
 			int pag = (new Integer(request.getParameter("pag"))).intValue();
+			int recarga = (new Integer(request.getParameter("recarga"))).intValue();
+			j.put("recarga", recarga);
 			if(authManager.isAutorized(actionId, user)){
 				ObjetoDOM obj = objectManager.getObjetoDOM(tipo, idInstancia);
 				if(obj != null){
@@ -81,6 +83,7 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 	private boolean errorParam(HttpServletRequest request){
 		return request.getParameter("idInstancia") == null &&
 				request.getParameter("modo") == null &&
-				request.getParameter("pag") == null;
+				request.getParameter("pag") == null &&
+				request.getParameter("recarga") == null;
 	}
 }

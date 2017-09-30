@@ -104,12 +104,20 @@ function postCarga(){
 		},
 		function(data){
 			$("#contenidoDetalle").html(data);
+			var i = 0;
+			var s = $(".modDetAtributosC").size();
 			$(".modDetAtributosC").each(function(){
 				//La variable pagCarga no puede ser javascript, debe venir en data. Pasar data a JSON con la página y los objetos. Construir botones y luego postCargaDetalle()
 				pagCarga = $(this).data('num');
-				postCargaDetalle();
-				cargaAtributosComplejosPorPagina(pagCarga);
+				if(++i == s){
+					cargaAtributosComplejosPorPagina(pagCarga,1);
+				}
+				else{
+					cargaAtributosComplejosPorPagina(pagCarga,0);
+				}
 			});
+			//postCargaDetalle2();
+			postCargaDetalle();
 		});
 	});
 	
@@ -131,18 +139,20 @@ function postCarga(){
 	});
 }
 
-function cargaAtributosComplejosPorPagina(pag2){
+function cargaAtributosComplejosPorPagina(pag2,recarga){
 	$("#modDetAtributos" + pag2).empty();
 	$.post("objectDetailComplexAttributes.do",{
 		idInstancia : idInstanciaModificar,
 		modo : 2,
-		pag : pag2
+		pag : pag2,
+		recarga: recarga
 	},
 	function(data){
 		var json = JSON.parse(data);
 		var pagina = json.pag;
 		var obj = json.actual;
 		var disp = json.disponibles;
+		var recarga = json.recarga;
 		$("#modDetAtributos" + pagina).append('<div class="row" id="rowPag'+pagina+'"></div>');
 		$("#rowPag"+pagina).append('<div class="col-xs-6 form-group"><label>Actual</fmt:message></label><ul class="list-group" id="list'+pagina+'"></ul></div>');
 		for(var d in obj){
@@ -159,7 +169,9 @@ function cargaAtributosComplejosPorPagina(pag2){
 			var idInst = disp[d].instanciaHijo.idInstancia;
 			$("#listD"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="addAtC'+tipo+'-'+idInst+'" class="btn btn-sm btn-default addComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'"><span class="glyphicon glyphicon-arrow-left"></span></button>'+nom+'</li>');
 		}
-		postCargaDetalle2();
+		if(recarga == 1){
+			postCargaDetalle2();
+		}
 	}
 );
 }
@@ -176,82 +188,86 @@ function postCargaDetalle(){
 		$("#modDetAtributos" + oldModDetAct).hide();
 		$("#modDetAtributos" + modDetAct).show();
 	});
-	postCargaDetalle2();
+	//postCargaDetalle2();
 }
 
 //Esta función se llama cada vez que se ha de recargar el modal (sin cerrarlo) por adición o borrado de atributo complejo
-function postCargaDetalle2(){	 
-	 //FIXME: Pasar la carga de la lista de objetos a un ajax particular. Hacer recarga de listas tras añadir o borrar.
-	 $(".remComplexAttribute").click(function(){
-		 inst = $(this).data('inst');
-		 tipo = $(this).data('tipo');
-		 pagina3 = $(this).data('pag');
-		 name = $(this).data('name');
-		 $.post("remComplexAttribute.do",
-				 {
-			 		idInstPadre : idInstanciaModificar,
-			 		idTipoAttr : tipo,
-			 		idInstHijo : inst
-				 },
-				 function(data){
-					 var json = JSON.parse(data);
-						if(json.message == "borrado"){
-							cargaAtributosComplejosPorPagina(json.pag);
-							$("#modalRemAtributoC1").modal();
-						}
-						else if(json.message == "noType"){
-							$("#modalRemAtributoC3").modal();
-						}
-						else if(json.message == "sinPrivilegios"){
-							$("#modalRemAtributoC4").modal();
-						}
-						else if(json.message == "sinSesion"){
-							window.location.href="hello.do";
-						}
-						else if(json.message == "errorDB"){
-							$("#modalRemAtributoC5").modal();
-						}
-						else{
-							$("#modalRemAtributoC2").modal();
-						}
-				 });
-	 });
-	 
-	 $(".addComplexAttribute").click(function(){
-		 inst = $(this).data('inst');
-		 tipo = $(this).data('tipo');
-		 pag = $(this).data('pag');
-		 name = $(this).data('name');
-		 $.post("addComplexAttribute.do",
-				 {
-			 		idInstPadre : idInstanciaModificar,
-			 		idTipoAttr : tipo,
-			 		idInstHijo : inst
-				 },
-				 function(data){
-					 var json = JSON.parse(data);
-						if(json.message == "añadido"){
-							$("#modalAddAtributoC1").modal();
-							cargaAtributosComplejosPorPagina(json.pag);
-						}
-						else if(json.message == "noType"){
-							$("#modalAddAtributoC3").modal();
-						}
-						else if(json.message == "sinPrivilegios"){
-							$("#modalAddAtributoC4").modal();
-						}
-						else if(json.message == "sinSesion"){
-							window.location.href="hello.do";
-						}
-						else if(json.message == "errorDB"){
-							$("#modalAddAtributoC5").modal();
-						}
-						else{
-							$("#modalAddAtributoC2").modal();
-						}
-				 });
-	 });
+function postCargaDetalle2(){
+	$(".remComplexAttribute").unbind("click",handBotRem);
+	$(".remComplexAttribute").click(handBotRem);
+	$(".addComplexAttribute").unbind("click",handBotAdd); 
+	$(".addComplexAttribute").click(handBotAdd);
 }
+
+var handBotAdd = function botonAddComplesAttr(){
+	 inst = $(this).data('inst');
+	 tipo = $(this).data('tipo');
+	 pag = $(this).data('pag');
+	 name = $(this).data('name');
+	 $.post("addComplexAttribute.do",
+			 {
+		 		idInstPadre : idInstanciaModificar,
+		 		idTipoAttr : tipo,
+		 		idInstHijo : inst
+			 },
+			 function(data){
+				 var json = JSON.parse(data);
+					if(json.message == "añadido"){
+						$("#modalAddAtributoC1").modal();
+						cargaAtributosComplejosPorPagina(json.pag,1);
+					}
+					else if(json.message == "noType"){
+						$("#modalAddAtributoC3").modal();
+					}
+					else if(json.message == "sinPrivilegios"){
+						$("#modalAddAtributoC4").modal();
+					}
+					else if(json.message == "sinSesion"){
+						window.location.href="hello.do";
+					}
+					else if(json.message == "errorDB"){
+						$("#modalAddAtributoC5").modal();
+					}
+					else{
+						$("#modalAddAtributoC2").modal();
+					}
+			 });
+ }
+
+var handBotRem = function botonRemComplexAttr(){
+	 inst = $(this).data('inst');
+	 tipo = $(this).data('tipo');
+	 pagina3 = $(this).data('pag');
+	 name = $(this).data('name');
+	 $.post("remComplexAttribute.do",
+		 {
+	 		idInstPadre : idInstanciaModificar,
+	 		idTipoAttr : tipo,
+	 		idInstHijo : inst
+		 },
+		 function(data){
+			 var json = JSON.parse(data);
+				if(json.message == "borrado"){
+					cargaAtributosComplejosPorPagina(json.pag,1);
+					$("#modalRemAtributoC1").modal();
+				}
+				else if(json.message == "noType"){
+					$("#modalRemAtributoC3").modal();
+				}
+				else if(json.message == "sinPrivilegios"){
+					$("#modalRemAtributoC4").modal();
+				}
+				else if(json.message == "sinSesion"){
+					window.location.href="hello.do";
+				}
+				else if(json.message == "errorDB"){
+					$("#modalRemAtributoC5").modal();
+				}
+				else{
+					$("#modalRemAtributoC2").modal();
+				}
+		 });
+ }
 
 function postCarga2(){
 	$(".saveStudentNewName").hide();

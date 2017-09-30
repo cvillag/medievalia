@@ -350,7 +350,7 @@ else{ %>
 				</h4>
 			</div>
 			<div class="modal-body">
-				<div class="alert alert-danger">
+				<div class="alert alert-success">
 					<fmt:message key="p2-2.modal61"></fmt:message>
 				</div>				
 			</div>
