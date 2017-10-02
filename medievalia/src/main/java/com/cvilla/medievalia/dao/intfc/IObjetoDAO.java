@@ -22,4 +22,7 @@ public interface IObjetoDAO {
 	public AtributoComplejoDOM getAtributoComplejoNotVal(int tipoDOM, int padre,int tipoHijo, int hijo);
 	public List<AtributoComplejoDOM> getAtributosComplejosNotVal(TipoObjetoDOM tipo, int id);
 	public String remAtributoComplejo(AtributoComplejoDOM acd, int padre);
+	public String updateSimpleAttributes(ObjetoDOM obj);
+	public ObjetoDOM getObjectByName(TipoObjetoDOM tipo, String nombre);
+	public String renameObject(TipoObjetoDOM tipo, int id, String nombre);
 }

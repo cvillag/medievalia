@@ -6,7 +6,7 @@ public class Fechas {
 
 	public static boolean fechaIncorrecta(Integer dia, Integer mes, Integer año){
 		if(dia == null || mes == null || año == null){
-			return false;
+			return true;
 		}
 		else{
 			int m = mes.intValue();

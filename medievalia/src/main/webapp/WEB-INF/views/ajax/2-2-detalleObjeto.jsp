@@ -14,8 +14,8 @@ ObjetoDOM objeto = (ObjetoDOM) request.getAttribute("object");
 boolean disabled = ((Integer) request.getAttribute("modo")).intValue() == 1;
 @SuppressWarnings("unchecked")
 List<TipoAtributoComplejoDOM> listaTipos = (List<TipoAtributoComplejoDOM>) request.getAttribute("tatributoc");
-List<AtributoComplejoDOM> acl = objeto.getAtributosComplejos();
 if(objeto != null){
+	List<AtributoComplejoDOM> acl = objeto.getAtributosComplejos();
 	%>
 	<ul class="nav nav-tabs">
 		<li class="active listaA" data-val="0"><a href="#"><fmt:message key="p2.2.detalle.atributos"></fmt:message></a></li>
@@ -60,24 +60,32 @@ if(objeto != null){
 					</div>
 					<%
 				}
+				//FIXME : no se muestra double
 				else if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_DOUBLE){
-					double d = ((Double)as.getValor()).doubleValue();
+					boolean nulo = as.getValor() == null;
+					String d = "";
+					if(!nulo)
+						d = ((Double)as.getValor()).toString();
 					%>
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="double"><%=as.getNombreTipoAtributo() %></label>
-							<input type="number" <%=disabled?"disabled":"" %> id="double<%=as.getIdAtributo() %>" value="<fmt:formatNumber type="number" maxFractionDigits="3" value="${d}"></fmt:formatNumber>" class="form-control">
+							<input type="number" <%=disabled?"disabled":"" %> id="double<%=as.getIdAtributo() %>" value="<%=d%>"
+							 	class="form-control">
 						</div>
 					</div>
 					<%
 				}
 				else if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_INT){
-					int i = ((Integer)as.getValor()).intValue();
+					boolean nulo = as.getValor() == null;
+					int i=0;
+					if(!nulo)
+						i = ((Integer)as.getValor()).intValue();
 					%>
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="int"><%=as.getNombreTipoAtributo() %></label>
-							<input type="number" <%=disabled?"disabled":"" %> id="int<%=as.getIdAtributo() %>" value="<%=i%>" class="form-control">
+							<input type="number" <%=disabled?"disabled":"" %> id="int<%=as.getIdAtributo() %>" value="<%if(!nulo){ %><%=i%><%} %>" class="form-control">
 						</div>
 					</div>
 					<%

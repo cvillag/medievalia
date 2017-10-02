@@ -78,6 +78,20 @@ public class ObjetoDAO implements IObjetoDAO {
  		+ "left join AtributoComplejoObjeto on sel1.idObjetoPadre = AtributoComplejoObjeto.idObjetoPadre and sel1.idObjetoHijo = AtributoComplejoObjeto.idObjetoHijo) as sel2 "
 		+ "left join InstanciaObjeto on InstanciaObjeto.idInstancia = sel2.idInstanciaHijo and InstanciaObjeto.idObjeto = sel2.idObjetoHijo";
 	private static final String DELETE_COMPLEX_ATTRIBUTE = "DELETE FROM `InstanciaAtributoComplejo` WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ? and `idInstanciaPadre` = ? and `idInstanciaHijo` = ?";
+	private static final String UPDATE_SIMPLE_ATTRIBUTE_DATE = "UPDATE `InstanciaAtributoDate` SET `dia`=?,`mes`=?,`anio`=? WHERE `idInstancia`=? and `idAtributoSencillo`=? and `idObjeto`=?";
+	private static final String UPDATE_SIMPLE_ATTRIBUTE_INT = "UPDATE `InstanciaAtributoInt` SET `valor`=? WHERE `idInstancia`=? and `idAtributoSencillo`=? and `idObjeto`=?";
+	private static final String UPDATE_SIMPLE_ATTRIBUTE_DOUBLE = "UPDATE `InstanciaAtributoDouble` SET `valor`=? WHERE `idInstancia`=? and `idAtributoSencillo`=? and `idObjeto`=?";
+	private static final String UPDATE_SIMPLE_ATTRIBUTE_STRING = "UPDATE `InstanciaAtributoString` SET `valor`=? WHERE `idInstancia`=? and `idAtributoSencillo`=? and `idObjeto`=?";
+	private static final String UPDATE_SIMPLE_ATTRIBUTE_TEXT = "UPDATE `InstanciaAtributoText` SET `valor`=? WHERE `idInstancia`=? and `idAtributoSencillo`=? and `idObjeto`=?";
+	
+	private static final String INSERT_SIMPLE_ATTRIBUTE_DATE = "INSERT INTO `InstanciaAtributoDate`(`idInstancia`, `idAtributoSencillo`, `idObjeto`, `dia`, `mes`, `anio`) VALUES (?,?,?,?,?,?)";
+	private static final String INSERT_SIMPLE_ATTRIBUTE_INT = "INSERT INTO `InstanciaAtributoInt`(`idInstancia`, `idAtributoSencillo`, `idObjeto`, `valor`) VALUES (?,?,?,?)";
+	private static final String INSERT_SIMPLE_ATTRIBUTE_DOUBLE = "INSERT INTO `InstanciaAtributoDouble`(`idInstancia`, `idAtributoSencillo`, `idObjeto`, `valor`) VALUES (?,?,?,?)";
+	private static final String INSERT_SIMPLE_ATTRIBUTE_STRING = "INSERT INTO `InstanciaAtributoString`(`idInstancia`, `idAtributoSencillo`, `idObjeto`, `valor`) VALUES (?,?,?,?)";
+	private static final String INSERT_SIMPLE_ATTRIBUTE_TEXT = "INSERT INTO `InstanciaAtributoText`(`idInstancia`, `idAtributoSencillo`, `idObjeto`, `valor`) VALUES (?,?,?,?)";
+	private static final String GET_OBJECT_BY_NAME = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaObjeto` WHERE idObjeto = ? and nombreInstancia = ?";
+	private static final String RENAME_OBJECT = "UPDATE `InstanciaObjeto` SET `nombreInstancia`= ? WHERE `idObjeto` = ? and `idInstancia` = ?";
+
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -267,6 +281,94 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 		catch(Exception e){
 			return "errorBD";
+		}
+	}
+
+	public String updateSimpleAttributes(ObjetoDOM obj) {
+		int idi = obj.getIdInstancia();
+		int idt = obj.getTipo().getTipoDOM();
+		try{
+			for(AtributoSencilloDOM a : obj.getAtributosSencillos()){
+				if(a.getTipoAtributo() == Constants.TIPO_ATRIBUTO_FECHA){
+					SpecialDate d = (SpecialDate) a.getValor();
+					int i = jdbcTemplate.update(UPDATE_SIMPLE_ATTRIBUTE_DATE, new Object[]{d.getDia(),d.getMes(),d.getAnio(),idi,a.getIdAtributo(),idt});
+					if(i != 1){
+						i = jdbcTemplate.update(INSERT_SIMPLE_ATTRIBUTE_DATE, new Object[]{idi,a.getIdAtributo(),idt,d.getDia(),d.getMes(),d.getAnio()});
+						if( i != 1){
+							return "errorDB";
+						}
+					}
+				}
+				else if(a.getTipoAtributo() == Constants.TIPO_ATRIBUTO_INT){
+					Integer d = (Integer) a.getValor();
+					int i = jdbcTemplate.update(UPDATE_SIMPLE_ATTRIBUTE_INT, new Object[]{d.intValue(),idi,a.getIdAtributo(),idt});
+					if(i != 1){
+						i = jdbcTemplate.update(INSERT_SIMPLE_ATTRIBUTE_INT, new Object[]{idi,a.getIdAtributo(),idt,d.intValue()});
+						if(i != 1){
+							return "errorDB";
+						}
+					}
+				}
+				else if(a.getTipoAtributo() == Constants.TIPO_ATRIBUTO_DOUBLE){
+					Double d = (Double) a.getValor();
+					int i = jdbcTemplate.update(UPDATE_SIMPLE_ATTRIBUTE_DOUBLE, new Object[]{d.doubleValue(),idi,a.getIdAtributo(),idt});
+					if(i != 1){
+						i = jdbcTemplate.update(INSERT_SIMPLE_ATTRIBUTE_DOUBLE, new Object[]{idi,a.getIdAtributo(),idt,d.doubleValue()});
+						if(i != 1){
+							return "errorDB";
+						}
+					}
+				}
+				else if(a.getTipoAtributo() == Constants.TIPO_ATRIBUTO_STRING){
+					String d = (String) a.getValor();
+					int i = jdbcTemplate.update(UPDATE_SIMPLE_ATTRIBUTE_STRING, new Object[]{d,idi,a.getIdAtributo(),idt});
+					if(i != 1){
+						i = jdbcTemplate.update(INSERT_SIMPLE_ATTRIBUTE_STRING, new Object[]{idi,a.getIdAtributo(),idt,d});
+						if(i != 1){
+							return "errorDB";	
+						}
+					}
+				}
+				else if(a.getTipoAtributo() == Constants.TIPO_ATRIBUTO_TEXT){
+					String d = (String) a.getValor();
+					int i = jdbcTemplate.update(UPDATE_SIMPLE_ATTRIBUTE_TEXT, new Object[]{d,idi,a.getIdAtributo(),idt});
+					if(i != 1){
+						i = jdbcTemplate.update(INSERT_SIMPLE_ATTRIBUTE_TEXT, new Object[]{idi,a.getIdAtributo(),idt,d});
+						if(i != 1){
+							return "errorDB";
+						}
+					}
+				}
+				else{
+					return "errorAtributos";
+				}
+			}
+			return "ok";
+		}
+		catch(Exception e){
+			return "errorDB";
+		}
+	}
+
+	public ObjetoDOM getObjectByName(TipoObjetoDOM tipo, String nombre) {
+		try{
+			return jdbcTemplate.queryForObject(GET_OBJECT_BY_NAME, new Object[]{tipo.getTipoDOM(),nombre},new ObjetoDOMMapper());
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
+
+	public String renameObject(TipoObjetoDOM tipo, int id, String nombre) {
+		try{
+			int i = jdbcTemplate.update(RENAME_OBJECT, new Object[]{nombre,tipo.getTipoDOM(),id});
+			if(i == 1)
+				return "ok";
+			else
+				return "errorDB";
+		}
+		catch(Exception e){
+			return "errorDB";
 		}
 	}
 }

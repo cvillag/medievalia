@@ -72,4 +72,5 @@ public interface IObjectManager extends Serializable{
 	public List<AtributoComplejoDOM> getAtributosCDisponiblesObjetoDOM(	TipoObjetoDOM tipo, ObjetoDOM obj, int pag);
 	
 	public List<AtributoComplejoDOM> getAtributosCPorTipo(ObjetoDOM obj, int pag);
+	public String modifySimpleAttribute(ObjetoDOM obj);
 }

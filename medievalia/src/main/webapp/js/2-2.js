@@ -14,6 +14,14 @@ var pagCarga = 0;
 var cambioAtrSim = 0;
 var firstC = 0;
 
+function cancelaEdicion(val,ol){
+	$("#objetoName" + val).val(ol);
+	activadoCom = 0;
+	$("#cancelObjeto" + val).hide();
+	$("#saveObjeto" + val).hide();
+	$("#objetoName" + val).attr("disabled","true");
+}
+
 function postCarga(){
 	//alert("Acciones de botones");
 	
@@ -36,11 +44,7 @@ function postCarga(){
 	});
 	
 	$(".cancelNewName").click(function(){
-		$("#objetoName" + $(this).data('val')).val(oldnameCom);
-		activadoCom = 0;
-		$("#cancelObjeto" + $(this).data('val')).hide();
-		$("#saveObjeto" + $(this).data('val')).hide();
-		$("#objetoName" + $(this).data('val')).attr("disabled","true");
+		cancelaEdicion($(this).data('val'),oldnameCom);
 	});
 	
 	$(".saveNewName").click(function(){
@@ -48,32 +52,37 @@ function postCarga(){
 			$("#modalModificaObjeto1").modal();
 		}
 		else{
-			$.post("renameObjectA.do",{
-				idInstancia : $(this).data('val'),
-				newNombre : $("#objetoName" + $(this).data('val')).val()
-			},
-			function(data){
-				var json = JSON.parse(data);
-				if(json.message == "cambiado"){
-					$("#modalModificaObjeto2").modal();
-					$("#objetoName" + activadoCom).attr("disabled","true");
-					$("#saveObjeto" + activadoCom).hide();
-					$("#cancelObjeto" + activadoCom).hide();
-					activadoCom = 0;
-				}
-				else{
-					$("#objetoName" + json.id).val(json.oldname);
-					if(json.message == "noExist"){
-						$("#modalModificaObjeto3").modal();
-					}
-					else if(json.message == "repeated"){
-						$("#modalModificaObjeto5").modal();
+			if($("#objetoName" + $(this).data('val')).val() == $("#objeto" + $(this).data('nom'))){
+			cancelaEdicion($(this).data('val'),oldnameCom);
+			}
+			else{
+				$.post("renameObjectA.do",{
+					idInstancia : $(this).data('val'),
+					newNombre : $("#objetoName" + $(this).data('val')).val()
+				},
+				function(data){
+					var json = JSON.parse(data);
+					if(json.message == "ok"){
+						$("#modalModificaObjeto2").modal();
+						$("#objetoName" + activadoCom).attr("disabled","true");
+						$("#saveObjeto" + activadoCom).hide();
+						$("#cancelObjeto" + activadoCom).hide();
+						activadoCom = 0;
 					}
 					else{
-						$("#modalModificaObjeto4").modal();
+						$("#objetoName" + json.id).val(json.oldname);
+						if(json.message == "noObject"){
+							$("#modalModificaObjeto3").modal();
+						}
+						else if(json.message == "nameRepeated"){
+							$("#modalModificaObjeto5").modal();
+						}
+						else{
+							$("#modalModificaObjeto4").modal();
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 	});
 	
@@ -137,7 +146,7 @@ function postCarga(){
 			modo : 1
 		},
 		function(data){
-			$("#contenidoDetalle").html(data);
+			$("#contenidoDetalle").html(data);	
 			postCargaDetalle(0);
 		});
 	});
@@ -197,7 +206,29 @@ function postCargaDetalle(mod){
 		if(firstC == 0){
 			$("#modalsave").click(function(){
 				if(cambioAtrSim == 1){
-					alert("guardamos");
+					var form1 = $("#simpleAttributeForm").serialize();
+					$.post("simpleAttributes.do",form1,
+						function(data){
+							var json = JSON.parse(data);
+							if(json.message == "ok"){
+								$("#modalModAtributoS1").modal();
+							}
+							else if(json.message == "errorAtributos"){
+								$("#modalModAtributoS2").modal();
+							}
+							else if(json.message == "errorDB"){
+								$("#modalModAtributoS3").modal();
+							}
+							else if(json.message == "sinPrivilegios"){
+								$("#modalModAtributoS4").modal();
+							}
+							else if(json.message == "sinSesion"){
+								window.location.href="hello.do";
+							}
+							else{
+								$("#modalModAtributoS3").modal();
+							}
+					});
 				}
 				cambioAtrSim = 0;
 				$("#modalDetalleObjeto2").modal("hide");

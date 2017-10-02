@@ -87,10 +87,20 @@ public class ObjectManager implements IObjectManager {
 		return objetoDAO.createObjectInstance(o);
 	}
 
-	public String renameObjetoDOM(TipoObjetoDOM tipo, String nombre, int id,
-			User user, Group groupA) {
-		// TODO Auto-generated method stub
-		return null;
+	public String renameObjetoDOM(TipoObjetoDOM tipo, String nombre, int id, User user, Group groupA) {
+		
+		if(nombre.length() >= Constants.MIN_PERSONAGE_NAME){
+			ObjetoDOM o = objetoDAO.getObjectByName(tipo,nombre);
+			if(o == null){
+				return objetoDAO.renameObject(tipo,id,nombre);
+			}
+			else{
+				return "nameRepeated";
+			}
+		}
+		else{
+			return "noLength";
+		}
 	}
 
 	public String renameObjetoDOMOwn(TipoObjetoDOM tipo, String nombre, int id,
@@ -306,5 +316,9 @@ public class ObjectManager implements IObjectManager {
 			}
 			return retl;
 		}
+	}
+
+	public String modifySimpleAttribute(ObjetoDOM obj) {
+		return objetoDAO.updateSimpleAttributes(obj);
 	}
 }
