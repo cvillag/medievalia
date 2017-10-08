@@ -91,6 +91,7 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String INSERT_SIMPLE_ATTRIBUTE_TEXT = "INSERT INTO `InstanciaAtributoText`(`idInstancia`, `idAtributoSencillo`, `idObjeto`, `valor`) VALUES (?,?,?,?)";
 	private static final String GET_OBJECT_BY_NAME = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaObjeto` WHERE idObjeto = ? and nombreInstancia = ?";
 	private static final String RENAME_OBJECT = "UPDATE `InstanciaObjeto` SET `nombreInstancia`= ? WHERE `idObjeto` = ? and `idInstancia` = ?";
+	private static final String DELETE_OBJECT = "DELETE FROM `InstanciaObjeto` WHERE `idInstancia` = ? and `idObjeto` = ?";
 
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
@@ -369,6 +370,21 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 		catch(Exception e){
 			return "errorDB";
+		}
+	}
+
+	public String deleteObjetoDOM(ObjetoDOM obj) {
+		try{
+			int i = jdbcTemplate.update(DELETE_OBJECT, new Object[]{obj.getIdInstancia(),obj.getTipo().getTipoDOM()});
+			if(i == 1){
+				return "borrado";
+			}
+			else{
+				return "error";
+			}
+		}
+		catch(Exception e){
+			return "errorBD";
 		}
 	}
 }

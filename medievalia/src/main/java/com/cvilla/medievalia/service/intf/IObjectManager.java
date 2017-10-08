@@ -35,12 +35,12 @@ public interface IObjectManager extends Serializable{
 	//Modificar objeto no validado propio, ACCION 10
 	/**/public String renameObjetoDOMOwn(TipoObjetoDOM tipo, String nombre, int id, User user, Group groupA);
 	//Eliminar objeto validado, ACCION 5
-	/**/public String deleteObjetoDOM(TipoObjetoDOM tipo, int id, User user, Group groupA);
+	public String deleteObjetoDOM(ObjetoDOM obj, User user, Group groupA);
 	
 	//Lista de objetos sin validar propios, ACCION 3
 	/**/public List<ObjetoDOM> getStudentObjetoDOMList(TipoObjetoDOM tipo, User user);
 	//Eliminar objeto no validado propio, ACCION 7
-	/**/public String deleteObjetoDOMOwn(TipoObjetoDOM tipo, int id, User user, Group groupA);
+	public String deleteObjetoDOMOwn(ObjetoDOM obj, User user, Group groupA);
 	
 	//Lista de objetos sin validar, ACCION 2
 	/**/public List<ObjetoDOM> getTeachersObjetoDOMList(TipoObjetoDOM tipo, User user, Group groupA);
@@ -73,4 +73,6 @@ public interface IObjectManager extends Serializable{
 	
 	public List<AtributoComplejoDOM> getAtributosCPorTipo(ObjetoDOM obj, int pag);
 	public String modifySimpleAttribute(ObjetoDOM obj);
+	
+	
 }

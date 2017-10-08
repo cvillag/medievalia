@@ -55,8 +55,8 @@ public class Constants {
 	public static final int P_RENAME_OBJECT_INSTANCE = 42;
 	public static final int P_MODIFY_OBJECT_INSTANCE = 43;
 	public static final int P_VALIDATE_COMPLEX_ATTRIBUTE = 44;
-	public static final int P_VALIDATE_SIMPLE_ATTRIBUTE = 45;
-	public static final int P_RENAME_OBJECT_INSTANCE_OWN = 46;
+	public static final int P_RENAME_OBJECT_INSTANCE_OWN = 45;
+	public static final int P_DELETE_OBJECT_INSTANCE_OWN = 46;
 	
 	//TODO: Permisos a eliminar tras la refactorización
 //	public static final int P_TOPIC_LIST = 21;

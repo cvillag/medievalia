@@ -109,10 +109,8 @@ public class ObjectManager implements IObjectManager {
 		return null;
 	}
 
-	public String deleteObjetoDOM(TipoObjetoDOM tipo, int id, User user,
-			Group groupA) {
-		// TODO Auto-generated method stub
-		return null;
+	public String deleteObjetoDOM(ObjetoDOM obj, User user, Group groupA){
+		return objetoDAO.deleteObjetoDOM(obj);
 	}
 
 	public List<ObjetoDOM> getStudentObjetoDOMList(TipoObjetoDOM tipo, User user) {
@@ -120,10 +118,18 @@ public class ObjectManager implements IObjectManager {
 		return null;
 	}
 
-	public String deleteObjetoDOMOwn(TipoObjetoDOM tipo, int id, User user,
-			Group groupA) {
-		// TODO Auto-generated method stub
-		return null;
+	public String deleteObjetoDOMOwn(ObjetoDOM obj, User user,	Group groupA) {
+		if(obj.getCreador() == user.getId()){
+			if(obj.getGrupo() == groupA.getIdGrupo()){
+				return objetoDAO.deleteObjetoDOM(obj);
+			}
+			else{
+				return "noGroup";
+			}
+		}
+		else{
+			return "noOwner";
+		}
 	}
 
 	public List<ObjetoDOM> getTeachersObjetoDOMList(TipoObjetoDOM tipo,

@@ -25,4 +25,5 @@ public interface IObjetoDAO {
 	public String updateSimpleAttributes(ObjetoDOM obj);
 	public ObjetoDOM getObjectByName(TipoObjetoDOM tipo, String nombre);
 	public String renameObject(TipoObjetoDOM tipo, int id, String nombre);
+	public String deleteObjetoDOM(ObjetoDOM obj);
 }

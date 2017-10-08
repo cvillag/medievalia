@@ -678,6 +678,31 @@ else{ %>
 <!-- SIN USO AUN -->
 
 <!-- Diálogos modales de borrado de objetos -->
+<div id="modalBorraObjeto0" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal20"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger">
+					<p class="text-center"><strong><fmt:message key="p2-2.modal21"></fmt:message></strong></p>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalDeleteCanc" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.cancelar" ></fmt:message>
+				</button>
+				<button type="button" id="modalDelete" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.borrar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div id="modalBorraObjeto1" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -688,7 +713,7 @@ else{ %>
 			</div>
 			<div class="modal-body">
 				<div class="alert alert-success">
-					<fmt:message key="p2-2.modal21"></fmt:message>
+					<fmt:message key="p2-2.modal22"></fmt:message>
 				</div>				
 			</div>
 			<div class="modal-footer">
@@ -709,7 +734,7 @@ else{ %>
 			</div>
 			<div class="modal-body">
 				<div class="alert alert-danger">
-					<fmt:message key="p2-2.modal22"></fmt:message>
+					<fmt:message key="p2-2.modal23"></fmt:message>
 				</div>				
 			</div>
 			<div class="modal-footer">
