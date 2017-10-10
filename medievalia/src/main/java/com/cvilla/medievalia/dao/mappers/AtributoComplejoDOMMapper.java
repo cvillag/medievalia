@@ -5,14 +5,15 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.cvilla.medievalia.domain.AtributoComplejoDOM;
-import com.cvilla.medievalia.domain.ObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
+import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.User;
 
-public class AtributoComplejoDOMMapper implements RowMapper<AtributoComplejoDOM>{
+public class AtributoComplejoDOMMapper implements RowMapper<InstanciaAtributoComplejoDOM>{
 	
-	public AtributoComplejoDOM mapRow(ResultSet rs, int rowNum) throws SQLException {
-		AtributoComplejoDOM a = new AtributoComplejoDOM();
+	public InstanciaAtributoComplejoDOM mapRow(ResultSet rs, int rowNum) throws SQLException {
+		InstanciaAtributoComplejoDOM a = new InstanciaAtributoComplejoDOM();
 		TipoObjetoDOM tipoPadre = new TipoObjetoDOM();
 		tipoPadre.setTipoDOM(rs.getInt("idObjetoPadre"));
 		tipoPadre.setNombreDOM(rs.getString("nombreObjetoPadre"));
@@ -21,14 +22,16 @@ public class AtributoComplejoDOMMapper implements RowMapper<AtributoComplejoDOM>
 		tipoHijo.setTipoDOM(rs.getInt("idObjetoHijo"));
 		tipoHijo.setNombreDOM(rs.getString("nombreObjetoHijo"));
 		a.setTipoHijo(tipoHijo);
-		ObjetoDOM iHijo = new ObjetoDOM();
+		InstanciaObjetoDOM iHijo = new InstanciaObjetoDOM();
 		iHijo.setIdInstancia(rs.getInt("idInstanciaHijo"));
 		iHijo.setTipo(tipoPadre);
 		iHijo.setNombre(rs.getString("nombreObjetoHijo"));
 		iHijo.setValidado(rs.getInt("validadoHijo"));
 		iHijo.setTextoValidacion(rs.getString("textoValidacionHijo"));
 		iHijo.setGrupo(rs.getInt("idGrupoHijo"));
-		iHijo.setCreador(rs.getInt("creadorHijo"));
+		User u = new User();
+		u.setId(rs.getInt("creadorHijo"));
+		iHijo.setCreador(u);
 		a.setInstanciaHijo(iHijo);
 		a.setNombreAtributo(rs.getString("nombreAtributo"));
 		a.setCreador(rs.getInt("creadorPadre"));

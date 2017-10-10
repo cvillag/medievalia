@@ -12,10 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cvilla.medievalia.domain.AtributoComplejoDOM;
-import com.cvilla.medievalia.domain.AtributoSencilloDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.ObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
@@ -64,7 +64,7 @@ public class SimpleAttributeAjaxController {
 			}
 			else{
 				int id = (new Integer(request.getParameter("idInstanciaObjeto"))).intValue();
-				ObjetoDOM obj = objectManager.getObjetoDOM(tipo, id);
+				InstanciaObjetoDOM obj = objectManager.getObjetoDOM(tipo, id);
 				if(obj != null){
 					String m = cambiaAtributosS(obj,request); 
 					if(m.equals("ok")){
@@ -88,8 +88,8 @@ public class SimpleAttributeAjaxController {
 		return model;
 	}
 	
-	private String cambiaAtributosS(ObjetoDOM obj, HttpServletRequest request) {
-		for(AtributoSencilloDOM as : obj.getAtributosSencillos()){
+	private String cambiaAtributosS(InstanciaObjetoDOM obj, HttpServletRequest request) {
+		for(InstanciaAtributoSencilloDOM as : obj.getAtributosSencillos()){
 			int idAt = as.getIdAtributo();
 			int tipoA = as.getTipoAtributo();
 			int pos = numAtributo(obj, idAt);
@@ -128,7 +128,7 @@ public class SimpleAttributeAjaxController {
 		return "ok";
 	}
 	
-	private int numAtributo(ObjetoDOM o, int idAtributo){
+	private int numAtributo(InstanciaObjetoDOM o, int idAtributo){
 		int i = 0;
 		while(i < o.getAtributosSencillos().size()){
 			if(idAtributo == o.getAtributosSencillos().get(i).getIdAtributo()){

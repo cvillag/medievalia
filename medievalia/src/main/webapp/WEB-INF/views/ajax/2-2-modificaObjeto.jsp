@@ -1,8 +1,8 @@
 <%@page import="com.cvilla.medievalia.domain.TipoAtributoComplejoDOM"%>
-<%@page import="com.cvilla.medievalia.domain.AtributoComplejoDOM"%>
+<%@page import="com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM"%>
 <%@page import="com.cvilla.medievalia.utils.SpecialDate"%>
-<%@page import="com.cvilla.medievalia.domain.AtributoSencilloDOM"%>
-<%@page import="com.cvilla.medievalia.domain.ObjetoDOM"%>
+<%@page import="com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM"%>
+<%@page import="com.cvilla.medievalia.domain.InstanciaObjetoDOM"%>
 <%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
 <%@page import="java.util.List"%>
@@ -10,13 +10,13 @@
 <%
 User user = (User) session.getAttribute("user");
 String type= (String) request.getAttribute("message");
-ObjetoDOM objeto = (ObjetoDOM) request.getAttribute("object");
+InstanciaObjetoDOM objeto = (InstanciaObjetoDOM) request.getAttribute("object");
 @SuppressWarnings("unchecked")
 List<TipoAtributoComplejoDOM> listaTipos = (List<TipoAtributoComplejoDOM>) request.getAttribute("tatributoc");
 @SuppressWarnings("unchecked")
-List<AtributoComplejoDOM> disp = (List<AtributoComplejoDOM>) request.getAttribute("disponibles");
+List<InstanciaAtributoComplejoDOM> disp = (List<InstanciaAtributoComplejoDOM>) request.getAttribute("disponibles");
 if(objeto != null){
-	List<AtributoComplejoDOM> acl = objeto.getAtributosComplejos();
+	List<InstanciaAtributoComplejoDOM> acl = objeto.getAtributosComplejos();
 	%>
 	<ul class="nav nav-tabs">
 		<li class="active listaA" data-val="0"><a href="#"><fmt:message key="p2.2.detalle.atributos"></fmt:message></a></li>
@@ -31,14 +31,14 @@ if(objeto != null){
 	<div id="modDetAtributos0">
 	<%
 	
-	List<AtributoSencilloDOM> atrS = objeto.getAtributosSencillos();
+	List<InstanciaAtributoSencilloDOM> atrS = objeto.getAtributosSencillos();
 	if(atrS != null && atrS.size() > 0){
 		%>
 		
 			<form id="simpleAttributeForm">
 			<input type="hidden" name="idInstanciaObjeto" value="<%=objeto.getIdInstancia()%>">
 			<%
-			for(AtributoSencilloDOM as : atrS){
+			for(InstanciaAtributoSencilloDOM as : atrS){
 				if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_FECHA){
 					%>
 					<div class="row">

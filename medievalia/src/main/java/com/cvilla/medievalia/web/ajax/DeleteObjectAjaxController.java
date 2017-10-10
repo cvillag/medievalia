@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.ObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
@@ -61,7 +61,7 @@ public class DeleteObjectAjaxController {
 			else{
 				int id = (new Integer(request.getParameter("idInstancia"))).intValue();
 				String message = "";
-				ObjetoDOM obj = objectManager.getObjetoDOM(tipo, id);
+				InstanciaObjetoDOM obj = objectManager.getObjetoDOM(tipo, id);
 				int act = 0;
 				if(obj != null){
 					j.put("id", obj.getIdInstancia());

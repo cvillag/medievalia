@@ -4,19 +4,19 @@ import java.util.List;
 
 import com.cvilla.medievalia.utils.Constants;
 
-public class ObjetoDOM {
+public class InstanciaObjetoDOM {
 	
 	private int idInstancia;
 	private TipoObjetoDOM tipo;
 	private String nombre;
-	private List<AtributoSencilloDOM> atributosSencillos;
-	private List<AtributoComplejoDOM> atributosComplejos;
+	private List<InstanciaAtributoSencilloDOM> atributosSencillos;
+	private List<InstanciaAtributoComplejoDOM> atributosComplejos;
 	private int validado;
-	private int creador;
+	private User creador;
 	private String textoValidacion;
 	private int grupo;
 	
-	public ObjetoDOM() {
+	public InstanciaObjetoDOM() {
 		super();
 	}
 
@@ -44,19 +44,19 @@ public class ObjetoDOM {
 		this.nombre = nombre;
 	}
 
-	public List<AtributoSencilloDOM> getAtributosSencillos() {
+	public List<InstanciaAtributoSencilloDOM> getAtributosSencillos() {
 		return atributosSencillos;
 	}
 
-	public void setAtributosSencillos(List<AtributoSencilloDOM> atributosSencillos) {
+	public void setAtributosSencillos(List<InstanciaAtributoSencilloDOM> atributosSencillos) {
 		this.atributosSencillos = atributosSencillos;
 	}
 
-	public List<AtributoComplejoDOM> getAtributosComplejos() {
+	public List<InstanciaAtributoComplejoDOM> getAtributosComplejos() {
 		return atributosComplejos;
 	}
 
-	public void setAtributosComplejos(List<AtributoComplejoDOM> atributosComplejos) {
+	public void setAtributosComplejos(List<InstanciaAtributoComplejoDOM> atributosComplejos) {
 		this.atributosComplejos = atributosComplejos;
 	}
 
@@ -68,11 +68,11 @@ public class ObjetoDOM {
 		this.validado = validado;
 	}
 
-	public int getCreador() {
+	public User getCreador() {
 		return creador;
 	}
 
-	public void setCreador(int creador) {
+	public void setCreador(User creador) {
 		this.creador = creador;
 	}
 

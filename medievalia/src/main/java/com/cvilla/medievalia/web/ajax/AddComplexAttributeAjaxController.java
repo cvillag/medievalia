@@ -10,9 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cvilla.medievalia.domain.AtributoComplejoDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.ObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;

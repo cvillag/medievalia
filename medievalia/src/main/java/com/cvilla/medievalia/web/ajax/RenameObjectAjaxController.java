@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.ObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
@@ -60,7 +60,7 @@ public class RenameObjectAjaxController {
 			}
 			else{
 				int id = (new Integer(request.getParameter("idInstancia"))).intValue();
-				ObjetoDOM obj = objectManager.getObjetoDOM(tipo, id);
+				InstanciaObjetoDOM obj = objectManager.getObjetoDOM(tipo, id);
 				String message = "";
 				if(obj != null){
 					j.put("oldname", obj.getNombre());

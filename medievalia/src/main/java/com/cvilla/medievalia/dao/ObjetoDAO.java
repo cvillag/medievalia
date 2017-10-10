@@ -14,9 +14,10 @@ import com.cvilla.medievalia.dao.mappers.SpecialDateDOMMapper;
 import com.cvilla.medievalia.dao.mappers.StringDOMMapper;
 import com.cvilla.medievalia.dao.mappers.TipoAtributoComplejoDOMMapper;
 import com.cvilla.medievalia.dao.mappers.TipoObjetoDOMMapper;
-import com.cvilla.medievalia.domain.AtributoComplejoDOM;
-import com.cvilla.medievalia.domain.AtributoSencilloDOM;
-import com.cvilla.medievalia.domain.ObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
+import com.cvilla.medievalia.domain.Group;
+import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.utils.Constants;
@@ -41,6 +42,7 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String GET_OBJECT_TYPE_LIST = "SELECT `idObjeto`, `nombreObjeto` FROM `ObjetoDOM`";
 	private static final String GET_OBJECT_TYPE = "SELECT `idObjeto`, `nombreObjeto` FROM `ObjetoDOM` where idObjeto = ?";
 	private static final String GET_OBJECT_INSTANCES_BY_TYPE = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaObjeto` WHERE idObjeto = ? and validado = ?";
+	private static final String GET_OBJECT_INSTANCES_BY_TYPE_GROUP = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaObjeto` WHERE idObjeto = ? and validado = ? and idGrupo = ?";
 	private static final String GET_OBJECT_INSTANCE = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaObjeto` WHERE idInstancia = ? and idObjeto = ? and validado = ?";
 	private static final String GET_OBJECT_S_ATTRIBUTES_TYPE_LIST = "SELECT `idAtributo`, `idObjeto`, `nombreAtributo`, `tipo` FROM `AtributoSencilloObjeto` WHERE idObjeto = ?";
 	private static final String GET_OBJECT_DATE_ATTRIBUTES_VALUE = "SELECT `idInstancia`, `idAtributoSencillo`, `idObjeto`, `dia`, `mes`, `anio` FROM `InstanciaAtributoDate` WHERE idObjeto = ? and idInstancia = ? and idAtributoSencillo = ?";
@@ -92,7 +94,6 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String GET_OBJECT_BY_NAME = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaObjeto` WHERE idObjeto = ? and nombreInstancia = ?";
 	private static final String RENAME_OBJECT = "UPDATE `InstanciaObjeto` SET `nombreInstancia`= ? WHERE `idObjeto` = ? and `idInstancia` = ?";
 	private static final String DELETE_OBJECT = "DELETE FROM `InstanciaObjeto` WHERE `idInstancia` = ? and `idObjeto` = ?";
-
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -112,7 +113,7 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 	}
 
-	public List<ObjetoDOM> getObjectListByTipe(TipoObjetoDOM tipo) {
+	public List<InstanciaObjetoDOM> getObjectListByTipe(TipoObjetoDOM tipo) {
 		try{
 			return jdbcTemplate.query(GET_OBJECT_INSTANCES_BY_TYPE, new Object[]{tipo.getTipoDOM(),Constants.OBJETO_VALIDADO}, new ObjetoDOMMapper());
 		}
@@ -121,7 +122,7 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 	}
 
-	public ObjetoDOM getObjectInstance(TipoObjetoDOM tipo, int id) {
+	public InstanciaObjetoDOM getObjectInstance(TipoObjetoDOM tipo, int id) {
 		try{
 			return jdbcTemplate.queryForObject(GET_OBJECT_INSTANCE, new Object[]{id,tipo.getTipoDOM(),Constants.OBJETO_VALIDADO}, new ObjetoDOMMapper());
 		}
@@ -130,11 +131,11 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 	}
 
-	public List<AtributoSencilloDOM> getAtributosSencillos(TipoObjetoDOM tipo, int id) {
-		List<AtributoSencilloDOM> la = null;
+	public List<InstanciaAtributoSencilloDOM> getAtributosSencillos(TipoObjetoDOM tipo, int id) {
+		List<InstanciaAtributoSencilloDOM> la = null;
 		try{
 			la = jdbcTemplate.query(GET_OBJECT_S_ATTRIBUTES_TYPE_LIST, new Object[]{tipo.getTipoDOM()}, new AtributoSencilloDOMMapper());
-			for(AtributoSencilloDOM a : la){
+			for(InstanciaAtributoSencilloDOM a : la){
 				switch(a.getTipoAtributo()){
 				case Constants.TIPO_ATRIBUTO_FECHA:
 					try{
@@ -191,7 +192,7 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 	}
 
-	public List<AtributoComplejoDOM> getAtributosComplejos(TipoObjetoDOM tipo, int id) {
+	public List<InstanciaAtributoComplejoDOM> getAtributosComplejos(TipoObjetoDOM tipo, int id) {
 		try{
 			return jdbcTemplate.query(GET_OBJECT_COMPLEX_ATTRIBUTES, new Object[]{tipo.getTipoDOM(),id,Constants.OBJETO_VALIDADO}, new AtributoComplejoDOMMapper());
 		}
@@ -200,7 +201,7 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 	}
 	
-	public List<AtributoComplejoDOM> getAtributosComplejosNotVal(TipoObjetoDOM tipo, int id) {
+	public List<InstanciaAtributoComplejoDOM> getAtributosComplejosNotVal(TipoObjetoDOM tipo, int id) {
 		try{
 			return jdbcTemplate.query(GET_OBJECT_COMPLEX_ATTRIBUTES_STUDENT, new Object[]{tipo.getTipoDOM(),id}, new AtributoComplejoDOMMapper());
 		}
@@ -209,7 +210,7 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 	}
 
-	public String createObjectInstance(ObjetoDOM o) {
+	public String createObjectInstance(InstanciaObjetoDOM o) {
 		try{
 			if(jdbcTemplate.queryForInt(GET_OBJECT_INSTANCE_BY_NAME,new Object[]{o.getTipo().getTipoDOM(),o.getNombre()}) == 0){
 				int maxId = jdbcTemplate.queryForInt(GET_MAX_INSTANCE_ID_BY_OBJECT, new Object[]{o.getTipo().getTipoDOM()});
@@ -239,7 +240,7 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 	}
 
-	public String addComplexAttribute(AtributoComplejoDOM ao, int idInstanciaPadre) {
+	public String addComplexAttribute(InstanciaAtributoComplejoDOM ao, int idInstanciaPadre) {
 		try{
 			int i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador()});
 			if(i == 1)
@@ -252,7 +253,7 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 	}
 
-	public AtributoComplejoDOM getAtributoComplejo(int tipoDOM, int padre,int tipoHijo, int hijo) {
+	public InstanciaAtributoComplejoDOM getAtributoComplejo(int tipoDOM, int padre,int tipoHijo, int hijo) {
 		try{
 			return jdbcTemplate.queryForObject(GET_COMPLEX_ATTRIBUTE, new Object[]{tipoDOM,padre,tipoHijo,hijo,Constants.OBJETO_VALIDADO},new AtributoComplejoDOMMapper());
 		}
@@ -261,7 +262,7 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 	}
 	
-	public AtributoComplejoDOM getAtributoComplejoNotVal(int tipoDOM, int padre,int tipoHijo, int hijo) {
+	public InstanciaAtributoComplejoDOM getAtributoComplejoNotVal(int tipoDOM, int padre,int tipoHijo, int hijo) {
 		try{
 			return jdbcTemplate.queryForObject(GET_COMPLEX_ATTRIBUTE_STUDENT, new Object[]{tipoDOM,padre,tipoHijo,hijo},new AtributoComplejoDOMMapper());
 		}
@@ -270,7 +271,7 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 	}
 
-	public String remAtributoComplejo(AtributoComplejoDOM acd, int padre) {
+	public String remAtributoComplejo(InstanciaAtributoComplejoDOM acd, int padre) {
 		try{
 			int i = jdbcTemplate.update(DELETE_COMPLEX_ATTRIBUTE, new Object[]{acd.getTipoPadre().getTipoDOM(),acd.getTipoHijo().getTipoDOM(),padre,acd.getInstanciaHijo().getIdInstancia()});
 			if(i == 1){
@@ -285,11 +286,11 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 	}
 
-	public String updateSimpleAttributes(ObjetoDOM obj) {
+	public String updateSimpleAttributes(InstanciaObjetoDOM obj) {
 		int idi = obj.getIdInstancia();
 		int idt = obj.getTipo().getTipoDOM();
 		try{
-			for(AtributoSencilloDOM a : obj.getAtributosSencillos()){
+			for(InstanciaAtributoSencilloDOM a : obj.getAtributosSencillos()){
 				if(a.getTipoAtributo() == Constants.TIPO_ATRIBUTO_FECHA){
 					SpecialDate d = (SpecialDate) a.getValor();
 					int i = jdbcTemplate.update(UPDATE_SIMPLE_ATTRIBUTE_DATE, new Object[]{d.getDia(),d.getMes(),d.getAnio(),idi,a.getIdAtributo(),idt});
@@ -351,7 +352,7 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 	}
 
-	public ObjetoDOM getObjectByName(TipoObjetoDOM tipo, String nombre) {
+	public InstanciaObjetoDOM getObjectByName(TipoObjetoDOM tipo, String nombre) {
 		try{
 			return jdbcTemplate.queryForObject(GET_OBJECT_BY_NAME, new Object[]{tipo.getTipoDOM(),nombre},new ObjetoDOMMapper());
 		}
@@ -373,7 +374,7 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 	}
 
-	public String deleteObjetoDOM(ObjetoDOM obj) {
+	public String deleteObjetoDOM(InstanciaObjetoDOM obj) {
 		try{
 			int i = jdbcTemplate.update(DELETE_OBJECT, new Object[]{obj.getIdInstancia(),obj.getTipo().getTipoDOM()});
 			if(i == 1){
@@ -385,6 +386,15 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 		catch(Exception e){
 			return "errorBD";
+		}
+	}
+
+	public List<InstanciaObjetoDOM> getTeachersObjetoDOMList(TipoObjetoDOM tipo,	Group groupA) {
+		try{
+			return jdbcTemplate.query(GET_OBJECT_INSTANCES_BY_TYPE_GROUP, new Object[]{tipo.getTipoDOM(),Constants.OBJETO_NO_VALIDADO,groupA.getIdGrupo()}, new ObjetoDOMMapper());
+		}
+		catch(Exception e){
+			return null;
 		}
 	}
 }

@@ -21,6 +21,15 @@ public class User implements Serializable {
 	private byte[] userPass;
 	
 	private int userRole;
+	
+	public User(int id){
+		super();
+		this.id = id;
+	}
+	
+	public User(){
+		super();
+	}
 
 	public int getId() {
 		return id;

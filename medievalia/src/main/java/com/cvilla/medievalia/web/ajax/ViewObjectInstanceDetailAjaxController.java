@@ -12,9 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cvilla.medievalia.domain.AtributoComplejoDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.ObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
@@ -56,7 +56,7 @@ public class ViewObjectInstanceDetailAjaxController {
 			int modo = (new Integer(request.getParameter("modo"))).intValue();
 			if(authManager.isAutorized(actionId, user)){
 				message = "ok";
-				ObjetoDOM obj = objectManager.getObjetoDOM(tipo, idInstancia);
+				InstanciaObjetoDOM obj = objectManager.getObjetoDOM(tipo, idInstancia);
 				List<TipoAtributoComplejoDOM> ac = objectManager.getTiposAtributosCompleos(tipo);
 				if(modo == 1){
 					model = new ModelAndView("ajax/2-2-detalleObjeto");
@@ -78,6 +78,7 @@ public class ViewObjectInstanceDetailAjaxController {
 			}
 		}
 		model.addObject("message", message);
+
 		return model;
 	}
 	

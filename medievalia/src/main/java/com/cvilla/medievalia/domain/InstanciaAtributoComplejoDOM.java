@@ -2,21 +2,21 @@ package com.cvilla.medievalia.domain;
 
 import com.cvilla.medievalia.utils.Constants;
 
-public class AtributoComplejoDOM {
+public class InstanciaAtributoComplejoDOM {
 	
 	private TipoObjetoDOM tipoPadre;
 	private TipoObjetoDOM tipoHijo;
-	private ObjetoDOM instanciaHijo;
+	private InstanciaObjetoDOM instanciaHijo;
 	private String nombreAtributo;
 	private int validado;
 	private String textoValidacion;
 	private int idGrupo;
 	private int creador;
 	
-	public AtributoComplejoDOM() {
+	public InstanciaAtributoComplejoDOM() {
 		super();
 	}
-	public AtributoComplejoDOM(TipoObjetoDOM tipoPadre) {
+	public InstanciaAtributoComplejoDOM(TipoObjetoDOM tipoPadre) {
 		super();
 		this.tipoPadre = tipoPadre;
 	}
@@ -32,10 +32,10 @@ public class AtributoComplejoDOM {
 	public void setTipoHijo(TipoObjetoDOM tipoHijo) {
 		this.tipoHijo = tipoHijo;
 	}
-	public ObjetoDOM getInstanciaHijo() {
+	public InstanciaObjetoDOM getInstanciaHijo() {
 		return instanciaHijo;
 	}
-	public void setInstanciaHijo(ObjetoDOM instanciaHijo) {
+	public void setInstanciaHijo(InstanciaObjetoDOM instanciaHijo) {
 		this.instanciaHijo = instanciaHijo;
 	}
 	public String getNombreAtributo() {

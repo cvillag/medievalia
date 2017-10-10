@@ -6,14 +6,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cvilla.medievalia.dao.intfc.IObjetoDAO;
-import com.cvilla.medievalia.domain.AtributoComplejoDOM;
-import com.cvilla.medievalia.domain.AtributoSencilloDOM;
+import com.cvilla.medievalia.dao.intfc.IUserDAO;
+import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.ObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
 
@@ -28,13 +31,19 @@ public class ObjectManager implements IObjectManager {
 	private IAutorizationManager authManager;
 	
 	@Autowired
+	private IGroupManager groupManager;
+	
+	@Autowired
 	private IObjetoDAO objetoDAO;
+
+	@Autowired
+	private ILoginManager loginManager;
 	
 	@Autowired
 	public IObjetoDAO getObjetoDAO() {
 		return objetoDAO;
 	}
-
+	
 	@Autowired
 	public void setObjetoDAO(IObjetoDAO objetoDAO) {
 		this.objetoDAO = objetoDAO;
@@ -53,13 +62,13 @@ public class ObjectManager implements IObjectManager {
 		return null;
 	}
 
-	public List<AtributoSencilloDOM> getAtributosSObjetoDOM(TipoObjetoDOM tipo) {
+	public List<InstanciaAtributoSencilloDOM> getAtributosSObjetoDOM(TipoObjetoDOM tipo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public ObjetoDOM getObjetoDOM(TipoObjetoDOM tipoObj, int idInstancia) {
-		ObjetoDOM o = objetoDAO.getObjectInstance(tipoObj,idInstancia);
+	public InstanciaObjetoDOM getObjetoDOM(TipoObjetoDOM tipoObj, int idInstancia) {
+		InstanciaObjetoDOM o = objetoDAO.getObjectInstance(tipoObj,idInstancia);
 		if(o != null){
 			o.setAtributosSencillos(objetoDAO.getAtributosSencillos(tipoObj,idInstancia));
 			o.setAtributosComplejos(objetoDAO.getAtributosComplejos(tipoObj,idInstancia));
@@ -67,12 +76,12 @@ public class ObjectManager implements IObjectManager {
 		return o;
 	}
 
-	public List<ObjetoDOM> getObjetoDOMListByType(TipoObjetoDOM tipo) {
+	public List<InstanciaObjetoDOM> getObjetoDOMListByType(TipoObjetoDOM tipo) {
 		return objetoDAO.getObjectListByTipe(tipo);
 	}
 
-	public String addObjetoDOM(TipoObjetoDOM tipo, ObjetoDOM o, Group groupA, User user) {
-		o.setCreador(user.getId());
+	public String addObjetoDOM(TipoObjetoDOM tipo, InstanciaObjetoDOM o, Group groupA, User user) {
+		o.setCreador(new User(user.getId()));
 		o.setGrupo(groupA.getIdGrupo());
 		o.setTipo(tipo);
 		if(authManager.isAutorized(Constants.P_VALIDATE_OBJECT_INSTANCE, user)){
@@ -90,7 +99,7 @@ public class ObjectManager implements IObjectManager {
 	public String renameObjetoDOM(TipoObjetoDOM tipo, String nombre, int id, User user, Group groupA) {
 		
 		if(nombre.length() >= Constants.MIN_PERSONAGE_NAME){
-			ObjetoDOM o = objetoDAO.getObjectByName(tipo,nombre);
+			InstanciaObjetoDOM o = objetoDAO.getObjectByName(tipo,nombre);
 			if(o == null){
 				return objetoDAO.renameObject(tipo,id,nombre);
 			}
@@ -109,17 +118,17 @@ public class ObjectManager implements IObjectManager {
 		return null;
 	}
 
-	public String deleteObjetoDOM(ObjetoDOM obj, User user, Group groupA){
+	public String deleteObjetoDOM(InstanciaObjetoDOM obj, User user, Group groupA){
 		return objetoDAO.deleteObjetoDOM(obj);
 	}
 
-	public List<ObjetoDOM> getStudentObjetoDOMList(TipoObjetoDOM tipo, User user) {
+	public List<InstanciaObjetoDOM> getStudentObjetoDOMList(TipoObjetoDOM tipo, User user) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String deleteObjetoDOMOwn(ObjetoDOM obj, User user,	Group groupA) {
-		if(obj.getCreador() == user.getId()){
+	public String deleteObjetoDOMOwn(InstanciaObjetoDOM obj, User user,	Group groupA) {
+		if(obj.getCreador().getId() == user.getId()){
 			if(obj.getGrupo() == groupA.getIdGrupo()){
 				return objetoDAO.deleteObjetoDOM(obj);
 			}
@@ -132,11 +141,17 @@ public class ObjectManager implements IObjectManager {
 		}
 	}
 
-	public List<ObjetoDOM> getTeachersObjetoDOMList(TipoObjetoDOM tipo,
-			User user, Group groupA) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<InstanciaObjetoDOM> getTeachersObjetoDOMList(TipoObjetoDOM tipo, User user, Group groupA) {
+		if(groupManager.isTeacherOrDirector(user, groupA.getIdGrupo())){
+			List<InstanciaObjetoDOM> lista = objetoDAO.getTeachersObjetoDOMList(tipo,groupA);
+			lista = fillUsers(lista);
+			return lista;
+		}
+		else{
+			return null;
+		}
 	}
+	
 
 	public String validateObjetoDOM(TipoObjetoDOM tipo, int id, User user,
 			Group group) {
@@ -162,7 +177,7 @@ public class ObjectManager implements IObjectManager {
 		return 0;
 	}
 
-	public List<ObjetoDOM> getObjetoDOMAtributeByType(TipoObjetoDOM tipoPadre,
+	public List<InstanciaObjetoDOM> getObjetoDOMAtributeByType(TipoObjetoDOM tipoPadre,
 			TipoObjetoDOM tipoHijo) {
 		// TODO Auto-generated method stub
 		return null;
@@ -170,7 +185,7 @@ public class ObjectManager implements IObjectManager {
 
 	public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA) {
 		String message = "";
-		ObjetoDOM op = objetoDAO.getObjectInstance(tipoP, padre);
+		InstanciaObjetoDOM op = objetoDAO.getObjectInstance(tipoP, padre);
 		TipoAtributoComplejoDOM tac  = null;
 		if(op == null){
 			message = "noType";
@@ -191,12 +206,12 @@ public class ObjectManager implements IObjectManager {
 			else{
 				TipoObjetoDOM tipoHijo = new TipoObjetoDOM();
 				tipoHijo.setTipoDOM(tac.getIdTipoHijo());
-				ObjetoDOM oh = objetoDAO.getObjectInstance(tipoHijo, hijo);
+				InstanciaObjetoDOM oh = objetoDAO.getObjectInstance(tipoHijo, hijo);
 				if(oh == null){
 					message = "noType";
 				}
 				else{
-					AtributoComplejoDOM ao = new AtributoComplejoDOM();
+					InstanciaAtributoComplejoDOM ao = new InstanciaAtributoComplejoDOM();
 					ao.setCreador(user.getId());
 					ao.setIdGrupo(groupA.getIdGrupo());
 					ao.setInstanciaHijo(oh);
@@ -223,7 +238,7 @@ public class ObjectManager implements IObjectManager {
 
 	public String deleteObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA) {
 		String message = "";
-		ObjetoDOM op = objetoDAO.getObjectInstance(tipoP, padre);
+		InstanciaObjetoDOM op = objetoDAO.getObjectInstance(tipoP, padre);
 		TipoAtributoComplejoDOM tac  = null;
 		if(op == null){
 			message = "noType";
@@ -244,12 +259,12 @@ public class ObjectManager implements IObjectManager {
 			else{
 				TipoObjetoDOM tipoHijo = new TipoObjetoDOM();
 				tipoHijo.setTipoDOM(tac.getIdTipoHijo());
-				ObjetoDOM oh = objetoDAO.getObjectInstance(tipoHijo, hijo);
+				InstanciaObjetoDOM oh = objetoDAO.getObjectInstance(tipoHijo, hijo);
 				if(oh == null){
 					message = "noType";
 				}
 				else{
-					AtributoComplejoDOM acd = objetoDAO.getAtributoComplejo(tipoP.getTipoDOM(), padre, tipoHijo.getTipoDOM(), hijo);
+					InstanciaAtributoComplejoDOM acd = objetoDAO.getAtributoComplejo(tipoP.getTipoDOM(), padre, tipoHijo.getTipoDOM(), hijo);
 					if(acd == null){
 						return "noType";
 					}
@@ -263,21 +278,21 @@ public class ObjectManager implements IObjectManager {
 		return message;
 	}
 
-	public List<ObjetoDOM> getStudentObjetoDOMAtributeByType(
+	public List<InstanciaObjetoDOM> getStudentObjetoDOMAtributeByType(
 			TipoObjetoDOM tipoPadre, TipoObjetoDOM tipoHijo, User user,
 			Group groupA) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String addStudentObjetoDOMAttributeByType(ObjetoDOM padre,
-			ObjetoDOM hijo, User user, Group groupA) {
+	public String addStudentObjetoDOMAttributeByType(InstanciaObjetoDOM padre,
+			InstanciaObjetoDOM hijo, User user, Group groupA) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String deleteStudentObjetoDOMAttributeByType(ObjetoDOM padre,
-			ObjetoDOM hijo, User user, Group groupA) {
+	public String deleteStudentObjetoDOMAttributeByType(InstanciaObjetoDOM padre,
+			InstanciaObjetoDOM hijo, User user, Group groupA) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -286,13 +301,13 @@ public class ObjectManager implements IObjectManager {
 		return objetoDAO.getTiposAtributosCompleos(tipo);
 	}
 
-	public List<AtributoComplejoDOM> getAtributosCDisponiblesObjetoDOM(TipoObjetoDOM tipo, ObjetoDOM obj, int pag) {
-		List<AtributoComplejoDOM> listaret = new ArrayList<AtributoComplejoDOM>();
+	public List<InstanciaAtributoComplejoDOM> getAtributosCDisponiblesObjetoDOM(TipoObjetoDOM tipo, InstanciaObjetoDOM obj, int pag) {
+		List<InstanciaAtributoComplejoDOM> listaret = new ArrayList<InstanciaAtributoComplejoDOM>();
 		
 		TipoObjetoDOM d = new TipoObjetoDOM();
 		d.setTipoDOM(pag);
-		List<ObjetoDOM> lista = getObjetoDOMListByType(d);
-		for(ObjetoDOM o : lista){
+		List<InstanciaObjetoDOM> lista = getObjetoDOMListByType(d);
+		for(InstanciaObjetoDOM o : lista){
 			boolean enc = false;
 			int i = 0;
 			while(!enc && i < obj.getAtributosComplejos().size()){
@@ -300,7 +315,7 @@ public class ObjectManager implements IObjectManager {
 				i++;
 			}
 			if(!enc){
-				AtributoComplejoDOM atr = new AtributoComplejoDOM();
+				InstanciaAtributoComplejoDOM atr = new InstanciaAtributoComplejoDOM();
 				atr.setInstanciaHijo(o);
 				atr.setTipoHijo(o.getTipo());
 				atr.setTipoPadre(tipo);
@@ -310,12 +325,12 @@ public class ObjectManager implements IObjectManager {
 		return listaret;
 	}
 
-	public List<AtributoComplejoDOM> getAtributosCPorTipo(ObjetoDOM obj, int pag) {
-		List<AtributoComplejoDOM> retl = new ArrayList<AtributoComplejoDOM>();
+	public List<InstanciaAtributoComplejoDOM> getAtributosCPorTipo(InstanciaObjetoDOM obj, int pag) {
+		List<InstanciaAtributoComplejoDOM> retl = new ArrayList<InstanciaAtributoComplejoDOM>();
 		if(obj == null)
 			return null;
 		else{
-			for(AtributoComplejoDOM ac : obj.getAtributosComplejos()){
+			for(InstanciaAtributoComplejoDOM ac : obj.getAtributosComplejos()){
 				if(ac.getTipoHijo().getTipoDOM() == pag){
 					retl.add(ac);
 				}
@@ -324,7 +339,15 @@ public class ObjectManager implements IObjectManager {
 		}
 	}
 
-	public String modifySimpleAttribute(ObjetoDOM obj) {
+	public String modifySimpleAttribute(InstanciaObjetoDOM obj) {
 		return objetoDAO.updateSimpleAttributes(obj);
+	}
+
+	public List<InstanciaObjetoDOM> fillUsers(List<InstanciaObjetoDOM> l) {
+		for(InstanciaObjetoDOM o : l){
+			User u = loginManager.getUser(o.getCreador().getId());
+			o.setCreador(u);
+		}
+		return l;
 	}
 }

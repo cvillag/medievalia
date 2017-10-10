@@ -410,9 +410,9 @@ var handBotRem = function botonRemComplexAttr(){
 //	});
 //}
 //
-//function postCarga3(){
-//	$(".saveProfeNewName").hide();
-//	$(".cancelProfeNewName").hide();
+function postCarga3(){
+	$(".saveProfeNewName").hide();
+	$(".cancelProfeNewName").hide();
 //	
 //	$(".activarProfeSNombre").click(function(){
 //		if(activadoPr != 0){
@@ -504,7 +504,7 @@ var handBotRem = function botonRemComplexAttr(){
 //			}
 //		});
 //	});
-//}
+}
 
 function cargaListaCompleta(){
 	$.post("completeObjectList.do",{

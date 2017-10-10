@@ -1,12 +1,12 @@
 package com.cvilla.medievalia.domain;
 
-public class AtributoSencilloDOM {
+public class InstanciaAtributoSencilloDOM {
 	private int tipoAtributo;
 	private Object valor;
 	private String nombreTipoAtributo;
 	private int idAtributo;
 	
-	public AtributoSencilloDOM() {
+	public InstanciaAtributoSencilloDOM() {
 		super();
 	}
 

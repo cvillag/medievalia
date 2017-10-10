@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.ObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
@@ -60,10 +60,10 @@ public class CompleteObjectListAjaxController {
 			if(authManager.isAutorized(actionInt, user)){
 				if(errorParam(request)){
 					j.put("message","noType");
-					logManager.log(user.getId(), actionInt, "Fallo en listado de autores. Parámetros incorrectos.", Constants.P_NOK);
+					logManager.log(user.getId(), actionInt, "Fallo en listado de objetos. Parámetros incorrectos.", Constants.P_NOK);
 				}
 				else{
-					List<ObjetoDOM> listag = objectManager.getObjetoDOMListByType(tipo);
+					List<InstanciaObjetoDOM> listag = objectManager.getObjetoDOMListByType(tipo);
 					model.addObject("listaObjetos", listag);
 					model.addObject("type",request.getParameter("type"));
 					logManager.log(user.getId(), actionInt, "Visualización lista de instancias de objeto", Constants.P_OK);
@@ -77,9 +77,10 @@ public class CompleteObjectListAjaxController {
 						model.addObject("permisoModificar","ok");
 					}
 				}
+				logManager.log(user.getId(), actionInt, "Listado completo de objeto " + tipo.getNombreDOM() + " del grupo " + groupA.getName(), Constants.P_OK);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,actionInt,"Visualización de autores no permitida (grupo: " + groupA.getName() + ")");
+				model = Constants.noPrivilegesA(user,logManager,actionInt,"Visualización de objetos no permitida (grupo: " + groupA.getName() + ")");
 			}
 		}
 		

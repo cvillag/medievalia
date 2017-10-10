@@ -12,9 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cvilla.medievalia.domain.AtributoComplejoDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.ObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
@@ -56,17 +56,17 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 			int recarga = (new Integer(request.getParameter("recarga"))).intValue();
 			j.put("recarga", recarga);
 			if(authManager.isAutorized(actionId, user)){
-				ObjetoDOM obj = objectManager.getObjetoDOM(tipo, idInstancia);
+				InstanciaObjetoDOM obj = objectManager.getObjetoDOM(tipo, idInstancia);
 				if(obj != null){
 					model = new ModelAndView("ajax/empty");
 					logManager.log(user.getId(), actionId2, "Visualización de detalle de objeto a modificar ", Constants.P_OK);
-					List<AtributoComplejoDOM> ac2 = objectManager.getAtributosCDisponiblesObjetoDOM(tipo,obj,pag);
+					List<InstanciaAtributoComplejoDOM> ac2 = objectManager.getAtributosCDisponiblesObjetoDOM(tipo,obj,pag);
 					j.put("disponibles", ac2);
 				}
 				else{
 					return Constants.paramError(logManager, actionId, user.getId());
 				}
-				List<AtributoComplejoDOM> actual = objectManager.getAtributosCPorTipo(obj,pag);
+				List<InstanciaAtributoComplejoDOM> actual = objectManager.getAtributosCPorTipo(obj,pag);
 				j.put("actual", actual);
 				j.put("modo",modo);
 				j.put("pag",pag);

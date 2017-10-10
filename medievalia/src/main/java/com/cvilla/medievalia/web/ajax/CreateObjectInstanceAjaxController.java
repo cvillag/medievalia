@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.ObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
@@ -58,7 +58,7 @@ public class CreateObjectInstanceAjaxController {
 			}
 			else{
 				String nombre = request.getParameter("nombre");
-				ObjetoDOM o = new ObjetoDOM();
+				InstanciaObjetoDOM o = new InstanciaObjetoDOM();
 				o.setNombre(nombre);
 				String message = objectManager.addObjetoDOM(tipo, o, groupA, user);
 				j.put("message", message);
