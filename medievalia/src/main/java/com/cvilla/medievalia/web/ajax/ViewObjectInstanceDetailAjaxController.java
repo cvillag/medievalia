@@ -54,12 +54,25 @@ public class ViewObjectInstanceDetailAjaxController {
 		else{
 			int idInstancia = (new Integer(request.getParameter("idInstancia"))).intValue();
 			int modo = (new Integer(request.getParameter("modo"))).intValue();
+			int validado = (new Integer(request.getParameter("val")).intValue());
 			if(authManager.isAutorized(actionId, user)){
 				message = "ok";
-				InstanciaObjetoDOM obj = objectManager.getObjetoDOM(tipo, idInstancia);
+				InstanciaObjetoDOM obj;
+				if(validado == 1){
+					obj= objectManager.getObjetoDOM(tipo, idInstancia);
+				}
+				else{
+					obj= objectManager.getObjetoDOMUnvalidated(tipo, idInstancia,groupA,user);
+				}
+				//Lista de tipoAtributoComplejo para crear las pestañas del modal
 				List<TipoAtributoComplejoDOM> ac = objectManager.getTiposAtributosCompleos(tipo);
 				if(modo == 1){
-					model = new ModelAndView("ajax/2-2-detalleObjeto");
+					if(validado == 1){
+						model = new ModelAndView("ajax/2-2-detalleObjeto");
+					}
+					else{
+						model = new ModelAndView("ajax/2-2-detalleObjetoProfe");
+					}
 					logManager.log(user.getId(), actionId, "Visualización de detalle de objeto ", Constants.P_OK);
 				}
 				else if(modo == 2){
@@ -84,6 +97,7 @@ public class ViewObjectInstanceDetailAjaxController {
 	
 	private boolean errorParam(HttpServletRequest request){
 		return request.getParameter("idInstancia") == null &&
-				request.getParameter("modo") == null;
+				request.getParameter("modo") == null &&
+				request.getParameter("val") == null;
 	}
 }

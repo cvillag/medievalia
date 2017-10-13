@@ -350,4 +350,26 @@ public class ObjectManager implements IObjectManager {
 		}
 		return l;
 	}
+
+	public InstanciaObjetoDOM getObjetoDOMUnvalidated(TipoObjetoDOM tipo, int id, Group g, User u) {
+		if(groupManager.isTeacherOrDirector(u, g.getIdGrupo())){
+			InstanciaObjetoDOM obj = objetoDAO.getObjectInstanceNotVal(tipo, id);
+			if(obj != null){
+				obj.setAtributosSencillos(objetoDAO.getAtributosSencillos(tipo,id));
+				obj.setAtributosComplejos(objetoDAO.getAtributosComplejosNoVal(tipo,id));
+				if(obj.getGrupo() != g.getIdGrupo()){
+					return null;
+				}
+				else{
+					return obj;
+				}
+			}
+			else{
+				return obj;
+			}
+		}
+		else{
+			return null;
+		}
+	}
 }

@@ -111,6 +111,7 @@ function postCarga(){
 	
 	$(".modifySObjeto").click(function(){
 		$("#contenidoDetalle").empty();
+		$("#contenidoDetalleProfe").empty();
 		oldModDetAct = 0;
 		modDetAct = 0;
 		name = $(this).data("name");
@@ -119,7 +120,8 @@ function postCarga(){
 		idInstanciaModificar = $(this).data('val');
 		$.post("objectDetail.do",{
 			idInstancia : $(this).data('val'),
-			modo : 2
+			modo : 2,
+			val : 1
 		},
 		function(data){
 			$("#contenidoDetalle2").html(data);
@@ -142,6 +144,7 @@ function postCarga(){
 	
 	$(".detalleObjeto").click(function(){
 		$("#contenidoDetalle2").empty();
+		$("#contenidoDetalleProfe").empty();
 		oldModDetAct = 0;
 		modDetAct = 0;
 		id = $(this).data("val");
@@ -150,7 +153,8 @@ function postCarga(){
 		$("#modalDetalleObjeto").modal();
 		$.post("objectDetail.do",{
 			idInstancia : id,
-			modo : 1
+			modo : 1,
+			val : 1
 		},
 		function(data){
 			$("#contenidoDetalle").html(data);	
@@ -413,6 +417,27 @@ var handBotRem = function botonRemComplexAttr(){
 function postCarga3(){
 	$(".saveProfeNewName").hide();
 	$(".cancelProfeNewName").hide();
+	
+	$(".detalleObjetoProfe").click(function(){
+		$("#contenidoDetalle").empty();
+		$("#contenidoDetalle2").empty();
+		oldModDetAct = 0;
+		modDetAct = 0;
+		id = $(this).data("val");
+		name = $(this).data("name");
+		$("#nombreObjetoDetalleProfe").html(name);
+		$("#modalDetalleObjetoProfe").modal();
+		$.post("objectDetail.do",{
+			idInstancia : id,
+			modo : 1,
+			val : 0
+		},
+		function(data){
+			$("#contenidoDetalleProfe").html(data);	
+			postCargaDetalle(0);
+		});
+	});
+	
 //	
 //	$(".activarProfeSNombre").click(function(){
 //		if(activadoPr != 0){
@@ -592,7 +617,7 @@ $(document).ready(function(){
 	
 	$("#busquedaProfe").keyup(function(){
 		if($("#busquedaProfe").val().length > 0){
-			$(".trobjetoP").each(function(){
+			$(".trObjetoP").each(function(){
 				if($(this).data("nom").indexOf($("#busquedaProfe").val()) == -1){
 					$(this).hide();
 				}
@@ -602,7 +627,7 @@ $(document).ready(function(){
 			});
 		}
 		else{
-			$(".trobjetoP").show();
+			$(".trObjetoP").show();
 		}
 	});
 	

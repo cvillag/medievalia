@@ -26,6 +26,10 @@ public interface IObjectManager extends Serializable{
 	
 	//Lista de objetos completa, ACCION 1
 	public InstanciaObjetoDOM getObjetoDOM(TipoObjetoDOM tipo, int id);
+	
+	//Lista de objetos completa, ACCION 1
+	public InstanciaObjetoDOM getObjetoDOMUnvalidated(TipoObjetoDOM tipo, int id, Group g, User u);
+	
 	//Lista de objetos completa, ACCION 1
 	public List<InstanciaObjetoDOM> getObjetoDOMListByType(TipoObjetoDOM tipo);
 	//Crear objeto, ACCION 4

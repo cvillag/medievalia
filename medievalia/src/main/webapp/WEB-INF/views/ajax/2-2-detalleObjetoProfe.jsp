@@ -145,7 +145,20 @@ if(objeto != null){
 		<%	for(InstanciaAtributoComplejoDOM ac : acl){
 				if(ac.getTipoHijo().getTipoDOM() == act.getIdTipoHijo()){
 			%>
-			<li class="list-group-item"><%=ac.getInstanciaHijo().getNombre() %></li>
+			<li class="list-group-item">
+			<%if(ac.getValidado() == Constants.OBJETO_VALIDADO){ %>
+					<span id="validado<%=ac.getInstanciaHijo() %>" class="label label-success"><fmt:message key="general.validado"></fmt:message></span>
+					<%}
+					else{
+ 						if(ac.getValidado() == Constants.OBJETO_NO_VALIDADO){ %>
+					
+					<span id="validado<%=ac.getInstanciaHijo() %>" class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span>
+						<%}else{ %>
+					<span id="validado<%=ac.getInstanciaHijo() %>" class="label label-danger"><fmt:message key="general.denegado"></fmt:message></span>
+					<%	}
+ 					}%>
+ 					<%=ac.getInstanciaHijo().getNombre() %>
+			</li>
 		<%
 				}
 			} %>

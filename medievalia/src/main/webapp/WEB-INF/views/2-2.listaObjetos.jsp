@@ -164,6 +164,26 @@ else{ %>
 	</div>
 </div>
 
+<div id="modalDetalleObjetoProfe" class="modal fade modal-lg" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal110"></fmt:message>&nbsp;<span id="nombreObjetoDetalleProfe"></span>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div id="contenidoDetalleProfe">
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalokProfe" class="btn btn-sm btn-default" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- Diálogos modales de creación de objetos -->
 <div id="modalCreaObjeto1" class="modal fade" role="dialog">

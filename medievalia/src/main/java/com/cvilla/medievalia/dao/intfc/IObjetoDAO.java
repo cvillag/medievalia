@@ -28,4 +28,6 @@ public interface IObjetoDAO {
 	public String renameObject(TipoObjetoDOM tipo, int id, String nombre);
 	public String deleteObjetoDOM(InstanciaObjetoDOM obj);
 	public List<InstanciaObjetoDOM> getTeachersObjetoDOMList(TipoObjetoDOM tipo,	Group groupA);
+	public InstanciaObjetoDOM getObjectInstanceNotVal(TipoObjetoDOM tipo, int id);
+	public List<InstanciaAtributoComplejoDOM> getAtributosComplejosNoVal(TipoObjetoDOM tipo, int id);
 }

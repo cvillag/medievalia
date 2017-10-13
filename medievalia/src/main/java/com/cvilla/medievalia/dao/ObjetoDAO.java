@@ -94,6 +94,12 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String GET_OBJECT_BY_NAME = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaObjeto` WHERE idObjeto = ? and nombreInstancia = ?";
 	private static final String RENAME_OBJECT = "UPDATE `InstanciaObjeto` SET `nombreInstancia`= ? WHERE `idObjeto` = ? and `idInstancia` = ?";
 	private static final String DELETE_OBJECT = "DELETE FROM `InstanciaObjeto` WHERE `idInstancia` = ? and `idObjeto` = ?";
+	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES_NO_VAL = "select	`idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionPadre`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, InstanciaObjeto.textoValidacion as `textoValidacionHijo`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo` from "
+			+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `nombreAtributo` from "
+			+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaAtributoComplejo` "
+			+ "left join ObjetoDOM on idObjetoPadre = idObjeto WHERE idObjetoPadre = ? and idInstanciaPadre = ?) as sel1 "
+ 		+ "left join AtributoComplejoObjeto on sel1.idObjetoPadre = AtributoComplejoObjeto.idObjetoPadre and sel1.idObjetoHijo = AtributoComplejoObjeto.idObjetoHijo) as sel2 "
+		+ "left join InstanciaObjeto on InstanciaObjeto.idInstancia = sel2.idInstanciaHijo and InstanciaObjeto.idObjeto = sel2.idObjetoHijo order by validadoPadre";
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -392,6 +398,24 @@ public class ObjetoDAO implements IObjetoDAO {
 	public List<InstanciaObjetoDOM> getTeachersObjetoDOMList(TipoObjetoDOM tipo,	Group groupA) {
 		try{
 			return jdbcTemplate.query(GET_OBJECT_INSTANCES_BY_TYPE_GROUP, new Object[]{tipo.getTipoDOM(),Constants.OBJETO_NO_VALIDADO,groupA.getIdGrupo()}, new ObjetoDOMMapper());
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
+
+	public InstanciaObjetoDOM getObjectInstanceNotVal(TipoObjetoDOM tipo, int id) {
+		try{
+			return jdbcTemplate.queryForObject(GET_OBJECT_INSTANCE, new Object[]{id,tipo.getTipoDOM(),Constants.OBJETO_NO_VALIDADO}, new ObjetoDOMMapper());
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
+
+	public List<InstanciaAtributoComplejoDOM> getAtributosComplejosNoVal(TipoObjetoDOM tipo, int id) {
+		try{
+			return jdbcTemplate.query(GET_OBJECT_COMPLEX_ATTRIBUTES_NO_VAL, new Object[]{tipo.getTipoDOM(),id}, new AtributoComplejoDOMMapper());
 		}
 		catch(Exception e){
 			return null;
