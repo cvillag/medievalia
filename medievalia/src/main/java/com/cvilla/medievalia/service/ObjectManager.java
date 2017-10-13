@@ -1,7 +1,9 @@
 package com.cvilla.medievalia.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -371,5 +373,21 @@ public class ObjectManager implements IObjectManager {
 		else{
 			return null;
 		}
+	}
+
+	public Map<Integer, Integer> getBadgesFromObject(InstanciaObjetoDOM obj) {
+		Map<Integer, Integer> badges = new HashMap<Integer, Integer>();
+		for(InstanciaAtributoComplejoDOM ac : obj.getAtributosComplejos()){
+			if(!ac.isValidado()){
+				Integer i = badges.get(ac.getTipoHijo().getTipoDOM());
+				if(i != null){
+					badges.put(ac.getTipoHijo().getTipoDOM(),++i);
+				}
+				else{
+					badges.put(ac.getTipoHijo().getTipoDOM(), 1);
+				}
+			}
+		}
+		return badges;
 	}
 }

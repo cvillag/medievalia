@@ -14,7 +14,7 @@ if (ugl.getUser_role() == Constants.ROLE_PROFESOR || ugl.getUser_role() == Const
 <div class="container">
 	<legend>
 		<h3>
-			<button id="displayGroup1" class="btn btn-sm btn-default btn-xs">
+			<button id="displayGroup1" class="btn btn-sm btn-info btn-xs">
 				<span id="displayGroup1i" class="glyphicon glyphicon-chevron-down"></span>
 			</button>
 			&nbsp;
@@ -28,7 +28,7 @@ if (ugl.getUser_role() == Constants.ROLE_PROFESOR || ugl.getUser_role() == Const
 	<form class="form-inline" role="form" id="firstForm">
 		<div class="form-group">
 			<label class="control-label formGroup" for="showform"><fmt:message key="p4-0.crearGrupo"></fmt:message></label>
-			<button type="button" class="btn btn-sm btn-default" id="showform">
+			<button type="button" class="btn btn-sm btn-info" id="showform">
 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 			</button>
 		</div>
@@ -44,10 +44,10 @@ if (ugl.getUser_role() == Constants.ROLE_PROFESOR || ugl.getUser_role() == Const
 			<p class="help-block"><fmt:message key="p4-0.descAyuda"></fmt:message></p>
 		</div>
 		<div class="form-group" id="buttonGroupForm">
-			<button type="button" class="btn btn-sm btn-default" id="createButton">
+			<button type="button" class="btn btn-sm btn-info" id="createButton">
 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 			</button>
-			<button type="button" class="btn btn-sm btn-default" id="cancelButton">
+			<button type="button" class="btn btn-sm btn-info" id="cancelButton">
 				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 			</button>
 		</div>
@@ -58,7 +58,7 @@ if (ugl.getUser_role() == Constants.ROLE_PROFESOR || ugl.getUser_role() == Const
 <div class="container">
 	<legend>
 		<h3>
-			<button id="displayGroup2" class="btn btn-sm btn-default btn-xs">
+			<button id="displayGroup2" class="btn btn-sm btn-info btn-xs">
 				<span id="displayGroup2i" class="glyphicon glyphicon-chevron-down"></span>
 			</button>
 			&nbsp;
@@ -71,7 +71,7 @@ if (ugl.getUser_role() == Constants.ROLE_PROFESOR || ugl.getUser_role() == Const
 <div class="container">
 	<legend>
 		<h3>
-			<button id="displayGroup3" class="btn btn-sm btn-default btn-xs">
+			<button id="displayGroup3" class="btn btn-sm btn-info btn-xs">
 				<span id="displayGroup3i" class="glyphicon glyphicon-chevron-down"></span>
 			</button>
 			&nbsp;

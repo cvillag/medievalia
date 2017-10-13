@@ -39,7 +39,7 @@
 				<p><fmt:message key="p2-1.numAlumnos"></fmt:message>&nbsp;<span class="label label-info"><%=numS %></span></p>
 				<p><fmt:message key="p2-1.numTeachers"></fmt:message>&nbsp;<span class="label label-info"><%=numT %></span></p>
 				<%if(user.getUser_role() == Constants.ROLE_PROFESOR){ %>
-				<p><button type="button" class="btn btn-sm btn-default" id="btnMatricularAlumnos"><fmt:message key="p2-1.listaUsuarios.btn"></fmt:message></button></p>
+				<p><button type="button" class="btn btn-sm btn-info" id="btnMatricularAlumnos"><fmt:message key="p2-1.listaUsuarios.btn"></fmt:message></button></p>
 				<%} %>
 			</div>
 		</div>
@@ -89,7 +89,7 @@
  					//}
 				} %>
 				</p>
-				<p><button type="button" class="btn btn-sm btn-default btnGestionObjetos" data-val="<%=tipo.getTipoDOM()%>"><fmt:message key="p2-1.objeto.btn"></fmt:message></button></p>
+				<p><button type="button" class="btn btn-sm btn-info btnGestionObjetos" data-val="<%=tipo.getTipoDOM()%>"><fmt:message key="p2-1.objeto.btn"></fmt:message></button></p>
 			</div>
 		</div>
 	<%if(i++ % 3 == 2){

@@ -20,43 +20,25 @@ List<InstanciaObjetoDOM> lista = (List<InstanciaObjetoDOM>) request.getAttribute
  	for(InstanciaObjetoDOM c : lista){
 		if(type.equals("table")){%>
 			<tr class="trObjetoP" id="objetoProfe<%=c.getIdInstancia()%>" data-nom="<%=c.getNombre()%>">
-				<td>
+				<td rowspan="2">
 					<input type="text" id="objetoProfeName<%=c.getIdInstancia()%>" value="<%=c.getNombre() %>" disabled class="nombreAl">
-					<button type="button" id="saveProfeObjeto<%=c.getIdInstancia()%>" class="btn btn-xs btn-default saveProfeNewName" data-val="<%=c.getIdInstancia()%>">
+					<button type="button" id="saveProfeObjeto<%=c.getIdInstancia()%>" class="btn btn-xs btn-info saveProfeNewName" data-val="<%=c.getIdInstancia()%>">
 						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 					</button>
-					<button type="button" id="cancelProfeObjeto<%=c.getIdInstancia()%>" class="btn btn-xs btn-default cancelProfeNewName" data-val="<%=c.getIdInstancia()%>">
+					<button type="button" id="cancelProfeObjeto<%=c.getIdInstancia()%>" class="btn btn-xs btn-info cancelProfeNewName" data-val="<%=c.getIdInstancia()%>">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 					</button>
 				</td>
 				<td>
-					<%if(c.getValidado() == Constants.OBJETO_VALIDADO){ %>
-					<span id="validado<%=c.getIdInstancia() %>" class="label label-success"><fmt:message key="general.validado"></fmt:message></span>
-					<%}
-					else{
- 						if(c.getValidado() == Constants.OBJETO_NO_VALIDADO){ %>
-					
-					<span id="validado<%=c.getIdInstancia() %>" class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span>
-						<%}else{ %>
-					<span id="validado<%=c.getIdInstancia() %>" class="label label-danger"><fmt:message key="general.denegado"></fmt:message></span>
-					<%	}
- 					}%>
- 					<%if(valid != null){%>
-					<button type="button" id="validarProfeObjeto<%=c.getIdInstancia()%>" class="btn btn-xs btn-default validarObjeto" data-val="<%=c.getIdInstancia()%>">
-						<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
-					</button>
-					<%} %>
-				</td>
-				<td>
 					<p><%=c.getCreador().getUser_long_name() %></p>
 				</td>
-				<td>
+				<td rowspan="2">
 					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-default detalleObjetoProfe" data-val="<%=c.getIdInstancia()%>" data-name="<%=c.getNombre()%>">
+						<button type="button" class="btn btn-xs btn-info detalleObjetoProfe" data-val="<%=c.getIdInstancia()%>" data-name="<%=c.getNombre()%>">
 							<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 						</button>
 						<div class="btn-group">
-							<button class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownAcciones" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							<button class="btn btn-info btn-xs dropdown-toggle" type="button" id="dropdownAcciones" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 								<span class="glyphicon glyphicon-collapse-down" aria-hidden="true"></span>
 							</button>
 							<ul class="dropdown-menu" aria-labelledby="dropdownAcciones" role="menu">
@@ -73,6 +55,26 @@ List<InstanciaObjetoDOM> lista = (List<InstanciaObjetoDOM>) request.getAttribute
 							</ul>
 						</div>
 					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<%if(c.getValidado() == Constants.OBJETO_VALIDADO){ %>
+					<span id="validado<%=c.getIdInstancia() %>" class="label label-success"><fmt:message key="general.validado"></fmt:message></span>
+					<%}
+					else{
+ 						if(c.getValidado() == Constants.OBJETO_NO_VALIDADO){ %>
+					
+					<span id="validado<%=c.getIdInstancia() %>" class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span>
+						<%}else{ %>
+					<span id="validado<%=c.getIdInstancia() %>" class="label label-danger"><fmt:message key="general.denegado"></fmt:message></span>
+					<%	}
+ 					}%>
+ 					<%if(valid != null){%>
+					<button type="button" id="validarProfeObjeto<%=c.getIdInstancia()%>" class="btn btn-xs btn-info validarObjeto" data-val="<%=c.getIdInstancia()%>">
+						<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+					</button>
+					<%} %>
 				</td>
 			</tr>
 <%		

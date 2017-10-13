@@ -15,10 +15,10 @@
 <%-- 			<tr class="trobjetoU" id="objetoStudent<%=c.getIdObjetoDOM()%>" data-nom="<%=c.getNombre()%>"> --%>
 <!-- 				<td> -->
 <%-- 					<input type="text" id="objetoStudentName<%=c.getIdObjetoDOM()%>" value="<%=c.getNombre() %>" disabled class="nombreAl"> --%>
-<%-- 					<button type="button" id="saveStudentObjeto<%=c.getIdObjetoDOM()%>" class="btn btn-sm btn-default saveStudentNewName" data-val="<%=c.getIdObjetoDOM()%>"> --%>
+<%-- 					<button type="button" id="saveStudentObjeto<%=c.getIdObjetoDOM()%>" class="btn btn-sm btn-info saveStudentNewName" data-val="<%=c.getIdObjetoDOM()%>"> --%>
 <!-- 						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> -->
 <!-- 					</button> -->
-<%-- 					<button type="button" id="cancelStudentObjeto<%=c.getIdObjetoDOM()%>" class="btn btn-sm btn-default cancelStudentNewName" data-val="<%=c.getIdObjetoDOM()%>"> --%>
+<%-- 					<button type="button" id="cancelStudentObjeto<%=c.getIdObjetoDOM()%>" class="btn btn-sm btn-info cancelStudentNewName" data-val="<%=c.getIdObjetoDOM()%>"> --%>
 <!-- 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> -->
 <!-- 					</button> -->
 <!-- 				</td> -->
@@ -36,11 +36,11 @@
 <%-- 					}%> --%>
 <!-- 				</td> -->
 <!-- 				<td> -->
-<%-- 					<button type="button" class="btn btn-sm btn-default activarStudentSNombre" data-val="<%=c.getIdObjetoDOM()%>"> --%>
+<%-- 					<button type="button" class="btn btn-sm btn-info activarStudentSNombre" data-val="<%=c.getIdObjetoDOM()%>"> --%>
 <!-- 						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> -->
 <!-- 					</button> -->
 <%-- 					<%if(delete != null){ %> --%>
-<%-- 					<button type="button" class="btn btn-sm btn-default deleteStudentSObjeto" data-val="<%=c.getIdObjetoDOM()%>"> --%>
+<%-- 					<button type="button" class="btn btn-sm btn-info deleteStudentSObjeto" data-val="<%=c.getIdObjetoDOM()%>"> --%>
 <!-- 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> -->
 <!-- 					</button> -->
 <%-- 					<%} %> --%>

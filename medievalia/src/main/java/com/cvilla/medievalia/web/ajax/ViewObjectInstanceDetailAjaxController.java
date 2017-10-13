@@ -1,6 +1,8 @@
 package com.cvilla.medievalia.web.ajax;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,8 +28,9 @@ import com.cvilla.medievalia.utils.Constants;
 @Controller 
 public class ViewObjectInstanceDetailAjaxController {
 	
-	final static int actionId = Constants.P_VIEW_OBJECT_INSTANCE_DETAIL; 
+	final static int actionId = Constants.P_VIEW_OBJECT_INSTANCE_DETAIL;
 	final static int actionId2 = Constants.P_MODIFY_OBJECT_INSTANCE;
+	final static int actionId3 = Constants.P_VALIDATE_OBJECT_INSTANCE;
 
 	@Autowired
 	private IAutorizationManager authManager;
@@ -55,7 +58,7 @@ public class ViewObjectInstanceDetailAjaxController {
 			int idInstancia = (new Integer(request.getParameter("idInstancia"))).intValue();
 			int modo = (new Integer(request.getParameter("modo"))).intValue();
 			int validado = (new Integer(request.getParameter("val")).intValue());
-			if(authManager.isAutorized(actionId, user)){
+			if(authManager.isAutorized(actionId, user) || authManager.isAutorized(actionId3, user)){
 				message = "ok";
 				InstanciaObjetoDOM obj;
 				if(validado == 1){
@@ -66,12 +69,18 @@ public class ViewObjectInstanceDetailAjaxController {
 				}
 				//Lista de tipoAtributoComplejo para crear las pestañas del modal
 				List<TipoAtributoComplejoDOM> ac = objectManager.getTiposAtributosCompleos(tipo);
+				Map<Integer, Integer> badges = objectManager.getBadgesFromObject(obj);
 				if(modo == 1){
 					if(validado == 1){
 						model = new ModelAndView("ajax/2-2-detalleObjeto");
 					}
 					else{
-						model = new ModelAndView("ajax/2-2-detalleObjetoProfe");
+						if(authManager.isAutorized(actionId3, user)){
+							model = new ModelAndView("ajax/2-2-detalleObjetoProfe");
+						}
+						else{
+							return Constants.noPrivilegesA(user, logManager, actionId, "Visualización de detalle de objeto no validado");
+						}
 					}
 					logManager.log(user.getId(), actionId, "Visualización de detalle de objeto ", Constants.P_OK);
 				}
@@ -79,9 +88,14 @@ public class ViewObjectInstanceDetailAjaxController {
 					model = new ModelAndView("ajax/2-2-modificaObjeto");
 					logManager.log(user.getId(), actionId2, "Visualización de detalle de objeto a modificar ", Constants.P_OK);
 				}
+				else if(modo == 3){
+					model = new ModelAndView("ajax/2-2-validaObjetoProfe");
+					logManager.log(user.getId(), actionId3, "Visualización de detalle de objeto a validar ", Constants.P_OK);
+				}
 				else{
 					return Constants.paramError(logManager, actionId, user.getId());
 				}
+				model.addObject("badges",badges);
 				model.addObject("modo",modo);
 				model.addObject("object", obj);
 				model.addObject("tatributoc",ac);

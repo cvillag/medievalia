@@ -2,6 +2,7 @@ package com.cvilla.medievalia.service.intf;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -79,4 +80,5 @@ public interface IObjectManager extends Serializable{
 	public String modifySimpleAttribute(InstanciaObjetoDOM obj);
 	
 	public List<InstanciaObjetoDOM> fillUsers(List<InstanciaObjetoDOM> l);
+	public Map<Integer, Integer> getBadgesFromObject(InstanciaObjetoDOM obj);
 }

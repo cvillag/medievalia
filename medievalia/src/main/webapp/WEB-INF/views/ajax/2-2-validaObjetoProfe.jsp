@@ -18,6 +18,7 @@ boolean disabled = ((Integer) request.getAttribute("modo")).intValue() == 1;
 List<TipoAtributoComplejoDOM> listaTipos = (List<TipoAtributoComplejoDOM>) request.getAttribute("tatributoc");
 @SuppressWarnings("unchecked")
 Map<Integer, Integer> badges = (Map<Integer, Integer>) request.getAttribute("badges");
+int totalbadges = 0;
 if(objeto != null){
 	List<InstanciaAtributoComplejoDOM> acl = objeto.getAtributosComplejos();
 	%>
@@ -25,11 +26,13 @@ if(objeto != null){
 		<li class="active listaA" data-val="0"><a href="#"><fmt:message key="p2.2.detalle.atributos"></fmt:message></a></li>
 		<%
 		if(listaTipos != null && listaTipos.size() > 0){
+			
 			for(TipoAtributoComplejoDOM ac : listaTipos){
 				int badge = 0;
 				if(badges != null){
 					if(badges.containsKey(ac.getIdTipoHijo())){
 						badge = badges.get(ac.getIdTipoHijo());
+						totalbadges += badge;
 					}
 				}
 			%>
@@ -37,6 +40,7 @@ if(objeto != null){
 		<%	}
 		}%>
 	</ul>
+	<input type="hidden" id="validateButtonFlag" value="<%=totalbadges%>">
 	<div id="modDetAtributos0">
 	<%
 	
@@ -155,22 +159,27 @@ if(objeto != null){
 		<%	for(InstanciaAtributoComplejoDOM ac : acl){
 				if(ac.getTipoHijo().getTipoDOM() == act.getIdTipoHijo()){
 			%>
-			<li class="list-group-item">
-			<%if(ac.getValidado() == Constants.OBJETO_VALIDADO){ %>
-					<span id="validado<%=ac.getInstanciaHijo() %>" class="label label-success"><fmt:message key="general.validado"></fmt:message></span>
-					<%}
+			<li class="list-group-item clearfix">
+				<%=ac.getInstanciaHijo().getNombre() %>
+				<span class="pull-right">
+				<%if(ac.getValidado() == Constants.OBJETO_VALIDADO){ %>
+				<span id="validado<%=ac.getInstanciaHijo() %>" class="label label-success"><fmt:message key="general.validado"></fmt:message></span>
+				<%}
 					else{
- 						if(ac.getValidado() == Constants.OBJETO_NO_VALIDADO){ %>
-					
-					<span id="validado<%=ac.getInstanciaHijo() %>" class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span>
-						<%}else{ %>
-					<span id="validado<%=ac.getInstanciaHijo() %>" class="label label-danger"><fmt:message key="general.denegado"></fmt:message></span>
-					<%	}
- 					}%>
- 					<%=ac.getInstanciaHijo().getNombre() %>
+						if(ac.getValidado() == Constants.OBJETO_NO_VALIDADO){ %>
+				<button type="button" id="validarProfeAtributoC<%=ac.getInstanciaHijo().getIdInstancia()%>" class="btn btn-xs btn-info validarAtributoC" data-val="<%=ac.getInstanciaHijo().getIdInstancia()%>">
+					<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+				</button>					
+				<span id="validado<%=ac.getInstanciaHijo() %>" class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span>
+				
+					<%}else{ %>
+				<span id="validado<%=ac.getInstanciaHijo() %>" class="label label-danger"><fmt:message key="general.denegado"></fmt:message></span>
+				<%	}
+				}%>
+				</span>
+			<%} %>
 			</li>
-		<%
-				}
+		<% 
 			} %>
 		</ul>
 	</div>

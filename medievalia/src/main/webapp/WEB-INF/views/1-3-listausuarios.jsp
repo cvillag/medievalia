@@ -56,13 +56,13 @@ String message = (String)request.getAttribute("message");
 						<div class="col-xs-1"><span class="glyphicon glyphicon-ban-circle" title="<fmt:message key="general.inactivo"/>"></span></div>
 						<%} %>
 						<div class="col-xs-3">
-							<button type="button" class="btn btn-default navbar-btn deleteuser" data-val="<%=u.getId() %>">
+							<button type="button" class="btn btn-info navbar-btn deleteuser" data-val="<%=u.getId() %>">
 								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 							</button>
-							<button type="button" class="btn btn-default navbar-btn modifyuser" data-val="<%=u.getId() %>">
+							<button type="button" class="btn btn-info navbar-btn modifyuser" data-val="<%=u.getId() %>">
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 							</button>
-							<button type="button" class="btn btn-default navbar-btn detailsuser" data-val="<%=u.getId() %>">
+							<button type="button" class="btn btn-info navbar-btn detailsuser" data-val="<%=u.getId() %>">
 								<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
 							</button>
 						</div>
@@ -110,18 +110,18 @@ String message = (String)request.getAttribute("message");
 						<%} %>
 						<td width="20%">
 							<button type="button"
-								class="btn btn-sm btn-default navbar-btn deleteuser"
+								class="btn btn-sm btn-info navbar-btn deleteuser"
 								data-toggle="modal" data-target="#modalBorrar"
 								data-val="<%=u.getId() %>">
 								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 							</button>
 							<button type="button"
-								class="btn btn-sm btn-default navbar-btn modifyuser"
+								class="btn btn-sm btn-info navbar-btn modifyuser"
 								data-val="<%=u.getId() %>">
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 							</button>
 							<button type="button"
-								class="btn btn-sm btn-default navbar-btn detailsuser"
+								class="btn btn-sm btn-info navbar-btn detailsuser"
 								data-val="<%=u.getId() %>">
 								<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
 							</button>
@@ -134,7 +134,7 @@ String message = (String)request.getAttribute("message");
 		</div>
 	</div>
 	<div class="panel panel-default">
-		<button type="button" class="btn btn-sm btn-default navbar-btn" id="adduser">
+		<button type="button" class="btn btn-sm btn-info navbar-btn" id="adduser">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 		</button>
 	</div>
@@ -212,11 +212,11 @@ String message = (String)request.getAttribute("message");
 				</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-sm btn-default"
+				<button type="button" id="modalok" class="btn btn-sm btn-info"
 					data-dismiss="modal">
 					<fmt:message key="p1-3.modalborrar"></fmt:message>
 				</button>
-				<button type="button" id="modalcancel" class="btn btn-sm btn-default"
+				<button type="button" id="modalcancel" class="btn btn-sm btn-info"
 					data-dismiss="modal">
 					<fmt:message key="p1-3.modalcancelar"></fmt:message>
 				</button>

@@ -62,7 +62,7 @@ else{%>
 			<%} %>
 			<td>
 				<button type="button"
-					class="btn btn-sm btn-default enroll"
+					class="btn btn-sm btn-info enroll"
 					data-val="<%=u.getId() %>">
 					<fmt:message key="p2-1.listaUsuarios.btn"></fmt:message>
 				</button>

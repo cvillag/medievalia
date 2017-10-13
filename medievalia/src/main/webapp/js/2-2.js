@@ -112,6 +112,7 @@ function postCarga(){
 	$(".modifySObjeto").click(function(){
 		$("#contenidoDetalle").empty();
 		$("#contenidoDetalleProfe").empty();
+		$("#contenidoValidaProfe").empty();
 		oldModDetAct = 0;
 		modDetAct = 0;
 		name = $(this).data("name");
@@ -145,6 +146,7 @@ function postCarga(){
 	$(".detalleObjeto").click(function(){
 		$("#contenidoDetalle2").empty();
 		$("#contenidoDetalleProfe").empty();
+		$("#contenidoValidaProfe").empty();
 		oldModDetAct = 0;
 		modDetAct = 0;
 		id = $(this).data("val");
@@ -421,6 +423,7 @@ function postCarga3(){
 	$(".detalleObjetoProfe").click(function(){
 		$("#contenidoDetalle").empty();
 		$("#contenidoDetalle2").empty();
+		$("#contenidoValidaProfe").empty();
 		oldModDetAct = 0;
 		modDetAct = 0;
 		id = $(this).data("val");
@@ -435,6 +438,32 @@ function postCarga3(){
 		function(data){
 			$("#contenidoDetalleProfe").html(data);	
 			postCargaDetalle(0);
+		});
+	});
+	
+	$(".validarObjeto").click(function(){
+		$("#contenidoDetalle").empty();
+		$("#contenidoDetalle2").empty();
+		$("#contenidoDetalleProfe").empty();
+		oldModDetAct = 0;
+		modDetAct = 0;
+		id = $(this).data("val");
+		name = $(this).data("name");
+		$("#nombreObjetoValidaProfe").html(name);
+		$("#modalValidaObjetoProfe").modal();
+		$.post("objectDetail.do",{
+			idInstancia : id,
+			modo : 3,
+			val : 0
+		},
+		function(data){
+			$("#contenidoValidaProfe").html(data);	
+			postCargaDetalle(0);
+			buttonflag = $("#validateButtonFlag").val();
+			alert(buttonflag);
+			if(buttonflag == 0){
+				$("#modalokValidaProfe").prop("disabled", false);
+			}
 		});
 	});
 	
