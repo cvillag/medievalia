@@ -16,6 +16,10 @@ var firstC = 0;
 
 var deleteObj = 0;
 
+var idHijo = 0;
+var tipoHijo = 0;
+var idPadre = 0;
+
 function cancelaEdicion(val,ol){
 	$("#objetoName" + val).val(ol);
 	activadoCom = 0;
@@ -438,6 +442,7 @@ function postCarga3(){
 		function(data){
 			$("#contenidoDetalleProfe").html(data);	
 			postCargaDetalle(0);
+			postCargaProfe();
 		});
 	});
 	
@@ -460,10 +465,10 @@ function postCarga3(){
 			$("#contenidoValidaProfe").html(data);	
 			postCargaDetalle(0);
 			buttonflag = $("#validateButtonFlag").val();
-			alert(buttonflag);
 			if(buttonflag == 0){
 				$("#modalokValidaProfe").prop("disabled", false);
 			}
+			postCargaProfe();
 		});
 	});
 	
@@ -558,6 +563,27 @@ function postCarga3(){
 //			}
 //		});
 //	});
+}
+
+function postCargaProfe(){
+	$(".validationText").click(function(){
+		$("#modalTextoValidacion").html($(this).data('textvalidacion'));
+		$("#modalMuestraTextoAC").modal();
+	});
+	
+	$(".novalidationText").click(function(){
+		$("#modalTextoNoValidacion").html($(this).data('textvalidacion'));
+		$("#modalMuestraTextoACNoVal").modal();
+	});
+	
+	$(".validarAtributoC").click(function(){
+		idHijo = $(this).data('val');
+		tipoHijo = $(this).data('thijo');
+		idPadre = $(this).data('padre');
+		alert("validando " + idHijo + " tipo " + tipoHijo + " id padre " + idPadre);
+		$("#textoValidaciónAC").val("");
+		$("#modalValidaAtributoC0").modal();
+	});
 }
 
 function cargaListaCompleta(){
@@ -723,5 +749,35 @@ $(document).ready(function(){
 				}
 			});
 		}
+	});
+	
+	$("#validaAC").click(function(){
+		alert("validando " + idHijo + " tipo " + tipoHijo + " id padre " + idPadre + " texto val " + $("#textoValidaciónAC").val());
+		$.post("validateComplexAttributeA.do",{
+			idHijo : idHijo,
+			tipoHijo : tipoHijo,
+			idPadre : idPadre,
+			val : 1,
+			textoVal : $("#textoValidaciónAC").val()
+		},
+		function(data){
+			var json = JSON.parse(data);
+			alert(json.message);
+		});
+	});
+	
+	$("#noValidaAC").click(function(){
+		alert("comentando " + idHijo + " tipo " + tipoHijo + " id padre " + idPadre + " texto val " + $("#textoValidaciónAC").val());
+		$.post("validateComplexAttributeA.do",{
+			idHijo : idHijo,
+			tipoHijo : tipoHijo,
+			idPadre : idPadre,
+			val : 0,
+			textoVal : $("#textoValidaciónAC").val()
+		},
+		function(data){
+			var json = JSON.parse(data);
+			alert(json.message);
+		});
 	});
 });

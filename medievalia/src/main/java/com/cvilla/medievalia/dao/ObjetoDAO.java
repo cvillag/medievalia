@@ -50,15 +50,16 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String GET_OBJECT_INT_ATTRIBUTES_VALUE = "SELECT `valor` FROM `InstanciaAtributoInt` WHERE idObjeto = ? and idInstancia = ? and idAtributoSencillo = ?";
 	private static final String GET_OBJECT_STRING_ATTRIBUTES_VALUE = "SELECT `idInstancia`, `idAtributoSencillo`, `idObjeto`, `valor` FROM `InstanciaAtributoString` WHERE idObjeto = ? and idInstancia = ? and idAtributoSencillo = ?";
 	private static final String GET_OBJECT_TEXT_ATTRIBUTES_VALUE = "SELECT `idInstancia`, `idAtributoSencillo`, `idObjeto`, `valor` FROM `InstanciaAtributoText` WHERE idObjeto = ? and idInstancia = ? and idAtributoSencillo = ?";
-	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES = "select	`idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionPadre`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, InstanciaObjeto.textoValidacion as `textoValidacionHijo`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo` from "
-																	+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `nombreAtributo` from "
-																		+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaAtributoComplejo` "
+	//FIXME: Los textos de validación de los atributos complejos son del objeto, no del atributo complejo.
+	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES = "select	`idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionHijo`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, sel2.`textoLeidoAC`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, InstanciaObjeto.textoValidacion as `textoValidacionPadre`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo` from "
+																	+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` as `textoLeidoAC`, `nombreAtributo` from "
+																		+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaAtributoComplejo` "
 																		+ "left join ObjetoDOM on idObjetoPadre = idObjeto WHERE idObjetoPadre = ? and idInstanciaPadre = ? and validado = ?) as sel1 "
 														     		+ "left join AtributoComplejoObjeto on sel1.idObjetoPadre = AtributoComplejoObjeto.idObjetoPadre and sel1.idObjetoHijo = AtributoComplejoObjeto.idObjetoHijo) as sel2 "
 													     		+ "left join InstanciaObjeto on InstanciaObjeto.idInstancia = sel2.idInstanciaHijo and InstanciaObjeto.idObjeto = sel2.idObjetoHijo";
-	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES_STUDENT = "select	`idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionPadre`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, InstanciaObjeto.textoValidacion as `textoValidacionHijo`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo` from "
-			+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `nombreAtributo` from "
-				+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaAtributoComplejo` "
+	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES_STUDENT = "select	`idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionHijo`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, sel2.`textoLeidoAC`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, InstanciaObjeto.textoValidacion as `textoValidacionPadre`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo` from "
+			+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` as `textoLeidoAC`, `nombreAtributo` from "
+				+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaAtributoComplejo` "
 				+ "left join ObjetoDOM on idObjetoPadre = idObjeto WHERE idObjetoPadre = ? and idInstanciaPadre = ?) as sel1 "
      		+ "left join AtributoComplejoObjeto on sel1.idObjetoPadre = AtributoComplejoObjeto.idObjetoPadre and sel1.idObjetoHijo = AtributoComplejoObjeto.idObjetoHijo) as sel2 "
  		+ "left join InstanciaObjeto on InstanciaObjeto.idInstancia = sel2.idInstanciaHijo and InstanciaObjeto.idObjeto = sel2.idObjetoHijo";
@@ -67,15 +68,15 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String GET_OBJECT_INSTANCE_BY_NAME ="SELECT count(*) FROM `InstanciaObjeto` WHERE idObjeto = ? and nombreInstancia = ?";
 	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES_TYPES = "SELECT `idObjetoPadre`, `idObjetoHijo`, `NombreAtributo` FROM `AtributoComplejoObjeto` WHERE idObjetoPadre = ?";
 	private static final String ADD_COMPLEX_ATTRIBUTE = "INSERT INTO `InstanciaAtributoComplejo`(`idObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`) VALUES (?,?,?,?,?,?,?,?)";
-	private static final String GET_COMPLEX_ATTRIBUTE = "select	`idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionPadre`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, InstanciaObjeto.textoValidacion as `textoValidacionHijo`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo` from "
-			+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `nombreAtributo` from "
-			+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaAtributoComplejo` "
+	private static final String GET_COMPLEX_ATTRIBUTE = "select	`idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionPadre`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, sel2.`textoLeidoAC`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, InstanciaObjeto.textoValidacion as `textoValidacionHijo`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo` from "
+			+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` as `textoLeidoAC`, `nombreAtributo` from "
+			+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaAtributoComplejo` "
 			+ "left join ObjetoDOM on idObjetoPadre = idObjeto WHERE idObjetoPadre = ? and idInstanciaPadre = ? and idObjetoHijo = ? and idInstanciaHijo = ? and validado = ?) as sel1 "
  		+ "left join AtributoComplejoObjeto on sel1.idObjetoPadre = AtributoComplejoObjeto.idObjetoPadre and sel1.idObjetoHijo = AtributoComplejoObjeto.idObjetoHijo) as sel2 "
 		+ "left join InstanciaObjeto on InstanciaObjeto.idInstancia = sel2.idInstanciaHijo and InstanciaObjeto.idObjeto = sel2.idObjetoHijo";
-	private static final String GET_COMPLEX_ATTRIBUTE_STUDENT = "select	`idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionPadre`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, InstanciaObjeto.textoValidacion as `textoValidacionHijo`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo` from "
-			+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `nombreAtributo` from "
-			+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaAtributoComplejo` "
+	private static final String GET_COMPLEX_ATTRIBUTE_STUDENT = "select	`idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionPadre`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, sel2.`textoLeidoAC`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, InstanciaObjeto.textoValidacion as `textoValidacionHijo`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo` from "
+			+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` as `textoLeidoAC`, `nombreAtributo` from "
+			+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaAtributoComplejo` "
 			+ "left join ObjetoDOM on idObjetoPadre = idObjeto WHERE idObjetoPadre = ? and idInstanciaPadre = ? and idObjetoHijo = ? and idInstanciaHijo = ?) as sel1 "
  		+ "left join AtributoComplejoObjeto on sel1.idObjetoPadre = AtributoComplejoObjeto.idObjetoPadre and sel1.idObjetoHijo = AtributoComplejoObjeto.idObjetoHijo) as sel2 "
 		+ "left join InstanciaObjeto on InstanciaObjeto.idInstancia = sel2.idInstanciaHijo and InstanciaObjeto.idObjeto = sel2.idObjetoHijo";
@@ -94,12 +95,14 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String GET_OBJECT_BY_NAME = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaObjeto` WHERE idObjeto = ? and nombreInstancia = ?";
 	private static final String RENAME_OBJECT = "UPDATE `InstanciaObjeto` SET `nombreInstancia`= ? WHERE `idObjeto` = ? and `idInstancia` = ?";
 	private static final String DELETE_OBJECT = "DELETE FROM `InstanciaObjeto` WHERE `idInstancia` = ? and `idObjeto` = ?";
-	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES_NO_VAL = "select	`idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionPadre`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, InstanciaObjeto.textoValidacion as `textoValidacionHijo`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo` from "
-			+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `nombreAtributo` from "
-			+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaAtributoComplejo` "
+	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES_NO_VAL = "select	`idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionPadre`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, sel2.`textoLeidoAC`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, InstanciaObjeto.textoValidacion as `textoValidacionHijo`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo` from "
+			+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` as `textoLeidoAC`, `nombreAtributo` from "
+			+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaAtributoComplejo` "
 			+ "left join ObjetoDOM on idObjetoPadre = idObjeto WHERE idObjetoPadre = ? and idInstanciaPadre = ?) as sel1 "
  		+ "left join AtributoComplejoObjeto on sel1.idObjetoPadre = AtributoComplejoObjeto.idObjetoPadre and sel1.idObjetoHijo = AtributoComplejoObjeto.idObjetoHijo) as sel2 "
 		+ "left join InstanciaObjeto on InstanciaObjeto.idInstancia = sel2.idInstanciaHijo and InstanciaObjeto.idObjeto = sel2.idObjetoHijo order by validadoPadre";
+	private static final String VALIDATE_ATRIBUTOC = "UPDATE `InstanciaAtributoComplejo` SET `validado`= ?,`textoValidacion`= ?, `textoLeido` = 0 WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ? and `idInstanciaPadre` = ? and `idInstanciaHijo` = ?";
+	private static final String COMMENT_ATRIBUTOC = "UPDATE `InstanciaAtributoComplejo` SET `textoValidacion`= ?, `textoLeido` = 0 WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ? and `idInstanciaPadre` = ? and `idInstanciaHijo` = ?";
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -221,7 +224,7 @@ public class ObjetoDAO implements IObjetoDAO {
 			if(jdbcTemplate.queryForInt(GET_OBJECT_INSTANCE_BY_NAME,new Object[]{o.getTipo().getTipoDOM(),o.getNombre()}) == 0){
 				int maxId = jdbcTemplate.queryForInt(GET_MAX_INSTANCE_ID_BY_OBJECT, new Object[]{o.getTipo().getTipoDOM()});
 				o.setIdInstancia(maxId+1);
-				if(jdbcTemplate.update(ADD_OBJECT_INSTANCE, new Object[]{o.getIdInstancia(),o.getTipo().getTipoDOM(),o.getNombre(),o.getValidado(),o.getTextoValidacion(),o.getGrupo(),o.getCreador()}) == 1){
+				if(jdbcTemplate.update(ADD_OBJECT_INSTANCE, new Object[]{o.getIdInstancia(),o.getTipo().getTipoDOM(),o.getNombre(),o.getValidado(),o.getTextoValidacion(),o.getGrupo(),o.getCreador().getId()}) == 1){
 					return "creado";
 				}
 				else{
@@ -419,6 +422,36 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 		catch(Exception e){
 			return null;
+		}
+	}
+
+	public String validateAtributoComplejo(int tipoDOM, int idPadre, int tipoHijo, int idHijo, String textV) {
+		try{
+			int i = jdbcTemplate.update(VALIDATE_ATRIBUTOC, new Object[]{Constants.OBJETO_VALIDADO,textV,tipoDOM,tipoHijo,idPadre,idHijo});
+			if(i == 1){
+				return "validado";
+			}
+			else{
+				return "errorBD";
+			}
+		}
+		catch(Exception e){
+			return "errorBD";
+		}
+	}
+
+	public String commentAtributoComplejoNoVal(int tipoDOM, int idPadre, int tipoHijo, int idHijo, String textV) {
+		try{
+			int i = jdbcTemplate.update(COMMENT_ATRIBUTOC, new Object[]{textV,tipoDOM,tipoHijo,idPadre,idHijo});
+			if(i == 1){
+				return "borrado";
+			}
+			else{
+				return "errorBD";
+			}
+		}
+		catch(Exception e){
+			return "errorBD";
 		}
 	}
 }

@@ -52,6 +52,8 @@ public interface IObjectManager extends Serializable{
 	//Validar objeto, ACCION 11
 	/**/public String validateObjetoDOM(TipoObjetoDOM tipo, int id, User user, Group group);
 	
+	public String validateAtributoC(int idHijo, int tipoHijo, int idPadre, TipoObjetoDOM tipo, User user, Group groupA, String textV, int val);
+	
 	//Ver lista de usuarios con objetos por validar, ACCION 2
 	/**/public List<User> getUsersToValidateObjectDOMByGroup(User teacher, Group group, TipoObjetoDOM tipo);
 	//Ver número de usuarios con objetos por validar, ACCION 2
@@ -81,4 +83,5 @@ public interface IObjectManager extends Serializable{
 	
 	public List<InstanciaObjetoDOM> fillUsers(List<InstanciaObjetoDOM> l);
 	public Map<Integer, Integer> getBadgesFromObject(InstanciaObjetoDOM obj);
+	
 }

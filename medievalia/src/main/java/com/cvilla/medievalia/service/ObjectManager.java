@@ -390,4 +390,40 @@ public class ObjectManager implements IObjectManager {
 		}
 		return badges;
 	}
+
+	public String validateAtributoC(int idHijo, int tipoHijo, int idPadre, TipoObjetoDOM tipo, User user, Group groupA, String textV, int val){
+		if(objetoDAO.getObjectInstanceNotVal(tipo, idPadre) != null){
+			if(groupManager.isTeacherOrDirector(user, groupA.getIdGrupo())){
+				InstanciaAtributoComplejoDOM ac = objetoDAO.getAtributoComplejoNotVal(tipo.getTipoDOM(), idPadre, tipoHijo, idHijo);
+				if(ac != null){
+					if(val == Constants.OBJETO_VALIDADO){
+						return objetoDAO.validateAtributoComplejo(tipo.getTipoDOM(), idPadre, tipoHijo, idHijo,textV);
+					}
+					else{
+						if(val == Constants.OBJETO_NO_VALIDADO){
+							return objetoDAO.commentAtributoComplejoNoVal(tipo.getTipoDOM(), idPadre, tipoHijo, idHijo,textV);
+						}
+						else{
+							return "errVal";
+						}
+					}
+				}
+				else{
+					InstanciaAtributoComplejoDOM ac2 = objetoDAO.getAtributoComplejo(tipo.getTipoDOM(), idPadre, tipoHijo, idHijo);
+					if(ac2 != null){
+						return "alreadyValidated";
+					}
+					else{
+						return "noAtributoC";
+					}
+				}
+			}
+			else{
+				return "noPrivileges";
+			}
+		}
+		else{
+			return "noObject";
+		}
+	}
 }

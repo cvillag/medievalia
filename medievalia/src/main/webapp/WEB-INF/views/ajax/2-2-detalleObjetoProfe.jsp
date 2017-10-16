@@ -77,7 +77,6 @@ if(objeto != null){
 					</div>
 					<%
 				}
-				//FIXME : no se muestra double
 				else if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_DOUBLE){
 					boolean nulo = as.getValor() == null;
 					String d = "";
@@ -155,22 +154,24 @@ if(objeto != null){
 		<%	for(InstanciaAtributoComplejoDOM ac : acl){
 				if(ac.getTipoHijo().getTipoDOM() == act.getIdTipoHijo()){
 			%>
-			<li class="list-group-item">
-			<%if(ac.getValidado() == Constants.OBJETO_VALIDADO){ %>
-					<span id="validado<%=ac.getInstanciaHijo() %>" class="label label-success"><fmt:message key="general.validado"></fmt:message></span>
-					<%}
+			<li class="list-group-item clearfix">
+				<%=ac.getInstanciaHijo().getNombre() %>
+				<span class="pull-right">
+				<%if(ac.getValidado() == Constants.OBJETO_VALIDADO){ %>
+				<span id="validado<%=ac.getInstanciaHijo().getIdInstancia() %>" class="label label-success validationText" data-textvalidacion="<%=ac.getTextoValidacion()%>"><fmt:message key="general.validado"></fmt:message><%if(!ac.isTextoLeido()){ %><span class="label label-info">1</span> <%} %></span>
+				<%}
 					else{
- 						if(ac.getValidado() == Constants.OBJETO_NO_VALIDADO){ %>
-					
-					<span id="validado<%=ac.getInstanciaHijo() %>" class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span>
-						<%}else{ %>
-					<span id="validado<%=ac.getInstanciaHijo() %>" class="label label-danger"><fmt:message key="general.denegado"></fmt:message></span>
-					<%	}
- 					}%>
- 					<%=ac.getInstanciaHijo().getNombre() %>
+						if(ac.getValidado() == Constants.OBJETO_NO_VALIDADO){ %>				
+				<span id="validado<%=ac.getInstanciaHijo().getIdInstancia() %>" class="label label-warning novalidationText" data-textvalidacion="<%=ac.getTextoValidacion()%>"><fmt:message key="general.novalidado"></fmt:message><%if(!ac.isTextoLeido()){ %><span class="label label-info">1</span> <%} %></span>
+				
+					<%}else{ %>
+				<span id="validado<%=ac.getInstanciaHijo().getIdInstancia() %>" class="label label-danger denegationText" data-textvalidacion="<%=ac.getTextoValidacion()%>"><fmt:message key="general.denegado"></fmt:message></span>
+				<%	}
+				}%>
+				</span>
+			<%} %>
 			</li>
 		<%
-				}
 			} %>
 		</ul>
 	</div>

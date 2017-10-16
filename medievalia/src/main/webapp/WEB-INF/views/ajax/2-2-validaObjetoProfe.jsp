@@ -13,7 +13,8 @@
 User user = (User) session.getAttribute("user");
 String type= (String) request.getAttribute("message");
 InstanciaObjetoDOM objeto = (InstanciaObjetoDOM) request.getAttribute("object");
-boolean disabled = ((Integer) request.getAttribute("modo")).intValue() == 1;
+int modo = ((Integer) request.getAttribute("modo")).intValue();
+boolean disabled = modo == 1;
 @SuppressWarnings("unchecked")
 List<TipoAtributoComplejoDOM> listaTipos = (List<TipoAtributoComplejoDOM>) request.getAttribute("tatributoc");
 @SuppressWarnings("unchecked")
@@ -41,6 +42,7 @@ if(objeto != null){
 		}%>
 	</ul>
 	<input type="hidden" id="validateButtonFlag" value="<%=totalbadges%>">
+	<input type="hidden" id="modoConsulta" value="<%=modo%>">
 	<div id="modDetAtributos0">
 	<%
 	
@@ -81,7 +83,6 @@ if(objeto != null){
 					</div>
 					<%
 				}
-				//FIXME : no se muestra double
 				else if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_DOUBLE){
 					boolean nulo = as.getValor() == null;
 					String d = "";
@@ -163,17 +164,17 @@ if(objeto != null){
 				<%=ac.getInstanciaHijo().getNombre() %>
 				<span class="pull-right">
 				<%if(ac.getValidado() == Constants.OBJETO_VALIDADO){ %>
-				<span id="validado<%=ac.getInstanciaHijo() %>" class="label label-success"><fmt:message key="general.validado"></fmt:message></span>
+				<span id="validado<%=ac.getInstanciaHijo().getIdInstancia() %>" class="label label-success <%if (ac.getTextoValidacion().length() > 1){ %> validationText" data-textvalidacion="<%=ac.getTextoValidacion()%>"<%}else{ %>"<%} %>><fmt:message key="general.validado"></fmt:message><%if(!ac.isTextoLeido()){ %><span class="label label-info">1</span> <%} %></span>
 				<%}
 					else{
 						if(ac.getValidado() == Constants.OBJETO_NO_VALIDADO){ %>
-				<button type="button" id="validarProfeAtributoC<%=ac.getInstanciaHijo().getIdInstancia()%>" class="btn btn-xs btn-info validarAtributoC" data-val="<%=ac.getInstanciaHijo().getIdInstancia()%>">
+				<button type="button" id="validarProfeAtributoC<%=ac.getInstanciaHijo().getIdInstancia()%>" class="btn btn-xs btn-info validarAtributoC" data-val="<%=ac.getInstanciaHijo().getIdInstancia()%>" data-thijo="<%=ac.getTipoHijo().getTipoDOM() %>" data-padre="<%=objeto.getIdInstancia()%>">
 					<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
 				</button>					
-				<span id="validado<%=ac.getInstanciaHijo() %>" class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span>
+				<span id="validado<%=ac.getInstanciaHijo().getIdInstancia() %>" class="label label-warning <%if (ac.getTextoValidacion().length() > 1){ %> novalidationText" data-textvalidacion="<%=ac.getTextoValidacion()%>"<%}else{ %>"<%} %>><fmt:message key="general.novalidado"></fmt:message><%if(!ac.isTextoLeido()){ %><span class="label label-info">1</span> <%} %></span>
 				
 					<%}else{ %>
-				<span id="validado<%=ac.getInstanciaHijo() %>" class="label label-danger"><fmt:message key="general.denegado"></fmt:message></span>
+				<span id="validado<%=ac.getInstanciaHijo().getIdInstancia() %>" class="label label-danger <%if (ac.getTextoValidacion().length() > 1){ %> denegationText" data-textvalidacion="<%=ac.getTextoValidacion()%>"<%}else{ %>"<%} %>><fmt:message key="general.denegado"></fmt:message></span>
 				<%	}
 				}%>
 				</span>

@@ -718,6 +718,83 @@ else{ %>
 	</div>
 </div>
 
+<!-- Diálogos modales de validación de atributos complejos -->
+
+<div id="modalValidaAtributoC0" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal80"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-info">
+					<fmt:message key="p2-2.modal81"></fmt:message>
+				</div>
+				<input type="text" id="textoValidaciónAC">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.cancelar" ></fmt:message>
+				</button>
+				<button type="button" id="validaAC" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="p2-2.modal80.button1" ></fmt:message>
+				</button>
+				<button type="button" id="noValidaAC" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="p2-2.modal80.button2" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Diálogos de información de validación -->
+
+<div id="modalMuestraTextoAC" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal90"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-info">
+					<fmt:message key="p2-2.modal91"></fmt:message>:<span id="modalTextoValidacion"></span>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalMuestraTextoACNoVal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal90"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-info">
+					<fmt:message key="p2-2.modal92"></fmt:message>:<span id="modalTextoNoValidacion"></span>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- SIN USO AUN -->
 
 <!-- Diálogos modales de borrado de objetos -->

@@ -62,7 +62,6 @@ if(objeto != null){
 					</div>
 					<%
 				}
-				//FIXME!: No se muestra double
 				else if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_DOUBLE){
 					String d = "";
 					boolean nulo = as.getValor() == null;
@@ -78,7 +77,6 @@ if(objeto != null){
 					</div>
 					<%
 				}
-				//FIXME!: No se muestra int
 				else if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_INT){
 					int i=0;
 					boolean nulo = as.getValor() == null;

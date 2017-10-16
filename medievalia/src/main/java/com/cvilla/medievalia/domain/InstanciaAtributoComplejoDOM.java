@@ -12,6 +12,7 @@ public class InstanciaAtributoComplejoDOM {
 	private String textoValidacion;
 	private int idGrupo;
 	private int creador;
+	private int textoLeido;
 	
 	public InstanciaAtributoComplejoDOM() {
 		super();
@@ -70,6 +71,15 @@ public class InstanciaAtributoComplejoDOM {
 	}
 	public boolean isValidado(){
 		return this.validado == Constants.OBJETO_VALIDADO;
+	}
+	public int getTextoLeido() {
+		return textoLeido;
+	}
+	public void setTextoLeido(int textoLeido) {
+		this.textoLeido = textoLeido;
+	}
+	public boolean isTextoLeido(){
+		return this.textoLeido == 1 || this.textoValidacion.length() < 1;
 	}
 
 }

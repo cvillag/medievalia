@@ -67,7 +67,6 @@ if(objeto != null){
 					</div>
 					<%
 				}
-				//FIXME : no se muestra double
 				else if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_DOUBLE){
 					boolean nulo = as.getValor() == null;
 					String d = "";
