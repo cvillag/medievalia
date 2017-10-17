@@ -63,7 +63,9 @@ public class ValidateComplexAttributeAjaxController {
 				int val = new Integer(request.getParameter("val")).intValue();
 				String textV = request.getParameter("textoVal");
 				j.put("message",objectManager.validateAtributoC(idHijo,tipoHijo,idPadre,tipo,user,groupA,textV,val));
-				
+				j.put("idHijo", idHijo);
+				j.put("tipoHijo", tipoHijo);
+				j.put("texts", textV.length());
 			}
 			model.addObject("json", j);
 		}

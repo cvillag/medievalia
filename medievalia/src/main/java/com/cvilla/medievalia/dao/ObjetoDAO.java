@@ -444,7 +444,7 @@ public class ObjetoDAO implements IObjetoDAO {
 		try{
 			int i = jdbcTemplate.update(COMMENT_ATRIBUTOC, new Object[]{textV,tipoDOM,tipoHijo,idPadre,idHijo});
 			if(i == 1){
-				return "borrado";
+				return "novalidado";
 			}
 			else{
 				return "errorBD";

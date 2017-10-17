@@ -580,7 +580,6 @@ function postCargaProfe(){
 		idHijo = $(this).data('val');
 		tipoHijo = $(this).data('thijo');
 		idPadre = $(this).data('padre');
-		alert("validando " + idHijo + " tipo " + tipoHijo + " id padre " + idPadre);
 		$("#textoValidaciónAC").val("");
 		$("#modalValidaAtributoC0").modal();
 	});
@@ -752,7 +751,6 @@ $(document).ready(function(){
 	});
 	
 	$("#validaAC").click(function(){
-		alert("validando " + idHijo + " tipo " + tipoHijo + " id padre " + idPadre + " texto val " + $("#textoValidaciónAC").val());
 		$.post("validateComplexAttributeA.do",{
 			idHijo : idHijo,
 			tipoHijo : tipoHijo,
@@ -761,13 +759,11 @@ $(document).ready(function(){
 			textoVal : $("#textoValidaciónAC").val()
 		},
 		function(data){
-			var json = JSON.parse(data);
-			alert(json.message);
+			modalesValidacion(data);
 		});
 	});
 	
 	$("#noValidaAC").click(function(){
-		alert("comentando " + idHijo + " tipo " + tipoHijo + " id padre " + idPadre + " texto val " + $("#textoValidaciónAC").val());
 		$.post("validateComplexAttributeA.do",{
 			idHijo : idHijo,
 			tipoHijo : tipoHijo,
@@ -776,8 +772,58 @@ $(document).ready(function(){
 			textoVal : $("#textoValidaciónAC").val()
 		},
 		function(data){
-			var json = JSON.parse(data);
-			alert(json.message);
+			modalesValidacion(data);
 		});
 	});
 });
+
+function modalesValidacion(data){
+	var json = JSON.parse(data);
+	if(json.message == "sinSesion"){
+		window.location.href="hello.do";
+	}
+	else if(json.message == "sinPrivilegios"){
+		$("#modalNoPrivilegios").modal();
+	}
+	else if(json.message == "noType"){
+		$("#modalValidaAtributoC1").modal();
+	}
+	else if(json.message == "errVal"){
+		$("#modalValidaAtributoC1").modal();
+	}
+	else if(json.message == "alreadyValidated"){
+		$("#modalValidaAtributoC2").modal();
+	}
+	else if(json.message == "noAtributoC"){
+		$("#modalValidaAtributoC3").modal();
+	}
+	else if(json.message == "noObject"){
+		$("#modalValidaAtributoC3").modal();
+	}
+	else if(json.message == "errorBD"){
+		$("#modalValidaAtributoC4").modal();
+	}
+	else if(json.message == "validado"){
+		$("#validado"+json.tipoHijo+"-"+json.idHijo).removeClass("label-warning");
+		$("#validado"+json.tipoHijo+"-"+json.idHijo).addClass("label-success");
+		$("#validado"+json.tipoHijo+"-"+json.idHijo).addClass("validationText");
+		$("#validado"+json.tipoHijo+"-"+json.idHijo).empty();
+		$("#validado"+json.tipoHijo+"-"+json.idHijo).html("Validado");
+		$("#validarProfeAtributoC"+json.tipoHijo+"-"+json.idHijo).remove();
+		$("#modalValidaAtributoC5").modal();
+		if(json.texts > 0){
+			$("#validado"+json.tipoHijo+"-"+json.idHijo).append('<span class="label label-info">1</span>');
+		}
+	}
+	else if(json.message == "novalidado"){
+		$("#validado"+json.tipoHijo+"-"+json.idHijo).removeClass("label-success");
+		$("#validado"+json.tipoHijo+"-"+json.idHijo).addClass("label-warning");
+		$("#validado"+json.tipoHijo+"-"+json.idHijo).addClass("novalidationText");
+		$("#validado"+json.tipoHijo+"-"+json.idHijo).empty();
+		$("#validado"+json.tipoHijo+"-"+json.idHijo).html("No validado");
+		$("#modalValidaAtributoC6").modal();
+		if(json.texts > 0){
+			$("#validado"+json.tipoHijo+"-"+json.idHijo).append('<span class="label label-info">1</span>');
+		}
+	}
+}

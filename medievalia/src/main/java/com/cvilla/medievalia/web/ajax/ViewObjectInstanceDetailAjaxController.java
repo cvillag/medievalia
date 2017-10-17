@@ -76,7 +76,7 @@ public class ViewObjectInstanceDetailAjaxController {
 					}
 					else{
 						if(authManager.isAutorized(actionId3, user)){
-							model = new ModelAndView("ajax/2-2-detalleObjetoProfe");
+							model = new ModelAndView("ajax/2-2-validaObjetoProfe");
 						}
 						else{
 							return Constants.noPrivilegesA(user, logManager, actionId, "Visualización de detalle de objeto no validado");

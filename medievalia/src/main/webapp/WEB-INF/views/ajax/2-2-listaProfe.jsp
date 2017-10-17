@@ -70,11 +70,7 @@ List<InstanciaObjetoDOM> lista = (List<InstanciaObjetoDOM>) request.getAttribute
 					<span id="validado<%=c.getIdInstancia() %>" class="label label-danger"><fmt:message key="general.denegado"></fmt:message></span>
 					<%	}
  					}%>
- 					<%if(valid != null){%>
-					<button type="button" id="validarProfeObjeto<%=c.getIdInstancia()%>" class="btn btn-xs btn-info validarObjeto" data-val="<%=c.getIdInstancia()%>" data-name="<%=c.getNombre()%>">
-						<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
-					</button>
-					<%} %>
+ 					
 				</td>
 			</tr>
 <%		
