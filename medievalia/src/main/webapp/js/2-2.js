@@ -472,6 +472,40 @@ function postCarga3(){
 		});
 	});
 	
+	$(".modifyObjetoP").click(function(){
+		$("#contenidoDetalle").empty();
+		$("#contenidoDetalleProfe").empty();
+		$("#contenidoValidaProfe").empty();
+		oldModDetAct = 0;
+		modDetAct = 0;
+		name = $(this).data("name");
+		$("#nombreObjetoDetalle2").html(name);
+		$("#modalDetalleObjeto2").modal();
+		idInstanciaModificar = $(this).data('val');
+		$.post("objectDetail.do",{
+			idInstancia : $(this).data('val'),
+			modo : 2,
+			val : 1
+		},
+		function(data){
+			$("#contenidoDetalle2").html(data);
+			var i = 0;
+			var s = $(".modDetAtributosC").size();
+			$(".modDetAtributosC").each(function(){
+				//La variable pagCarga no puede ser javascript, debe venir en data. Pasar data a JSON con la página y los objetos. Construir botones y luego postCargaDetalle()
+				pagCarga = $(this).data('num');
+				if(++i == s){
+					cargaAtributosComplejosPorPagina(pagCarga,1);
+				}
+				else{
+					cargaAtributosComplejosPorPagina(pagCarga,0);
+				}
+			});
+			//postCargaDetalle2();
+			postCargaDetalle(1);
+		});
+	});
+	
 //	
 //	$(".activarProfeSNombre").click(function(){
 //		if(activadoPr != 0){
@@ -811,8 +845,9 @@ function modalesValidacion(data){
 		$("#validado"+json.tipoHijo+"-"+json.idHijo).html("Validado");
 		$("#validarProfeAtributoC"+json.tipoHijo+"-"+json.idHijo).remove();
 		$("#modalValidaAtributoC5").modal();
-		if(json.texts > 0){
+		if(json.texts.length > 0){
 			$("#validado"+json.tipoHijo+"-"+json.idHijo).append('<span class="label label-info">1</span>');
+			$("#validado"+json.tipoHijo+"-"+json.idHijo).data("textvalidacion",json.texts);
 		}
 	}
 	else if(json.message == "novalidado"){
@@ -822,8 +857,9 @@ function modalesValidacion(data){
 		$("#validado"+json.tipoHijo+"-"+json.idHijo).empty();
 		$("#validado"+json.tipoHijo+"-"+json.idHijo).html("No validado");
 		$("#modalValidaAtributoC6").modal();
-		if(json.texts > 0){
+		if(json.texts.length > 0){
 			$("#validado"+json.tipoHijo+"-"+json.idHijo).append('<span class="label label-info">1</span>');
+			$("#validado"+json.tipoHijo+"-"+json.idHijo).data("textvalidacion",json.texts);
 		}
 	}
 }
