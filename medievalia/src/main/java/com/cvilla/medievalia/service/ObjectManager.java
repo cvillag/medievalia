@@ -155,32 +155,27 @@ public class ObjectManager implements IObjectManager {
 	}
 	
 
-	public String validateObjetoDOM(TipoObjetoDOM tipo, int id, User user,
-			Group group) {
+	public String validateObjetoDOM(TipoObjetoDOM tipo, int id, User user, Group group) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public List<User> getUsersToValidateObjectDOMByGroup(User teacher,
-			Group group, TipoObjetoDOM tipo) {
+	public List<User> getUsersToValidateObjectDOMByGroup(User teacher, Group group, TipoObjetoDOM tipo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public int getNumUsersToValidateByGroup(User teacher, Group group,
-			TipoObjetoDOM tipo) {
+	public int getNumUsersToValidateByGroup(User teacher, Group group, TipoObjetoDOM tipo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int getNumObjetoDOMToValidateByUser(User teacher, Group group,
-			TipoObjetoDOM tipo) {
+	public int getNumObjetoDOMToValidateByUser(User teacher, Group group, TipoObjetoDOM tipo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public List<InstanciaObjetoDOM> getObjetoDOMAtributeByType(TipoObjetoDOM tipoPadre,
-			TipoObjetoDOM tipoHijo) {
+	public List<InstanciaObjetoDOM> getObjetoDOMAtributeByType(TipoObjetoDOM tipoPadre, TipoObjetoDOM tipoHijo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -280,21 +275,18 @@ public class ObjectManager implements IObjectManager {
 		return message;
 	}
 
-	public List<InstanciaObjetoDOM> getStudentObjetoDOMAtributeByType(
-			TipoObjetoDOM tipoPadre, TipoObjetoDOM tipoHijo, User user,
+	public List<InstanciaObjetoDOM> getStudentObjetoDOMAtributeByType(TipoObjetoDOM tipoPadre, TipoObjetoDOM tipoHijo, User user,
 			Group groupA) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String addStudentObjetoDOMAttributeByType(InstanciaObjetoDOM padre,
-			InstanciaObjetoDOM hijo, User user, Group groupA) {
+	public String addStudentObjetoDOMAttributeByType(InstanciaObjetoDOM padre, InstanciaObjetoDOM hijo, User user, Group groupA) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String deleteStudentObjetoDOMAttributeByType(InstanciaObjetoDOM padre,
-			InstanciaObjetoDOM hijo, User user, Group groupA) {
+	public String deleteStudentObjetoDOMAttributeByType(InstanciaObjetoDOM padre, InstanciaObjetoDOM hijo, User user, Group groupA) {
 		// TODO Auto-generated method stub
 		return null;
 	}

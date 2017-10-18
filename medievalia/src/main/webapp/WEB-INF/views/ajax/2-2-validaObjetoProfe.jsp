@@ -13,6 +13,8 @@
 User user = (User) session.getAttribute("user");
 String type= (String) request.getAttribute("message");
 InstanciaObjetoDOM objeto = (InstanciaObjetoDOM) request.getAttribute("object");
+@SuppressWarnings("unchecked")
+List<User> listU = (List<User>) request.getAttribute("users");
 int modo = ((Integer) request.getAttribute("modo")).intValue();
 boolean disabled = modo == 1;
 @SuppressWarnings("unchecked")
@@ -161,24 +163,39 @@ if(objeto != null){
 				if(ac.getTipoHijo().getTipoDOM() == act.getIdTipoHijo()){
 			%>
 			<li class="list-group-item clearfix">
-				<%=ac.getInstanciaHijo().getNombre() %>
-				<span class="pull-right">
-				<%if(ac.getValidado() == Constants.OBJETO_VALIDADO){ %>
-				<span id="validado<%=ac.getTipoHijo().getTipoDOM() %>-<%=ac.getInstanciaHijo().getIdInstancia() %>" class="label label-success <%if (ac.getTextoValidacion().length() > 1){ %> validationText" data-textvalidacion="<%=ac.getTextoValidacion()%>"<%}else{ %>"<%} %>><fmt:message key="general.validado"></fmt:message><%if(!ac.isTextoLeido()){ %><span class="label label-info">1</span> <%} %></span>
-				<%}
-					else{
-						if(ac.getValidado() == Constants.OBJETO_NO_VALIDADO){ %>
-				<button type="button" id="validarProfeAtributoC<%=ac.getTipoHijo().getTipoDOM() %>-<%=ac.getInstanciaHijo().getIdInstancia() %>" class="btn btn-xs btn-info validarAtributoC" data-val="<%=ac.getInstanciaHijo().getIdInstancia()%>" data-thijo="<%=ac.getTipoHijo().getTipoDOM() %>" data-padre="<%=objeto.getIdInstancia()%>">
-					<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
-				</button>					
-				<span id="validado<%=ac.getTipoHijo().getTipoDOM() %>-<%=ac.getInstanciaHijo().getIdInstancia() %>" class="label label-warning <%if (ac.getTextoValidacion().length() > 1){ %> novalidationText" data-textvalidacion="<%=ac.getTextoValidacion()%>"<%}else{ %>"<%} %>><fmt:message key="general.novalidado"></fmt:message><%if(!ac.isTextoLeido()){ %><span class="label label-info">1</span> <%} %></span>
-				
-					<%}else{ %>
-				<span id="validado<%=ac.getTipoHijo().getTipoDOM() %>-<%=ac.getInstanciaHijo().getIdInstancia() %>" class="label label-danger <%if (ac.getTextoValidacion().length() > 1){ %> denegationText" data-textvalidacion="<%=ac.getTextoValidacion()%>"<%}else{ %>"<%} %>><fmt:message key="general.denegado"></fmt:message></span>
-				<%	}
-				}%>
-				</span>
-			<%} %>
+				<div class="row">
+					<div class="col-xs-4">
+						<p ><%=ac.getInstanciaHijo().getNombre() %></p>
+					</div>
+					<div class="col-xs-4">
+						<p><%for(User u : listU){
+							if(ac.getCreador() == u.getId()){
+								%><%=u.getUser_long_name()%><%
+								break;
+							}
+						}
+						%></p>
+					</div>
+					<div class="col-xs-4">
+						<span class="pull-right">
+						<%if(ac.getValidado() == Constants.OBJETO_VALIDADO){ %>
+						<span id="validado<%=ac.getTipoHijo().getTipoDOM() %>-<%=ac.getInstanciaHijo().getIdInstancia() %>" class="label label-success <%if (ac.getTextoValidacion().length() > 1){ %> validationText" data-textvalidacion="<%=ac.getTextoValidacion()%>"<%}else{ %>"<%} %>><fmt:message key="general.validado"></fmt:message><%if(!ac.isTextoLeido()){ %><span class="label label-info">1</span> <%} %></span>
+						<%}
+							else{
+								if(ac.getValidado() == Constants.OBJETO_NO_VALIDADO){ %>
+						<button type="button" id="validarProfeAtributoC<%=ac.getTipoHijo().getTipoDOM() %>-<%=ac.getInstanciaHijo().getIdInstancia() %>" class="btn btn-xs btn-info validarAtributoC" data-val="<%=ac.getInstanciaHijo().getIdInstancia()%>" data-thijo="<%=ac.getTipoHijo().getTipoDOM() %>" data-padre="<%=objeto.getIdInstancia()%>">
+							<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+						</button>					
+						<span id="validado<%=ac.getTipoHijo().getTipoDOM() %>-<%=ac.getInstanciaHijo().getIdInstancia() %>" class="label label-warning <%if (ac.getTextoValidacion().length() > 1){ %> novalidationText" data-textvalidacion="<%=ac.getTextoValidacion()%>"<%}else{ %>"<%} %>><fmt:message key="general.novalidado"></fmt:message><%if(!ac.isTextoLeido()){ %><span class="label label-info">1</span> <%} %></span>
+						
+							<%}else{ %>
+						<span id="validado<%=ac.getTipoHijo().getTipoDOM() %>-<%=ac.getInstanciaHijo().getIdInstancia() %>" class="label label-danger <%if (ac.getTextoValidacion().length() > 1){ %> denegationText" data-textvalidacion="<%=ac.getTextoValidacion()%>"<%}else{ %>"<%} %>><fmt:message key="general.denegado"></fmt:message></span>
+						<%	}
+						}%>
+						</span>
+					<%} %>
+					</div>
+				</div>	
 			</li>
 		<% 
 			} %>

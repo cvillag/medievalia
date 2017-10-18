@@ -20,8 +20,10 @@ import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
+import com.cvilla.medievalia.service.LoginManager;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
+import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
 
@@ -40,6 +42,9 @@ public class ViewObjectInstanceDetailAjaxController {
 	
 	@Autowired
 	private IObjectManager objectManager;
+	
+	@Autowired
+	private ILoginManager loginManager;
 	
 	@RequestMapping(value = "objectDetail.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -95,6 +100,7 @@ public class ViewObjectInstanceDetailAjaxController {
 				else{
 					return Constants.paramError(logManager, actionId, user.getId());
 				}
+				model.addObject("users",loginManager.listar());
 				model.addObject("badges",badges);
 				model.addObject("modo",modo);
 				model.addObject("object", obj);
