@@ -53,7 +53,7 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES = "select	`idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionHijo`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, sel2.`textoLeidoAC`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, InstanciaObjeto.textoValidacion as `textoValidacionPadre`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo` from "
 																	+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` as `textoLeidoAC`, `nombreAtributo` from "
 																		+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaAtributoComplejo` "
-																		+ "left join ObjetoDOM on idObjetoPadre = idObjeto WHERE idObjetoPadre = ? and idInstanciaPadre = ? and validado = ?) as sel1 "
+																		+ "left join ObjetoDOM on idObjetoPadre = idObjeto WHERE idObjetoPadre = ? and idInstanciaPadre = ?) as sel1 "
 														     		+ "left join AtributoComplejoObjeto on sel1.idObjetoPadre = AtributoComplejoObjeto.idObjetoPadre and sel1.idObjetoHijo = AtributoComplejoObjeto.idObjetoHijo) as sel2 "
 													     		+ "left join InstanciaObjeto on InstanciaObjeto.idInstancia = sel2.idInstanciaHijo and InstanciaObjeto.idObjeto = sel2.idObjetoHijo";
 	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES_STUDENT = "select	`idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionHijo`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, sel2.`textoLeidoAC`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, InstanciaObjeto.textoValidacion as `textoValidacionPadre`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo` from "
@@ -203,7 +203,7 @@ public class ObjetoDAO implements IObjetoDAO {
 
 	public List<InstanciaAtributoComplejoDOM> getAtributosComplejos(TipoObjetoDOM tipo, int id) {
 		try{
-			return jdbcTemplate.query(GET_OBJECT_COMPLEX_ATTRIBUTES, new Object[]{tipo.getTipoDOM(),id,Constants.OBJETO_VALIDADO}, new AtributoComplejoDOMMapper());
+			return jdbcTemplate.query(GET_OBJECT_COMPLEX_ATTRIBUTES, new Object[]{tipo.getTipoDOM(),id}, new AtributoComplejoDOMMapper());
 		}
 		catch(Exception e){
 			return null;

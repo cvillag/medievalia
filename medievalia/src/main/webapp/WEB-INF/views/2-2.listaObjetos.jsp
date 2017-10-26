@@ -953,3 +953,20 @@ else{ %>
 
 <!-- SIN USO AUN -->
 
+<!-- Modal de mensaje de atributo complejo no validado -->
+<div id="modalPendienteValidacionAtributo" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="alert alert-info">
+					<fmt:message key="p2-2.modal100"></fmt:message>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

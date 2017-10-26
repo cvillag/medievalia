@@ -144,7 +144,11 @@ if(objeto != null){
 		<%	for(InstanciaAtributoComplejoDOM ac : acl){
 				if(ac.getTipoHijo().getTipoDOM() == act.getIdTipoHijo()){
 			%>
-			<li class="list-group-item"><%=ac.getInstanciaHijo().getNombre() %></li>
+			<li class="list-group-item"><%=ac.getInstanciaHijo().getNombre() %>
+			<%if(!ac.isValidado()){ %>
+			<span class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span>
+			<%} %>
+			</li>
 		<%
 				}
 			} %>

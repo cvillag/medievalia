@@ -348,18 +348,16 @@ public class ObjectManager implements IObjectManager {
 	public InstanciaObjetoDOM getObjetoDOMUnvalidated(TipoObjetoDOM tipo, int id, Group g, User u) {
 		if(groupManager.isTeacherOrDirector(u, g.getIdGrupo())){
 			InstanciaObjetoDOM obj = objetoDAO.getObjectInstanceNotVal(tipo, id);
+			if(obj == null){
+				obj = objetoDAO.getObjectInstance(tipo, id);
+			}
 			if(obj != null){
 				obj.setAtributosSencillos(objetoDAO.getAtributosSencillos(tipo,id));
 				obj.setAtributosComplejos(objetoDAO.getAtributosComplejosNoVal(tipo,id));
-				if(obj.getGrupo() != g.getIdGrupo()){
-					return null;
-				}
-				else{
-					return obj;
-				}
+				return obj;
 			}
 			else{
-				return obj;
+				return null;
 			}
 		}
 		else{
@@ -369,6 +367,9 @@ public class ObjectManager implements IObjectManager {
 
 	public Map<Integer, Integer> getBadgesFromObject(InstanciaObjetoDOM obj) {
 		Map<Integer, Integer> badges = new HashMap<Integer, Integer>();
+		if(obj == null){
+			return null;
+		}
 		for(InstanciaAtributoComplejoDOM ac : obj.getAtributosComplejos()){
 			if(!ac.isValidado()){
 				Integer i = badges.get(ac.getTipoHijo().getTipoDOM());
