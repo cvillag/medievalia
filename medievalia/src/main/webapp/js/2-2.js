@@ -117,6 +117,7 @@ function postCarga(){
 		$("#contenidoDetalle").empty();
 		$("#contenidoDetalleProfe").empty();
 		$("#contenidoValidaProfe").empty();
+		$("#contenidoModifyProfe").empty();
 		oldModDetAct = 0;
 		modDetAct = 0;
 		name = $(this).data("name");
@@ -151,6 +152,7 @@ function postCarga(){
 		$("#contenidoDetalle2").empty();
 		$("#contenidoDetalleProfe").empty();
 		$("#contenidoValidaProfe").empty();
+		$("#contenidoModifyProfe").empty();
 		oldModDetAct = 0;
 		modDetAct = 0;
 		id = $(this).data("val");
@@ -428,6 +430,7 @@ function postCarga3(){
 		$("#contenidoDetalle").empty();
 		$("#contenidoDetalle2").empty();
 		$("#contenidoValidaProfe").empty();
+		$("#contenidoModifyProfe").empty();
 		oldModDetAct = 0;
 		modDetAct = 0;
 		id = $(this).data("val");
@@ -450,6 +453,7 @@ function postCarga3(){
 		$("#contenidoDetalle").empty();
 		$("#contenidoDetalle2").empty();
 		$("#contenidoDetalleProfe").empty();
+		$("#contenidoModifyProfe").empty();
 		oldModDetAct = 0;
 		modDetAct = 0;
 		id = $(this).data("val");
@@ -474,35 +478,34 @@ function postCarga3(){
 	
 	$(".modifyObjetoP").click(function(){
 		$("#contenidoDetalle").empty();
+		$("#contenidoDetalle2").empty();
 		$("#contenidoDetalleProfe").empty();
 		$("#contenidoValidaProfe").empty();
 		oldModDetAct = 0;
 		modDetAct = 0;
 		name = $(this).data("name");
-		$("#nombreObjetoDetalle2").html(name);
-		$("#modalDetalleObjeto2").modal();
+		$("#nombreObjetoModifyProfe").html(name);
+		$("#modalModifyObjetoProfe").modal();
 		idInstanciaModificar = $(this).data('val');
-		$.post("objectDetail.do",{
+		$.post("detalleObjectProfe.do",{
 			idInstancia : $(this).data('val'),
-			modo : 2,
-			val : 1
 		},
 		function(data){
-			$("#contenidoDetalle2").html(data);
-			var i = 0;
-			var s = $(".modDetAtributosC").size();
-			$(".modDetAtributosC").each(function(){
-				//La variable pagCarga no puede ser javascript, debe venir en data. Pasar data a JSON con la página y los objetos. Construir botones y luego postCargaDetalle()
-				pagCarga = $(this).data('num');
-				if(++i == s){
-					cargaAtributosComplejosPorPagina(pagCarga,1);
-				}
-				else{
-					cargaAtributosComplejosPorPagina(pagCarga,0);
-				}
-			});
-			//postCargaDetalle2();
-			postCargaDetalle(1);
+			$("#contenidoModifyProfe").html(data);
+//			var i = 0;
+//			var s = $(".modDetAtributosC").size();
+//			$(".modDetAtributosC").each(function(){
+//				//La variable pagCarga no puede ser javascript, debe venir en data. Pasar data a JSON con la página y los objetos. Construir botones y luego postCargaDetalle()
+//				pagCarga = $(this).data('num');
+//				if(++i == s){
+//					cargaAtributosComplejosPorPagina(pagCarga,1);
+//				}
+//				else{
+//					cargaAtributosComplejosPorPagina(pagCarga,0);
+//				}
+//			});
+//			//postCargaDetalle2();
+//			postCargaDetalle(1);
 		});
 	});
 	

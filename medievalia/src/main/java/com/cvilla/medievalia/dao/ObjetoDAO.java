@@ -102,6 +102,7 @@ public class ObjetoDAO implements IObjetoDAO {
 		+ "left join InstanciaObjeto on InstanciaObjeto.idInstancia = sel2.idInstanciaHijo and InstanciaObjeto.idObjeto = sel2.idObjetoHijo order by validadoPadre";
 	private static final String VALIDATE_ATRIBUTOC = "UPDATE `InstanciaAtributoComplejo` SET `validado`= ?,`textoValidacion`= ?, `textoLeido` = 0 WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ? and `idInstanciaPadre` = ? and `idInstanciaHijo` = ?";
 	private static final String COMMENT_ATRIBUTOC = "UPDATE `InstanciaAtributoComplejo` SET `textoValidacion`= ?, `textoLeido` = 0 WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ? and `idInstanciaPadre` = ? and `idInstanciaHijo` = ?";
+	private static final String GET_VALIDATED_OBJECT_INSTANCE_WITH_NOT_VALIDATED_AC_LIST_BY_GROUP = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaObjeto` where validado = ? and idObjeto = ? and idInstancia IN (SELECT `idInstanciaPadre` FROM `InstanciaAtributoComplejo` WHERE idGrupo = ? and idObjetoPadre = ? and validado = ?)";
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -399,7 +400,10 @@ public class ObjetoDAO implements IObjetoDAO {
 
 	public List<InstanciaObjetoDOM> getTeachersObjetoDOMList(TipoObjetoDOM tipo,	Group groupA) {
 		try{
-			return jdbcTemplate.query(GET_OBJECT_INSTANCES_BY_TYPE_GROUP, new Object[]{tipo.getTipoDOM(),Constants.OBJETO_NO_VALIDADO,groupA.getIdGrupo()}, new ObjetoDOMMapper());
+			List<InstanciaObjetoDOM> li1 = jdbcTemplate.query(GET_OBJECT_INSTANCES_BY_TYPE_GROUP, new Object[]{tipo.getTipoDOM(),Constants.OBJETO_NO_VALIDADO,groupA.getIdGrupo()}, new ObjetoDOMMapper());
+			List<InstanciaObjetoDOM> li2 = jdbcTemplate.query(GET_VALIDATED_OBJECT_INSTANCE_WITH_NOT_VALIDATED_AC_LIST_BY_GROUP, new Object[]{Constants.OBJETO_VALIDADO,tipo.getTipoDOM(),groupA.getIdGrupo(),tipo.getTipoDOM(),Constants.OBJETO_NO_VALIDADO}, new ObjetoDOMMapper());
+			li1.addAll(li2);
+			return li1;
 		}
 		catch(Exception e){
 			return null;

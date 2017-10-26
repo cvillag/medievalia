@@ -209,6 +209,30 @@ else{ %>
 	</div>
 </div>
 
+<div id="modalModifyObjetoProfe" class="modal fade modal-lg" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal110"></fmt:message>&nbsp;<span id="nombreObjetoModifyProfe"></span>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div id="contenidoModifyProfe">
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalcanc" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.cancelar" ></fmt:message>
+				</button>
+				<button disabled type="button" id="modalokValidaProfe" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.validar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- Diálogos modales de creación de objetos -->
 <div id="modalCreaObjeto1" class="modal fade" role="dialog">
 	<div class="modal-dialog">

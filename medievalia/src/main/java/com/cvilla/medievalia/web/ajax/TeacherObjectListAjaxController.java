@@ -70,6 +70,9 @@ public class TeacherObjectListAjaxController {
 					if(authManager.isAutorized(Constants.P_VALIDATE_OBJECT_INSTANCE, user)){
 						model.addObject("permisovalidar","ok");
 					}
+					if(authManager.isAutorized(Constants.P_MODIFY_OBJECT_INSTANCE, user)){
+						model.addObject("permisomodificar", "ok");
+					}
 					logManager.log(user.getId(), actionInt, "Listado de profesor de objeto " + tipo.getNombreDOM() + " del grupo " + groupA.getName(), Constants.P_OK);
 				}
 			}
