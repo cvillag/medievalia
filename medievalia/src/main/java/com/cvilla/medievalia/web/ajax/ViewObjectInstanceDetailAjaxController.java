@@ -56,14 +56,14 @@ public class ViewObjectInstanceDetailAjaxController {
 		ModelAndView model;
 //		JSONObject j = new JSONObject();
 		String message;
-		if(errorParam(request) || groupA == null || tipo == null){
-			return Constants.paramError(logManager, actionId, user.getId());
-		}
-		else{
-			int idInstancia = (new Integer(request.getParameter("idInstancia"))).intValue();
-			int modo = (new Integer(request.getParameter("modo"))).intValue();
-			int validado = (new Integer(request.getParameter("val")).intValue());
-			if(authManager.isAutorized(actionId, user) || authManager.isAutorized(actionId3, user)){
+		if(authManager.isAutorized(actionId, user) || authManager.isAutorized(actionId3, user)){
+			if(errorParam(request) || groupA == null || tipo == null){
+				return Constants.paramError(logManager, actionId, user.getId());
+			}
+			else{
+				int idInstancia = (new Integer(request.getParameter("idInstancia"))).intValue();
+				int modo = (new Integer(request.getParameter("modo"))).intValue();
+				int validado = (new Integer(request.getParameter("val")).intValue());
 				message = "ok";
 				InstanciaObjetoDOM obj;
 				if(validado == 1){
@@ -105,13 +105,13 @@ public class ViewObjectInstanceDetailAjaxController {
 				model.addObject("modo",modo);
 				model.addObject("object", obj);
 				model.addObject("tatributoc",ac);
+				
 			}
-			else{
-				return Constants.noPrivilegesA(user, logManager, actionId, "Visualización de detalle de objeto");
-			}
-		}
 		model.addObject("message", message);
-
+		}
+		else{
+			return Constants.noPrivilegesA(user, logManager, actionId, "Visualización de detalle de objeto");
+		}
 		return model;
 	}
 	

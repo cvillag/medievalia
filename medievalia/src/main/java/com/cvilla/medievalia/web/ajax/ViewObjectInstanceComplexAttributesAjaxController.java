@@ -56,7 +56,7 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 			int recarga = (new Integer(request.getParameter("recarga"))).intValue();
 			j.put("recarga", recarga);
 			if(authManager.isAutorized(actionId, user)){
-				InstanciaObjetoDOM obj = objectManager.getObjetoDOM(tipo, idInstancia);
+				InstanciaObjetoDOM obj = objectManager.getObjetoDOMUnvalidated(tipo, idInstancia, groupA, user);
 				if(obj != null){
 					model = new ModelAndView("ajax/empty");
 					logManager.log(user.getId(), actionId2, "Visualización de detalle de objeto a modificar ", Constants.P_OK);

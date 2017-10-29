@@ -244,7 +244,7 @@ public class Constants {
 		}
 		else{
 			logManager.log(Constants.P_NOUSER, action, "Sesión posiblemente expirada (usuario nulo)", Constants.P_NOK);
-			ModelAndView model = new ModelAndView("0-bienvenida");
+			ModelAndView model = new ModelAndView("5-2-errorAjax");
 			model.addObject("mensaje2", "test.noSesion");
 			return model;
 		}

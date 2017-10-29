@@ -185,50 +185,50 @@ public class ObjectManager implements IObjectManager {
 		InstanciaObjetoDOM op = objetoDAO.getObjectInstance(tipoP, padre);
 		TipoAtributoComplejoDOM tac  = null;
 		if(op == null){
+			op = objetoDAO.getObjectInstanceNotVal(tipoP, padre);
+			if(op == null){
+				return "noType";
+			}
+		}
+		List<TipoAtributoComplejoDOM> tacl = objetoDAO.getTiposAtributosCompleos(tipoP);
+		boolean enc = false;
+		int i = 0;
+		while(!enc && i < tacl.size()){
+			enc = tacl.get(i).getIdTipoHijo() == tipoH;
+			if(enc)
+				tac = tacl.get(i);
+			i++;
+		}
+		if(!enc){
 			message = "noType";
 		}
 		else{
-			List<TipoAtributoComplejoDOM> tacl = objetoDAO.getTiposAtributosCompleos(tipoP);
-			boolean enc = false;
-			int i = 0;
-			while(!enc && i < tacl.size()){
-				enc = tacl.get(i).getIdTipoHijo() == tipoH;
-				if(enc)
-					tac = tacl.get(i);
-				i++;
-			}
-			if(!enc){
+			TipoObjetoDOM tipoHijo = new TipoObjetoDOM();
+			tipoHijo.setTipoDOM(tac.getIdTipoHijo());
+			InstanciaObjetoDOM oh = objetoDAO.getObjectInstance(tipoHijo, hijo);
+			if(oh == null){
 				message = "noType";
 			}
 			else{
-				TipoObjetoDOM tipoHijo = new TipoObjetoDOM();
-				tipoHijo.setTipoDOM(tac.getIdTipoHijo());
-				InstanciaObjetoDOM oh = objetoDAO.getObjectInstance(tipoHijo, hijo);
-				if(oh == null){
-					message = "noType";
+				InstanciaAtributoComplejoDOM ao = new InstanciaAtributoComplejoDOM();
+				ao.setCreador(user.getId());
+				ao.setIdGrupo(groupA.getIdGrupo());
+				ao.setInstanciaHijo(oh);
+				ao.setNombreAtributo(tac.getNombreAtributo());
+				ao.setTipoHijo(tipoHijo);
+				ao.setTipoPadre(tipoP);
+				ao.setValidado(val);
+				if(val == Constants.OBJETO_VALIDADO){
+					ao.setTextoValidacion(Constants.TEXTO_VALIDACION_PROFESOR);
+				}
+				String ret = objetoDAO.addComplexAttribute(ao,padre);
+				if(ret.equals("añadido") && !ao.isValidado()){
+					return "añadidoS";
 				}
 				else{
-					InstanciaAtributoComplejoDOM ao = new InstanciaAtributoComplejoDOM();
-					ao.setCreador(user.getId());
-					ao.setIdGrupo(groupA.getIdGrupo());
-					ao.setInstanciaHijo(oh);
-					ao.setNombreAtributo(tac.getNombreAtributo());
-					ao.setTipoHijo(tipoHijo);
-					ao.setTipoPadre(tipoP);
-					ao.setValidado(val);
-					if(val == Constants.OBJETO_VALIDADO){
-						ao.setTextoValidacion(Constants.TEXTO_VALIDACION_PROFESOR);
-					}
-					String ret = objetoDAO.addComplexAttribute(ao,padre);
-					if(ret.equals("añadido") && !ao.isValidado()){
-						return "añadidoS";
-					}
-					else{
-						return ret;
-					}
+					return ret;
 				}
 			}
-			
 		}
 		return message;
 	}
@@ -238,40 +238,41 @@ public class ObjectManager implements IObjectManager {
 		InstanciaObjetoDOM op = objetoDAO.getObjectInstance(tipoP, padre);
 		TipoAtributoComplejoDOM tac  = null;
 		if(op == null){
+			op = objetoDAO.getObjectInstanceNotVal(tipoP, padre);
+			if( op == null){
+			return "noType";
+			}
+		}
+		List<TipoAtributoComplejoDOM> tacl = objetoDAO.getTiposAtributosCompleos(tipoP);
+		boolean enc = false;
+		int i = 0;
+		while(!enc && i < tacl.size()){
+			enc = tacl.get(i).getIdTipoHijo() == tipoH;
+			if(enc)
+				tac = tacl.get(i);
+			i++;
+		}
+		if(!enc){
 			message = "noType";
 		}
 		else{
-			List<TipoAtributoComplejoDOM> tacl = objetoDAO.getTiposAtributosCompleos(tipoP);
-			boolean enc = false;
-			int i = 0;
-			while(!enc && i < tacl.size()){
-				enc = tacl.get(i).getIdTipoHijo() == tipoH;
-				if(enc)
-					tac = tacl.get(i);
-				i++;
-			}
-			if(!enc){
+			TipoObjetoDOM tipoHijo = new TipoObjetoDOM();
+			tipoHijo.setTipoDOM(tac.getIdTipoHijo());
+			InstanciaObjetoDOM oh = objetoDAO.getObjectInstance(tipoHijo, hijo);
+			if(oh == null){
 				message = "noType";
 			}
 			else{
-				TipoObjetoDOM tipoHijo = new TipoObjetoDOM();
-				tipoHijo.setTipoDOM(tac.getIdTipoHijo());
-				InstanciaObjetoDOM oh = objetoDAO.getObjectInstance(tipoHijo, hijo);
-				if(oh == null){
-					message = "noType";
+				InstanciaAtributoComplejoDOM acd = objetoDAO.getAtributoComplejo(tipoP.getTipoDOM(), padre, tipoHijo.getTipoDOM(), hijo);
+				if(acd == null){
+					return "noType";
 				}
 				else{
-					InstanciaAtributoComplejoDOM acd = objetoDAO.getAtributoComplejo(tipoP.getTipoDOM(), padre, tipoHijo.getTipoDOM(), hijo);
-					if(acd == null){
-						return "noType";
-					}
-					else{
-						return objetoDAO.remAtributoComplejo(acd,padre);
-					}
+					return objetoDAO.remAtributoComplejo(acd,padre);
 				}
 			}
-			
 		}
+		
 		return message;
 	}
 

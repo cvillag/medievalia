@@ -83,6 +83,9 @@ function postCarga(){
 						else if(json.message == "nameRepeated"){
 							$("#modalModificaObjeto5").modal();
 						}
+						else if(json.message == "sinSesion"){
+							window.location.href="hello.do";
+						}
 						else{
 							$("#modalModificaObjeto4").modal();
 						}
@@ -208,9 +211,9 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 			var val = disp[d].validado;
 			$("#listD"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="addAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default addComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'">&nbsp;<span class="glyphicon glyphicon-arrow-left"></span></button> '+nom+'</li>');
 		}
-		if(recarga == 1){
+//		if(recarga == 1){
 			postCargaDetalle2();
-		}
+//		}
 	}
 );
 }
@@ -500,25 +503,27 @@ function postCarga3(){
 		$("#nombreObjetoModifyProfe").html(name);
 		$("#modalModifyObjetoProfe").modal();
 		idInstanciaModificar = $(this).data('val');
-		$.post("detalleObjectProfe.do",{
+		$.post("objectDetail.do",{
 			idInstancia : $(this).data('val'),
+			modo : 2,
+			val : 0
 		},
 		function(data){
 			$("#contenidoModifyProfe").html(data);
-//			var i = 0;
-//			var s = $(".modDetAtributosC").size();
-//			$(".modDetAtributosC").each(function(){
-//				//La variable pagCarga no puede ser javascript, debe venir en data. Pasar data a JSON con la página y los objetos. Construir botones y luego postCargaDetalle()
-//				pagCarga = $(this).data('num');
-//				if(++i == s){
-//					cargaAtributosComplejosPorPagina(pagCarga,1);
-//				}
-//				else{
-//					cargaAtributosComplejosPorPagina(pagCarga,0);
-//				}
-//			});
-//			//postCargaDetalle2();
-//			postCargaDetalle(1);
+			var i = 0;
+			var s = $(".modDetAtributosC").size();
+			$(".modDetAtributosC").each(function(){
+				//La variable pagCarga no puede ser javascript, debe venir en data. Pasar data a JSON con la página y los objetos. Construir botones y luego postCargaDetalle()
+				pagCarga = $(this).data('num');
+				if(++i == s){
+					cargaAtributosComplejosPorPagina(pagCarga,1);
+				}
+				else{
+					cargaAtributosComplejosPorPagina(pagCarga,0);
+				}
+			});
+			//postCargaDetalle2();
+			postCargaDetalle(1);
 		});
 	});
 	
