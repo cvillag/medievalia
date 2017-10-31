@@ -9,9 +9,10 @@ var modDetAct = 0;
 var oldModDetAct = 0;
 
 var idInstanciaModificar = 0;
-var pag = 0;
+var pag = 0;	
 var pagCarga = 0;
 var cambioAtrSim = 0;
+var cambioAtrSimP = 0;
 var firstC = 0;
 
 var deleteObj = 0;
@@ -271,6 +272,7 @@ function postCargaDetalle(mod){
 		
 		$(".atrSim").change(function(){
 			cambioAtrSim = 1;
+			cambioAtrSimP = 1;
 		});
 	}
 }
@@ -459,7 +461,14 @@ function postCarga3(){
 			val : 0
 		},
 		function(data){
-			$("#contenidoDetalleProfe").html(data);	
+			$("#contenidoDetalleProfe").html(data);
+			validado = $("#objetodetallevalidado").val();
+			if(validado == 1){
+				$("#modalokValidaProfe").prop("disabled", true);
+			}
+			else{
+				$("#modalokValidaProfe").prop("disabled", false);
+			}
 			postCargaDetalle(0);
 			postCargaProfe();
 		});
@@ -524,6 +533,39 @@ function postCarga3(){
 			});
 			//postCargaDetalle2();
 			postCargaDetalle(1);
+			$("#modalsavep").click(function(){
+				if(cambioAtrSimP == 1){
+					var form1 = $("#simpleAttributeForm").serialize();
+					$.post("simpleAttributes.do",form1,
+						function(data){
+							var json = JSON.parse(data);
+							if(json.message == "ok"){
+								$("#modalModAtributoS1").modal();
+							}
+							else if(json.message == "errorAtributos"){
+								$("#modalModAtributoS2").modal();
+							}
+							else if(json.message == "errorDB"){
+								$("#modalModAtributoS3").modal();
+							}
+							else if(json.message == "sinPrivilegios"){
+								$("#modalModAtributoS4").modal();
+							}
+							else if(json.message == "sinSesion"){
+								window.location.href="hello.do";
+							}
+							else{
+								$("#modalModAtributoS3").modal();
+							}
+					});
+				}
+				cambioAtrSimP = 0;
+				$("#modalModifyObjetoProfe").modal("hide");
+			});
+			$("#modalcancp").click(function(){
+				cambioAtrSimP = 0;
+				$("#modalModifyObjetoProfe").modal("hide");
+			});
 		});
 	});
 	
@@ -830,7 +872,50 @@ $(document).ready(function(){
 			modalesValidacion(data);
 		});
 	});
+	
+	$("#modalokValidaProfe").click(function(){
+		$("#modalValidaObjetoText").modal();
+	});
+	
+	$("#validaOB").click(function(){
+		alert("valida : " + $("#idObjetoValidar").val() + " " + $("#textoValidaciónOB").val());
+		$.post("validateObject.do",{
+			idInstancia : $("#idObjetoValidar").val(),
+			text : $("#textoValidaciónOB").val(),
+			val : 1},
+			function(data){
+				alert(data);
+		});
+	});
+	
+	$("#noValidaOB").click(function(){
+		alert("valida : " + $("#idObjetoValidar").val() + " " + $("#textoValidaciónOB").val());
+		$.post("validateObject.do",{
+			idInstancia : $("#idObjetoValidar").val(),
+			text : $("#textoValidaciónOB").val(),
+			val : 0},
+			function(data){
+				alert(data);
+		});
+	});
+	
 });
+
+function modalesValidacionObj(data){
+	var json = JSON.parse(data);
+	if(json.message == "sinSesion"){
+		window.location.href="hello.do";
+	}
+	else if(json.message == "sinPrivilegios"){
+		$("#modalNoPrivilegios").modal();
+	}
+	else if(json.message == "noObject"){
+		$("#modalNoObject").modal();
+	}
+	else if(json.message == "errorParam"){
+		$("#modalErrorParam").modal();
+	}
+}
 
 function modalesValidacion(data){
 	var json = JSON.parse(data);

@@ -15,6 +15,7 @@ public class InstanciaObjetoDOM {
 	private User creador;
 	private String textoValidacion;
 	private int grupo;
+	private int textoLeido;
 	
 	public InstanciaObjetoDOM() {
 		super();
@@ -94,5 +95,17 @@ public class InstanciaObjetoDOM {
 
 	public boolean isValidado(){
 		return this.validado == Constants.OBJETO_VALIDADO;
+	}
+
+	public boolean isTextoLeido() {
+		return textoLeido == 1;
+	}
+
+	public void setTextoLeido(int textoLeido) {
+		this.textoLeido = textoLeido;
+	}
+	
+	public int getTextoLeido(){
+		return this.textoLeido;
 	}
 }

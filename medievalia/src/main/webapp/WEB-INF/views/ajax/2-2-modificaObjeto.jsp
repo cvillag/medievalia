@@ -49,7 +49,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-3 form-group">
 							<label for="dia"><fmt:message key="p2.2.detalle.dia"></fmt:message></label>
-							<input type="number" name="dia<%=as.getIdAtributo() %>" value="<%=as.getValor()!=null?((SpecialDate)as.getValor()).getDia():""%>" size="2" min="1" max="12" class="inputDays form-control atrSim">
+							<input type="number" name="dia<%=as.getIdAtributo() %>" value="<%=as.getValor()!=null?((SpecialDate)as.getValor()).getDia():""%>" size="2" min="1" max="31" class="inputDays form-control atrSim">
 						</div>
 						<div class="col-xs-3 form-group">
 							<label for="mes"><fmt:message key="p2.2.detalle.mes"></fmt:message></label>
@@ -57,7 +57,7 @@ if(objeto != null){
 						</div>
 						<div class="col-xs-3 form-group">
 							<label for="anio"><fmt:message key="p2.2.detalle.anio"></fmt:message></label>
-							<input type="number" name="anio<%=as.getIdAtributo() %>" value="<%=as.getValor()!=null?((SpecialDate) as.getValor()).getAnio():""%>"  size="2" min="1" max="12" class="inputYears form-control atrSim"	>
+							<input type="number" name="anio<%=as.getIdAtributo() %>" value="<%=as.getValor()!=null?((SpecialDate) as.getValor()).getAnio():""%>"  size="2" class="inputYears form-control atrSim"	>
 						</div>
 					</div>
 					<%

@@ -89,11 +89,13 @@ public class ObjectManager implements IObjectManager {
 		if(authManager.isAutorized(Constants.P_VALIDATE_OBJECT_INSTANCE, user)){
 			o.setValidado(Constants.OBJETO_VALIDADO);
 			o.setTextoValidacion(Constants.TEXTO_VALIDACION_PROFESOR);
+			o.setTextoLeido(Constants.TEXTO_LEIDO);
 			
 		}
 		else{
 			o.setValidado(Constants.OBJETO_NO_VALIDADO);
 			o.setTextoValidacion(Constants.TEXTO_SIN_VALIDAR);
+			o.setTextoLeido(Constants.TEXTO_NO_LEIDO);
 		}
 		return objetoDAO.createObjectInstance(o);
 	}
@@ -155,9 +157,27 @@ public class ObjectManager implements IObjectManager {
 	}
 	
 
-	public String validateObjetoDOM(TipoObjetoDOM tipo, int id, User user, Group group) {
-		// TODO Auto-generated method stub
-		return null;
+	public String validateObjetoDOM(TipoObjetoDOM tipo, int id, User user, Group group, int val, String text) {
+		InstanciaObjetoDOM obj = objetoDAO.getObjectInstanceNotVal(tipo, id);
+		if(obj == null){
+			return "noObject";
+		}
+		else{
+			if(!groupManager.isTeacherOrDirector(user, obj.getGrupo())){
+				return "noGroup";
+			}
+			else{
+				if(val == Constants.OBJETO_NO_VALIDADO){
+					return objetoDAO.commentObjectInstance(obj,text);
+				}
+				else if(val == Constants.OBJETO_VALIDADO){
+					return objetoDAO.validateObjectInstance(obj,text);
+				}
+				else{
+					return "errorParam";
+				}
+			}
+		}
 	}
 
 	public List<User> getUsersToValidateObjectDOMByGroup(User teacher, Group group, TipoObjetoDOM tipo) {

@@ -24,6 +24,7 @@ public class ObjetoDOMMapper implements RowMapper<InstanciaObjetoDOM> {
 		o.setCreador(u);
 		o.setTextoValidacion(rs.getString("textoValidacion"));
 		o.setGrupo(rs.getInt("idGrupo"));
+		o.setTextoLeido(rs.getInt("textoLeido"));
 		return o;
 	}
 }

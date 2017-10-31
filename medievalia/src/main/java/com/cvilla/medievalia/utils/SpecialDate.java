@@ -1,29 +1,29 @@
 package com.cvilla.medievalia.utils;
 
 public class SpecialDate {
-	private int anio;
-	private int mes;
-	private int dia;
+	private Integer anio;
+	private Integer mes;
+	private Integer dia;
 	
 	public SpecialDate() {
 		super();
 	}
-	public int getAnio() {
+	public Integer getAnio() {
 		return anio;
 	}
-	public void setAnio(int anio) {
+	public void setAnio(Integer anio) {
 		this.anio = anio;
 	}
-	public int getMes() {
+	public Integer getMes() {
 		return mes;
 	}
-	public void setMes(int mes) {
+	public void setMes(Integer mes) {
 		this.mes = mes;
 	}
-	public int getDia() {
+	public Integer getDia() {
 		return dia;
 	}
-	public void setDia(int dia) {
+	public void setDia(Integer dia) {
 		this.dia = dia;
 	}
 	

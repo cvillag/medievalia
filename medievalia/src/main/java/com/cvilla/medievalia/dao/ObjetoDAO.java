@@ -41,9 +41,9 @@ public class ObjetoDAO implements IObjetoDAO {
 	
 	private static final String GET_OBJECT_TYPE_LIST = "SELECT `idObjeto`, `nombreObjeto` FROM `ObjetoDOM`";
 	private static final String GET_OBJECT_TYPE = "SELECT `idObjeto`, `nombreObjeto` FROM `ObjetoDOM` where idObjeto = ?";
-	private static final String GET_OBJECT_INSTANCES_BY_TYPE = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaObjeto` WHERE idObjeto = ? and validado = ?";
-	private static final String GET_OBJECT_INSTANCES_BY_TYPE_GROUP = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaObjeto` WHERE idObjeto = ? and validado = ? and idGrupo = ?";
-	private static final String GET_OBJECT_INSTANCE = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaObjeto` WHERE idInstancia = ? and idObjeto = ? and validado = ?";
+	private static final String GET_OBJECT_INSTANCES_BY_TYPE = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaObjeto` WHERE idObjeto = ? and validado = ?";
+	private static final String GET_OBJECT_INSTANCES_BY_TYPE_GROUP = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaObjeto` WHERE idObjeto = ? and validado = ? and idGrupo = ?";
+	private static final String GET_OBJECT_INSTANCE = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaObjeto` WHERE idInstancia = ? and idObjeto = ? and validado = ?";
 	private static final String GET_OBJECT_S_ATTRIBUTES_TYPE_LIST = "SELECT `idAtributo`, `idObjeto`, `nombreAtributo`, `tipo` FROM `AtributoSencilloObjeto` WHERE idObjeto = ?";
 	private static final String GET_OBJECT_DATE_ATTRIBUTES_VALUE = "SELECT `idInstancia`, `idAtributoSencillo`, `idObjeto`, `dia`, `mes`, `anio` FROM `InstanciaAtributoDate` WHERE idObjeto = ? and idInstancia = ? and idAtributoSencillo = ?";
 	private static final String GET_OBJECT_DOUBLE_ATTRIBUTES_VALUE = "SELECT `idInstancia`, `idAtributoSencillo`, `idObjeto`, `valor` FROM `InstanciaAtributoDouble` WHERE idObjeto = ? and idInstancia = ? and idAtributoSencillo = ?";
@@ -62,7 +62,7 @@ public class ObjetoDAO implements IObjetoDAO {
 				+ "left join ObjetoDOM on idObjetoPadre = idObjeto WHERE idObjetoPadre = ? and idInstanciaPadre = ?) as sel1 "
      		+ "left join AtributoComplejoObjeto on sel1.idObjetoPadre = AtributoComplejoObjeto.idObjetoPadre and sel1.idObjetoHijo = AtributoComplejoObjeto.idObjetoHijo) as sel2 "
  		+ "left join InstanciaObjeto on InstanciaObjeto.idInstancia = sel2.idInstanciaHijo and InstanciaObjeto.idObjeto = sel2.idObjetoHijo";
-	private static final String ADD_OBJECT_INSTANCE = "INSERT INTO `InstanciaObjeto`(`idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`) VALUES (?,?,?,?,?,?,?)";
+	private static final String ADD_OBJECT_INSTANCE = "INSERT INTO `InstanciaObjeto`(`idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido`) VALUES (?,?,?,?,?,?,?,?)";
 	private static final String GET_MAX_INSTANCE_ID_BY_OBJECT = "select max(idInstancia) from InstanciaObjeto where idObjeto = ?";
 	private static final String GET_OBJECT_INSTANCE_BY_NAME ="SELECT count(*) FROM `InstanciaObjeto` WHERE idObjeto = ? and nombreInstancia = ?";
 	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES_TYPES = "SELECT `idObjetoPadre`, `idObjetoHijo`, `NombreAtributo` FROM `AtributoComplejoObjeto` WHERE idObjetoPadre = ?";
@@ -91,7 +91,7 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String INSERT_SIMPLE_ATTRIBUTE_DOUBLE = "INSERT INTO `InstanciaAtributoDouble`(`idInstancia`, `idAtributoSencillo`, `idObjeto`, `valor`) VALUES (?,?,?,?)";
 	private static final String INSERT_SIMPLE_ATTRIBUTE_STRING = "INSERT INTO `InstanciaAtributoString`(`idInstancia`, `idAtributoSencillo`, `idObjeto`, `valor`) VALUES (?,?,?,?)";
 	private static final String INSERT_SIMPLE_ATTRIBUTE_TEXT = "INSERT INTO `InstanciaAtributoText`(`idInstancia`, `idAtributoSencillo`, `idObjeto`, `valor`) VALUES (?,?,?,?)";
-	private static final String GET_OBJECT_BY_NAME = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaObjeto` WHERE idObjeto = ? and nombreInstancia = ?";
+	private static final String GET_OBJECT_BY_NAME = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaObjeto` WHERE idObjeto = ? and nombreInstancia = ?";
 	private static final String RENAME_OBJECT = "UPDATE `InstanciaObjeto` SET `nombreInstancia`= ? WHERE `idObjeto` = ? and `idInstancia` = ?";
 	private static final String DELETE_OBJECT = "DELETE FROM `InstanciaObjeto` WHERE `idInstancia` = ? and `idObjeto` = ?";
 	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES_NO_VAL = "select	`idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionPadre`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, sel2.`textoLeidoAC`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, InstanciaObjeto.textoValidacion as `textoValidacionHijo`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo` from "
@@ -102,7 +102,8 @@ public class ObjetoDAO implements IObjetoDAO {
 		+ "left join InstanciaObjeto on InstanciaObjeto.idInstancia = sel2.idInstanciaHijo and InstanciaObjeto.idObjeto = sel2.idObjetoHijo order by validadoPadre";
 	private static final String VALIDATE_ATRIBUTOC = "UPDATE `InstanciaAtributoComplejo` SET `validado`= ?,`textoValidacion`= ?, `textoLeido` = 0 WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ? and `idInstanciaPadre` = ? and `idInstanciaHijo` = ?";
 	private static final String COMMENT_ATRIBUTOC = "UPDATE `InstanciaAtributoComplejo` SET `textoValidacion`= ?, `textoLeido` = 0 WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ? and `idInstanciaPadre` = ? and `idInstanciaHijo` = ?";
-	private static final String GET_VALIDATED_OBJECT_INSTANCE_WITH_NOT_VALIDATED_AC_LIST_BY_GROUP = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador` FROM `InstanciaObjeto` where validado = ? and idObjeto = ? and idInstancia IN (SELECT `idInstanciaPadre` FROM `InstanciaAtributoComplejo` WHERE idGrupo = ? and idObjetoPadre = ? and validado = ?)";
+	private static final String GET_VALIDATED_OBJECT_INSTANCE_WITH_NOT_VALIDATED_AC_LIST_BY_GROUP = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaObjeto` where validado = ? and idObjeto = ? and idInstancia IN (SELECT `idInstanciaPadre` FROM `InstanciaAtributoComplejo` WHERE idGrupo = ? and idObjetoPadre = ? and validado = ?)";
+	private static final String VALIDATE_OBJECT_INSTANCE = "UPDATE `InstanciaObjeto` SET `validado`= ?,`textoValidacion`= ?,`textoLeido`=? WHERE `idObjeto` = ? and `idInstancia` = ?";
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -224,7 +225,7 @@ public class ObjetoDAO implements IObjetoDAO {
 			if(jdbcTemplate.queryForInt(GET_OBJECT_INSTANCE_BY_NAME,new Object[]{o.getTipo().getTipoDOM(),o.getNombre()}) == 0){
 				int maxId = jdbcTemplate.queryForInt(GET_MAX_INSTANCE_ID_BY_OBJECT, new Object[]{o.getTipo().getTipoDOM()});
 				o.setIdInstancia(maxId+1);
-				if(jdbcTemplate.update(ADD_OBJECT_INSTANCE, new Object[]{o.getIdInstancia(),o.getTipo().getTipoDOM(),o.getNombre(),o.getValidado(),o.getTextoValidacion(),o.getGrupo(),o.getCreador().getId()}) == 1){
+				if(jdbcTemplate.update(ADD_OBJECT_INSTANCE, new Object[]{o.getIdInstancia(),o.getTipo().getTipoDOM(),o.getNombre(),o.getValidado(),o.getTextoValidacion(),o.getGrupo(),o.getCreador().getId(),o.getTextoLeido()}) == 1){
 					return "creado";
 				}
 				else{
@@ -448,6 +449,36 @@ public class ObjetoDAO implements IObjetoDAO {
 			int i = jdbcTemplate.update(COMMENT_ATRIBUTOC, new Object[]{textV,tipoDOM,tipoHijo,idPadre,idHijo});
 			if(i == 1){
 				return "novalidado";
+			}
+			else{
+				return "errorBD";
+			}
+		}
+		catch(Exception e){
+			return "errorBD";
+		}
+	}
+
+	public String validateObjectInstance(InstanciaObjetoDOM obj, String text) {
+		try{
+			int i = jdbcTemplate.update(VALIDATE_OBJECT_INSTANCE, new Object[]{Constants.OBJETO_VALIDADO,text,Constants.TEXTO_NO_LEIDO,obj.getTipo().getTipoDOM(),obj.getIdInstancia()});
+			if(i == 1){
+				return "validado";
+			}
+			else{
+				return "errorBD";
+			}
+		}
+		catch(Exception e){
+			return "errorBD";
+		}
+	}
+
+	public String commentObjectInstance(InstanciaObjetoDOM obj, String text) {
+		try{
+			int i = jdbcTemplate.update(VALIDATE_OBJECT_INSTANCE, new Object[]{Constants.OBJETO_NO_VALIDADO,text,Constants.TEXTO_NO_LEIDO,obj.getTipo().getTipoDOM(),obj.getIdInstancia()});
+			if(i == 1){
+				return "validado";
 			}
 			else{
 				return "errorBD";

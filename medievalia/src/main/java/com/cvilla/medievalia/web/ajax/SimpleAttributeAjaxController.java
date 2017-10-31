@@ -31,6 +31,7 @@ import com.cvilla.medievalia.utils.SpecialDate;
 public class SimpleAttributeAjaxController {
 	
 	private int actionInt = Constants.P_MODIFY_OBJECT_INSTANCE;
+	private int actionInt2 = Constants.P_MODIFY_OBJECT_INSTANCE_OWN;
 	
 	@Autowired
 	private IAutorizationManager authManager;
@@ -57,7 +58,7 @@ public class SimpleAttributeAjaxController {
 		TipoObjetoDOM tipo = (TipoObjetoDOM) sesion.getAttribute("tipoObjeto");
 		JSONObject j = new JSONObject();
 		
-		if(authManager.isAutorized(actionInt, user)){
+		if(authManager.isAutorized(actionInt, user) || authManager.isAutorized(actionInt2, user)){
 			if((errorParam(request) && tipo == null) || groupA == null){
 				j.put("message","noType");
 				logManager.log(user.getId(), actionInt, "Fallo en modificación de instancia de objeto. Parámetros o sesión incorrectos.", Constants.P_NOK);
@@ -65,6 +66,15 @@ public class SimpleAttributeAjaxController {
 			else{
 				int id = (new Integer(request.getParameter("idInstanciaObjeto"))).intValue();
 				InstanciaObjetoDOM obj = objectManager.getObjetoDOM(tipo, id);
+				if(authManager.isAutorized(actionInt, user)){
+					obj = objectManager.getObjetoDOMUnvalidated(tipo, id, groupA, user);
+				}
+				else if(authManager.isAutorized(actionInt2, user)){
+					obj = objectManager.getObjetoDOMUnvalidated(tipo, id, groupA, user);
+					if(obj.getCreador().getId() != user.getId()){
+						return Constants.noPrivilegesJ(user,logManager,actionInt,"Modificación de objeto no permitida ");
+					}
+				}
 				if(obj != null){
 					String m = cambiaAtributosS(obj,request); 
 					if(m.equals("ok")){
@@ -98,9 +108,24 @@ public class SimpleAttributeAjaxController {
 			}
 			if(tipoA == Constants.TIPO_ATRIBUTO_FECHA){
 				SpecialDate dat = new SpecialDate();
-				dat.setAnio(new Integer(request.getParameter("anio"+idAt)));
-				dat.setMes(new Integer(request.getParameter("mes"+idAt)));
-				dat.setDia(new Integer(request.getParameter("dia"+idAt)));
+				try{
+					dat.setDia(new Integer(request.getParameter("dia"+idAt)));
+				}
+				catch(Exception e){
+					dat.setDia(null);
+				}
+				try{
+					dat.setMes(new Integer(request.getParameter("mes"+idAt)));
+				}
+				catch(Exception e){
+					dat.setMes(null);
+				}
+				try{
+					dat.setAnio(new Integer(request.getParameter("anio"+idAt)));
+				}
+				catch(Exception e){
+					dat.setAnio(null);
+				}
 				if(Fechas.fechaIncorrecta(dat.getDia(), dat.getMes(), dat.getAnio())){
 					return "errorAtributos";
 				}

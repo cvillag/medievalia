@@ -32,4 +32,6 @@ public interface IObjetoDAO {
 	public List<InstanciaAtributoComplejoDOM> getAtributosComplejosNoVal(TipoObjetoDOM tipo, int id);
 	public String validateAtributoComplejo(int tipoDOM, int idPadre,int tipoHijo, int idHijo, String textV);
 	public String commentAtributoComplejoNoVal(int tipoDOM, int idPadre,int tipoHijo, int idHijo, String textV);
+	public String validateObjectInstance(InstanciaObjetoDOM obj, String text);
+	public String commentObjectInstance(InstanciaObjetoDOM obj, String text);
 }

@@ -50,7 +50,7 @@ public interface IObjectManager extends Serializable{
 	//Lista de objetos sin validar, ACCION 2
 	public List<InstanciaObjetoDOM> getTeachersObjetoDOMList(TipoObjetoDOM tipo,User user, Group groupA);
 	//Validar objeto, ACCION 11
-	/**/public String validateObjetoDOM(TipoObjetoDOM tipo, int id, User user, Group group);
+	/**/public String validateObjetoDOM(TipoObjetoDOM tipo, int id, User user, Group group, int val, String text);
 	
 	public String validateAtributoC(int idHijo, int tipoHijo, int idPadre, TipoObjetoDOM tipo, User user, Group groupA, String textV, int val);
 	

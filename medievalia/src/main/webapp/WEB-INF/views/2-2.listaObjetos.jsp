@@ -177,8 +177,11 @@ else{ %>
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalokProfe" class="btn btn-sm btn-info" data-dismiss="modal">
-					<fmt:message key="general.aceptar" ></fmt:message>
+				<button type="button" id="modalcanc" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.cancelar" ></fmt:message>
+				</button>
+				<button disabled type="button" id="modalokValidaProfe" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.validar" ></fmt:message>
 				</button>
 			</div>
 		</div>
@@ -222,11 +225,11 @@ else{ %>
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalcanc" class="btn btn-sm btn-info" data-dismiss="modal">
+				<button type="button" id="modalcancp" class="btn btn-sm btn-info">
 					<fmt:message key="general.cancelar" ></fmt:message>
 				</button>
-				<button disabled type="button" id="modalokValidaProfe" class="btn btn-sm btn-info" data-dismiss="modal">
-					<fmt:message key="general.validar" ></fmt:message>
+				<button type="button" id="modalsavep" class="btn btn-sm btn-info">
+					<fmt:message key="general.guardar" ></fmt:message>
 				</button>
 			</div>
 		</div>
@@ -762,10 +765,10 @@ else{ %>
 				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
 					<fmt:message key="general.cancelar" ></fmt:message>
 				</button>
-				<button type="button" id="validaAC" class="btn btn-sm btn-info" data-dismiss="modal">
+				<button type="button" id="validaAC" class="btn btn-sm btn-success" data-dismiss="modal">
 					<fmt:message key="p2-2.modal80.button1" ></fmt:message>
 				</button>
-				<button type="button" id="noValidaAC" class="btn btn-sm btn-info" data-dismiss="modal">
+				<button type="button" id="noValidaAC" class="btn btn-sm btn-warning" data-dismiss="modal">
 					<fmt:message key="p2-2.modal80.button2" ></fmt:message>
 				</button>
 			</div>
@@ -951,7 +954,36 @@ else{ %>
 	</div>
 </div>
 
-<!-- SIN USO AUN -->
+<!-- Modal previo de validación de objeto -->
+
+<div id="modalValidaObjetoText" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal110"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-info">
+					<fmt:message key="p2-2.modal111"></fmt:message>
+				</div>
+				<input type="text" id="textoValidaciónOB">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.cancelar" ></fmt:message>
+				</button>
+				<button type="button" id="validaOB" class="btn btn-sm btn-success" data-dismiss="modal">
+					<fmt:message key="p2-2.modal110.button1" ></fmt:message>
+				</button>
+				<button type="button" id="noValidaOB" class="btn btn-sm btn-warning" data-dismiss="modal">
+					<fmt:message key="p2-2.modal110.button2" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- Modal de mensaje de atributo complejo no validado -->
 <div id="modalPendienteValidacionAtributo" class="modal fade" role="dialog">
@@ -960,6 +992,76 @@ else{ %>
 			<div class="modal-body">
 				<div class="alert alert-info">
 					<fmt:message key="p2-2.modal100"></fmt:message>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal de borrado de objeto -->
+<div id="modalBorraObjeto0" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal20"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger">
+					<fmt:message key="p2-2.modal21"></fmt:message>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.cancelar" ></fmt:message>
+				</button>
+				<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" id="modalDelete">
+					<fmt:message key="general.borrar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalBorraObjeto1" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal20"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-success">
+					<fmt:message key="p2-2.modal22"></fmt:message>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalBorraObjeto1" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal20"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-warning">
+					<fmt:message key="p2-2.modal23"></fmt:message>
 				</div>
 			</div>
 			<div class="modal-footer">

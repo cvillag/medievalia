@@ -58,6 +58,7 @@ public class Constants {
 	public static final int P_RENAME_OBJECT_INSTANCE_OWN = 45;
 	public static final int P_DELETE_OBJECT_INSTANCE_OWN = 46;
 	public static final int P_UNVALIDATED_OBJECT_LIST_BY_GROUP = 47;
+	public static final int P_MODIFY_OBJECT_INSTANCE_OWN = 48;
 	
 	//TODO: Permisos a eliminar tras la refactorización
 //	public static final int P_TOPIC_LIST = 21;
@@ -169,6 +170,8 @@ public class Constants {
 	
 	public static final String TEXTO_VALIDACION_PROFESOR = "Creado ya validado";
 	public static final String TEXTO_SIN_VALIDAR = "";
+	public static final int TEXTO_LEIDO = 1;
+	public static final int TEXTO_NO_LEIDO = 0;
 		
 	public static String getKey(){
 		return PASS_KEY;

@@ -25,6 +25,8 @@ int totalbadges = 0;
 if(objeto != null){
 	List<InstanciaAtributoComplejoDOM> acl = objeto.getAtributosComplejos();
 	%>
+	<input type="hidden" id="objetodetallevalidado" value="<%=objeto.isValidado()?"1":"0"%>">
+	<input type="hidden" id="idObjetoValidar" value="<%=objeto.getIdInstancia()%>">
 	<ul class="nav nav-tabs">
 		<li class="active listaA" data-val="0"><a href="#"><fmt:message key="p2.2.detalle.atributos"></fmt:message></a></li>
 		<%
@@ -57,7 +59,7 @@ if(objeto != null){
 			for(InstanciaAtributoSencilloDOM as : atrS){
 				if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_FECHA){
 					boolean empty = as.getValor() == null;
-					int d =0,m=0,a=0;
+					Integer d = null,m = null,a = null;
 					if(!empty){
 						d = ((SpecialDate)as.getValor()).getDia();
 						m = ((SpecialDate)as.getValor()).getMes();
@@ -72,15 +74,15 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-3 form-group">
 							<label for="dia"><fmt:message key="p2.2.detalle.dia"></fmt:message></label>
-							<input type="number" <%=disabled?"disabled":"" %> id="dia<%=as.getIdAtributo() %>" value="<%=empty?"":d%>" size="2" min="1" max="12" class="inputDays form-control">
+							<input type="number" <%=disabled?"disabled":"" %> id="dia<%=as.getIdAtributo() %>" value="<%=empty || d == null?"":d%>" size="2" min="1" max="31" class="inputDays form-control">
 						</div>
 						<div class="col-xs-3 form-group">
 							<label for="mes"><fmt:message key="p2.2.detalle.mes"></fmt:message></label>
-							<input type="number" <%=disabled?"disabled":"" %> id="mes<%=as.getIdAtributo() %>" value="<%=empty?"":m%>" size="2" min="1" max="12" class="inputMonths form-control">
+							<input type="number" <%=disabled?"disabled":"" %> id="mes<%=as.getIdAtributo() %>" value="<%=empty || m == null?"":m%>" size="2" min="1" max="12" class="inputMonths form-control">
 						</div>
 						<div class="col-xs-3 form-group">
 							<label for="anio"><fmt:message key="p2.2.detalle.anio"></fmt:message></label>
-							<input type="number" <%=disabled?"disabled":"" %> id="anio<%=as.getIdAtributo() %>" value="<%=empty?"":a%>"  size="2" min="1" max="12" class="inputYears form-control"	>
+							<input type="number" <%=disabled?"disabled":"" %> id="anio<%=as.getIdAtributo() %>" value="<%=empty || a == null?"":a%>"  size="2" class="inputYears form-control"	>
 						</div>
 					</div>
 					<%
