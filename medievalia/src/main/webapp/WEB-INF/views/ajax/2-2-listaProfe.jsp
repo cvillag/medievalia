@@ -60,17 +60,24 @@ List<InstanciaObjetoDOM> lista = (List<InstanciaObjetoDOM>) request.getAttribute
 			<tr>
 				<td>
 					<%if(c.getValidado() == Constants.OBJETO_VALIDADO){ %>
-					<span id="validado<%=c.getIdInstancia() %>" class="label label-success"><fmt:message key="general.validado"></fmt:message></span>
+					<span id="validado<%=c.getIdInstancia() %>" class="label label-success  <%=c.getTextoValidacion().length()>0?"textoValidaOB":""%>" data-textVal="<%=c.getTextoValidacion()%>"><fmt:message key="general.validado"></fmt:message>
+					<%if(!c.isTextoLeido()){ %>
+					<span class="label label-info">1</span>
+					<%} %>
+					</span>
 					<%}
 					else{
  						if(c.getValidado() == Constants.OBJETO_NO_VALIDADO){ %>
 					
-					<span id="validado<%=c.getIdInstancia() %>" class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span>
+					<span id="validado<%=c.getIdInstancia() %>" class="label label-warning <%=c.getTextoValidacion().length()>0?"textoNoValidaOB":""%>" data-textVal="<%=c.getTextoValidacion()%>"><fmt:message key="general.novalidado"></fmt:message>
+					<%if(!c.isTextoLeido()){ %>
+					<span class="label label-info">1</span>
+					<%} %>
+					</span>
 						<%}else{ %>
 					<span id="validado<%=c.getIdInstancia() %>" class="label label-danger"><fmt:message key="general.denegado"></fmt:message></span>
-					<%	}
+						<%}
  					}%>
- 					
 				</td>
 			</tr>
 <%		

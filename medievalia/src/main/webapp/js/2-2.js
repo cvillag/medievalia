@@ -444,6 +444,16 @@ function postCarga3(){
 	$(".saveProfeNewName").hide();
 	$(".cancelProfeNewName").hide();
 	
+	$(".textoNoValidaOB").click(function(){
+		$("#modalTextoNoValidacionOB").html($(this).data('textval'));
+		$("#modalMuestraTextoNoOB").modal();
+	});
+	
+	$(".textoValidaOB").click(function(){
+		$("#modalTextoValidacionOB").html($(this).data('textval'));
+		$("#modalMuestraTextoOB").modal();
+	});
+	
 	$(".detalleObjetoProfe").click(function(){
 		$("#contenidoDetalle").empty();
 		$("#contenidoDetalle2").empty();
@@ -878,24 +888,26 @@ $(document).ready(function(){
 	});
 	
 	$("#validaOB").click(function(){
-		alert("valida : " + $("#idObjetoValidar").val() + " " + $("#textoValidaciónOB").val());
 		$.post("validateObject.do",{
 			idInstancia : $("#idObjetoValidar").val(),
 			text : $("#textoValidaciónOB").val(),
 			val : 1},
 			function(data){
-				alert(data);
+				modalesValidacionObj(data);
+				cargaListaProfe();
+				cargaListaCompleta();
 		});
 	});
 	
 	$("#noValidaOB").click(function(){
-		alert("valida : " + $("#idObjetoValidar").val() + " " + $("#textoValidaciónOB").val());
 		$.post("validateObject.do",{
 			idInstancia : $("#idObjetoValidar").val(),
 			text : $("#textoValidaciónOB").val(),
 			val : 0},
 			function(data){
-				alert(data);
+				modalesValidacionObj(data);
+				cargaListaProfe();
+				cargaListaCompleta();
 		});
 	});
 	
@@ -907,13 +919,19 @@ function modalesValidacionObj(data){
 		window.location.href="hello.do";
 	}
 	else if(json.message == "sinPrivilegios"){
-		$("#modalNoPrivilegios").modal();
+		$("#modalErrorParam").modal();
 	}
 	else if(json.message == "noObject"){
 		$("#modalNoObject").modal();
 	}
 	else if(json.message == "errorParam"){
 		$("#modalErrorParam").modal();
+	}
+	else if(json.message == "validado"){
+		$("#modalObjetoValidado").modal();
+	}
+	else if(json.message == "novalidado"){
+		$("#modalObjetoNoValidado").modal();
 	}
 }
 
@@ -923,7 +941,7 @@ function modalesValidacion(data){
 		window.location.href="hello.do";
 	}
 	else if(json.message == "sinPrivilegios"){
-		$("#modalNoPrivilegios").modal();
+		$("#modalErrorParam").modal();
 	}
 	else if(json.message == "noType"){
 		$("#modalValidaAtributoC1").modal();

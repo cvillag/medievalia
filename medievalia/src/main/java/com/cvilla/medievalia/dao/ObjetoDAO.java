@@ -478,7 +478,7 @@ public class ObjetoDAO implements IObjetoDAO {
 		try{
 			int i = jdbcTemplate.update(VALIDATE_OBJECT_INSTANCE, new Object[]{Constants.OBJETO_NO_VALIDADO,text,Constants.TEXTO_NO_LEIDO,obj.getTipo().getTipoDOM(),obj.getIdInstancia()});
 			if(i == 1){
-				return "validado";
+				return "novalidado";
 			}
 			else{
 				return "errorBD";

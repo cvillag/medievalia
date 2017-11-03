@@ -95,7 +95,7 @@ public class ObjectManager implements IObjectManager {
 		else{
 			o.setValidado(Constants.OBJETO_NO_VALIDADO);
 			o.setTextoValidacion(Constants.TEXTO_SIN_VALIDAR);
-			o.setTextoLeido(Constants.TEXTO_NO_LEIDO);
+			o.setTextoLeido(Constants.TEXTO_LEIDO);
 		}
 		return objetoDAO.createObjectInstance(o);
 	}
