@@ -1,5 +1,7 @@
 var oldnameCom;
+var oldnameComP;
 var activadoCom = 0;
+var activadoComP = 0;
 var oldnameAl;
 var activadoAl = 0;
 var oldnamePr;
@@ -27,6 +29,14 @@ function cancelaEdicion(val,ol){
 	$("#cancelObjeto" + val).hide();
 	$("#saveObjeto" + val).hide();
 	$("#objetoName" + val).attr("disabled","true");
+}
+
+function cancelaEdicionP(val,ol){
+	$("#objetoNameP" + val).val(ol);
+	activadoCom = 0;
+	$("#cancelObjetoP" + val).hide();
+	$("#saveObjetoP" + val).hide();
+	$("#objetoNameP" + val).attr("disabled","true");
 }
 
 function postCarga(){
@@ -441,8 +451,70 @@ var handBotRem = function botonRemComplexAttr(){
 //}
 //
 function postCarga3(){
-	$(".saveProfeNewName").hide();
-	$(".cancelProfeNewName").hide();
+	$(".saveNewNameP").hide();
+	$(".cancelNewNameP").hide();
+	
+	$(".activarNombreProfe").click(function(){
+		if(activadoComP != 0){
+			$("#objetoNameP" + activadoComP).val(oldnameComP);
+			$("#objetoNameP" + activadoComP).attr("disabled","true");
+			$("#saveObjetoP" + activadoComP).hide();
+			$("#cancelObjetoP" + activadoComP).hide();
+			activadoComP = 0;
+		}
+		oldnameComP = $("#objetoNameP" + $(this).data('val')).val();
+		activadoComP = $(this).data('val');
+		$("#objetoNameP" + $(this).data('val')).removeAttr("disabled");
+		$("#saveObjetoP" + $(this).data('val')).show();
+		$("#cancelObjetoP" + $(this).data('val')).show();
+	});
+	
+	$(".cancelNewNameP").click(function(){
+		cancelaEdicionP($(this).data('val'),oldnameComP);
+	});
+	
+	$(".saveNewNameP").click(function(){
+		if($("#objetoNameP" + $(this).data('val')).val().length < 1 ){
+			$("#modalModificaObjeto1").modal();
+		}
+		else{
+			if($("#objetoNameP" + $(this).data('val')).val() == $("#objetoProfe" + $(this).data('nom'))){
+			cancelaEdicionP($(this).data('val'),oldnameCom);
+			}
+			else{
+				$.post("renameObjectA.do",{
+					idInstancia : $(this).data('val'),
+					newNombre : $("#objetoNameP" + $(this).data('val')).val()
+				},
+				function(data){
+					var json = JSON.parse(data);
+					if(json.message == "ok"){
+						$("#modalModificaObjeto2").modal();
+						$("#objetoNameP" + activadoComP).attr("disabled","true");
+						$("#saveObjetoP" + activadoComP).hide();
+						$("#cancelObjetoP" + activadoComP).hide();
+						activadoComP = 0;
+					}
+					else{
+						$("#objetoNameP" + json.id).val(json.oldname);
+						if(json.message == "noObject"){
+							$("#modalModificaObjeto3").modal();
+						}
+						else if(json.message == "nameRepeated"){
+							$("#modalModificaObjeto5").modal();
+						}
+						else if(json.message == "sinSesion"){
+							window.location.href="hello.do";
+						}
+						else{
+							$("#modalModificaObjeto4").modal();
+						}
+					}
+				});
+			}
+		}
+	});
+	
 	
 	$(".textoNoValidaOB").click(function(){
 		$("#modalTextoNoValidacionOB").html($(this).data('textval'));

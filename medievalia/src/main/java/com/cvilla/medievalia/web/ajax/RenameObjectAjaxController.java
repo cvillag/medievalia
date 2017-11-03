@@ -61,6 +61,17 @@ public class RenameObjectAjaxController {
 			else{
 				int id = (new Integer(request.getParameter("idInstancia"))).intValue();
 				InstanciaObjetoDOM obj = objectManager.getObjetoDOM(tipo, id);
+				if(obj == null){
+					if(authManager.isAutorized(actionInt, user)){
+						obj = objectManager.getObjetoDOMUnvalidated(tipo, id, groupA, user);
+					}
+					else if(authManager.isAutorized(actionInt2, user)){
+						obj = objectManager.getObjetoDOMUnvalidated(tipo, id, groupA, user);
+						if(obj.getCreador().getId() != user.getId()){
+							return Constants.noPrivilegesJ(user,logManager,actionInt,"Modificación de objeto no permitida ");
+						}
+					} 
+				}
 				String message = "";
 				if(obj != null){
 					j.put("oldname", obj.getNombre());

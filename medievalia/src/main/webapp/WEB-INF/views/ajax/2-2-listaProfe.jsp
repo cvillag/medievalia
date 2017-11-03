@@ -21,11 +21,11 @@ List<InstanciaObjetoDOM> lista = (List<InstanciaObjetoDOM>) request.getAttribute
 		if(type.equals("table")){%>
 			<tr class="trObjetoP" id="objetoProfe<%=c.getIdInstancia()%>" data-nom="<%=c.getNombre()%>">
 				<td rowspan="2">
-					<input type="text" id="objetoProfeName<%=c.getIdInstancia()%>" value="<%=c.getNombre() %>" disabled class="nombreAl">
-					<button type="button" id="saveProfeObjeto<%=c.getIdInstancia()%>" class="btn btn-xs btn-info saveProfeNewName" data-val="<%=c.getIdInstancia()%>">
+					<input type="text" id="objetoNameP<%=c.getIdInstancia()%>" value="<%=c.getNombre() %>" disabled class="nombreP">
+					<button type="button" id="saveObjetoP<%=c.getIdInstancia()%>" class="btn btn-xs btn-info saveNewNameP" data-val="<%=c.getIdInstancia()%>">
 						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 					</button>
-					<button type="button" id="cancelProfeObjeto<%=c.getIdInstancia()%>" class="btn btn-xs btn-info cancelProfeNewName" data-val="<%=c.getIdInstancia()%>">
+					<button type="button" id="cancelObjetoP<%=c.getIdInstancia()%>" class="btn btn-xs btn-info cancelNewNameP" data-val="<%=c.getIdInstancia()%>">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 					</button>
 				</td>
@@ -43,7 +43,7 @@ List<InstanciaObjetoDOM> lista = (List<InstanciaObjetoDOM>) request.getAttribute
 							</button>
 							<ul class="dropdown-menu" aria-labelledby="dropdownAcciones" role="menu">
 								<%if(rename != null){ %>
-								<li class="activarSNombre" data-val="<%=c.getIdInstancia()%>"><fmt:message key="p2.2.objetos.acciones.cnombre"></fmt:message></li>
+								<li class="activarNombreProfe" data-val="<%=c.getIdInstancia()%>"><fmt:message key="p2.2.objetos.acciones.cnombre"></fmt:message></li>
 								<%} 
 								if(modify != null){ %>
 								<li class="modifyObjetoP" data-val="<%=c.getIdInstancia()%>" data-name="<%=c.getNombre()%>"><fmt:message key="p2.2.objetos.acciones.modify"></fmt:message></li>
