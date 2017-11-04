@@ -76,6 +76,9 @@ public class TeacherObjectListAjaxController {
 					if(authManager.isAutorized(Constants.P_RENAME_OBJECT_INSTANCE, user)){
 						model.addObject("permisorenombrar","ok");
 					}
+					if(authManager.isAutorized(Constants.P_DELETE_OBJECT_INSTANCE, user)){
+						model.addObject("permisoborrado", "ok");
+					}
 					logManager.log(user.getId(), actionInt, "Listado de profesor de objeto " + tipo.getNombreDOM() + " del grupo " + groupA.getName(), Constants.P_OK);
 				}
 			}

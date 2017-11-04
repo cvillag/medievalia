@@ -111,21 +111,7 @@ function postCarga(){
 		$("#modalBorraObjeto0").modal();
 	});
 	
-	$("#modalDelete").click(function(){
-		$.post("removeObjectA.do",{
-			idInstancia : deleteObjeto
-		},
-		function(data){
-			var json = JSON.parse(data);
-			if(json.message == "borrado"){
-				$("#modalBorraObjeto1").modal();
-				$("#objeto" + json.id).remove();
-			}
-			else{
-				$("#modalBorraObjeto2").modal();
-			}
-		})
-	});
+	
 	
 	$(".modifySObjeto").click(function(){
 		$("#contenidoDetalle").empty();
@@ -453,6 +439,11 @@ var handBotRem = function botonRemComplexAttr(){
 function postCarga3(){
 	$(".saveNewNameP").hide();
 	$(".cancelNewNameP").hide();
+	
+	$(".deleteObjetoP").click(function(){
+		deleteObjeto = $(this).data('val');
+		$("#modalBorraObjeto0").modal();
+	});
 	
 	$(".activarNombreProfe").click(function(){
 		if(activadoComP != 0){
@@ -981,6 +972,23 @@ $(document).ready(function(){
 				cargaListaProfe();
 				cargaListaCompleta();
 		});
+	});
+	
+	$("#modalDelete").click(function(){
+		$.post("removeObjectA.do",{
+			idInstancia : deleteObjeto
+		},
+		function(data){
+			var json = JSON.parse(data);
+			if(json.message == "borrado"){
+				$("#modalBorraObjeto1").modal();
+				$("#objeto" + json.id).remove();
+				$("#objetoProfe" + json.id).remove();
+			}
+			else{
+				$("#modalBorraObjeto2").modal();
+			}
+		})
 	});
 	
 });

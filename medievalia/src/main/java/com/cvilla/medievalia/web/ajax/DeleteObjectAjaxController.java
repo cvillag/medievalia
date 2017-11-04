@@ -62,6 +62,9 @@ public class DeleteObjectAjaxController {
 				int id = (new Integer(request.getParameter("idInstancia"))).intValue();
 				String message = "";
 				InstanciaObjetoDOM obj = objectManager.getObjetoDOM(tipo, id);
+				if(obj == null){
+					obj = objectManager.getObjetoDOMUnvalidated(tipo, id, groupA, user);
+				}
 				int act = 0;
 				if(obj != null){
 					j.put("id", obj.getIdInstancia());

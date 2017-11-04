@@ -50,7 +50,7 @@ List<InstanciaObjetoDOM> lista = (List<InstanciaObjetoDOM>) request.getAttribute
 								<%} 
 								if(delete != null){ %>
 								<li role="separator" class="divider"></li>
-								<li class="deleteSObjeto" data-val="<%=c.getIdInstancia()%>"><fmt:message key="p2.2.objetos.acciones.delete"></fmt:message></li>
+								<li class="deleteObjetoP" data-val="<%=c.getIdInstancia()%>"><fmt:message key="p2.2.objetos.acciones.delete"></fmt:message></li>
 								<%} %>
 							</ul>
 						</div>

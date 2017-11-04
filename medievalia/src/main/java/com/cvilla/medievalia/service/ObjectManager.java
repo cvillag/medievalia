@@ -382,7 +382,13 @@ public class ObjectManager implements IObjectManager {
 			}
 		}
 		else{
-			return null;
+			InstanciaObjetoDOM obj = objetoDAO.getObjectInstanceNotVal(tipo, id);
+			if(obj.getCreador().getId() == u.getId()){
+				return obj;
+			}
+			else{
+				return null;
+			}
 		}
 	}
 
