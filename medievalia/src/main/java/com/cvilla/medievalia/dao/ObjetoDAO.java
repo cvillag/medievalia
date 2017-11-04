@@ -20,6 +20,7 @@ import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.utils.Constants;
 import com.cvilla.medievalia.utils.SpecialDate;
 
@@ -104,6 +105,9 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String COMMENT_ATRIBUTOC = "UPDATE `InstanciaAtributoComplejo` SET `textoValidacion`= ?, `textoLeido` = 0 WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ? and `idInstanciaPadre` = ? and `idInstanciaHijo` = ?";
 	private static final String GET_VALIDATED_OBJECT_INSTANCE_WITH_NOT_VALIDATED_AC_LIST_BY_GROUP = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaObjeto` where validado = ? and idObjeto = ? and idInstancia IN (SELECT `idInstanciaPadre` FROM `InstanciaAtributoComplejo` WHERE idGrupo = ? and idObjetoPadre = ? and validado = ?)";
 	private static final String VALIDATE_OBJECT_INSTANCE = "UPDATE `InstanciaObjeto` SET `validado`= ?,`textoValidacion`= ?,`textoLeido`=? WHERE `idObjeto` = ? and `idInstancia` = ?";
+	
+	private static final String GET_OBJECT_INSTANCES_BY_TYPE_USER = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaObjeto` WHERE idObjeto = ? and idGrupo = ? and creador = ?";
+	private static final String GET_VALIDATED_OBJECT_INSTANCE_WITH_NOT_VALIDATED_AC_LIST_BY_USER = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaObjeto` where idObjeto = ? and creador != ? and idInstancia IN (SELECT `idInstanciaPadre` FROM `InstanciaAtributoComplejo` WHERE idGrupo = ? and idObjetoPadre = ? and creador = ?)";
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -486,6 +490,18 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 		catch(Exception e){
 			return "errorBD";
+		}
+	}
+
+	public List<InstanciaObjetoDOM> getStudentObjetoDOMList(TipoObjetoDOM tipo,	Group groupA, User user) {
+		try{
+			List<InstanciaObjetoDOM> li1 = jdbcTemplate.query(GET_OBJECT_INSTANCES_BY_TYPE_USER, new Object[]{tipo.getTipoDOM(),groupA.getIdGrupo(),user.getId()}, new ObjetoDOMMapper());
+			List<InstanciaObjetoDOM> li2 = jdbcTemplate.query(GET_VALIDATED_OBJECT_INSTANCE_WITH_NOT_VALIDATED_AC_LIST_BY_USER, new Object[]{tipo.getTipoDOM(),user.getId(),groupA.getIdGrupo(),tipo.getTipoDOM(),user.getId()}, new ObjetoDOMMapper());
+			li1.addAll(li2);
+			return li1;
+		}
+		catch(Exception e){
+			return null;
 		}
 	}
 }

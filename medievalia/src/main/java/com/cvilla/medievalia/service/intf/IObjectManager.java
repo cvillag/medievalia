@@ -43,7 +43,7 @@ public interface IObjectManager extends Serializable{
 	public String deleteObjetoDOM(InstanciaObjetoDOM obj, User user, Group groupA);
 	
 	//Lista de objetos sin validar propios, ACCION 3
-	/**/public List<InstanciaObjetoDOM> getStudentObjetoDOMList(TipoObjetoDOM tipo, User user);
+	/**/public List<InstanciaObjetoDOM> getStudentObjetoDOMList(TipoObjetoDOM tipo, User user, Group groupA);
 	//Eliminar objeto no validado propio, ACCION 7
 	public String deleteObjetoDOMOwn(InstanciaObjetoDOM obj, User user, Group groupA);
 	

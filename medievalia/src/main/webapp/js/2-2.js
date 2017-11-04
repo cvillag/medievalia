@@ -358,84 +358,90 @@ var handBotRem = function botonRemComplexAttr(){
 		 });
  }
 
-//function postCarga2(){
-//	$(".saveStudentNewName").hide();
-//	$(".cancelStudentNewName").hide();
-//	
-//	$(".activarStudentSNombre").click(function(){
-//		if(activadoAl != 0){
-//			$("#objetoStudentName" + activadoAl).val(oldnameAl);
-//			$("#objetoStudentName" + activadoAl).attr("disabled","true");
-//			$("#saveStudentObjeto" + activadoAl).hide();
-//			$("#cancelStudentObjeto" + activadoAl).hide();
-//			activadoAl = 0;
-//		}
-//		oldnameAl = $("#objetoStudentName" + $(this).data('val')).val();
-//		activadoAl = $(this).data('val');
-//		$("#objetoStudentName" + $(this).data('val')).removeAttr("disabled");
-//		$("#saveStudentObjeto" + $(this).data('val')).show();
-//		$("#cancelStudentObjeto" + $(this).data('val')).show();
-//	});
-//	
-//	$(".cancelStudentNewName").click(function(){
-//		$("#objetoStudentName" + $(this).data('val')).val(oldnameAl);
-//		activadoAl = 0;
-//		$("#cancelStudentObjeto" + $(this).data('val')).hide();
-//		$("#saveStudentObjeto" + $(this).data('val')).hide();
-//		$("#objetoStudentName" + $(this).data('val')).attr("disabled","true");
-//	});
-//	
-//	$(".saveStudentNewName").click(function(){
-//		if($("#objetoStudentName" + $(this).data('val')).val().length < 1 ){
-//			$("#modalModificaObjeto1").modal();
-//		}
-//		else{
-//			$.post("renameObjectA.do",{
-//				idObjeto : $(this).data('val'),
-//				newNombre : $("#objetoStudentName" + $(this).data('val')).val()
-//			},
-//			function(data){
-//				var json = JSON.parse(data);
-//				if(json.message == "cambiado"){
-//					$("#modalModificaObjeto2").modal();
-//					$("#objetoStudentName" + activadoAl).attr("disabled","true");
-//					$("#saveStudentObjeto" + activadoAl).hide();
-//					$("#cancelStudentObjeto" + activadoAl).hide();
-//					activadoAl = 0;
-//				}
-//				else{
-//					$("#objetoStudentName" + json.id).val(json.oldname);
-//					if(json.message == "noExist"){
-//						$("#modalModificaObjeto3").modal();
-//					}
-//					else if(json.message == "repeated"){
-//						$("#modalModificaObjeto5").modal();
-//					}
-//					else{
-//						$("#modalModificaObjeto4").modal();
-//					}
-//				}
-//			});
-//		}
-//	});
-//	
-//	$(".deleteStudentSObjeto").click(function(){
-//		$.post("removeObjectA.do",{
-//			idObjeto : $(this).data('val')
-//		},
-//		function(data){
-//			var json = JSON.parse(data);
-//			if(json.message == "borrado"){
-//				$("#modalBorraObjeto1").modal();
-//				$("#objetoStudent" + json.id).remove();
-//			}
-//			else{
-//				$("#modalBorraObjeto2").modal();
-//			}
-//		});
-//	});
-//}
-//
+function postCarga2(){
+	$(".saveStudentNewName").hide();
+	$(".cancelStudentNewName").hide();
+	
+	$(".activarStudentSNombre").click(function(){
+		if(activadoAl != 0){
+			$("#objetoStudentName" + activadoAl).val(oldnameAl);
+			$("#objetoStudentName" + activadoAl).attr("disabled","true");
+			$("#saveStudentObjeto" + activadoAl).hide();
+			$("#cancelStudentObjeto" + activadoAl).hide();
+			activadoAl = 0;
+		}
+		oldnameAl = $("#objetoStudentName" + $(this).data('val')).val();
+		activadoAl = $(this).data('val');
+		$("#objetoStudentName" + $(this).data('val')).removeAttr("disabled");
+		$("#saveStudentObjeto" + $(this).data('val')).show();
+		$("#cancelStudentObjeto" + $(this).data('val')).show();
+	});
+	
+	$(".cancelStudentNewName").click(function(){
+		$("#objetoStudentName" + $(this).data('val')).val(oldnameAl);
+		activadoAl = 0;
+		$("#cancelStudentObjeto" + $(this).data('val')).hide();
+		$("#saveStudentObjeto" + $(this).data('val')).hide();
+		$("#objetoStudentName" + $(this).data('val')).attr("disabled","true");
+	});
+	
+	$(".saveStudentNewName").click(function(){
+		if($("#objetoStudentName" + $(this).data('val')).val().length < 1 ){
+			$("#modalModificaLugar1").modal();
+		}
+		else{
+			$.post("renameObjectA.do",{
+				idInstancia : $(this).data('val'),
+				newNombre : $("#objetoStudentName" + $(this).data('val')).val()
+			},
+			function(data){
+				var json = JSON.parse(data);
+				if(json.message == "ok"){
+					$("#modalModificaObjeto2").modal();
+					$("#objetoStudentName" + activadoAl).attr("disabled","true");
+					$("#saveStudentObjeto" + activadoAl).hide();
+					$("#cancelStudentObjeto" + activadoAl).hide();
+					activadoAl = 0;
+				}
+				else{
+					$("#objetoName" + json.id).val(json.oldname);
+					if(json.message == "noObject"){
+						$("#modalModificaObjeto3").modal();
+					}
+					else if(json.message == "nameRepeated"){
+						$("#modalModificaObjeto5").modal();
+					}
+					else if(json.message == "sinSesion"){
+						window.location.href="hello.do";
+					}
+					else if(json.message == "noOwner"){
+						$("#modalModificaObjeto6").modal();
+					}
+					else{
+						$("#modalModificaObjeto4").modal();
+					}
+				}
+			});
+		}
+	});
+	
+	$(".deleteStudentSObjeto").click(function(){
+		$.post("removePlaceA.do",{
+			idLugar : $(this).data('val')
+		},
+		function(data){
+			var json = JSON.parse(data);
+			if(json.message == "borrado"){
+				$("#modalBorraLugar1").modal();
+				$("#lugarStudent" + json.id).remove();
+			}
+			else{
+				$("#modalBorraLugar2").modal();
+			}
+		});
+	});
+}
+
 function postCarga3(){
 	$(".saveNewNameP").hide();
 	$(".cancelNewNameP").hide();
@@ -790,9 +796,9 @@ $(document).ready(function(){
 	
 	cargaListaCompleta();
 	
-//	if($("#listaalumno").length > 0){
-//		cargaListaAlumno();
-//	}
+	if($("#listaalumno").length > 0){
+		cargaListaAlumno();
+	}
 //	else
 	if($("#listaProfe").length > 0){
 		cargaListaProfe();

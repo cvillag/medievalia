@@ -8,6 +8,7 @@ import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.User;
 
 public interface IObjetoDAO {
 	public List<TipoObjetoDOM> getObjectTypeList();
@@ -34,4 +35,5 @@ public interface IObjetoDAO {
 	public String commentAtributoComplejoNoVal(int tipoDOM, int idPadre,int tipoHijo, int idHijo, String textV);
 	public String validateObjectInstance(InstanciaObjetoDOM obj, String text);
 	public String commentObjectInstance(InstanciaObjetoDOM obj, String text);
+	public List<InstanciaObjetoDOM> getStudentObjetoDOMList(TipoObjetoDOM tipo, Group groupA, User user);
 }

@@ -38,10 +38,10 @@ List<InstanciaObjetoDOM> lista = (List<InstanciaObjetoDOM>) request.getAttribute
 							<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 						</button>
 						<div class="btn-group">
-							<button class="btn btn-info btn-xs dropdown-toggle" type="button" id="dropdownAcciones" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							<button class="btn btn-info btn-xs dropdown-toggle" type="button" id="dropdownAcciones<%=c.getIdInstancia()%>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 								<span class="glyphicon glyphicon-collapse-down" aria-hidden="true"></span>
 							</button>
-							<ul class="dropdown-menu" aria-labelledby="dropdownAcciones" role="menu">
+							<ul class="dropdown-menu" aria-labelledby="dropdownAcciones<%=c.getIdInstancia()%>" role="menu">
 								<%if(rename != null){ %>
 								<li class="activarNombreProfe" data-val="<%=c.getIdInstancia()%>"><fmt:message key="p2.2.objetos.acciones.cnombre"></fmt:message></li>
 								<%} 

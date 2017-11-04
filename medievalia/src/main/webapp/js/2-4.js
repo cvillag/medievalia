@@ -91,47 +91,47 @@ function postCarga2(){
 	
 	$(".activarStudentSNombre").click(function(){
 		if(activadoAl != 0){
-			$("#lugarStudentName" + activadoAl).val(oldnameAl);
-			$("#lugarStudentName" + activadoAl).attr("disabled","true");
-			$("#saveStudentLugar" + activadoAl).hide();
-			$("#cancelStudentLugar" + activadoAl).hide();
+			$("#objetoStudentName" + activadoAl).val(oldnameAl);
+			$("#objetoStudentName" + activadoAl).attr("disabled","true");
+			$("#saveStudentObjeto" + activadoAl).hide();
+			$("#cancelStudentObjeto" + activadoAl).hide();
 			activadoAl = 0;
 		}
 		oldnameAl = $("#lugarStudentName" + $(this).data('val')).val();
 		activadoAl = $(this).data('val');
-		$("#lugarStudentName" + $(this).data('val')).removeAttr("disabled");
-		$("#saveStudentLugar" + $(this).data('val')).show();
-		$("#cancelStudentLugar" + $(this).data('val')).show();
+		$("#objetoStudentName" + $(this).data('val')).removeAttr("disabled");
+		$("#saveStudentObjeto" + $(this).data('val')).show();
+		$("#cancelStudentObjeto" + $(this).data('val')).show();
 	});
 	
 	$(".cancelStudentNewName").click(function(){
-		$("#lugarStudentName" + $(this).data('val')).val(oldnameAl);
+		$("#objetoStudentName" + $(this).data('val')).val(oldnameAl);
 		activadoAl = 0;
-		$("#cancelStudentLugar" + $(this).data('val')).hide();
-		$("#saveStudentLugar" + $(this).data('val')).hide();
-		$("#lugarStudentName" + $(this).data('val')).attr("disabled","true");
+		$("#cancelStudentObjeto" + $(this).data('val')).hide();
+		$("#saveStudentObjeto" + $(this).data('val')).hide();
+		$("#objetoStudentName" + $(this).data('val')).attr("disabled","true");
 	});
 	
 	$(".saveStudentNewName").click(function(){
-		if($("#lugarStudentName" + $(this).data('val')).val().length < 1 ){
+		if($("#objetoStudentName" + $(this).data('val')).val().length < 1 ){
 			$("#modalModificaLugar1").modal();
 		}
 		else{
 			$.post("renamePlaceA.do",{
 				idLugar : $(this).data('val'),
-				newNombre : $("#lugarStudentName" + $(this).data('val')).val()
+				newNombre : $("#objetoStudentName" + $(this).data('val')).val()
 			},
 			function(data){
 				var json = JSON.parse(data);
 				if(json.message == "cambiado"){
 					$("#modalModificaLugar2").modal();
-					$("#lugarStudentName" + activadoAl).attr("disabled","true");
-					$("#saveStudentLugar" + activadoAl).hide();
-					$("#cancelStudentLugar" + activadoAl).hide();
+					$("#objetoStudentName" + activadoAl).attr("disabled","true");
+					$("#saveStudentObjeto" + activadoAl).hide();
+					$("#cancelStudentObjeto" + activadoAl).hide();
 					activadoAl = 0;
 				}
 				else{
-					$("#lugarStudentName" + json.id).val(json.oldname);
+					$("#objetoStudentName" + json.id).val(json.oldname);
 					if(json.message == "noExist"){
 						$("#modalModificaLugar3").modal();
 					}

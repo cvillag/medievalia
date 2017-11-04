@@ -47,7 +47,7 @@ TipoObjetoDOM tipo = (TipoObjetoDOM) request.getAttribute("tipo");
 				<p><fmt:message key="p2.2.objetos.usuario"></fmt:message></p>
 			</div>
 			<div class="panel-body">
-				<p><form><input id="busquedaUsuario" type="text"/></form></p>
+				<p><form><fmt:message key="p2.2.objetos.filtro"></fmt:message><input id="busquedaUsuario" type="text"/></form></p>
 				<table class="table table-hover table-striped table-condensed table-responsive">
 					<thead>
 						<tr>
@@ -72,7 +72,7 @@ else{ %>
 				<p><fmt:message key="p2.2.objetos.profe"></fmt:message></p>
 			</div>
 			<div class="panel-body">
-				<p><form><input id="busquedaProfe" type="text"/></form></p>
+				<p><form><fmt:message key="p2.2.objetos.filtro"></fmt:message><input id="busquedaProfe" type="text"/></form></p>
 				<table class="table table-hover table-striped table-condensed table-responsive">
 					<thead>
 						<tr>
@@ -734,6 +734,28 @@ else{ %>
 			<div class="modal-body">
 				<div class="alert alert-warning">
 					<fmt:message key="p2-2.modal15"></fmt:message>
+				</div>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="modalok" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalModificaObjeto6" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal10"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-warning">
+					<fmt:message key="p2-2.modal16"></fmt:message>
 				</div>				
 			</div>
 			<div class="modal-footer">

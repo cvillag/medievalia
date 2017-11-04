@@ -101,10 +101,16 @@ public class ObjectManager implements IObjectManager {
 	}
 
 	public String renameObjetoDOM(TipoObjetoDOM tipo, String nombre, int id, User user, Group groupA) {
-		
+		InstanciaObjetoDOM obj = objetoDAO.getObjectInstance(tipo, id);
+		if(obj == null){
+			obj = objetoDAO.getObjectInstanceNotVal(tipo, id);
+			if(obj == null){
+				return "noObject";
+			}
+		}
 		if(nombre.length() >= Constants.MIN_PERSONAGE_NAME){
-			InstanciaObjetoDOM o = objetoDAO.getObjectByName(tipo,nombre);
-			if(o == null){
+			InstanciaObjetoDOM o2 = objetoDAO.getObjectByName(tipo,nombre);
+			if(o2 == null){
 				return objetoDAO.renameObject(tipo,id,nombre);
 			}
 			else{
@@ -116,19 +122,41 @@ public class ObjectManager implements IObjectManager {
 		}
 	}
 
-	public String renameObjetoDOMOwn(TipoObjetoDOM tipo, String nombre, int id,
-			User user, Group groupA) {
-		// TODO Auto-generated method stub
-		return null;
+	public String renameObjetoDOMOwn(TipoObjetoDOM tipo, String nombre, int id,	User user, Group groupA) {
+		InstanciaObjetoDOM obj = objetoDAO.getObjectInstance(tipo, id);
+		if(obj == null){
+			obj = objetoDAO.getObjectInstanceNotVal(tipo, id);
+			if(obj == null){
+				return "noObject";
+			}
+		}
+		if(obj.getCreador().getId() == user.getId()){
+			if(nombre.length() >= Constants.MIN_PERSONAGE_NAME){
+				InstanciaObjetoDOM o = objetoDAO.getObjectByName(tipo,nombre);
+				if(o == null){
+					return objetoDAO.renameObject(tipo,id,nombre);
+				}
+				else{
+					return "nameRepeated";
+				}
+			}
+			else{
+				return "noLength";
+			}
+		}
+		else{
+			return "noOwner";
+		}
 	}
 
 	public String deleteObjetoDOM(InstanciaObjetoDOM obj, User user, Group groupA){
 		return objetoDAO.deleteObjetoDOM(obj);
 	}
 
-	public List<InstanciaObjetoDOM> getStudentObjetoDOMList(TipoObjetoDOM tipo, User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<InstanciaObjetoDOM> getStudentObjetoDOMList(TipoObjetoDOM tipo, User user, Group groupA) {
+		List<InstanciaObjetoDOM> lista = objetoDAO.getStudentObjetoDOMList(tipo,groupA,user);
+		lista = fillUsers(lista);
+		return lista;
 	}
 
 	public String deleteObjetoDOMOwn(InstanciaObjetoDOM obj, User user,	Group groupA) {
