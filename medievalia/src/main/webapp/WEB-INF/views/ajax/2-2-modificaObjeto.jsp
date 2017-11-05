@@ -135,7 +135,7 @@ if(objeto != null){
 		for(TipoAtributoComplejoDOM act : listaTipos){
 			idPag++;	
 			%>
-	<div id="modDetAtributos<%=idPag %>" class="modDetAtributosC" data-num="<%=idPag%>">
+	<div id="modDetAtributos<%=act.getIdTipoHijo() %>" class="modDetAtributosC" data-num="<%=act.getIdTipoHijo()%>">
 	</div>
 	
 	<%

@@ -425,6 +425,16 @@ function postCarga2(){
 		}
 	});
 	
+	$(".textoNoValidaOBA").click(function(){
+		$("#modalTextoNoValidacionOB").html($(this).data('textval'));
+		$("#modalMuestraTextoNoOB").modal();
+	});
+	
+	$(".textoValidaOBA").click(function(){
+		$("#modalTextoValidacionOB").html($(this).data('textval'));
+		$("#modalMuestraTextoOB").modal();
+	});
+	
 	$(".deleteStudentSObjeto").click(function(){
 		$.post("removePlaceA.do",{
 			idLugar : $(this).data('val')

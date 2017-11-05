@@ -159,7 +159,7 @@ if(objeto != null){
 		for(TipoAtributoComplejoDOM act : listaTipos){
 			idPag++;	
 			%>
-	<div id="modDetAtributos<%=idPag %>" class="modDetAtributosC">
+	<div id="modDetAtributos<%=act.getIdTipoHijo() %>" class="modDetAtributosC">
 		<ul class="list-group">
 		<%	for(InstanciaAtributoComplejoDOM ac : acl){
 				if(ac.getTipoHijo().getTipoDOM() == act.getIdTipoHijo()){
