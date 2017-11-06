@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cvilla.medievalia.dao.intfc.IObjetoDAO;
 import com.cvilla.medievalia.dao.intfc.IUserDAO;
+import com.cvilla.medievalia.dao.mappers.AtributoSencilloDOMMapper;
 import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
 import com.cvilla.medievalia.domain.Group;
@@ -21,6 +22,7 @@ import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
+import com.cvilla.medievalia.utils.ListaAtributoSimple;
 
 public class ObjectManager implements IObjectManager {
 
@@ -382,8 +384,44 @@ public class ObjectManager implements IObjectManager {
 		}
 	}
 
-	public String modifySimpleAttribute(InstanciaObjetoDOM obj) {
-		return objetoDAO.updateSimpleAttributes(obj);
+	public String modifySimpleAttribute(InstanciaObjetoDOM obj,Group g, User u) {
+		for(InstanciaAtributoSencilloDOM as : obj.getAtributosSencillos()){
+			if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_OBJECT && as.getValor() != null){
+				int tipo = as.getSubtipo();
+				int id = ((InstanciaObjetoDOM) as.getValor()).getIdInstancia();
+				if(id != 0){
+					InstanciaObjetoDOM o = getObjetoDOM(new TipoObjetoDOM(tipo,""), id);
+					if(o == null){
+						o = getObjetoDOMUnvalidated(new TipoObjetoDOM(tipo,""), id, g, u);
+					}
+					if(o == null){
+						return "errorParam";
+					}
+				}
+				if(!objetoDAO.atributoSimpleObjetoExists(as.getIdAtributo(),obj.getTipo().getTipoDOM(),as.getSubtipo())){
+					return "errorParam";
+				}
+			}
+		}
+//		boolean enc = false;
+//		int i = 0;
+//		List<InstanciaAtributoSencilloDOM> ltas = getAtributosSObjetoDOM(obj.getTipo());
+//		while (!enc && i < ltas.size()){
+//			boolean enc2 = false;
+//			int j = 0;
+//			while(!enc2 && j < obj.getAtributosSencillos().size()){
+//				enc2 = obj.getAtributosSencillos().get(j).getSubtipo() == ltas.get(i).getSubtipo();
+//				j++;
+//			}
+//			enc = !enc2;
+//			i++;
+//		}
+//		if(!enc){
+			return objetoDAO.updateSimpleAttributes(obj);
+//		}
+//		else{
+//			return "errorParam";
+//		}
 	}
 
 	public List<InstanciaObjetoDOM> fillUsers(List<InstanciaObjetoDOM> l) {
@@ -473,5 +511,20 @@ public class ObjectManager implements IObjectManager {
 		else{
 			return "noObject";
 		}
+	}
+
+	public List<ListaAtributoSimple> getListaDisponibleAtributoSimpleObjeto(InstanciaObjetoDOM ac) {
+		List<ListaAtributoSimple> lista = new ArrayList<ListaAtributoSimple>();
+		for(InstanciaAtributoSencilloDOM as : ac.getAtributosSencillos()){
+			if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_OBJECT){
+				ListaAtributoSimple li = new ListaAtributoSimple();
+				li.setAtributo(as);
+				TipoObjetoDOM t = new TipoObjetoDOM();
+				t.setTipoDOM(as.getSubtipo());
+				li.setDisponibles(getObjetoDOMListByType(t));
+				lista.add(li);
+			}
+		}
+		return lista;
 	}
 }

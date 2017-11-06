@@ -1,3 +1,4 @@
+<%@page import="com.cvilla.medievalia.utils.ListaAtributoSimple"%>
 <%@page import="com.cvilla.medievalia.domain.TipoAtributoComplejoDOM"%>
 <%@page import="com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM"%>
 <%@page import="com.cvilla.medievalia.utils.SpecialDate"%>
@@ -15,6 +16,8 @@ InstanciaObjetoDOM objeto = (InstanciaObjetoDOM) request.getAttribute("object");
 List<TipoAtributoComplejoDOM> listaTipos = (List<TipoAtributoComplejoDOM>) request.getAttribute("tatributoc");
 @SuppressWarnings("unchecked")
 List<InstanciaAtributoComplejoDOM> disp = (List<InstanciaAtributoComplejoDOM>) request.getAttribute("disponibles");
+@SuppressWarnings("unchecked")
+List<ListaAtributoSimple> atributosSimplesObjeto = (List<ListaAtributoSimple>) request.getAttribute("simplesDisponibles");
 if(objeto != null){
 	List<InstanciaAtributoComplejoDOM> acl = objeto.getAtributosComplejos();
 	%>
@@ -112,6 +115,41 @@ if(objeto != null){
 							<textarea name="text<%=as.getIdAtributo() %>" class="form-control atrSim"><%=s!=null?s:""%></textarea>
 						</div>
 					</div>
+					<%
+				}
+				else if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_OBJECT){
+					boolean enc = false;
+					int i = 0;
+					ListaAtributoSimple aso = null;
+					while(!enc && i < atributosSimplesObjeto.size()){
+						if(atributosSimplesObjeto.get(i).getAtributo().getIdAtributo() == as.getIdAtributo()){
+							aso = atributosSimplesObjeto.get(i);
+							enc = true;
+						}
+						i++;
+					}
+					%>
+					<div class="row">
+						<div class="col-xs-12 form-group">
+							<label for="st"><%=as.getNombreTipoAtributo() %></label>
+							<select class="form-control atrSim" name="object<%=as.getIdAtributo()%>">
+								<option value="0"></option>
+								<%
+								InstanciaObjetoDOM seleccionado = (InstanciaObjetoDOM) as.getValor();
+								if(aso != null){
+									for(InstanciaObjetoDOM objAtr : aso.getDisponibles()){
+									%>
+									<option value="<%=objAtr.getIdInstancia()%>" <%=seleccionado!=null && seleccionado.getIdInstancia()==objAtr.getIdInstancia()?"selected":"" %>>
+										<%=objAtr.getNombre() %>
+									</option>
+								<%
+									}
+								}
+								%>
+							</select>
+						</div>
+					</div>
+						
 					<%
 				}
 			}

@@ -1,3 +1,4 @@
+<%@page import="com.cvilla.medievalia.dao.mappers.ObjetoDOMMapper"%>
 <%@page import="com.cvilla.medievalia.domain.TipoAtributoComplejoDOM"%>
 <%@page import="com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM"%>
 <%@page import="com.cvilla.medievalia.utils.SpecialDate"%>
@@ -114,6 +115,17 @@ if(objeto != null){
 						<div class="col-xs-12 form-group">
 							<label for="st"><%=as.getNombreTipoAtributo() %></label>
 							<textarea <%=disabled?"disabled":"" %> id="text<%=as.getIdAtributo() %>" class="form-control"><%=s%></textarea>
+						</div>
+					</div>
+					<%
+				}
+				else if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_OBJECT){
+					InstanciaObjetoDOM o = (InstanciaObjetoDOM) as.getValor();
+					%>
+					<div class="row">
+						<div class="col-xs-12 form-group">
+							<label for="st"><%=as.getNombreTipoAtributo() %></label>
+							<input type="text" <%=disabled?"disabled":"" %> id="string<%=as.getIdAtributo() %>" value="<%=o!=null?o.getNombre():""%>" class="form-control">
 						</div>
 					</div>
 					<%

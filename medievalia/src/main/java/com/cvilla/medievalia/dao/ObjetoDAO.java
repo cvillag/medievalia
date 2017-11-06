@@ -45,7 +45,7 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String GET_OBJECT_INSTANCES_BY_TYPE = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaObjeto` WHERE idObjeto = ? and validado = ?";
 	private static final String GET_OBJECT_INSTANCES_BY_TYPE_GROUP = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaObjeto` WHERE idObjeto = ? and validado = ? and idGrupo = ?";
 	private static final String GET_OBJECT_INSTANCE = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaObjeto` WHERE idInstancia = ? and idObjeto = ? and validado = ?";
-	private static final String GET_OBJECT_S_ATTRIBUTES_TYPE_LIST = "SELECT `idAtributo`, `idObjeto`, `nombreAtributo`, `tipo` FROM `AtributoSencilloObjeto` WHERE idObjeto = ?";
+	private static final String GET_OBJECT_S_ATTRIBUTES_TYPE_LIST = "SELECT `idAtributo`, `idObjeto`, `nombreAtributo`, `tipo`, `subtipo` FROM `AtributoSencilloObjeto` WHERE idObjeto = ?";
 	private static final String GET_OBJECT_DATE_ATTRIBUTES_VALUE = "SELECT `idInstancia`, `idAtributoSencillo`, `idObjeto`, `dia`, `mes`, `anio` FROM `InstanciaAtributoDate` WHERE idObjeto = ? and idInstancia = ? and idAtributoSencillo = ?";
 	private static final String GET_OBJECT_DOUBLE_ATTRIBUTES_VALUE = "SELECT `idInstancia`, `idAtributoSencillo`, `idObjeto`, `valor` FROM `InstanciaAtributoDouble` WHERE idObjeto = ? and idInstancia = ? and idAtributoSencillo = ?";
 	private static final String GET_OBJECT_INT_ATTRIBUTES_VALUE = "SELECT `valor` FROM `InstanciaAtributoInt` WHERE idObjeto = ? and idInstancia = ? and idAtributoSencillo = ?";
@@ -108,6 +108,12 @@ public class ObjetoDAO implements IObjetoDAO {
 	
 	private static final String GET_OBJECT_INSTANCES_BY_TYPE_USER = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaObjeto` WHERE idObjeto = ? and idGrupo = ? and creador = ?";
 	private static final String GET_VALIDATED_OBJECT_INSTANCE_WITH_NOT_VALIDATED_AC_LIST_BY_USER = "SELECT `idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaObjeto` where idObjeto = ? and creador != ? and idInstancia IN (SELECT `idInstanciaPadre` FROM `InstanciaAtributoComplejo` WHERE idGrupo = ? and idObjetoPadre = ? and creador = ?)";
+	private static final String GET_OBJECT_ATTRIBUTES_OBJECT = "SELECT InstanciaObjeto.`idInstancia`, InstanciaObjeto.`idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido` FROM `InstanciaObjeto` right join ( SELECT `idObjetoHijo`, `idInstanciaHijo` FROM `InstanciaAtributoObjeto` WHERE idObjeto = ? and idObjetoHijo = ? and idInstancia = ? and idAtributoSencillo = ?) as sel1 on InstanciaObjeto.idObjeto = sel1.idObjetoHijo and InstanciaObjeto.idInstancia = sel1.idInstanciaHijo";
+	private static final String DELETE_SIMPLE_ATRIBUTE_OBJECT = "DELETE FROM `InstanciaAtributoObjeto` WHERE `idObjeto` = ? and `idInstancia` = ? and `idAtributoSencillo` = ? and `idObjetoHijo` = ?";
+	private static final String INSERT_SIMPLE_ATRIBUTE_OBJECT = "INSERT INTO `InstanciaAtributoObjeto`(`idObjeto`, `idInstancia`, `idAtributoSencillo`, `idObjetoHijo`, `idInstanciaHijo`) VALUES (?,?,?,?,?)";
+	private static final String EXIST_SIMPLE_ATRIBUTE_OBJECT = "SELECT count(*) FROM `AtributoSencilloObjeto` WHERE `idAtributo` = ? and `idObjeto` = ? and `subtipo` = ?";
+	private static final String EXIST_SIMPLE_ATRIBUTE_OBJECT_INSTANCE = "SELECT count(*) FROM `InstanciaAtributoObjeto` WHERE `idObjeto` = ? and `idInstancia` = ? and `idAtributoSencillo` = ? and `idObjetoHijo` = ?";
+	private static final String UPDATE_SIMPLE_ATRIBUTE_OBJECT = "UPDATE `InstanciaAtributoObjeto` SET `idInstanciaHijo`= ? WHERE `idObjeto`= ? and `idInstancia`= ? and `idAtributoSencillo`= ?  and `idObjetoHijo`= ?";
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -194,6 +200,15 @@ public class ObjetoDAO implements IObjetoDAO {
 						break;
 					}
 					catch (Exception e){
+						a.setValor(null);
+					}
+				case Constants.TIPO_ATRIBUTO_OBJECT:
+					try{
+						InstanciaObjetoDOM o = jdbcTemplate.queryForObject(GET_OBJECT_ATTRIBUTES_OBJECT, new Object[]{tipo.getTipoDOM(),a.getSubtipo(),id,a.getIdAtributo()},new ObjetoDOMMapper());
+						a.setValor(o);
+						break;
+					}
+					catch(Exception e){
 						a.setValor(null);
 					}
 				default: throw new Exception();
@@ -355,6 +370,31 @@ public class ObjetoDAO implements IObjetoDAO {
 						}
 					}
 				}
+				else if(a.getTipoAtributo() == Constants.TIPO_ATRIBUTO_OBJECT){
+					InstanciaObjetoDOM o = (InstanciaObjetoDOM) a.getValor();
+					if(o != null){
+						if(o.getIdInstancia() == 0){
+							if(atributoSimpleObjetoInstanciaExists(obj.getTipo().getTipoDOM(),obj.getIdInstancia(),a.getIdAtributo(),a.getSubtipo(),o.getIdInstancia())){
+								int res = jdbcTemplate.update(DELETE_SIMPLE_ATRIBUTE_OBJECT, new Object[]{obj.getTipo().getTipoDOM(),obj.getIdInstancia(),a.getIdAtributo(),a.getSubtipo()});
+								return "ok";
+							}
+						}
+						else{
+							if(!atributoSimpleObjetoInstanciaExists(obj.getTipo().getTipoDOM(),obj.getIdInstancia(),a.getIdAtributo(),a.getSubtipo(),o.getIdInstancia())){
+								int res = jdbcTemplate.update(INSERT_SIMPLE_ATRIBUTE_OBJECT, new Object[]{obj.getTipo().getTipoDOM(),obj.getIdInstancia(),a.getIdAtributo(),a.getSubtipo(),o.getIdInstancia()});
+								if(res != 1){
+									return "errorDB";
+								}
+							}
+							else{
+								int res = jdbcTemplate.update(UPDATE_SIMPLE_ATRIBUTE_OBJECT, new Object[]{o.getIdInstancia(),obj.getTipo().getTipoDOM(),obj.getIdInstancia(),a.getIdAtributo(),a.getSubtipo()});
+								if(res != 1){
+									return "errorDB";
+								}
+							}
+						}
+					}
+				}
 				else{
 					return "errorAtributos";
 				}
@@ -502,6 +542,26 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 		catch(Exception e){
 			return null;
+		}
+	}
+
+	public boolean atributoSimpleObjetoExists(int idAtributo, int tipoDOM,int subtipo) {
+		try{
+			int i = jdbcTemplate.queryForInt(EXIST_SIMPLE_ATRIBUTE_OBJECT,new Object[]{idAtributo,tipoDOM,subtipo});
+			return i == 1;
+		}
+		catch(Exception e){
+			return false;
+		}
+	}
+	
+	public boolean atributoSimpleObjetoInstanciaExists(int idObjeto, int idInstancia, int idAtributoSencillo, int idObjetoHijo, int idInstanciaHijo) {
+		try{
+			int i = jdbcTemplate.queryForInt(EXIST_SIMPLE_ATRIBUTE_OBJECT_INSTANCE,new Object[]{idObjeto,idInstancia,idAtributoSencillo,idObjetoHijo});
+			return i == 1;
+		}
+		catch(Exception e){
+			return false;
 		}
 	}
 }

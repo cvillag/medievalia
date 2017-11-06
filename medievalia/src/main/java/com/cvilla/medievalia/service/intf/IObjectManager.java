@@ -13,6 +13,7 @@ import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
+import com.cvilla.medievalia.utils.ListaAtributoSimple;
 
 @Component
 public interface IObjectManager extends Serializable{
@@ -79,9 +80,10 @@ public interface IObjectManager extends Serializable{
 	public List<InstanciaAtributoComplejoDOM> getAtributosCDisponiblesObjetoDOM(	TipoObjetoDOM tipo, InstanciaObjetoDOM obj, int pag);
 	
 	public List<InstanciaAtributoComplejoDOM> getAtributosCPorTipo(InstanciaObjetoDOM obj, int pag);
-	public String modifySimpleAttribute(InstanciaObjetoDOM obj);
+	public String modifySimpleAttribute(InstanciaObjetoDOM obj,Group g, User u);
 	
 	public List<InstanciaObjetoDOM> fillUsers(List<InstanciaObjetoDOM> l);
 	public Map<Integer, Integer> getBadgesFromObject(InstanciaObjetoDOM obj);
+	public List<ListaAtributoSimple> getListaDisponibleAtributoSimpleObjeto(InstanciaObjetoDOM obj);
 	
 }

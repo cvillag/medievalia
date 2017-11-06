@@ -5,6 +5,7 @@ public class InstanciaAtributoSencilloDOM {
 	private Object valor;
 	private String nombreTipoAtributo;
 	private int idAtributo;
+	private int subtipo;
 	
 	public InstanciaAtributoSencilloDOM() {
 		super();
@@ -40,6 +41,14 @@ public class InstanciaAtributoSencilloDOM {
 
 	public void setIdAtributo(int idAtributo) {
 		this.idAtributo = idAtributo;
+	}
+
+	public int getSubtipo() {
+		return subtipo;
+	}
+
+	public void setSubtipo(int subtipo) {
+		this.subtipo = subtipo;
 	}
 	
 }

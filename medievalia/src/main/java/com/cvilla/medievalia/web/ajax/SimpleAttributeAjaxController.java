@@ -78,7 +78,7 @@ public class SimpleAttributeAjaxController {
 				if(obj != null){
 					String m = cambiaAtributosS(obj,request); 
 					if(m.equals("ok")){
-						String message = objectManager.modifySimpleAttribute(obj);
+						String message = objectManager.modifySimpleAttribute(obj,groupA,user);
 						j.put("message", message);
 					}
 					else{
@@ -148,6 +148,12 @@ public class SimpleAttributeAjaxController {
 			else if(tipoA == Constants.TIPO_ATRIBUTO_TEXT){
 				String dat = request.getParameter("text"+idAt);
 				obj.getAtributosSencillos().get(pos).setValor(dat);
+			}
+			else if(tipoA == Constants.TIPO_ATRIBUTO_OBJECT){
+				String dat = request.getParameter("object"+idAt);
+				InstanciaObjetoDOM o = new InstanciaObjetoDOM();
+				o.setIdInstancia(new Integer(dat));
+				obj.getAtributosSencillos().get(pos).setValor(o);
 			}
 		}
 		return "ok";

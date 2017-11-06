@@ -36,4 +36,5 @@ public interface IObjetoDAO {
 	public String validateObjectInstance(InstanciaObjetoDOM obj, String text);
 	public String commentObjectInstance(InstanciaObjetoDOM obj, String text);
 	public List<InstanciaObjetoDOM> getStudentObjetoDOMList(TipoObjetoDOM tipo, Group groupA, User user);
+	public boolean atributoSimpleObjetoExists(int idAtributo, int tipoDOM,int subtipo);
 }

@@ -169,6 +169,7 @@ public class Constants {
 	public static final int TIPO_ATRIBUTO_INT = 3;
 	public static final int TIPO_ATRIBUTO_STRING = 4;
 	public static final int TIPO_ATRIBUTO_TEXT = 5;
+	public static final int TIPO_ATRIBUTO_OBJECT = 6;
 	
 	public static final String TEXTO_VALIDACION_PROFESOR = "Creado ya validado";
 	public static final String TEXTO_SIN_VALIDAR = "";

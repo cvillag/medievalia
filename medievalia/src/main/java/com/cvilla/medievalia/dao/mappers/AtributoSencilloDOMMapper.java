@@ -15,6 +15,7 @@ public class AtributoSencilloDOMMapper implements RowMapper<InstanciaAtributoSen
 		a.setIdAtributo(rs.getInt("idAtributo"));
 		a.setNombreTipoAtributo(rs.getString("nombreAtributo"));
 		a.setTipoAtributo(rs.getInt("tipo"));
+		a.setSubtipo(rs.getInt("subtipo"));
 		a.setValor(null);
 		
 		return a;

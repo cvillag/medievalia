@@ -1,6 +1,5 @@
 package com.cvilla.medievalia.web.ajax;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,24 +7,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
-import com.cvilla.medievalia.service.LoginManager;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
+import com.cvilla.medievalia.utils.ListaAtributoSimple;
 
 @Controller 
 public class ViewObjectInstanceDetailAjaxController {
@@ -75,6 +72,7 @@ public class ViewObjectInstanceDetailAjaxController {
 				//Lista de tipoAtributoComplejo para crear las pestañas del modal
 				List<TipoAtributoComplejoDOM> ac = objectManager.getTiposAtributosCompleos(tipo);
 				Map<Integer, Integer> badges = objectManager.getBadgesFromObject(obj);
+				List<ListaAtributoSimple> atrob = objectManager.getListaDisponibleAtributoSimpleObjeto(obj);
 				if(modo == 1){
 					if(validado == 1){
 						model = new ModelAndView("ajax/2-2-detalleObjeto");
@@ -100,6 +98,7 @@ public class ViewObjectInstanceDetailAjaxController {
 				else{
 					return Constants.paramError(logManager, actionId, user.getId());
 				}
+				model.addObject("simplesDisponibles",atrob);
 				model.addObject("users",loginManager.listar());
 				model.addObject("badges",badges);
 				model.addObject("modo",modo);

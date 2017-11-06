@@ -138,6 +138,17 @@ if(objeto != null){
 					</div>
 					<%
 				}
+				else if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_OBJECT){
+					InstanciaObjetoDOM o = (InstanciaObjetoDOM) as.getValor();
+					%>
+					<div class="row">
+						<div class="col-xs-12 form-group">
+							<label for="st"><%=as.getNombreTipoAtributo() %></label>
+							<input type="text" <%=disabled?"disabled":"" %> id="string<%=as.getIdAtributo() %>" value="<%=o!=null?o.getNombre():""%>" class="form-control">
+						</div>
+					</div>
+					<%
+				}
 			}
 		%>
 			</form>
