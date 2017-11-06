@@ -165,6 +165,7 @@ public class ObjetoDAO implements IObjetoDAO {
 					}
 					catch (Exception e){
 						a.setValor(null);
+						break;
 					}
 				case Constants.TIPO_ATRIBUTO_DOUBLE:
 					try{
@@ -174,6 +175,7 @@ public class ObjetoDAO implements IObjetoDAO {
 					}
 					catch (Exception e){
 						a.setValor(null);
+						break;
 					}
 				case Constants.TIPO_ATRIBUTO_INT:
 					try{
@@ -183,6 +185,7 @@ public class ObjetoDAO implements IObjetoDAO {
 					}
 					catch (Exception e){
 						a.setValor(null);
+						break;
 					}
 				case Constants.TIPO_ATRIBUTO_STRING:
 					try{
@@ -192,6 +195,7 @@ public class ObjetoDAO implements IObjetoDAO {
 					}
 					catch (Exception e){
 						a.setValor(null);
+						break;
 					}
 				case Constants.TIPO_ATRIBUTO_TEXT:
 					try{
@@ -201,6 +205,7 @@ public class ObjetoDAO implements IObjetoDAO {
 					}
 					catch (Exception e){
 						a.setValor(null);
+						break;
 					}
 				case Constants.TIPO_ATRIBUTO_OBJECT:
 					try{
@@ -210,6 +215,7 @@ public class ObjetoDAO implements IObjetoDAO {
 					}
 					catch(Exception e){
 						a.setValor(null);
+						break;
 					}
 				default: throw new Exception();
 				}
