@@ -766,7 +766,9 @@ function postCargaProfe(){
 		idHijo = $(this).data('val');
 		tipoHijo = $(this).data('thijo');
 		idPadre = $(this).data('padre');
+		textoRelacionAC = $(this).data('textrel')
 		$("#textoValidaciónAC").val("");
+		$("#textoRelacionAC").html(textoRelacionAC);
 		$("#modalValidaAtributoC0").modal();
 	});
 }

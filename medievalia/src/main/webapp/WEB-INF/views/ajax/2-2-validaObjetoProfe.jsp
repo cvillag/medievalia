@@ -196,7 +196,7 @@ if(objeto != null){
 							<%}
 							else{
 								if(ac.getValidado() == Constants.OBJETO_NO_VALIDADO){ %>
-						<button type="button" id="validarProfeAtributoC<%=ac.getTipoHijo().getTipoDOM() %>-<%=ac.getInstanciaHijo().getIdInstancia() %>" class="btn btn-xs btn-info validarAtributoC" data-val="<%=ac.getInstanciaHijo().getIdInstancia()%>" data-thijo="<%=ac.getTipoHijo().getTipoDOM() %>" data-padre="<%=objeto.getIdInstancia()%>">
+						<button type="button" id="validarProfeAtributoC<%=ac.getTipoHijo().getTipoDOM() %>-<%=ac.getInstanciaHijo().getIdInstancia() %>" class="btn btn-xs btn-info validarAtributoC" data-val="<%=ac.getInstanciaHijo().getIdInstancia()%>" data-thijo="<%=ac.getTipoHijo().getTipoDOM() %>" data-padre="<%=objeto.getIdInstancia()%>" data-textrel="<%if(ac.getIdTipoObjetoRelacion() != null && ac.getIdTipoObjetoRelacion() != 0){%><fmt:message key="p2-2.modal801"></fmt:message><%=ac.getInstanciaObjetoRelacion()!=null?ac.getInstanciaObjetoRelacion().getNombre():"(sin relación)"%><%}else{%> (sin relación)<%}%>">
 							<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
 						</button>					
 						<span id="validado<%=ac.getTipoHijo().getTipoDOM() %>-<%=ac.getInstanciaHijo().getIdInstancia() %>" class="label label-warning <%=(ac.getTextoValidacion().length() > 1)?"novalidationText":""%>" data-textvalidacion="<%=ac.getTextoValidacion()%>"><fmt:message key="general.novalidado"></fmt:message><%if(!ac.isTextoLeido()){ %><span class="label label-info">1</span> <%} %></span>

@@ -40,7 +40,7 @@ if(objeto != null){
 			for(InstanciaAtributoSencilloDOM as : atrS){
 				if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_FECHA){
 					boolean empty = as.getValor() == null;
-					int d =0,m=0,a=0;
+					Integer d =0,m=0,a=0;
 					if(!empty){
 						d = ((SpecialDate)as.getValor()).getDia();
 						m = ((SpecialDate)as.getValor()).getMes();
@@ -156,10 +156,20 @@ if(objeto != null){
 		<%	for(InstanciaAtributoComplejoDOM ac : acl){
 				if(ac.getTipoHijo().getTipoDOM() == act.getIdTipoHijo()){
 			%>
-			<li class="list-group-item"><%=ac.getInstanciaHijo().getNombre() %>
-			<%if(!ac.isValidado()){ %>
-			<span class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span>
-			<%} %>
+			<li class="list-group-item">
+			<div class="row">
+				<div class="col-xs-6">
+				<%=ac.getInstanciaHijo().getNombre() %>
+				<%if(!ac.isValidado()){ %>
+				<span class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span>
+				<%} %>
+				</div>
+				<% if(ac.getIdTipoObjetoRelacion() != null && ac.getIdTipoObjetoRelacion() != 0){%>
+				<div class="col-xs-6">
+					<span class="pull-right"><%=ac.getInstanciaObjetoRelacion()!=null?ac.getInstanciaObjetoRelacion().getNombre():"" %></span>
+				</div>
+				<%} %>
+			</div>
 			</li>
 		<%
 				}

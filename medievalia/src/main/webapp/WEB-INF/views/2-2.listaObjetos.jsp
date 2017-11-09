@@ -779,8 +779,10 @@ else{ %>
 			</div>
 			<div class="modal-body">
 				<div class="alert alert-info">
-					<fmt:message key="p2-2.modal81"></fmt:message>
+					<span id="textoRelacionAC"></span>
 				</div>
+				
+				<label for="textoValidaciónAC"><fmt:message key="p2-2.modal81"></fmt:message></label>
 				<input type="text" id="textoValidaciónAC">
 			</div>
 			<div class="modal-footer">

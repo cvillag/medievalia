@@ -13,6 +13,8 @@ public class InstanciaAtributoComplejoDOM {
 	private int idGrupo;
 	private int creador;
 	private int textoLeido;
+	private Integer idTipoObjetoRelacion;
+	private InstanciaObjetoDOM instanciaObjetoRelacion;
 	
 	public InstanciaAtributoComplejoDOM() {
 		super();
@@ -80,6 +82,18 @@ public class InstanciaAtributoComplejoDOM {
 	}
 	public boolean isTextoLeido(){
 		return this.textoLeido == 1 || this.textoValidacion.length() < 1;
+	}
+	public InstanciaObjetoDOM getInstanciaObjetoRelacion() {
+		return instanciaObjetoRelacion;
+	}
+	public void setInstanciaObjetoRelacion(InstanciaObjetoDOM idInstanciaObjetoRelacion) {
+		this.instanciaObjetoRelacion = idInstanciaObjetoRelacion;
+	}
+	public Integer getIdTipoObjetoRelacion() {
+		return idTipoObjetoRelacion;
+	}
+	public void setIdTipoObjetoRelacion(Integer idTipoObjetoRelacion) {
+		this.idTipoObjetoRelacion = idTipoObjetoRelacion;
 	}
 
 }

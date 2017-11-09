@@ -39,6 +39,12 @@ public class AtributoComplejoDOMMapper implements RowMapper<InstanciaAtributoCom
 		a.setTextoValidacion(rs.getString("textoValidacionPadre"));
 		a.setValidado(rs.getInt("validadoPadre"));
 		a.setTextoLeido(rs.getInt("textoLeidoAC"));
+		a.setIdTipoObjetoRelacion(rs.getInt("idObjetoRelacion"));
+		InstanciaObjetoDOM irel = new InstanciaObjetoDOM();
+		irel.setIdInstancia(rs.getInt("idInstanciaRelacion"));
+		irel.setTipo(new TipoObjetoDOM(rs.getInt("idObjetoRelacion"),rs.getString("nombreObjeto")));
+		irel.setNombre(rs.getString("nombreInstancia"));
+		a.setInstanciaObjetoRelacion(irel);
 		return a;
 	}
 }
