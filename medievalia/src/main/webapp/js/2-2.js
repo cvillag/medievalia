@@ -407,12 +407,28 @@ function postCarga2(){
 	});
 	
 	$(".textoNoValidaOBA").click(function(){
+		if($(this).data('leido') == 0){
+			$("#marcarleidotextovalNV").show();
+			$("#marcaleidonv").prop('checked',true);
+		}
+		else{
+			$("#marcarleidotextovalNV").hide();
+			$("#marcaleidonv").prop('checked',false);
+		}
 		$("#modalTextoNoValidacionOB").html($(this).data('textval'));
-		$("#idObjetoTxtVal").val($(this).data('idtextval'));
+		$("#idObjetoTxtNVal").val($(this).data('idtextval'));
 		$("#modalMuestraTextoNoOB").modal();
 	});
 	
 	$(".textoValidaOBA").click(function(){
+		if($(this).data('leido') == 0){
+			$("#marcarleidotextoval").show();
+			$("#marcaleido").prop('checked',true);
+		}
+		else{
+			$("#marcarleidotextoval").hide();
+			$("#marcaleidonv").prop('checked',false);
+		}
 		$("#modalTextoValidacionOB").html($(this).data('textval'));
 		$("#idObjetoTxtVal").val($(this).data('idtextval'));
 		$("#modalMuestraTextoOB").modal();
@@ -439,6 +455,7 @@ function postCarga3(){
 	$(".saveNewNameP").hide();
 	$(".cancelNewNameP").hide();
 	$("#marcarleidotextoval").hide();
+	$("#marcarleidotextovalNV").hide();
 	$("#marcaleido").attr("checked",false);
 	
 	$(".deleteObjetoP").click(function(){
@@ -1030,6 +1047,26 @@ $(document).ready(function(){
 							$("#modalAddAtributoC2").modal();
 						}
 				 });
+	});
+	
+	$("#botonmarcaleidonv").click(function(){
+		if($("#marcaleidonv").is(':checked')){
+			$.post("setObjectTextReaded.do",{
+				idObjeto : $("#idObjetoTxtNVal").val()
+			},
+			function(data){
+				var json = JSON.parse(data);
+				if(json.message == "ok"){
+					cargaListaAlumno();
+				}
+				else if(json.message == "noType"){
+					$("#marcaTextoLeido1").modal();
+				}
+				else if(json.message == "errorDB"){
+					$("#marcaTextoLeido2").modal();
+				}
+			});
+		}
 	});
 	
 	$("#botonmarcaleido").click(function(){

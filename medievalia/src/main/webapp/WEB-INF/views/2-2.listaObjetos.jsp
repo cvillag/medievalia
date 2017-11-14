@@ -1227,15 +1227,15 @@ else{ %>
 				<div class="alert alert-info">
 					<fmt:message key="p2-2.modal94"></fmt:message><span id="modalTextoNoValidacionOB"></span>
 				</div>
-				<div id="marcarleidotextoval" class="checkbox">
+				<div id="marcarleidotextovalNV" class="checkbox">
 					<label>
-						<input type="checkbox" checked id="marcaleido"> <fmt:message key="p2-2.modal95"></fmt:message>
-						<input type="hidden" id="idObjetoTxtVal">
+						<input type="checkbox" checked id="marcaleidonv"> <fmt:message key="p2-2.modal95"></fmt:message>
+						<input type="hidden" id="idObjetoTxtNVal">
 					</label>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-info" id="botonmarcaleido" data-dismiss="modal">
+				<button type="button" class="btn btn-sm btn-info" id="botonmarcaleidonv" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -1255,9 +1255,15 @@ else{ %>
 				<div class="alert alert-info">
 					<fmt:message key="p2-2.modal93"></fmt:message><span id="modalTextoValidacionOB"></span>
 				</div>
+				<div id="marcarleidotextoval" class="checkbox">
+					<label>
+						<input type="checkbox" checked id="marcaleido"> <fmt:message key="p2-2.modal95"></fmt:message>
+						<input type="hidden" id="idObjetoTxtVal">
+					</label>
+				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
+				<button type="button" class="btn btn-sm btn-info"  id="botonmarcaleido" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>

@@ -158,6 +158,12 @@ public class ObjectManager implements IObjectManager {
 
 	public List<InstanciaObjetoDOM> getStudentObjetoDOMList(TipoObjetoDOM tipo, User user, Group groupA) {
 		List<InstanciaObjetoDOM> lista = objetoDAO.getStudentObjetoDOMList(tipo,groupA,user);
+		for(InstanciaObjetoDOM o : lista){
+			if(o.getCreador().getId() != user.getId()){
+				o.setTextoLeido(Constants.TEXTO_LEIDO);
+				o.setTextoValidacion("");
+			}
+		}
 		lista = fillUsers(lista);
 		return lista;
 	}
