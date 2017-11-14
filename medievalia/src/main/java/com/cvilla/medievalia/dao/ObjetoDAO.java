@@ -66,7 +66,7 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String GET_MAX_INSTANCE_ID_BY_OBJECT = "select max(idInstancia) from InstanciaObjeto where idObjeto = ?";
 	private static final String GET_OBJECT_INSTANCE_BY_NAME ="SELECT count(*) FROM `InstanciaObjeto` WHERE idObjeto = ? and nombreInstancia = ?";
 	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES_TYPES = "SELECT `idObjetoPadre`, `idObjetoHijo`, `NombreAtributo`, `idObjetoRelacion` FROM `AtributoComplejoObjeto` WHERE idObjetoPadre = ?";
-	private static final String ADD_COMPLEX_ATTRIBUTE = "INSERT INTO `InstanciaAtributoComplejo`(`idObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`) VALUES (?,?,?,?,?,?,?,?)";
+	private static final String ADD_COMPLEX_ATTRIBUTE = "INSERT INTO `InstanciaAtributoComplejo`(`idObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`,`idObjetoRelacion`,`idInstanciaRelacion`) VALUES (?,?,?,?,?,?,?,?,?,?)";
 	private static final String GET_COMPLEX_ATTRIBUTE = "select `idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validadoPadre`, `textoValidacionHijo`, `idGrupoPadre`, `creadorPadre`, `textoLeidoAC`, `nombreAtributo`, `nombreObjetoHijo`, `validadoHijo`, `textoValidacionPadre`, `idGrupoHijo`, `creadorHijo`, `idObjetoRelacion`,`idInstanciaRelacion`, `nombreObjeto`, `nombreInstancia` from( "
 		+ "select `idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validadoPadre`, `textoValidacionHijo`, `idGrupoPadre`, `creadorPadre`, `textoLeidoAC`, `nombreAtributo`, `nombreObjetoHijo`, `validadoHijo`, `textoValidacionPadre`, `idGrupoHijo`, `creadorHijo`, `idObjetoRelacion`,`idInstanciaRelacion`, `nombreObjeto` from( "
 			+ "select `idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionHijo`, 			sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, sel2.`textoLeidoAC`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, 	InstanciaObjeto.textoValidacion as `textoValidacionPadre`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo`, sel2.`idObjetoRelacion`,sel2.`idInstanciaRelacion` from "
@@ -107,6 +107,7 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String EXIST_SIMPLE_ATRIBUTE_OBJECT = "SELECT count(*) FROM `AtributoSencilloObjeto` WHERE `idAtributo` = ? and `idObjeto` = ? and `subtipo` = ?";
 	private static final String EXIST_SIMPLE_ATRIBUTE_OBJECT_INSTANCE = "SELECT count(*) FROM `InstanciaAtributoObjeto` WHERE `idObjeto` = ? and `idInstancia` = ? and `idAtributoSencillo` = ? and `idObjetoHijo` = ?";
 	private static final String UPDATE_SIMPLE_ATRIBUTE_OBJECT = "UPDATE `InstanciaAtributoObjeto` SET `idInstanciaHijo`= ? WHERE `idObjeto`= ? and `idInstancia`= ? and `idAtributoSencillo`= ?  and `idObjetoHijo`= ?";
+	private static final String CHECK_COMMENT_OBJECT = "UPDATE `InstanciaObjeto` SET `textoLeido`=? WHERE `idInstancia`=? and `idObjeto`=?";
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -270,7 +271,7 @@ public class ObjetoDAO implements IObjetoDAO {
 
 	public String addComplexAttribute(InstanciaAtributoComplejoDOM ao, int idInstanciaPadre) {
 		try{
-			int i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador()});
+			int i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),ao.getInstanciaObjetoRelacion().getIdInstancia()});
 			if(i == 1)
 				return "añadido";
 			else
@@ -561,6 +562,21 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 		catch(Exception e){
 			return false;
+		}
+	}
+
+	public String setObjectTextReaded(InstanciaObjetoDOM obj) {
+		try{
+			int i = jdbcTemplate.update(CHECK_COMMENT_OBJECT, new Object[]{Constants.TEXTO_LEIDO,obj.getIdInstancia(),obj.getTipo().getTipoDOM()});
+			if(i == 1){
+				return "ok";
+			}
+			else{
+				return "errorBD";
+			}
+		}
+		catch(Exception e){
+			return "errorBD";
 		}
 	}
 }

@@ -1,3 +1,5 @@
+<%@page import="com.cvilla.medievalia.domain.InstanciaObjetoDOM"%>
+<%@page import="com.cvilla.medievalia.utils.ListaRelaciones"%>
 <%@page import="com.cvilla.medievalia.domain.TipoObjetoDOM"%>
 <%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
@@ -10,6 +12,8 @@ User usr = (User)ses.getAttribute("user");
 String validar = (String) request.getAttribute("validar");
 
 TipoObjetoDOM tipo = (TipoObjetoDOM) request.getAttribute("tipo");
+@SuppressWarnings("unchecked")
+List<ListaRelaciones> listarel = (List<ListaRelaciones>) request.getAttribute("listasRelacion");
 %>
 <form id="formUser">
 	<input type="hidden" id="userrole" value="<%=usr.getUser_role()%>">
@@ -1223,9 +1227,15 @@ else{ %>
 				<div class="alert alert-info">
 					<fmt:message key="p2-2.modal94"></fmt:message><span id="modalTextoNoValidacionOB"></span>
 				</div>
+				<div id="marcarleidotextoval" class="checkbox">
+					<label>
+						<input type="checkbox" checked id="marcaleido"> <fmt:message key="p2-2.modal95"></fmt:message>
+						<input type="hidden" id="idObjetoTxtVal">
+					</label>
+				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
+				<button type="button" class="btn btn-sm btn-info" id="botonmarcaleido" data-dismiss="modal">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
@@ -1255,3 +1265,96 @@ else{ %>
 	</div>
 </div>
 
+<!-- Modales de tipos de relación con sus instancias -->
+
+<%
+if(listarel != null && listarel.size() > 0 ){
+	for(ListaRelaciones rel : listarel){
+		if(rel.getAc() != null && rel.getAc().getIdTipoRelacion() != 0){
+%>
+<div id="modalRelacion<%=rel.getAc().getIdTipoRelacion() %>" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal120"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-info form-group">
+					<label for="selectRelacion"><fmt:message key="p2-2.modal121"></fmt:message></label>
+				</div>
+				<select id="selectRelacion<%=rel.getAc().getIdTipoRelacion()%>" name="selectRelacion" class="form-control selectpicker" data-live-search="true">
+					<%
+					List<InstanciaObjetoDOM> li = rel.getLi();
+					for(InstanciaObjetoDOM o : li){
+					%>
+					<option value="<%=o.getIdInstancia()%>" data-tokens="<%=o.getNombre()%>"><%=o.getNombre() %></option>
+					<%} %>
+				</select>
+				<input type="hidden" name="inst" id="instHR<%=rel.getAc().getIdTipoRelacion()%>">
+				<input type="hidden" name="tipo" id="tipoHR<%=rel.getAc().getIdTipoRelacion()%>">
+				<input type="hidden" name="pag" id="pag<%=rel.getAc().getIdTipoRelacion()%>">
+				<input type="hidden" name="name" id="name<%=rel.getAc().getIdTipoRelacion()%>">
+				<input type="hidden" name="idInstanciaModificar" id="idInstanciaModificar<%=rel.getAc().getIdTipoRelacion()%>">
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-info buttonmodalasignacionrelacion" data-dismiss="modal" data-tiporel="<%=rel.getAc().getIdTipoRelacion() %>">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.cancelar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<%
+		}
+	}
+}%>
+
+<div id="marcaTextoLeido1" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal130"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-info">
+					<fmt:message key="p2-2.modal131"></fmt:message>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="marcaTextoLeido2" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal130"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-info">
+					<fmt:message key="p2-2.modal132"></fmt:message>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

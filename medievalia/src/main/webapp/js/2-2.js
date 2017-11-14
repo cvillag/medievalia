@@ -192,8 +192,9 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 			var tipo = obj[d].instanciaHijo.tipo.tipoDOM;
 			var idInst = obj[d].instanciaHijo.idInstancia;
 			var val = obj[d].validado;
+			var tiporelacion = obj[d].idTipoObjetoRelacion;
 			if(val == 1){
-				$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'"><span class="glyphicon glyphicon-arrow-right"></span></button> '+nom+'</li>');
+				$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+tiporelacion+'"><span class="glyphicon glyphicon-arrow-right"></span></button> '+nom+'</li>');
 			}
 			else{
 				$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" class="btn btn-xs btn-warning pendienteVal"><span class="glyphicon glyphicon-ban-circle"></span></button> '+nom+'</li>');
@@ -206,7 +207,7 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 			var tipo = disp[d].instanciaHijo.tipo.tipoDOM;
 			var idInst = disp[d].instanciaHijo.idInstancia;
 			var val = disp[d].validado;
-			$("#listD"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="addAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default addComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'">&nbsp;<span class="glyphicon glyphicon-arrow-left"></span></button> '+nom+'</li>');
+			$("#listD"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="addAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default addComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+tiporelacion+'">&nbsp;<span class="glyphicon glyphicon-arrow-left"></span></button> '+nom+'</li>');
 		}
 //		if(recarga == 1){
 			postCargaDetalle2();
@@ -293,34 +294,12 @@ var handBotAdd = function botonAddComplesAttr(){
 	 tipo = $(this).data('tipo');
 	 pag = $(this).data('pag');
 	 name = $(this).data('name');
-	 $.post("addComplexAttribute.do",
-			 {
-		 		idInstPadre : idInstanciaModificar,
-		 		idTipoAttr : tipo,
-		 		idInstHijo : inst
-			 },
-			 function(data){
-				 var json = JSON.parse(data);
-					if(json.message == "añadido"){
-						$("#modalAddAtributoC1").modal();
-						cargaAtributosComplejosPorPagina(json.pag,1);
-					}
-					else if(json.message == "noType"){
-						$("#modalAddAtributoC3").modal();
-					}
-					else if(json.message == "sinPrivilegios"){
-						$("#modalAddAtributoC4").modal();
-					}
-					else if(json.message == "sinSesion"){
-						window.location.href="hello.do";
-					}
-					else if(json.message == "errorDB"){
-						$("#modalAddAtributoC5").modal();
-					}
-					else{
-						$("#modalAddAtributoC2").modal();
-					}
-			 });
+	 tipoRel = $(this).data('tiporelacion');
+	 $("#instHR" + tipoRel).val(inst);
+	 $("#tipoHR" + tipoRel).val(tipo);
+	 $("#idInstanciaModificar" + tipoRel).val(idInstanciaModificar);
+	 $("#modalRelacion" + tipoRel).modal();
+	 
  }
 
 var handBotRem = function botonRemComplexAttr(){
@@ -328,11 +307,13 @@ var handBotRem = function botonRemComplexAttr(){
 	 tipo = $(this).data('tipo');
 	 pagina3 = $(this).data('pag');
 	 name = $(this).data('name');
+	 tipoRel = $(this).data('tiporelacion');
 	 $.post("remComplexAttribute.do",
 		 {
 	 		idInstPadre : idInstanciaModificar,
 	 		idTipoAttr : tipo,
-	 		idInstHijo : inst
+	 		idInstHijo : inst,
+	 		tipoRel : tipoRel
 		 },
 		 function(data){
 			 var json = JSON.parse(data);
@@ -427,11 +408,13 @@ function postCarga2(){
 	
 	$(".textoNoValidaOBA").click(function(){
 		$("#modalTextoNoValidacionOB").html($(this).data('textval'));
+		$("#idObjetoTxtVal").val($(this).data('idtextval'));
 		$("#modalMuestraTextoNoOB").modal();
 	});
 	
 	$(".textoValidaOBA").click(function(){
 		$("#modalTextoValidacionOB").html($(this).data('textval'));
+		$("#idObjetoTxtVal").val($(this).data('idtextval'));
 		$("#modalMuestraTextoOB").modal();
 	});
 	
@@ -455,6 +438,8 @@ function postCarga2(){
 function postCarga3(){
 	$(".saveNewNameP").hide();
 	$(".cancelNewNameP").hide();
+	$("#marcarleidotextoval").hide();
+	$("#marcaleido").attr("checked",false);
 	
 	$(".deleteObjetoP").click(function(){
 		deleteObjeto = $(this).data('val');
@@ -1007,6 +992,64 @@ $(document).ready(function(){
 				$("#modalBorraObjeto2").modal();
 			}
 		})
+	});
+	
+	$(".buttonmodalasignacionrelacion").click(function(){
+		
+		tipoR = $(this).data("tiporel");
+		idInstMod = $("#idInstanciaModificar" + tipoR).val();
+		tipo = $("#tipoHR" + tipoR).val();
+		inst = $("#instHR" + tipoR).val();
+		selRel = $("#selectRelacion" + tipoR).val();
+		$.post("addComplexAttribute.do",
+				 {
+			 		idInstPadre : idInstMod,
+			 		idTipoAttr : tipo,
+			 		idInstHijo : inst,
+			 		selRel : selRel
+				 },
+				 function(data){
+					 var json = JSON.parse(data);
+						if(json.message == "añadido"){
+							$("#modalAddAtributoC1").modal();
+							cargaAtributosComplejosPorPagina(json.pag,1);
+						}
+						else if(json.message == "noType"){
+							$("#modalAddAtributoC3").modal();
+						}
+						else if(json.message == "sinPrivilegios"){
+							$("#modalAddAtributoC4").modal();
+						}
+						else if(json.message == "sinSesion"){
+							window.location.href="hello.do";
+						}
+						else if(json.message == "errorDB"){
+							$("#modalAddAtributoC5").modal();
+						}
+						else{
+							$("#modalAddAtributoC2").modal();
+						}
+				 });
+	});
+	
+	$("#botonmarcaleido").click(function(){
+		if($("#marcaleido").is(':checked')){
+			$.post("setObjectTextReaded.do",{
+				idObjeto : $("#idObjetoTxtVal").val()
+			},
+			function(data){
+				var json = JSON.parse(data);
+				if(json.message == "ok"){
+					cargaListaAlumno();
+				}
+				else if(json.message == "noType"){
+					$("#marcaTextoLeido1").modal();
+				}
+				else if(json.message == "errorDB"){
+					$("#marcaTextoLeido2").modal();
+				}
+			});
+		}
 	});
 	
 });

@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
+import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.utils.Constants;
+import com.cvilla.medievalia.utils.ListaRelaciones;
 
 @Controller
 public class ObjectController {
@@ -60,6 +62,10 @@ public class ObjectController {
 					}
 					model = new ModelAndView("2-2.listaObjetos");
 					model.addObject("tipo", tipoNuevo);
+					List<TipoAtributoComplejoDOM> ac = objectManager.getTiposAtributosCompleos(tipoNuevo);
+					List<ListaRelaciones> listaBiblio = objectManager.getRelaciones(ac);
+					model.addObject("listasRelacion", listaBiblio);
+					
 					logManager.log(user.getId(), actionInt, "Pantalla de gestión de " + tipoNuevo.getNombreDOM(), Constants.P_OK);
 					model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
 					List<String> scripts = new ArrayList<String>();

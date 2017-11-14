@@ -235,14 +235,17 @@ public class GroupManager implements IGroupManager {
 		List<Teachers> listaTeach = getListByTeacher(user, user);
 		boolean enc = false;
 		int i = 0;
-		
-		while(!enc && i < listaDir.size()){
-			enc = listaDir.get(i++).getIdGrupo() == idGrupo;
+		if(listaDir != null){
+			while(!enc && i < listaDir.size()){
+				enc = listaDir.get(i++).getIdGrupo() == idGrupo;
+			}
 		}
 		
 		i = 0;
-		while(!enc && i < listaTeach.size()){
-			enc = listaTeach.get(i++).getIdGroup() == idGrupo;
+		if(listaTeach != null){
+			while(!enc && i < listaTeach.size()){
+				enc = listaTeach.get(i++).getIdGroup() == idGrupo;
+			}
 		}
 		return enc;
 	}

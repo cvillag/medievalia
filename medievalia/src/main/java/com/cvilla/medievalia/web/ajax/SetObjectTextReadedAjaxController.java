@@ -23,10 +23,9 @@ import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller
-public class AddComplexAttributeAjaxController {
+public class SetObjectTextReadedAjaxController {
 	
-	private int actionInt = Constants.P_MODIFY_OBJECT_INSTANCE;
-	private int actionInt2 = Constants.P_VALIDATE_COMPLEX_ATTRIBUTE;
+	private int actionInt = Constants.P_SET_OBJECT_TEXT_READED;
 	
 	@Autowired
 	private IAutorizationManager authManager;
@@ -43,7 +42,7 @@ public class AddComplexAttributeAjaxController {
 	@Autowired
 	private IObjectManager objectManager;
 	
-	@RequestMapping(value = "addComplexAttribute.do")
+	@RequestMapping(value = "setObjectTextReaded.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView model = new ModelAndView("ajax/empty");
@@ -56,36 +55,22 @@ public class AddComplexAttributeAjaxController {
 		if(authManager.isAutorized(actionInt, user)){
 			if((errorParam(request) && tipo == null) || groupA == null){
 				j.put("message","noType");
-				logManager.log(user.getId(), actionInt, "Fallo en creación de instancia de objeto. Parámetros o sesión incorrectos.", Constants.P_NOK);
+				logManager.log(user.getId(), actionInt, "Fallo en marcado de comentario de objeto como leído. Parámetros o sesión incorrectos.", Constants.P_NOK);
 			}
 			else{
-				int idInstPadre = (new Integer(request.getParameter("idInstPadre"))).intValue();
-				int idTipoAttr = (new Integer(request.getParameter("idTipoAttr"))).intValue();
-				int idInstHijo = (new Integer(request.getParameter("idInstHijo"))).intValue();
-				int selRel = (new Integer(request.getParameter("selRel"))).intValue();
-				int val;
-				if(authManager.isAutorized(actionInt2, user)){
-					val = Constants.OBJETO_VALIDADO;
-				}
-				else{
-					val = Constants.OBJETO_NO_VALIDADO;
-				}
-				String message = objectManager.addObjetoDOMAttributeByType(idInstPadre, idInstHijo, tipo, idTipoAttr, val, user, groupA,selRel);
+				int idObjeto = (new Integer(request.getParameter("idObjeto"))).intValue();
+				String message = objectManager.setObjectTextReaded(idObjeto,user,tipo,groupA);
 				j.put("message", message);
-				j.put("pag", idTipoAttr);
 			}
 			model.addObject("json", j);
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Creación de objeto no permitida ");
+			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Marcado de comentario de objeto como leído no permitido.");
 		}
 		return model;
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idInstPadre") == null &&
-				request.getParameter("idTipoAttr") == null &&
-				request.getParameter("idInstHijo") == null &&
-				request.getParameter("selRel") == null;
+		return request.getParameter("idObjeto") == null;
 	}
 }

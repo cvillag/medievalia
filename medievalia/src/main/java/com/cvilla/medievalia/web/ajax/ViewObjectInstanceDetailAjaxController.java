@@ -23,6 +23,7 @@ import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
 import com.cvilla.medievalia.utils.ListaAtributoSimple;
+import com.cvilla.medievalia.utils.ListaRelaciones;
 
 @Controller 
 public class ViewObjectInstanceDetailAjaxController {
@@ -98,6 +99,7 @@ public class ViewObjectInstanceDetailAjaxController {
 				else{
 					return Constants.paramError(logManager, actionId, user.getId());
 				}
+				
 				model.addObject("simplesDisponibles",atrob);
 				model.addObject("users",loginManager.listar());
 				model.addObject("badges",badges);

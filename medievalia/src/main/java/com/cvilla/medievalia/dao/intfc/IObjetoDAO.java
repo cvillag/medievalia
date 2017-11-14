@@ -37,4 +37,5 @@ public interface IObjetoDAO {
 	public String commentObjectInstance(InstanciaObjetoDOM obj, String text);
 	public List<InstanciaObjetoDOM> getStudentObjetoDOMList(TipoObjetoDOM tipo, Group groupA, User user);
 	public boolean atributoSimpleObjetoExists(int idAtributo, int tipoDOM,int subtipo);
+	public String setObjectTextReaded(InstanciaObjetoDOM obj);
 }

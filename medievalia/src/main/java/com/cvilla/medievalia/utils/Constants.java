@@ -61,6 +61,8 @@ public class Constants {
 	public static final int P_MODIFY_OBJECT_INSTANCE_OWN = 48;
 	
 	public static final int P_UNVALIDATED_OBJECT_LIST_BY_GROUP_USER = 49;
+	public static final int P_SET_OBJECT_TEXT_READED = 50;
+	public static final int P_SET_COMPLEX_ATTRIBUTE_TEXT_READED = 51;
 	
 	//TODO: Permisos a eliminar tras la refactorización
 //	public static final int P_TOPIC_LIST = 21;

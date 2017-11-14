@@ -23,6 +23,7 @@ import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
 import com.cvilla.medievalia.utils.ListaAtributoSimple;
+import com.cvilla.medievalia.utils.ListaRelaciones;
 
 public class ObjectManager implements IObjectManager {
 
@@ -230,7 +231,7 @@ public class ObjectManager implements IObjectManager {
 		return null;
 	}
 
-	public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA) {
+	public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA, int selRel) {
 		String message = "";
 		InstanciaObjetoDOM op = objetoDAO.getObjectInstance(tipoP, padre);
 		TipoAtributoComplejoDOM tac  = null;
@@ -248,6 +249,13 @@ public class ObjectManager implements IObjectManager {
 			if(enc)
 				tac = tacl.get(i);
 			i++;
+		}
+		InstanciaObjetoDOM docrel = objetoDAO.getObjectInstance(objetoDAO.getObjectType(tac.getIdTipoRelacion()), selRel);
+		if(docrel == null){
+			docrel = objetoDAO.getObjectInstanceNotVal(objetoDAO.getObjectType(tac.getIdTipoRelacion()), selRel);
+		}
+		if(docrel == null){
+			return "noType";
 		}
 		if(!enc){
 			message = "noType";
@@ -268,6 +276,8 @@ public class ObjectManager implements IObjectManager {
 				ao.setTipoHijo(tipoHijo);
 				ao.setTipoPadre(tipoP);
 				ao.setValidado(val);
+				ao.setIdTipoObjetoRelacion(tac.getIdTipoRelacion());
+				ao.setInstanciaObjetoRelacion(docrel);
 				if(val == Constants.OBJETO_VALIDADO){
 					ao.setTextoValidacion(Constants.TEXTO_VALIDACION_PROFESOR);
 				}
@@ -526,5 +536,35 @@ public class ObjectManager implements IObjectManager {
 			}
 		}
 		return lista;
+	}
+
+	public List<ListaRelaciones> getRelaciones(List<TipoAtributoComplejoDOM> ac) {
+		List<ListaRelaciones> lista = new ArrayList<ListaRelaciones>();
+		if(ac != null){
+			for(TipoAtributoComplejoDOM ta : ac){
+				ListaRelaciones lr = new ListaRelaciones();
+				lr.setAc(ta);
+				TipoObjetoDOM t = getTipoObjetoDOM(ta.getIdTipoRelacion());
+				lr.setLi(getObjetoDOMListByType(t));
+				lista.add(lr);
+			}
+			return lista;
+		}
+		else{
+			return null;
+		}
+	}
+
+	public String setObjectTextReaded(int idInstancia, User user, TipoObjetoDOM tipo, Group groupA) {
+		InstanciaObjetoDOM obj = getObjetoDOM(tipo, idInstancia);
+		if(obj == null){
+			obj = getObjetoDOMUnvalidated(tipo, idInstancia, groupA, user);
+		}
+		if(obj == null || obj.getCreador().getId() != user.getId()){
+			return "noType";
+		}
+		else{
+			return objetoDAO.setObjectTextReaded(obj);
+		}
 	}
 }

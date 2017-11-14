@@ -26,7 +26,7 @@ if (objetos != null && objetos.size() > 0){
 				</td>
 				<td>
 					<%if(c.isValidado()){ %>
-					<span id="validado<%=c.getIdInstancia() %>" class="label label-success  <%=c.getTextoValidacion().length()>0?"textoValidaOBA":""%>" data-textval="<%=c.getTextoValidacion()%>"><fmt:message key="general.validado"></fmt:message>
+					<span id="validado<%=c.getIdInstancia() %>" class="label label-success  <%=c.getTextoValidacion().length()>0?"textoValidaOBA":""%>" data-textval="<%=c.getTextoValidacion()%>" data-idtextval="<%=c.getIdInstancia()%>"><fmt:message key="general.validado"></fmt:message>
 					<%if(!c.isTextoLeido()){ %>
 					<span class="label label-info">1</span>
 					<%} %>
@@ -35,7 +35,7 @@ if (objetos != null && objetos.size() > 0){
 					else{
  						if(c.getValidado() == Constants.OBJETO_NO_VALIDADO){ %>
 					
-							<span id="validado<%=c.getIdInstancia() %>" class="label label-warning <%=c.getTextoValidacion().length()>0?"textoNoValidaOBA":""%>" data-textval="<%=c.getTextoValidacion()%>"><fmt:message key="general.novalidado"></fmt:message>
+							<span id="validado<%=c.getIdInstancia() %>" class="label label-warning <%=c.getTextoValidacion().length()>0?"textoNoValidaOBA":""%>" data-textval="<%=c.getTextoValidacion()%>" data-idtextval="<%=c.getIdInstancia()%>"><fmt:message key="general.novalidado"></fmt:message>
 							<%if(!c.isTextoLeido()){ %>
 							<span class="label label-info">1</span>
 							<%} %>

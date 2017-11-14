@@ -14,6 +14,7 @@ import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.utils.ListaAtributoSimple;
+import com.cvilla.medievalia.utils.ListaRelaciones;
 
 @Component
 public interface IObjectManager extends Serializable{
@@ -65,7 +66,7 @@ public interface IObjectManager extends Serializable{
 	//Ver lista de objetosDOM-atributo de un objetoDOM concreto, ACCION 1
 	/**/public List<InstanciaObjetoDOM> getObjetoDOMAtributeByType(TipoObjetoDOM tipoPadre, TipoObjetoDOM tipoHijo);
 	//Añadir objetoDOM-atributo de un objetoDOM concreto, ACCION 8
-	/**/public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA);
+	/**/public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA, int selRel);
 	//Eliminar objetoDOM-atributo de un objetoDOM concreto, ACCION 8
 	/**/public String deleteObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA);
 	
@@ -85,5 +86,9 @@ public interface IObjectManager extends Serializable{
 	public List<InstanciaObjetoDOM> fillUsers(List<InstanciaObjetoDOM> l);
 	public Map<Integer, Integer> getBadgesFromObject(InstanciaObjetoDOM obj);
 	public List<ListaAtributoSimple> getListaDisponibleAtributoSimpleObjeto(InstanciaObjetoDOM obj);
+	
+	//Desde la lista de atributos complejos adquiere la lista de instancias de relación para cada atributo complejo
+	public List<ListaRelaciones> getRelaciones(List<TipoAtributoComplejoDOM> ac);
+	public String setObjectTextReaded(int idInstancia, User user, TipoObjetoDOM tipo, Group groupA);
 	
 }
