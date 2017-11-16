@@ -38,4 +38,5 @@ public interface IObjetoDAO {
 	public List<InstanciaObjetoDOM> getStudentObjetoDOMList(TipoObjetoDOM tipo, Group groupA, User user);
 	public boolean atributoSimpleObjetoExists(int idAtributo, int tipoDOM,int subtipo);
 	public String setObjectTextReaded(InstanciaObjetoDOM obj);
+	public int getRelacionForComplexAttribute(InstanciaObjetoDOM obj, int pag);
 }

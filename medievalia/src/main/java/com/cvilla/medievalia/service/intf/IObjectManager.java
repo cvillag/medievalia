@@ -90,5 +90,6 @@ public interface IObjectManager extends Serializable{
 	//Desde la lista de atributos complejos adquiere la lista de instancias de relación para cada atributo complejo
 	public List<ListaRelaciones> getRelaciones(List<TipoAtributoComplejoDOM> ac);
 	public String setObjectTextReaded(int idInstancia, User user, TipoObjetoDOM tipo, Group groupA);
+	public int getTypeRelacionForComplexAttribute(InstanciaObjetoDOM obj,int pag);
 	
 }

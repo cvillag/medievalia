@@ -91,7 +91,7 @@ public class DeleteObjectAjaxController {
 			model.addObject("json", j);
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Modificación de objeto no permitida ");
+			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Borrado de objeto no permitido ");
 		}
 		return model;
 	}

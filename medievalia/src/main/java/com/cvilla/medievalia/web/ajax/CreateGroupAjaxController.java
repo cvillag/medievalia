@@ -46,6 +46,7 @@ public class CreateGroupAjaxController {
 		if(authManager.isAutorized(Constants.P_CREATE_GROUP, user)){
 			if(errorParam(request)){
 				model = Constants.paramError(logManager,user.getId(),Constants.P_CREATE_GROUP);
+				logManager.log(user.getId(), Constants.P_CREATE_GROUP, "Fallo en creación de grupo. Parámetros incorrectos.", Constants.P_NOK);
 				return model;
 			}
 			else{

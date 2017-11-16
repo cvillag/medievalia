@@ -56,7 +56,7 @@ public class AddComplexAttributeAjaxController {
 		if(authManager.isAutorized(actionInt, user)){
 			if((errorParam(request) && tipo == null) || groupA == null){
 				j.put("message","noType");
-				logManager.log(user.getId(), actionInt, "Fallo en creación de instancia de objeto. Parámetros o sesión incorrectos.", Constants.P_NOK);
+				logManager.log(user.getId(), actionInt, "Fallo al añadir atributo complejo a instancia de objeto. Parámetros o sesión incorrectos.", Constants.P_NOK);
 			}
 			else{
 				int idInstPadre = (new Integer(request.getParameter("idInstPadre"))).intValue();
@@ -71,13 +71,14 @@ public class AddComplexAttributeAjaxController {
 					val = Constants.OBJETO_NO_VALIDADO;
 				}
 				String message = objectManager.addObjetoDOMAttributeByType(idInstPadre, idInstHijo, tipo, idTipoAttr, val, user, groupA,selRel);
+				logManager.log(user.getId(), actionInt, "Adición de atributo complejo de instancia padre" + idInstPadre + " idObjeto " + tipo.getNombreDOM(), Constants.P_OK);
 				j.put("message", message);
 				j.put("pag", idTipoAttr);
 			}
 			model.addObject("json", j);
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Creación de objeto no permitida ");
+			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Adición de atributo complejo no permitida ");
 		}
 		return model;
 	}

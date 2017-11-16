@@ -18,6 +18,9 @@ List<TipoAtributoComplejoDOM> listaTipos = (List<TipoAtributoComplejoDOM>) reque
 List<InstanciaAtributoComplejoDOM> disp = (List<InstanciaAtributoComplejoDOM>) request.getAttribute("disponibles");
 @SuppressWarnings("unchecked")
 List<ListaAtributoSimple> atributosSimplesObjeto = (List<ListaAtributoSimple>) request.getAttribute("simplesDisponibles");
+String editSimple = (String) request.getAttribute("editSimple");
+boolean editS = editSimple != null;
+
 if(objeto != null){
 	List<InstanciaAtributoComplejoDOM> acl = objeto.getAtributosComplejos();
 	%>
@@ -52,15 +55,15 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-3 form-group">
 							<label for="dia"><fmt:message key="p2.2.detalle.dia"></fmt:message></label>
-							<input type="number" name="dia<%=as.getIdAtributo() %>" value="<%=as.getValor()!=null?((SpecialDate)as.getValor()).getDia():""%>" size="2" min="1" max="31" class="inputDays form-control atrSim">
+							<input type="number" name="dia<%=as.getIdAtributo() %>" <%=editS?"":"disabled" %> value="<%=as.getValor()!=null?((SpecialDate)as.getValor()).getDia():""%>" size="2" min="1" max="31" class="inputDays form-control atrSim">
 						</div>
 						<div class="col-xs-3 form-group">
 							<label for="mes"><fmt:message key="p2.2.detalle.mes"></fmt:message></label>
-							<input type="number" name="mes<%=as.getIdAtributo() %>" value="<%=as.getValor()!=null?((SpecialDate) as.getValor()).getMes():""%>" size="2" min="1" max="12" class="inputMonths form-control atrSim">
+							<input type="number" name="mes<%=as.getIdAtributo() %>" <%=editS?"":"disabled" %> value="<%=as.getValor()!=null?((SpecialDate) as.getValor()).getMes():""%>" size="2" min="1" max="12" class="inputMonths form-control atrSim">
 						</div>
 						<div class="col-xs-3 form-group">
 							<label for="anio"><fmt:message key="p2.2.detalle.anio"></fmt:message></label>
-							<input type="number" name="anio<%=as.getIdAtributo() %>" value="<%=as.getValor()!=null?((SpecialDate) as.getValor()).getAnio():""%>"  size="2" class="inputYears form-control atrSim"	>
+							<input type="number" name="anio<%=as.getIdAtributo() %>" <%=editS?"":"disabled" %> value="<%=as.getValor()!=null?((SpecialDate) as.getValor()).getAnio():""%>"  size="2" class="inputYears form-control atrSim"	>
 						</div>
 					</div>
 					<%
@@ -75,7 +78,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="double"><%=as.getNombreTipoAtributo() %></label>
-							<input type="number" name="double<%=as.getIdAtributo() %>" value="<%=d %>" class="form-control atrSim">
+							<input type="number" name="double<%=as.getIdAtributo() %>" <%=editS?"":"disabled" %> value="<%=d %>" class="form-control atrSim">
 						</div>
 					</div>
 					<%
@@ -90,7 +93,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="int"><%=as.getNombreTipoAtributo() %></label>
-							<input type="number" name="int<%=as.getIdAtributo() %>" value="<%if(!nulo){%><%=i%><%} %>" class="form-control atrSim">
+							<input type="number" name="int<%=as.getIdAtributo() %>" <%=editS?"":"disabled" %> value="<%if(!nulo){%><%=i%><%} %>" class="form-control atrSim">
 						</div>
 					</div>
 					<%
@@ -101,7 +104,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="st"><%=as.getNombreTipoAtributo() %></label>
-							<input type="text" name="string<%=as.getIdAtributo() %>" value="<%=s!=null?s:""%>" class="form-control atrSim">
+							<input type="text" name="string<%=as.getIdAtributo() %>" <%=editS?"":"disabled" %> value="<%=s!=null?s:""%>" class="form-control atrSim">
 						</div>
 					</div>
 					<%
@@ -112,7 +115,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="st"><%=as.getNombreTipoAtributo() %></label>
-							<textarea name="text<%=as.getIdAtributo() %>" class="form-control atrSim"><%=s!=null?s:""%></textarea>
+							<textarea name="text<%=as.getIdAtributo() %>" <%=editS?"":"disabled" %> class="form-control atrSim"><%=s!=null?s:""%></textarea>
 						</div>
 					</div>
 					<%
@@ -132,7 +135,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="st"><%=as.getNombreTipoAtributo() %></label>
-							<select class="form-control atrSim" name="object<%=as.getIdAtributo()%>">
+							<select class="form-control atrSim" name="object<%=as.getIdAtributo()%>" <%=editS?"":"disabled" %>>
 								<option value="0"></option>
 								<%
 								InstanciaObjetoDOM seleccionado = (InstanciaObjetoDOM) as.getValor();

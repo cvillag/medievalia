@@ -37,6 +37,7 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 	@Autowired
 	private IObjectManager objectManager;
 	
+	
 	@RequestMapping(value = "objectDetailComplexAttributes.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -64,12 +65,16 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 					j.put("disponibles", ac2);
 				}
 				else{
-					return Constants.paramError(logManager, actionId, user.getId());
+					return Constants.noPrivilegesJ(user, logManager, actionId, "El objeto seleccionado no existe");
 				}
 				List<InstanciaAtributoComplejoDOM> actual = objectManager.getAtributosCPorTipo(obj,pag);
+				int idRelacion = objectManager.getTypeRelacionForComplexAttribute(obj,pag);
+				
+				
 				j.put("actual", actual);
 				j.put("modo",modo);
 				j.put("pag",pag);
+				j.put("relacion", idRelacion);
 			}
 			else{
 				return Constants.noPrivilegesJ(user, logManager, actionId, "Visualización de detalle de objeto");

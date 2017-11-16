@@ -108,6 +108,7 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String EXIST_SIMPLE_ATRIBUTE_OBJECT_INSTANCE = "SELECT count(*) FROM `InstanciaAtributoObjeto` WHERE `idObjeto` = ? and `idInstancia` = ? and `idAtributoSencillo` = ? and `idObjetoHijo` = ?";
 	private static final String UPDATE_SIMPLE_ATRIBUTE_OBJECT = "UPDATE `InstanciaAtributoObjeto` SET `idInstanciaHijo`= ? WHERE `idObjeto`= ? and `idInstancia`= ? and `idAtributoSencillo`= ?  and `idObjetoHijo`= ?";
 	private static final String CHECK_COMMENT_OBJECT = "UPDATE `InstanciaObjeto` SET `textoLeido`=? WHERE `idInstancia`=? and `idObjeto`=?";
+	private static final String GET_TYPE_RELACION_FOR_CA = "SELECT `idObjetoRelacion` FROM `AtributoComplejoObjeto` WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ?";
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -577,6 +578,16 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 		catch(Exception e){
 			return "errorBD";
+		}
+	}
+
+	public int getRelacionForComplexAttribute(InstanciaObjetoDOM obj, int pag) {
+		try{
+			int i = jdbcTemplate.queryForInt(GET_TYPE_RELACION_FOR_CA,new Object[]{obj.getTipo().getTipoDOM(),pag});
+			return i;
+		}
+		catch(Exception e){
+			return 0;
 		}
 	}
 }

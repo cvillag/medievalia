@@ -449,28 +449,17 @@ public class ObjectManager implements IObjectManager {
 	}
 
 	public InstanciaObjetoDOM getObjetoDOMUnvalidated(TipoObjetoDOM tipo, int id, Group g, User u) {
-		if(groupManager.isTeacherOrDirector(u, g.getIdGrupo())){
-			InstanciaObjetoDOM obj = objetoDAO.getObjectInstanceNotVal(tipo, id);
-			if(obj == null){
-				obj = objetoDAO.getObjectInstance(tipo, id);
-			}
-			if(obj != null){
-				obj.setAtributosSencillos(objetoDAO.getAtributosSencillos(tipo,id));
-				obj.setAtributosComplejos(objetoDAO.getAtributosComplejosNoVal(tipo,id));
-				return obj;
-			}
-			else{
-				return null;
-			}
+		InstanciaObjetoDOM obj = objetoDAO.getObjectInstanceNotVal(tipo, id);
+		if(obj == null){
+			obj = objetoDAO.getObjectInstance(tipo, id);
+		}
+		if(obj != null){
+			obj.setAtributosSencillos(objetoDAO.getAtributosSencillos(tipo,id));
+			obj.setAtributosComplejos(objetoDAO.getAtributosComplejosNoVal(tipo,id));
+			return obj;
 		}
 		else{
-			InstanciaObjetoDOM obj = objetoDAO.getObjectInstanceNotVal(tipo, id);
-			if(obj.getCreador().getId() == u.getId()){
-				return obj;
-			}
-			else{
-				return null;
-			}
+			return null;
 		}
 	}
 
@@ -572,5 +561,9 @@ public class ObjectManager implements IObjectManager {
 		else{
 			return objetoDAO.setObjectTextReaded(obj);
 		}
+	}
+
+	public int getTypeRelacionForComplexAttribute(InstanciaObjetoDOM obj,int pag) {
+		return objetoDAO.getRelacionForComplexAttribute(obj,pag);
 	}
 }

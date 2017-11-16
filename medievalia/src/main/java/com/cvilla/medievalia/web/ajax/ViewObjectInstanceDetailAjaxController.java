@@ -18,6 +18,7 @@ import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
@@ -43,6 +44,9 @@ public class ViewObjectInstanceDetailAjaxController {
 	
 	@Autowired
 	private ILoginManager loginManager;
+	
+	@Autowired
+	private IGroupManager groupManager;
 	
 	@RequestMapping(value = "objectDetail.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -99,7 +103,9 @@ public class ViewObjectInstanceDetailAjaxController {
 				else{
 					return Constants.paramError(logManager, actionId, user.getId());
 				}
-				
+				if(groupManager.isTeacherOrDirector(user, groupA.getIdGrupo()) || user.getId() == obj.getCreador().getId()){
+					model.addObject("editSimple", "ok");
+				}
 				model.addObject("simplesDisponibles",atrob);
 				model.addObject("users",loginManager.listar());
 				model.addObject("badges",badges);
