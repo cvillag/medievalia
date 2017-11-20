@@ -16,6 +16,7 @@ public class TipoAtributoComplejoDOMMapper implements RowMapper<TipoAtributoComp
 		t.setIdTipoHijo(rs.getInt("idObjetoHijo"));
 		t.setNombreAtributo(rs.getString("NombreAtributo"));
 		t.setIdTipoRelacion(rs.getInt("idObjetoRelacion"));
+		t.setConFecha(rs.getInt("conFecha"));
 		return t;
 	}
 }

@@ -1,6 +1,7 @@
 package com.cvilla.medievalia.domain;
 
 import com.cvilla.medievalia.utils.Constants;
+import com.cvilla.medievalia.utils.SpecialDate;
 
 public class InstanciaAtributoComplejoDOM {
 	
@@ -15,6 +16,9 @@ public class InstanciaAtributoComplejoDOM {
 	private int textoLeido;
 	private Integer idTipoObjetoRelacion;
 	private InstanciaObjetoDOM instanciaObjetoRelacion;
+	private int conFecha;
+	private SpecialDate fechaInicio;
+	private SpecialDate fechaFin;
 	
 	public InstanciaAtributoComplejoDOM() {
 		super();
@@ -95,5 +99,25 @@ public class InstanciaAtributoComplejoDOM {
 	public void setIdTipoObjetoRelacion(Integer idTipoObjetoRelacion) {
 		this.idTipoObjetoRelacion = idTipoObjetoRelacion;
 	}
-
+	public int getConFecha() {
+		return conFecha;
+	}
+	public void setConFecha(int conFecha) {
+		this.conFecha = conFecha;
+	}
+	public SpecialDate getFechaInicio() {
+		return fechaInicio;
+	}
+	public void setFechaInicio(SpecialDate fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+	public SpecialDate getFechaFin() {
+		return fechaFin;
+	}
+	public void setFechaFin(SpecialDate fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+	public boolean hasDate(){
+		return conFecha == 1;
+	}
 }

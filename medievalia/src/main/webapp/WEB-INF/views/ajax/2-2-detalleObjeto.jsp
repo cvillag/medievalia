@@ -103,7 +103,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="st"><%=as.getNombreTipoAtributo() %></label>
-							<input type="text" <%=disabled?"disabled":"" %> id="string<%=as.getIdAtributo() %>" value="<%=s%>" class="form-control">
+							<input type="text" <%=disabled?"disabled":"" %> id="string<%=as.getIdAtributo() %>" value="<%=s!=null?s:""%>" class="form-control">
 						</div>
 					</div>
 					<%
@@ -114,7 +114,7 @@ if(objeto != null){
 					<div class="row">
 						<div class="col-xs-12 form-group">
 							<label for="st"><%=as.getNombreTipoAtributo() %></label>
-							<textarea <%=disabled?"disabled":"" %> id="text<%=as.getIdAtributo() %>" class="form-control"><%=s%></textarea>
+							<textarea <%=disabled?"disabled":"" %> id="text<%=as.getIdAtributo() %>" class="form-control"><%=s!=null?s:""%></textarea>
 						</div>
 					</div>
 					<%
@@ -155,17 +155,41 @@ if(objeto != null){
 		<ul class="list-group">
 		<%	for(InstanciaAtributoComplejoDOM ac : acl){
 				if(ac.getTipoHijo().getTipoDOM() == act.getIdTipoHijo()){
-			%>
+					int cols;
+					if(ac.getConFecha() == 1){
+						cols = 4;
+					}
+					else{
+						cols = 6;
+					}
+		%>
 			<li class="list-group-item">
 			<div class="row">
-				<div class="col-xs-6">
+				<div class="col-xs-<%=cols%>">
 				<%=ac.getInstanciaHijo().getNombre() %>
 				<%if(!ac.isValidado()){ %>
-				<span class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span>
+					<span class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span>
 				<%} %>
 				</div>
+				<%if(ac.getConFecha() == 1){
+					SpecialDate in = ac.getFechaInicio();
+					SpecialDate fi = ac.getFechaFin();
+				%>
+				<div class="col-xs-<%=cols%>">
+					<%if(in != null){%>
+					<div class="row">
+						<span><fmt:message key="general.from"></fmt:message> <%=in.getDia()%>-<%=in.getMes()%>-<%=in.getAnio()%></span>
+					</div>
+					<%}%>
+					<%if(fi != null){%>
+					<div class="row">
+						<span><fmt:message key="general.to"></fmt:message> <%=fi.getDia()%>-<%=fi.getMes()%>-<%=fi.getAnio()%></span>
+					</div>
+					<%}%>
+				</div>
+				<%} %>
 				<% if(ac.getIdTipoObjetoRelacion() != null && ac.getIdTipoObjetoRelacion() != 0){%>
-				<div class="col-xs-6">
+				<div class="col-xs-<%=cols%>">
 					<span class="pull-right"><%=ac.getInstanciaObjetoRelacion()!=null?ac.getInstanciaObjetoRelacion().getNombre():"" %></span>
 				</div>
 				<%} %>

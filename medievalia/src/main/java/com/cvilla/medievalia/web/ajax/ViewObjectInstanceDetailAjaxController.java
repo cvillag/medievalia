@@ -87,7 +87,8 @@ public class ViewObjectInstanceDetailAjaxController {
 							model = new ModelAndView("ajax/2-2-validaObjetoProfe");
 						}
 						else{
-							return Constants.noPrivilegesA(user, logManager, actionId, "Visualización de detalle de objeto no validado");
+							model = new ModelAndView("ajax/2-2-detalleObjeto");
+//							return Constants.noPrivilegesA(user, logManager, actionId, "Visualización de detalle de objeto no validado");
 						}
 					}
 					logManager.log(user.getId(), actionId, "Visualización de detalle de objeto ", Constants.P_OK);
@@ -96,7 +97,7 @@ public class ViewObjectInstanceDetailAjaxController {
 					model = new ModelAndView("ajax/2-2-modificaObjeto");
 					logManager.log(user.getId(), actionId2, "Visualización de detalle de objeto a modificar ", Constants.P_OK);
 				}
-				else if(modo == 3){
+				else if(modo == 3 && authManager.isAutorized(actionId3, user)){
 					model = new ModelAndView("ajax/2-2-validaObjetoProfe");
 					logManager.log(user.getId(), actionId3, "Visualización de detalle de objeto a validar ", Constants.P_OK);
 				}

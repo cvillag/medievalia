@@ -6,6 +6,7 @@ public class TipoAtributoComplejoDOM {
 	private int idTipoHijo;
 	private String nombreAtributo;
 	private int idTipoRelacion;
+	private int conFecha;
 	public TipoAtributoComplejoDOM() {
 		super();
 	}
@@ -32,5 +33,11 @@ public class TipoAtributoComplejoDOM {
 	}
 	public void setIdTipoRelacion(int idTipoRelacion) {
 		this.idTipoRelacion = idTipoRelacion;
+	}
+	public int getConFecha() {
+		return conFecha;
+	}
+	public void setConFecha(int conFecha) {
+		this.conFecha = conFecha;
 	}
 }

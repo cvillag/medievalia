@@ -21,6 +21,7 @@ import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
+import com.cvilla.medievalia.utils.SpecialDate;
 
 @Controller
 public class AddComplexAttributeAjaxController {
@@ -63,6 +64,13 @@ public class AddComplexAttributeAjaxController {
 				int idTipoAttr = (new Integer(request.getParameter("idTipoAttr"))).intValue();
 				int idInstHijo = (new Integer(request.getParameter("idInstHijo"))).intValue();
 				int selRel = (new Integer(request.getParameter("selRel"))).intValue();
+				int confecha = (new Integer(request.getParameter("confecha"))).intValue();
+				SpecialDate inicio = null;
+				SpecialDate fin = null;
+				if(confecha == 1){
+					inicio = getDate(request,"i");
+					fin = getDate(request,"f");
+				}
 				int val;
 				if(authManager.isAutorized(actionInt2, user)){
 					val = Constants.OBJETO_VALIDADO;
@@ -70,7 +78,7 @@ public class AddComplexAttributeAjaxController {
 				else{
 					val = Constants.OBJETO_NO_VALIDADO;
 				}
-				String message = objectManager.addObjetoDOMAttributeByType(idInstPadre, idInstHijo, tipo, idTipoAttr, val, user, groupA,selRel);
+				String message = objectManager.addObjetoDOMAttributeByType(idInstPadre, idInstHijo, tipo, idTipoAttr, val, user, groupA,selRel,inicio,fin);
 				logManager.log(user.getId(), actionInt, "Adición de atributo complejo de instancia padre" + idInstPadre + " idObjeto " + tipo.getNombreDOM(), Constants.P_OK);
 				j.put("message", message);
 				j.put("pag", idTipoAttr);
@@ -87,6 +95,24 @@ public class AddComplexAttributeAjaxController {
 		return request.getParameter("idInstPadre") == null &&
 				request.getParameter("idTipoAttr") == null &&
 				request.getParameter("idInstHijo") == null &&
-				request.getParameter("selRel") == null;
+				request.getParameter("selRel") == null &&
+				request.getParameter("confecha") == null;
+	}
+	
+	private SpecialDate getDate(HttpServletRequest request, String x){
+		SpecialDate date = new SpecialDate();
+		String d = request.getParameter("dia" + x);
+		if(d != null && Constants.isNumeric(d)){
+			date.setDia(new Integer(d));
+		}
+		String m = request.getParameter("mes" + x);
+		if(m != null && Constants.isNumeric(m)){
+			date.setMes(new Integer(m));
+		}
+		String a = request.getParameter("anio" + x);
+		if(a != null && Constants.isNumeric(a)){
+			date.setAnio(new Integer(a));
+		}
+		return date;
 	}
 }

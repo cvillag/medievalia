@@ -57,7 +57,7 @@ List<InstanciaObjetoDOM> lista = (List<InstanciaObjetoDOM>) request.getAttribute
 					</div>
 				</td>
 			</tr>
-			<tr>
+			<tr class="trObjetoP" data-nom="<%=c.getNombre()%>">
 				<td>
 					<%if(c.getValidado() == Constants.OBJETO_VALIDADO){ %>
 					<span id="validado<%=c.getIdInstancia() %>" class="label label-success  <%=c.getTextoValidacion().length()>0?"textoValidaOB":""%>" data-textVal="<%=c.getTextoValidacion()%>"><fmt:message key="general.validado"></fmt:message>

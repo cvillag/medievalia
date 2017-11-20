@@ -22,8 +22,10 @@ import com.cvilla.medievalia.service.intf.IGroupManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
+import com.cvilla.medievalia.utils.Fechas;
 import com.cvilla.medievalia.utils.ListaAtributoSimple;
 import com.cvilla.medievalia.utils.ListaRelaciones;
+import com.cvilla.medievalia.utils.SpecialDate;
 
 public class ObjectManager implements IObjectManager {
 
@@ -237,7 +239,7 @@ public class ObjectManager implements IObjectManager {
 		return null;
 	}
 
-	public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA, int selRel) {
+	public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA, int selRel, SpecialDate inicio, SpecialDate fin) {
 		String message = "";
 		InstanciaObjetoDOM op = objetoDAO.getObjectInstance(tipoP, padre);
 		TipoAtributoComplejoDOM tac  = null;
@@ -247,6 +249,7 @@ public class ObjectManager implements IObjectManager {
 				return "noType";
 			}
 		}
+		//FIXME: Añadir fecha de relación
 		List<TipoAtributoComplejoDOM> tacl = objetoDAO.getTiposAtributosCompleos(tipoP);
 		boolean enc = false;
 		int i = 0;
@@ -284,6 +287,13 @@ public class ObjectManager implements IObjectManager {
 				ao.setValidado(val);
 				ao.setIdTipoObjetoRelacion(tac.getIdTipoRelacion());
 				ao.setInstanciaObjetoRelacion(docrel);
+				if(objetoDAO.isConFecha(tipoP.getTipoDOM(),tipoH)){
+					if(!Fechas.fechaIncorrecta(inicio) && !Fechas.fechaIncorrecta(fin)){
+						ao.setConFecha(1);
+						ao.setFechaInicio(inicio);
+						ao.setFechaFin(fin);
+					}
+				}
 				if(val == Constants.OBJETO_VALIDADO){
 					ao.setTextoValidacion(Constants.TEXTO_VALIDACION_PROFESOR);
 				}

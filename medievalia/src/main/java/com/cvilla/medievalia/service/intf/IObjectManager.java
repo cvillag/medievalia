@@ -15,6 +15,7 @@ import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.utils.ListaAtributoSimple;
 import com.cvilla.medievalia.utils.ListaRelaciones;
+import com.cvilla.medievalia.utils.SpecialDate;
 
 @Component
 public interface IObjectManager extends Serializable{
@@ -66,7 +67,7 @@ public interface IObjectManager extends Serializable{
 	//Ver lista de objetosDOM-atributo de un objetoDOM concreto, ACCION 1
 	/**/public List<InstanciaObjetoDOM> getObjetoDOMAtributeByType(TipoObjetoDOM tipoPadre, TipoObjetoDOM tipoHijo);
 	//Añadir objetoDOM-atributo de un objetoDOM concreto, ACCION 8
-	/**/public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA, int selRel);
+	/**/public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA, int selRel, SpecialDate inicio, SpecialDate fin);
 	//Eliminar objetoDOM-atributo de un objetoDOM concreto, ACCION 8
 	/**/public String deleteObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA);
 	

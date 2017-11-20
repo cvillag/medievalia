@@ -3,6 +3,10 @@ package com.cvilla.medievalia.utils;
 import java.util.GregorianCalendar;
 
 public class Fechas {
+	
+	public static boolean fechaIncorrecta(SpecialDate d){
+		return fechaIncorrecta(d.getDia(),d.getMes(),d.getAnio());
+	}
 
 	public static boolean fechaIncorrecta(Integer dia, Integer mes, Integer año){
 		if(dia == null || mes == null || año == null){

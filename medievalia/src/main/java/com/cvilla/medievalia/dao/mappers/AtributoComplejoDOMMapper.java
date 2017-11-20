@@ -9,6 +9,8 @@ import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
+import com.cvilla.medievalia.utils.Fechas;
+import com.cvilla.medievalia.utils.SpecialDate;
 
 public class AtributoComplejoDOMMapper implements RowMapper<InstanciaAtributoComplejoDOM>{
 	
@@ -45,6 +47,31 @@ public class AtributoComplejoDOMMapper implements RowMapper<InstanciaAtributoCom
 		irel.setTipo(new TipoObjetoDOM(rs.getInt("idObjetoRelacion"),rs.getString("nombreObjeto")));
 		irel.setNombre(rs.getString("nombreInstancia"));
 		a.setInstanciaObjetoRelacion(irel);
+		
+		a.setConFecha(rs.getInt("conFecha"));
+		if(a.getConFecha() == 1){
+			SpecialDate si = new SpecialDate();
+			si.setDia(rs.getInt("diaI"));
+			si.setMes(rs.getInt("mesI"));
+			si.setAnio(rs.getInt("anioI"));
+			SpecialDate sf = new SpecialDate();
+			sf.setDia(rs.getInt("diaF"));
+			sf.setMes(rs.getInt("mesF"));
+			sf.setAnio(rs.getInt("anioF"));
+			if(Fechas.fechaIncorrecta(si)){
+				a.setFechaInicio(null);
+			}
+			else{
+				a.setFechaInicio(si);
+			}
+			if(Fechas.fechaIncorrecta(sf)){
+				a.setFechaFin(null);
+			}
+			else{
+				a.setFechaFin(sf);
+			}
+		}
+		
 		return a;
 	}
 }

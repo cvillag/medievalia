@@ -39,4 +39,5 @@ public interface IObjetoDAO {
 	public boolean atributoSimpleObjetoExists(int idAtributo, int tipoDOM,int subtipo);
 	public String setObjectTextReaded(InstanciaObjetoDOM obj);
 	public int getRelacionForComplexAttribute(InstanciaObjetoDOM obj, int pag);
+	public boolean isConFecha(int tipoDOM, int tipoH);
 }

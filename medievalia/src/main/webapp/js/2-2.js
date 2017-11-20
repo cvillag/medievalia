@@ -192,9 +192,10 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 			var nom = obj[d].instanciaHijo.nombre;
 			var tipo = obj[d].instanciaHijo.tipo.tipoDOM;
 			var idInst = obj[d].instanciaHijo.idInstancia;
+			var cfecha = obj[d].conFecha;
 			var val = obj[d].validado;
 			if(val == 1){
-				$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'"><span class="glyphicon glyphicon-arrow-right"></span></button> '+nom+'</li>');
+				$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'"><span class="glyphicon glyphicon-arrow-right"></span></button> '+nom+'</li>');
 			}
 			else{
 				$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" class="btn btn-xs btn-warning pendienteVal"><span class="glyphicon glyphicon-ban-circle"></span></button> '+nom+'</li>');
@@ -207,7 +208,7 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 			var tipo = disp[d].instanciaHijo.tipo.tipoDOM;
 			var idInst = disp[d].instanciaHijo.idInstancia;
 			var val = disp[d].validado;
-			$("#listD"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="addAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default addComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'">&nbsp;<span class="glyphicon glyphicon-arrow-left"></span></button> '+nom+'</li>');
+			$("#listD"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="addAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default addComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'">&nbsp;<span class="glyphicon glyphicon-arrow-left"></span></button> '+nom+'</li>');
 		}
 //		if(recarga == 1){
 			postCargaDetalle2();
@@ -294,11 +295,13 @@ var handBotAdd = function botonAddComplesAttr(){
 	 tipo = $(this).data('tipo');
 	 pag = $(this).data('pag');
 	 name = $(this).data('name');
+	 cfecha = $(this).data('cfecha');
 	 tipoRel = $(this).data('tiporelacion');
-	 $("#instHR" + tipoRel).val(inst);
-	 $("#tipoHR" + tipoRel).val(tipo);
-	 $("#idInstanciaModificar" + tipoRel).val(idInstanciaModificar);
-	 $("#modalRelacion" + tipoRel).modal();
+	 $("#instHR" + tipo).val(inst);
+	 $("#tipoHR" + tipo).val(tipo);
+	 $("#idInstanciaModificar" + tipo).val(idInstanciaModificar);
+	 $("#conFecha" + tipo).val(cfecha);
+	 $("#modalRelacion" + tipo).modal();
 	 
  }
 
@@ -459,22 +462,16 @@ function postCarga2(){
 		modDetAct = 0;
 		id = $(this).data("val");
 		name = $(this).data("name");
-		$("#nombreObjetoDetalleProfe").html(name);
-		$("#modalDetalleObjetoProfe").modal();
+		$("#nombreObjetoDetalle").html(name);
+		$("#modalDetalleObjeto").modal();
 		$.post("objectDetail.do",{
 			idInstancia : id,
 			modo : 1,
 			val : 0
 		},
 		function(data){
-			$("#contenidoDetalleProfe").html(data);
+			$("#contenidoDetalle").html(data);
 			validado = $("#objetodetallevalidado").val();
-			if(validado == 1){
-				$("#modalokValidaProfe").prop("disabled", true);
-			}
-			else{
-				$("#modalokValidaProfe").prop("disabled", false);
-			}
 			postCargaDetalle(0);
 			postCargaProfe();
 		});
@@ -1031,9 +1028,14 @@ $(document).ready(function(){
 		function(data){
 			var json = JSON.parse(data);
 			if(json.message == "borrado"){
+				cargaListaCompleta();
+				if($("#listaalumno").length > 0){
+					cargaListaAlumno();
+				}
+				if($("#listaProfe").length > 0){
+					cargaListaProfe();
+				}
 				$("#modalBorraObjeto1").modal();
-				$("#objeto" + json.id).remove();
-				$("#objetoProfe" + json.id).remove();
 			}
 			else{
 				$("#modalBorraObjeto2").modal();
@@ -1043,23 +1045,42 @@ $(document).ready(function(){
 	
 	$(".buttonmodalasignacionrelacion").click(function(){
 		
-		tipoR = $(this).data("tiporel");
+		tipoR = $(this).data("tipo");
 		idInstMod = $("#idInstanciaModificar" + tipoR).val();
 		tipo = $("#tipoHR" + tipoR).val();
 		inst = $("#instHR" + tipoR).val();
 		selRel = $("#selectRelacion" + tipoR).val();
+		confecha = $("#conFecha" + tipoR).val();
+		diai = $("#diaI" + tipoR).val();
+		mesi = $("#mesI" + tipoR).val();
+		anioi = $("#anioI" + tipoR).val();
+		diaf = $("#diaF" + tipoR).val();
+		mesf = $("#mesF" + tipoR).val();
+		aniof = $("#anioF" + tipoR).val();
 		$.post("addComplexAttribute.do",
 				 {
 			 		idInstPadre : idInstMod,
 			 		idTipoAttr : tipo,
 			 		idInstHijo : inst,
-			 		selRel : selRel
+			 		selRel : selRel,
+			 		confecha : confecha,
+			 		diai : diai,
+			 		mesi : mesi,
+			 		anioi : anioi,
+			 		diaf : diaf,
+			 		mesf : mesf,
+			 		aniof : aniof
 				 },
 				 function(data){
 					 var json = JSON.parse(data);
 						if(json.message == "añadido"){
 							$("#modalAddAtributoC1").modal();
 							cargaAtributosComplejosPorPagina(json.pag,1);
+						}
+						if(json.message == "añadidoS"){
+							$("#modalAddAtributoC1").modal();
+							cargaAtributosComplejosPorPagina(json.pag,1);
+							cargaListaAlumno();
 						}
 						else if(json.message == "noType"){
 							$("#modalAddAtributoC3").modal();
