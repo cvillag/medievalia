@@ -36,3 +36,8 @@ html, body {
 p{
 	overflow: auto;
 }
+
+.btn-group ul li{
+	cursor: pointer;
+	cursor: hand;
+}

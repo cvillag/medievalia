@@ -249,7 +249,6 @@ public class ObjectManager implements IObjectManager {
 				return "noType";
 			}
 		}
-		//FIXME: Añadir fecha de relación
 		List<TipoAtributoComplejoDOM> tacl = objetoDAO.getTiposAtributosCompleos(tipoP);
 		boolean enc = false;
 		int i = 0;
@@ -493,7 +492,7 @@ public class ObjectManager implements IObjectManager {
 	}
 
 	public String validateAtributoC(int idHijo, int tipoHijo, int idPadre, TipoObjetoDOM tipo, User user, Group groupA, String textV, int val){
-		if(objetoDAO.getObjectInstanceNotVal(tipo, idPadre) != null){
+		if(objetoDAO.getObjectInstanceNotVal(tipo, idPadre) != null || objetoDAO.getObjectInstance(tipo, idPadre) != null){
 			if(groupManager.isTeacherOrDirector(user, groupA.getIdGrupo())){
 				InstanciaAtributoComplejoDOM ac = objetoDAO.getAtributoComplejoNotVal(tipo.getTipoDOM(), idPadre, tipoHijo, idHijo);
 				if(ac != null){
@@ -576,4 +575,91 @@ public class ObjectManager implements IObjectManager {
 	public int getTypeRelacionForComplexAttribute(InstanciaObjetoDOM obj,int pag) {
 		return objetoDAO.getRelacionForComplexAttribute(obj,pag);
 	}
+
+	public InstanciaAtributoComplejoDOM getComplexAttribute(TipoObjetoDOM tipo,	int idTipoHijo, int idInstPadre, int idInstHijo, Group g, User u) {
+		InstanciaObjetoDOM objP = getObjetoDOM(tipo, idInstPadre);
+		if(objP == null){
+			objP = getObjetoDOMUnvalidated(tipo, idInstPadre, g, u);
+		}
+		if(objP != null){
+			TipoObjetoDOM tipoH = getTipoObjetoDOM(idTipoHijo);
+			if(tipoH != null){
+				InstanciaObjetoDOM objH = getObjetoDOM(tipoH, idInstHijo);
+				if(objH != null){
+					return objetoDAO.getAtributoComplejo(tipo.getTipoDOM(), idInstPadre, idTipoHijo, idInstHijo);
+				}
+			}
+		}
+		return null;
+	}
+
+	public String updateObjetoDOMAttributeByType(int idInstPadre, int idInstHijo, TipoObjetoDOM tipo, int idTipoAttr, int val, User user, Group groupA, int selRel, SpecialDate inicio,	SpecialDate fin) {
+		String message = "";
+		InstanciaObjetoDOM op = objetoDAO.getObjectInstance(tipo, idInstPadre);
+		TipoAtributoComplejoDOM tac  = null;
+		if(op == null){
+			op = objetoDAO.getObjectInstanceNotVal(tipo, idInstPadre);
+			if(op == null){
+				return "noType";
+			}
+		}
+		List<TipoAtributoComplejoDOM> tacl = objetoDAO.getTiposAtributosCompleos(tipo);
+		boolean enc = false;
+		int i = 0;
+		while(!enc && i < tacl.size()){
+			enc = tacl.get(i).getIdTipoHijo() == idTipoAttr;
+			if(enc)
+				tac = tacl.get(i);
+			i++;
+		}
+		InstanciaObjetoDOM docrel = objetoDAO.getObjectInstance(objetoDAO.getObjectType(tac.getIdTipoRelacion()), selRel);
+		if(docrel == null){
+			docrel = objetoDAO.getObjectInstanceNotVal(objetoDAO.getObjectType(tac.getIdTipoRelacion()), selRel);
+		}
+		if(docrel == null){
+			return "noType";
+		}
+		if(!enc){
+			message = "noType";
+		}
+		else{
+			TipoObjetoDOM tipoHijo = new TipoObjetoDOM();
+			tipoHijo.setTipoDOM(tac.getIdTipoHijo());
+			InstanciaObjetoDOM oh = objetoDAO.getObjectInstance(tipoHijo, idInstHijo);
+			if(oh == null){
+				message = "noType";
+			}
+			else{
+				InstanciaAtributoComplejoDOM ao = new InstanciaAtributoComplejoDOM();
+				ao.setCreador(user.getId());
+				ao.setIdGrupo(groupA.getIdGrupo());
+				ao.setInstanciaHijo(oh);
+				ao.setNombreAtributo(tac.getNombreAtributo());
+				ao.setTipoHijo(tipoHijo);
+				ao.setTipoPadre(tipo);
+				ao.setValidado(val);
+				ao.setIdTipoObjetoRelacion(tac.getIdTipoRelacion());
+				ao.setInstanciaObjetoRelacion(docrel);
+				if(objetoDAO.isConFecha(tipo.getTipoDOM(),idTipoAttr)){
+					if(!Fechas.fechaIncorrecta(inicio) && !Fechas.fechaIncorrecta(fin)){
+						ao.setConFecha(1);
+						ao.setFechaInicio(inicio);
+						ao.setFechaFin(fin);
+					}
+				}
+				if(val == Constants.OBJETO_VALIDADO){
+					ao.setTextoValidacion(Constants.TEXTO_VALIDACION_PROFESOR);
+				}
+				String ret = objetoDAO.updateComplexAttribute(ao,idInstPadre);
+				if(ret.equals("añadido") && !ao.isValidado()){
+					return "añadidoS";
+				}
+				else{
+					return ret;
+				}
+			}
+		}
+		return message;
+	}
+	// FIXME: Ver si existe el atributo (o dejarlo a error de BD), ver si está validado y permisos relacionados.
 }

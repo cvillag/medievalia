@@ -2,7 +2,26 @@ package com.cvilla.medievalia.utils;
 
 import java.util.GregorianCalendar;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class Fechas {
+	
+	public static SpecialDate getDate(HttpServletRequest request, String x){
+		SpecialDate date = new SpecialDate();
+		String d = request.getParameter("dia" + x);
+		if(d != null && Constants.isNumeric(d)){
+			date.setDia(new Integer(d));
+		}
+		String m = request.getParameter("mes" + x);
+		if(m != null && Constants.isNumeric(m)){
+			date.setMes(new Integer(m));
+		}
+		String a = request.getParameter("anio" + x);
+		if(a != null && Constants.isNumeric(a)){
+			date.setAnio(new Integer(a));
+		}
+		return date;
+	}
 	
 	public static boolean fechaIncorrecta(SpecialDate d){
 		return fechaIncorrecta(d.getDia(),d.getMes(),d.getAnio());

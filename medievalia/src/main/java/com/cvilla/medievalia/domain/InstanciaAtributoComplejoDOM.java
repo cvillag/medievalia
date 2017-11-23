@@ -8,6 +8,7 @@ public class InstanciaAtributoComplejoDOM {
 	private TipoObjetoDOM tipoPadre;
 	private TipoObjetoDOM tipoHijo;
 	private InstanciaObjetoDOM instanciaHijo;
+	private int idInstanciaPadre;
 	private String nombreAtributo;
 	private int validado;
 	private String textoValidacion;
@@ -119,5 +120,11 @@ public class InstanciaAtributoComplejoDOM {
 	}
 	public boolean hasDate(){
 		return conFecha == 1;
+	}
+	public int getIdInstanciaPadre() {
+		return idInstanciaPadre;
+	}
+	public void setIdInstanciaPadre(int idInstanciaPadre) {
+		this.idInstanciaPadre = idInstanciaPadre;
 	}
 }

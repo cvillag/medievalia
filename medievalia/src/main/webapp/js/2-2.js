@@ -192,10 +192,11 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 			var nom = obj[d].instanciaHijo.nombre;
 			var tipo = obj[d].instanciaHijo.tipo.tipoDOM;
 			var idInst = obj[d].instanciaHijo.idInstancia;
+			var idInstP = obj[d].idInstanciaPadre;
 			var cfecha = obj[d].conFecha;
 			var val = obj[d].validado;
 			if(val == 1){
-				$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'"><span class="glyphicon glyphicon-arrow-right"></span></button> '+nom+'</li>');
+				$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+'</li>');
 			}
 			else{
 				$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" class="btn btn-xs btn-warning pendienteVal"><span class="glyphicon glyphicon-ban-circle"></span></button> '+nom+'</li>');
@@ -284,6 +285,54 @@ function postCargaDetalle2(){
 	$(".addComplexAttribute").click(handBotAdd);
 	$(".pendienteVal").unbind("click",handPendienteVal);
 	$(".pendienteVal").click(handPendienteVal);
+	$(".modifyRelation").unbind("click",handModifyRel);
+	$(".modifyRelation").click(handModifyRel)
+}
+
+var handModifyRel = function botonModifyVal(){
+	tipoH = $(this).data("tipo");
+	instH = $(this).data("inst");
+	instP = $(this).data("instp");
+	$.post("getComplexAttribute.do",{
+		tipoh : tipoH,
+		insth : instH,
+		instp : instP
+	},
+	function(data){
+		var json = JSON.parse(data);
+		if(json.message = "ok"){
+			var iac = json.compAt;
+			tipo = json.tipoH;
+			$("#selectRelacionM"+tipo).val(json.idInstRel)
+			if(json.conFecha == 1){
+				if(json.fechaINull != 1){
+					$("#diaIM" + tipo).val(json.diaIM);
+					$("#mesIM" + tipo).val(json.mesIM);
+					$("#anioIM" + tipo).val(json.anioIM);
+				}
+				else{
+					$("#diaIM" + tipo).val("");
+					$("#mesIM" + tipo).val("");
+					$("#anioIM" + tipo).val("");
+				}
+				if(json.fechaFNull != 1){
+					$("#diaFM" + tipo).val(json.diaFM);
+					$("#mesFM" + tipo).val(json.mesFM);
+					$("#anioFM" + tipo).val(json.anioFM);
+				}
+				else{
+					$("#diaFM" + tipo).val("");
+					$("#mesFM" + tipo).val("");
+					$("#anioFM" + tipo).val("");
+				}
+			}
+			$("#conFechaM" + tipo).val(json.conFecha);
+			$("#instHRM" + tipo).val(json.instH);
+			$("#tipoHRM" + tipo).val(json.tipoH);
+			$("#idInstanciaModificarM" + tipo).val(json.instP);	
+			$("#modalModifyRelacion" + tipo).modal();
+		}
+	});
 }
 
 var handPendienteVal = function botonPendienteVal(){
@@ -291,16 +340,25 @@ var handPendienteVal = function botonPendienteVal(){
 }
 
 var handBotAdd = function botonAddComplesAttr(){
-	 inst = $(this).data('inst');
-	 tipo = $(this).data('tipo');
-	 pag = $(this).data('pag');
-	 name = $(this).data('name');
-	 cfecha = $(this).data('cfecha');
-	 tipoRel = $(this).data('tiporelacion');
-	 $("#instHR" + tipo).val(inst);
-	 $("#tipoHR" + tipo).val(tipo);
-	 $("#idInstanciaModificar" + tipo).val(idInstanciaModificar);
-	 $("#conFecha" + tipo).val(cfecha);
+	inst = $(this).data('inst');
+	tipo = $(this).data('tipo');
+	pag = $(this).data('pag');
+	name = $(this).data('name');
+	cfecha = $(this).data('cfecha');
+	tipoRel = $(this).data('tiporelacion');
+	$("#instHR" + tipo).val(inst);
+	$("#tipoHR" + tipo).val(tipo);
+	$("#idInstanciaModificar" + tipo).val(idInstanciaModificar);
+	$("#conFecha" + tipo).val(cfecha);
+	 
+	$("#diaI" + tipo).val("");
+	$("#mesI" + tipo).val("");
+	$("#anioI" + tipo).val("");
+	$("#diaF" + tipo).val("");
+	$("#mesF" + tipo).val("");
+	$("#anioF" + tipo).val("");
+	 
+	 
 	 $("#modalRelacion" + tipo).modal();
 	 
  }
@@ -1077,7 +1135,7 @@ $(document).ready(function(){
 							$("#modalAddAtributoC1").modal();
 							cargaAtributosComplejosPorPagina(json.pag,1);
 						}
-						if(json.message == "añadidoS"){
+						else if(json.message == "añadidoS"){
 							$("#modalAddAtributoC1").modal();
 							cargaAtributosComplejosPorPagina(json.pag,1);
 							cargaListaAlumno();
@@ -1098,6 +1156,40 @@ $(document).ready(function(){
 							$("#modalAddAtributoC2").modal();
 						}
 				 });
+	});
+	
+	$(".buttonmodalmodifyrelacion").click(function(){
+		tiporm = $(this).data("tipo");
+		select = $("#selectRelacionM" + tiporm).val();
+		confecham = $("#conFechaM" + tiporm).val();
+		instanciaHijom = $("#instHRM" +tiporm).val();
+		tipoHijoM = $("#tipoHRM" + tiporm).val();
+		instanciaPadreM = $("#idInstanciaModificarM" + tiporm).val();
+		diaim = $("#diaIM" + tiporm).val();
+		mesim = $("#mesIM" + tiporm).val();
+		anioim = $("#anioIM" + tiporm).val();
+		diafm = $("#diaFM" + tiporm).val();
+		mesfm = $("#mesFM" + tiporm).val();
+		aniofm = $("#anioFM" + tiporm).val();
+		$.post("updateRelation.do",{
+			select : select,
+			confecha : confecham,
+			instanciaH : instanciaHijom,
+			tipoH : tipoHijoM,
+			instanciaP : instanciaPadreM,
+			diai : diaim,
+			mesi : mesim,
+			anioi : anioim,
+			diaf : diafm,
+			mesf : mesfm,
+			aniof : aniofm
+		},
+		function(data){
+			var json = JSON.parse(data);
+			alert(json.message);
+		})
+		
+		
 	});
 	
 	$("#botonmarcaleidonv").click(function(){

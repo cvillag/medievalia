@@ -92,5 +92,8 @@ public interface IObjectManager extends Serializable{
 	public List<ListaRelaciones> getRelaciones(List<TipoAtributoComplejoDOM> ac);
 	public String setObjectTextReaded(int idInstancia, User user, TipoObjetoDOM tipo, Group groupA);
 	public int getTypeRelacionForComplexAttribute(InstanciaObjetoDOM obj,int pag);
+	public InstanciaAtributoComplejoDOM getComplexAttribute(TipoObjetoDOM tipo,int idTipoHijo, int idInstPadre, int idInstHijo, Group groupA, User user);
+	public String updateObjetoDOMAttributeByType(int idInstPadre,int idInstHijo, TipoObjetoDOM tipo, int idTipoAttr, int val,User user, Group groupA, int selRel, SpecialDate inicio,
+			SpecialDate fin);
 	
 }

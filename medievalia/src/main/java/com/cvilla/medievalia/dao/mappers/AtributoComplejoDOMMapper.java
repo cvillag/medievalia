@@ -16,6 +16,7 @@ public class AtributoComplejoDOMMapper implements RowMapper<InstanciaAtributoCom
 	
 	public InstanciaAtributoComplejoDOM mapRow(ResultSet rs, int rowNum) throws SQLException {
 		InstanciaAtributoComplejoDOM a = new InstanciaAtributoComplejoDOM();
+		a.setIdInstanciaPadre(rs.getInt("idInstanciaPadre"));
 		TipoObjetoDOM tipoPadre = new TipoObjetoDOM();
 		tipoPadre.setTipoDOM(rs.getInt("idObjetoPadre"));
 		tipoPadre.setNombreDOM(rs.getString("nombreObjetoPadre"));

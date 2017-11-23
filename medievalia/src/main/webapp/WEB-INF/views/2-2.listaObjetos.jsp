@@ -21,7 +21,7 @@ List<ListaRelaciones> listarel = (List<ListaRelaciones>) request.getAttribute("l
 <div class="container">
 	<div class="row">
 		<h1>
-			<fmt:message key="p2.2.objetos.titulo"></fmt:message>
+			<fmt:message key="p2.2.objetos.titulo"></fmt:message> <%=tipo.getNombreDOM() %>
 		</h1>
 	</div>
 	<div class="row">
@@ -1347,11 +1347,86 @@ if(listarel != null && listarel.size() > 0 ){
 				
 			</div>
 			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.cancelar" ></fmt:message>
+				</button>
 				<button type="button" class="btn btn-sm btn-info buttonmodalasignacionrelacion" data-dismiss="modal" data-tipo="<%=rel.getAc().getIdTipoHijo() %>">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalModifyRelacion<%=rel.getAc().getIdTipoHijo() %>" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal120"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+					<div class="alert alert-info form-group">
+						<fmt:message key="p2-2.modal121"></fmt:message>
+					</div>
+					<label for="selectRelacionM"><fmt:message key="p2-2.modal122"></fmt:message></label>
+					<select id="selectRelacionM<%=rel.getAc().getIdTipoHijo()%>" name="selectRelacionM" class="form-control selectpicker" data-live-search="true">
+						<%
+						List<InstanciaObjetoDOM> li2 = rel.getLi();
+						for(InstanciaObjetoDOM o : li2){
+						%>
+						<option value="<%=o.getIdInstancia()%>" data-tokens="<%=o.getNombre()%>"><%=o.getNombre() %></option>
+						<%} %>
+					</select>
+				<%if(rel.getAc().getConFecha() == 1){ %>
+					<br>
+					<label><fmt:message key="p2-2.modal123"></fmt:message></label>
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="diaIM<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.dia"></fmt:message></label>
+							<input type="number" name="diaIM<%=rel.getAc().getIdTipoHijo() %>" id="diaIM<%=rel.getAc().getIdTipoHijo() %>" size="2" min="1" max="31" class="inputDays form-control">
+						</div>
+						<div class="form-group">
+							<label for="mesIM<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.mes"></fmt:message></label>
+							<input type="number" name="mesIM<%=rel.getAc().getIdTipoHijo() %>" id="mesIM<%=rel.getAc().getIdTipoHijo() %>" size="2" min="1" max="12" class="inputDays form-control">
+						</div>
+						<div class="form-group">
+							<label for="anioIM<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.anio"></fmt:message></label>
+							<input type="number" name="anioIM<%=rel.getAc().getIdTipoHijo() %>" id="anioIM<%=rel.getAc().getIdTipoHijo() %>" size="4" class="inputDays form-control">
+						</div>
+					</form>
+					<br>
+					<label><fmt:message key="p2-2.modal124"></fmt:message></label>
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="diaFM<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.dia"></fmt:message></label>
+							<input type="number" name="diaFM<%=rel.getAc().getIdTipoHijo() %>" id="diaFM<%=rel.getAc().getIdTipoHijo() %>" size="2" min="1" max="31" class="inputDays form-control">
+						</div>
+						<div class="form-group">
+							<label for="mesFM<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.mes"></fmt:message></label>
+							<input type="number" name="mesFM<%=rel.getAc().getIdTipoHijo() %>" id="mesFM<%=rel.getAc().getIdTipoHijo() %>" size="2" min="1" max="12" class="inputDays form-control">
+						</div>
+						<div class="form-group">
+							<label for="anioFM<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.anio"></fmt:message></label>
+							<input type="number" name="anioFM<%=rel.getAc().getIdTipoHijo() %>" id="anioFM<%=rel.getAc().getIdTipoHijo() %>" size="4" class="inputDays form-control">
+						</div>
+					</form>
+				<%} %>
+				<input type="hidden" name="conFechaM" id="conFechaM<%=rel.getAc().getIdTipoHijo()%>">
+				<input type="hidden" name="instM" id="instHRM<%=rel.getAc().getIdTipoHijo()%>">
+				<input type="hidden" name="tipoM" id="tipoHRM<%=rel.getAc().getIdTipoHijo()%>">
+				<input type="hidden" name="pagM" id="pagM<%=rel.getAc().getIdTipoHijo()%>">
+				<input type="hidden" name="nameM" id="nameM<%=rel.getAc().getIdTipoHijo()%>">
+				<input type="hidden" name="idInstanciaModificarM" id="idInstanciaModificarM<%=rel.getAc().getIdTipoHijo()%>">
+				
+			</div>
+			<div class="modal-footer">
 				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
 					<fmt:message key="general.cancelar" ></fmt:message>
+				</button>
+				<button type="button" class="btn btn-sm btn-info buttonmodalmodifyrelacion" data-dismiss="modal" data-tipo="<%=rel.getAc().getIdTipoHijo() %>">
+					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>
 		</div>

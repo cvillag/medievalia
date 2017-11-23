@@ -110,6 +110,7 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String CHECK_COMMENT_OBJECT = "UPDATE `InstanciaObjeto` SET `textoLeido`=? WHERE `idInstancia`=? and `idObjeto`=?";
 	private static final String GET_TYPE_RELACION_FOR_CA = "SELECT `idObjetoRelacion` FROM `AtributoComplejoObjeto` WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ?";
 	private static final String IS_CON_FECHA = "SELECT `conFecha` FROM `AtributoComplejoObjeto` WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ?";
+	private static final String UPDATE_COMPLEX_ATTRIBUTE = "UPDATE `InstanciaAtributoComplejo` SET `idInstanciaRelacion`= ?, `diaI`=?,`mesI`=?,`anioI`=?,`diaF`=?,`mesF`=?,`anioF`=? WHERE `idObjetoPadre`=? and `idObjetoHijo`=? and `idInstanciaPadre`=? and `idInstanciaHijo`=?";
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -295,7 +296,7 @@ public class ObjetoDAO implements IObjetoDAO {
 	
 	public InstanciaAtributoComplejoDOM getAtributoComplejoNotVal(int tipoDOM, int padre,int tipoHijo, int hijo) {
 		try{
-			return jdbcTemplate.queryForObject(GET_COMPLEX_ATTRIBUTE_STUDENT, new Object[]{tipoDOM,padre,tipoHijo,hijo},new AtributoComplejoDOMMapper());
+			return jdbcTemplate.queryForObject(GET_COMPLEX_ATTRIBUTE_STUDENT, new Object[]{tipoDOM,padre,tipoHijo,hijo,Constants.OBJETO_NO_VALIDADO},new AtributoComplejoDOMMapper());
 		}
 		catch(Exception e){
 			return null;
@@ -599,6 +600,33 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 		catch(Exception e){
 			return false;
+		}
+	}
+
+	public String updateComplexAttribute(InstanciaAtributoComplejoDOM ao,int idInstPadre) {
+		try{
+			SpecialDate in = ao.getFechaInicio();
+			SpecialDate fi = ao.getFechaFin();
+			int i = 0;
+			if(in != null && fi != null){
+				i = jdbcTemplate.update(UPDATE_COMPLEX_ATTRIBUTE, new Object[]{ao.getInstanciaObjetoRelacion().getIdInstancia(),in.getDia(),in.getMes(),in.getAnio(),fi.getDia(),fi.getMes(),fi.getAnio(),ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstPadre,ao.getInstanciaHijo().getIdInstancia()});
+			}
+			else if(fi != null){
+				i = jdbcTemplate.update(UPDATE_COMPLEX_ATTRIBUTE, new Object[]{ao.getInstanciaObjetoRelacion().getIdInstancia(),in.getDia(),in.getMes(),in.getAnio(),null,null,null,ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstPadre,ao.getInstanciaHijo().getIdInstancia()});
+			}
+			else if(in != null){
+				i = jdbcTemplate.update(UPDATE_COMPLEX_ATTRIBUTE, new Object[]{ao.getInstanciaObjetoRelacion().getIdInstancia(),null,null,null,fi.getDia(),fi.getMes(),fi.getAnio(),ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstPadre,ao.getInstanciaHijo().getIdInstancia()});
+			}
+			else{
+				i = jdbcTemplate.update(UPDATE_COMPLEX_ATTRIBUTE, new Object[]{ao.getInstanciaObjetoRelacion().getIdInstancia(),null,null,null,null,null,null,ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstPadre,ao.getInstanciaHijo().getIdInstancia()});
+			}
+			if(i == 1)
+				return "actualizado";
+			else
+				return "errorDB";
+		}
+		catch(Exception e){
+			return "errorDB";
 		}
 	}
 }

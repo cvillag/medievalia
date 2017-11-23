@@ -25,7 +25,7 @@ import com.cvilla.medievalia.utils.Fechas;
 import com.cvilla.medievalia.utils.SpecialDate;
 
 @Controller
-public class AddComplexAttributeAjaxController {
+public class UpdateComplexAttributeAjaxController {
 	
 	private int actionInt = Constants.P_MODIFY_OBJECT_INSTANCE;
 	private int actionInt2 = Constants.P_VALIDATE_COMPLEX_ATTRIBUTE;
@@ -45,7 +45,7 @@ public class AddComplexAttributeAjaxController {
 	@Autowired
 	private IObjectManager objectManager;
 	
-	@RequestMapping(value = "addComplexAttribute.do")
+	@RequestMapping(value = "updateRelation.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView model = new ModelAndView("ajax/empty");
@@ -58,13 +58,13 @@ public class AddComplexAttributeAjaxController {
 		if(authManager.isAutorized(actionInt, user)){
 			if((errorParam(request) && tipo == null) || groupA == null){
 				j.put("message","noType");
-				logManager.log(user.getId(), actionInt, "Fallo al añadir atributo complejo a instancia de objeto. Parámetros o sesión incorrectos.", Constants.P_NOK);
+				logManager.log(user.getId(), actionInt, "Fallo al actualizar atributo complejo a instancia de objeto. Parámetros o sesión incorrectos.", Constants.P_NOK);
 			}
 			else{
-				int idInstPadre = (new Integer(request.getParameter("idInstPadre"))).intValue();
-				int idTipoAttr = (new Integer(request.getParameter("idTipoAttr"))).intValue();
-				int idInstHijo = (new Integer(request.getParameter("idInstHijo"))).intValue();
-				int selRel = (new Integer(request.getParameter("selRel"))).intValue();
+				int idInstPadre = (new Integer(request.getParameter("instanciaP"))).intValue();
+				int idTipoAttr = (new Integer(request.getParameter("tipoH"))).intValue();
+				int idInstHijo = (new Integer(request.getParameter("instanciaH"))).intValue();
+				int selRel = (new Integer(request.getParameter("select"))).intValue();
 				int confecha = (new Integer(request.getParameter("confecha"))).intValue();
 				SpecialDate inicio = null;
 				SpecialDate fin = null;
@@ -79,25 +79,25 @@ public class AddComplexAttributeAjaxController {
 				else{
 					val = Constants.OBJETO_NO_VALIDADO;
 				}
-				String message = objectManager.addObjetoDOMAttributeByType(idInstPadre, idInstHijo, tipo, idTipoAttr, val, user, groupA,selRel,inicio,fin);
-				logManager.log(user.getId(), actionInt, "Adición de atributo complejo de instancia padre" + idInstPadre + " idObjeto " + tipo.getNombreDOM(), Constants.P_OK);
+				String message = objectManager.updateObjetoDOMAttributeByType(idInstPadre, idInstHijo, tipo, idTipoAttr, val, user, groupA,selRel,inicio,fin);
+				logManager.log(user.getId(), actionInt, "Actualización de atributo complejo de instancia padre" + idInstPadre + " idObjeto " + tipo.getNombreDOM(), Constants.P_OK);
 				j.put("message", message);
 				j.put("pag", idTipoAttr);
 			}
 			model.addObject("json", j);
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Adición de atributo complejo no permitida ");
+			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Actualización de atributo complejo no permitida ");
 		}
 		return model;
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idInstPadre") == null &&
-				request.getParameter("idTipoAttr") == null &&
-				request.getParameter("idInstHijo") == null &&
-				request.getParameter("selRel") == null &&
-				request.getParameter("confecha") == null;
+		return request.getParameter("select") == null &&
+				request.getParameter("confecha") == null &&
+				request.getParameter("instanciaH") == null &&
+				request.getParameter("tipoH") == null &&
+				request.getParameter("instanciaP") == null;
 	}
 	
 
