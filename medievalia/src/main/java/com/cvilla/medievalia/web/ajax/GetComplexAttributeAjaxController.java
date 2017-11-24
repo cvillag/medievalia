@@ -63,6 +63,9 @@ public class GetComplexAttributeAjaxController {
 				int idTipoHijo = (new Integer(request.getParameter("tipoh"))).intValue();
 				int idInstHijo = (new Integer(request.getParameter("insth"))).intValue();
 				InstanciaAtributoComplejoDOM iac = objectManager.getComplexAttribute(tipo,idTipoHijo,idInstPadre,idInstHijo, groupA,  user);
+				if(iac == null){
+					iac = objectManager.getComplexAttributeNotVal(tipo,idTipoHijo,idInstPadre,idInstHijo, groupA,  user);
+				}
 				if(iac != null){
 					logManager.log(user.getId(), actionInt, "Consulta de atributo complejo de instancia padre" + idInstPadre + " idObjeto " + tipo.getNombreDOM(), Constants.P_OK);
 					j.put("message", "ok");

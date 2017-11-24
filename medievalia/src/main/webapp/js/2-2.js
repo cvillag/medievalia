@@ -199,7 +199,7 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 				$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+'</li>');
 			}
 			else{
-				$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" class="btn btn-xs btn-warning pendienteVal"><span class="glyphicon glyphicon-ban-circle"></span></button> '+nom+'</li>');
+				$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" class="btn btn-xs btn-warning pendienteVal"><span class="glyphicon glyphicon-ban-circle"></span></button><button type="button" class="btn btn-xs btn-default viewRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-eye-open"></span></button> '+nom+'</li>');
 			}
 		}
 		
@@ -287,6 +287,50 @@ function postCargaDetalle2(){
 	$(".pendienteVal").click(handPendienteVal);
 	$(".modifyRelation").unbind("click",handModifyRel);
 	$(".modifyRelation").click(handModifyRel)
+	$(".viewRelation").unbind("click",handViewRel);
+	$(".viewRelation").click(handViewRel);
+}
+
+var handViewRel = function botonViewVal(){
+	tipoH = $(this).data("tipo");
+	instH = $(this).data("inst");
+	instP = $(this).data("instp");
+	$.post("getComplexAttribute.do",{
+		tipoh : tipoH,
+		insth : instH,
+		instp : instP
+	},
+	function(data){
+		var json = JSON.parse(data);
+		if(json.message = "ok"){
+			var iac = json.compAt;
+			tipo = json.tipoH;
+			$("#selectRelacionV"+tipo).val(json.idInstRel)
+			if(json.conFecha == 1){
+				if(json.fechaINull != 1){
+					$("#diaIV" + tipo).val(json.diaIM);
+					$("#mesIV" + tipo).val(json.mesIM);
+					$("#anioIV" + tipo).val(json.anioIM);
+				}
+				else{
+					$("#diaIV" + tipo).val("");
+					$("#mesIV" + tipo).val("");
+					$("#anioIV" + tipo).val("");
+				}
+				if(json.fechaFNull != 1){
+					$("#diaFV" + tipo).val(json.diaFM);
+					$("#mesFV" + tipo).val(json.mesFM);
+					$("#anioFV" + tipo).val(json.anioFM);
+				}
+				else{
+					$("#diaFV" + tipo).val("");
+					$("#mesFV" + tipo).val("");
+					$("#anioFV" + tipo).val("");
+				}
+			}	
+			$("#modalViewRelacion" + tipo).modal();
+		}
+	});
 }
 
 var handModifyRel = function botonModifyVal(){

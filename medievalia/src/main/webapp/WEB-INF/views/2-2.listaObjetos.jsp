@@ -1432,6 +1432,71 @@ if(listarel != null && listarel.size() > 0 ){
 		</div>
 	</div>
 </div>
+
+<div id="modalViewRelacion<%=rel.getAc().getIdTipoHijo() %>" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal120"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+					<div class="alert alert-info form-group">
+						<fmt:message key="p2-2.modal121"></fmt:message>
+					</div>
+					<label for="selectRelacionV"><fmt:message key="p2-2.modal122"></fmt:message></label>
+					<select id="selectRelacionV<%=rel.getAc().getIdTipoHijo()%>" class="form-control selectpicker" data-live-search="true" DISABLED>
+						<%
+						List<InstanciaObjetoDOM> li3 = rel.getLi();
+						for(InstanciaObjetoDOM o : li3){
+						%>
+						<option value="<%=o.getIdInstancia()%>" data-tokens="<%=o.getNombre()%>"><%=o.getNombre() %></option>
+						<%} %>
+					</select>
+				<%if(rel.getAc().getConFecha() == 1){ %>
+					<br>
+					<label><fmt:message key="p2-2.modal123"></fmt:message></label>
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="diaIV<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.dia"></fmt:message></label>
+							<input DISABLED type="number" name="diaIV<%=rel.getAc().getIdTipoHijo() %>" id="diaIV<%=rel.getAc().getIdTipoHijo() %>" size="2" min="1" max="31" class="inputDays form-control">
+						</div>
+						<div class="form-group">
+							<label for="mesIV<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.mes"></fmt:message></label>
+							<input DISABLED type="number" name="mesIV<%=rel.getAc().getIdTipoHijo() %>" id="mesIV<%=rel.getAc().getIdTipoHijo() %>" size="2" min="1" max="12" class="inputDays form-control">
+						</div>
+						<div class="form-group">
+							<label for="anioIV<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.anio"></fmt:message></label>
+							<input DISABLED type="number" name="anioIV<%=rel.getAc().getIdTipoHijo() %>" id="anioIV<%=rel.getAc().getIdTipoHijo() %>" size="4" class="inputDays form-control">
+						</div>
+					</form>
+					<br>
+					<label><fmt:message key="p2-2.modal124"></fmt:message></label>
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="diaFV<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.dia"></fmt:message></label>
+							<input DISABLED type="number" name="diaFV<%=rel.getAc().getIdTipoHijo() %>" id="diaFV<%=rel.getAc().getIdTipoHijo() %>" size="2" min="1" max="31" class="inputDays form-control">
+						</div>
+						<div class="form-group">
+							<label for="mesFV<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.mes"></fmt:message></label>
+							<input DISABLED type="number" name="mesFV<%=rel.getAc().getIdTipoHijo() %>" id="mesFV<%=rel.getAc().getIdTipoHijo() %>" size="2" min="1" max="12" class="inputDays form-control">
+						</div>
+						<div class="form-group">
+							<label for="anioFV<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.anio"></fmt:message></label>
+							<input DISABLED type="number" name="anioFV<%=rel.getAc().getIdTipoHijo() %>" id="anioFV<%=rel.getAc().getIdTipoHijo() %>" size="4" class="inputDays form-control">
+						</div>
+					</form>
+				<%} %>				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
 <%
 		}
 	}

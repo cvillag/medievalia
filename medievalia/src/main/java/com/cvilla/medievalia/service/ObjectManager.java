@@ -592,6 +592,23 @@ public class ObjectManager implements IObjectManager {
 		}
 		return null;
 	}
+	
+	public InstanciaAtributoComplejoDOM getComplexAttributeNotVal(TipoObjetoDOM tipo,	int idTipoHijo, int idInstPadre, int idInstHijo, Group g, User u) {
+		InstanciaObjetoDOM objP = getObjetoDOM(tipo, idInstPadre);
+		if(objP == null){
+			objP = getObjetoDOMUnvalidated(tipo, idInstPadre, g, u);
+		}
+		if(objP != null){
+			TipoObjetoDOM tipoH = getTipoObjetoDOM(idTipoHijo);
+			if(tipoH != null){
+				InstanciaObjetoDOM objH = getObjetoDOM(tipoH, idInstHijo);
+				if(objH != null){
+					return objetoDAO.getAtributoComplejoNotVal(tipo.getTipoDOM(), idInstPadre, idTipoHijo, idInstHijo);
+				}
+			}
+		}
+		return null;
+	}
 
 	public String updateObjetoDOMAttributeByType(int idInstPadre, int idInstHijo, TipoObjetoDOM tipo, int idTipoAttr, int val, User user, Group groupA, int selRel, SpecialDate inicio,	SpecialDate fin) {
 		String message = "";
@@ -626,7 +643,8 @@ public class ObjectManager implements IObjectManager {
 			TipoObjetoDOM tipoHijo = new TipoObjetoDOM();
 			tipoHijo.setTipoDOM(tac.getIdTipoHijo());
 			InstanciaObjetoDOM oh = objetoDAO.getObjectInstance(tipoHijo, idInstHijo);
-			if(oh == null){
+			InstanciaAtributoComplejoDOM ioc = objetoDAO.getAtributoComplejo(tipo.getTipoDOM(), idInstPadre, idTipoAttr, idInstHijo);
+			if(oh == null || ioc == null){
 				message = "noType";
 			}
 			else{
