@@ -171,16 +171,21 @@ public class ObjectManager implements IObjectManager {
 	}
 
 	public String deleteObjetoDOMOwn(InstanciaObjetoDOM obj, User user,	Group groupA) {
-		if(obj.getCreador().getId() == user.getId()){
-			if(obj.getGrupo() == groupA.getIdGrupo()){
-				return objetoDAO.deleteObjetoDOM(obj);
-			}
-			else{
-				return "noGroup";
-			}
+		if(obj.isValidado()){
+			return "alreadyValidated";
 		}
 		else{
-			return "noOwner";
+			if(obj.getCreador().getId() == user.getId()){
+				if(obj.getGrupo() == groupA.getIdGrupo()){
+					return objetoDAO.deleteObjetoDOM(obj);
+				}
+				else{
+					return "noGroup";
+				}
+			}
+			else{
+				return "noOwner";
+			}
 		}
 	}
 
@@ -258,12 +263,15 @@ public class ObjectManager implements IObjectManager {
 				tac = tacl.get(i);
 			i++;
 		}
-		InstanciaObjetoDOM docrel = objetoDAO.getObjectInstance(objetoDAO.getObjectType(tac.getIdTipoRelacion()), selRel);
-		if(docrel == null){
-			docrel = objetoDAO.getObjectInstanceNotVal(objetoDAO.getObjectType(tac.getIdTipoRelacion()), selRel);
-		}
-		if(docrel == null){
-			return "noType";
+		InstanciaObjetoDOM docrel = null;
+		if(objetoDAO.hasRelationObject(tipoP.getTipoDOM(),tipoH)){
+			docrel = objetoDAO.getObjectInstance(objetoDAO.getObjectType(tac.getIdTipoRelacion()), selRel);
+			if(docrel == null){
+				docrel = objetoDAO.getObjectInstanceNotVal(objetoDAO.getObjectType(tac.getIdTipoRelacion()), selRel);
+			}
+			if(docrel == null){
+				return "noType";
+			}
 		}
 		if(!enc){
 			message = "noType";
@@ -309,6 +317,7 @@ public class ObjectManager implements IObjectManager {
 	}
 
 	public String deleteObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA) {
+		// FIXME:  Comprobar si tiene privilegios de borrar un atributo validado. Los alumnos no lo tendrán.
 		String message = "";
 		InstanciaObjetoDOM op = objetoDAO.getObjectInstance(tipoP, padre);
 		TipoAtributoComplejoDOM tac  = null;
@@ -338,7 +347,22 @@ public class ObjectManager implements IObjectManager {
 				message = "noType";
 			}
 			else{
-				InstanciaAtributoComplejoDOM acd = objetoDAO.getAtributoComplejo(tipoP.getTipoDOM(), padre, tipoHijo.getTipoDOM(), hijo);
+				InstanciaAtributoComplejoDOM acd = null;
+				if(authManager.isAutorized(Constants.P_VALIDATE_COMPLEX_ATTRIBUTE, user)){
+					acd = objetoDAO.getAtributoComplejo(tipoP.getTipoDOM(), padre, tipoHijo.getTipoDOM(), hijo);
+					if(acd == null){
+						acd = objetoDAO.getAtributoComplejoNotVal(tipoP.getTipoDOM(), padre, tipoHijo.getTipoDOM(), hijo);
+					}
+				}
+				else{
+					acd = objetoDAO.getAtributoComplejoNotVal(tipoP.getTipoDOM(), padre, tipoHijo.getTipoDOM(), hijo);
+					if(acd == null){
+						return "noType";
+					}
+					if(acd.getCreador() != user.getId()){
+						return "noOwner";
+					}
+				}
 				if(acd == null){
 					return "noType";
 				}
@@ -679,5 +703,8 @@ public class ObjectManager implements IObjectManager {
 		}
 		return message;
 	}
-	// FIXME: Ver si existe el atributo (o dejarlo a error de BD), ver si está validado y permisos relacionados.
+
+	public boolean isConFecha(int tipoDOM, int idTipoAttr) {
+		return objetoDAO.isConFecha(tipoDOM, idTipoAttr);
+	}
 }

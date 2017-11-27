@@ -65,10 +65,9 @@ public class AddComplexAttributeAjaxController {
 				int idTipoAttr = (new Integer(request.getParameter("idTipoAttr"))).intValue();
 				int idInstHijo = (new Integer(request.getParameter("idInstHijo"))).intValue();
 				int selRel = (new Integer(request.getParameter("selRel"))).intValue();
-				int confecha = (new Integer(request.getParameter("confecha"))).intValue();
 				SpecialDate inicio = null;
 				SpecialDate fin = null;
-				if(confecha == 1){
+				if(objectManager.isConFecha(tipo.getTipoDOM(),idTipoAttr)){
 					inicio = Fechas.getDate(request,"i");
 					fin = Fechas.getDate(request,"f");
 				}
@@ -83,6 +82,7 @@ public class AddComplexAttributeAjaxController {
 				logManager.log(user.getId(), actionInt, "Adición de atributo complejo de instancia padre" + idInstPadre + " idObjeto " + tipo.getNombreDOM(), Constants.P_OK);
 				j.put("message", message);
 				j.put("pag", idTipoAttr);
+				j.put("val", val);
 			}
 			model.addObject("json", j);
 		}
@@ -96,8 +96,7 @@ public class AddComplexAttributeAjaxController {
 		return request.getParameter("idInstPadre") == null &&
 				request.getParameter("idTipoAttr") == null &&
 				request.getParameter("idInstHijo") == null &&
-				request.getParameter("selRel") == null &&
-				request.getParameter("confecha") == null;
+				request.getParameter("selRel") == null;
 	}
 	
 

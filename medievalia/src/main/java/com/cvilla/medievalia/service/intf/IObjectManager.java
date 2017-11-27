@@ -95,5 +95,6 @@ public interface IObjectManager extends Serializable{
 	public InstanciaAtributoComplejoDOM getComplexAttribute(TipoObjetoDOM tipo,int idTipoHijo, int idInstPadre, int idInstHijo, Group groupA, User user);
 	public String updateObjetoDOMAttributeByType(int idInstPadre,int idInstHijo, TipoObjetoDOM tipo, int idTipoAttr, int val,User user, Group groupA, int selRel, SpecialDate inicio,SpecialDate fin);
 	public InstanciaAtributoComplejoDOM getComplexAttributeNotVal(TipoObjetoDOM tipo,	int idTipoHijo, int idInstPadre, int idInstHijo, Group g, User u);
+	public boolean isConFecha(int tipoDOM, int idTipoAttr);
 	
 }

@@ -41,4 +41,5 @@ public interface IObjetoDAO {
 	public int getRelacionForComplexAttribute(InstanciaObjetoDOM obj, int pag);
 	public boolean isConFecha(int tipoDOM, int tipoH);
 	public String updateComplexAttribute(InstanciaAtributoComplejoDOM ao,int idInstPadre);
+	public boolean hasRelationObject(int tipoDOM, int tipoH);
 }

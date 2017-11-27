@@ -59,9 +59,9 @@ if (objetos != null && objetos.size() > 0){
 								<li class="activarStudentSNombre" data-val="<%=c.getIdInstancia()%>"><fmt:message key="p2.2.objetos.acciones.cnombre"></fmt:message></li>
 								<%} 
 								if(modify != null){ %>
-								<li class="modifyObjetoS" data-val="<%=c.getIdInstancia()%>" data-name="<%=c.getNombre()%>"><fmt:message key="p2.2.objetos.acciones.modify"></fmt:message></li>
+								<li class="modifyObjetoS" data-val="<%=c.getIdInstancia()%>" data-name="<%=c.getNombre()%>" data-validado="<%=c.isValidado()?"1":"0"%>"><fmt:message key="p2.2.objetos.acciones.modify"></fmt:message></li>
 								<%} 
-								if(delete != null){ %>
+								if(delete != null && user.getId() == c.getCreador().getId() && !c.isValidado()){ %>
 								<li role="separator" class="divider"></li>
 								<li class="deleteObjetoS" data-val="<%=c.getIdInstancia()%>"><fmt:message key="p2.2.objetos.acciones.delete"></fmt:message></li>
 								<%} %>

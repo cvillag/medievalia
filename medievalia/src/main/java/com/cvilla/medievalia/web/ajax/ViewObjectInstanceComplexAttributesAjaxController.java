@@ -75,6 +75,7 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 				j.put("modo",modo);
 				j.put("pag",pag);
 				j.put("relacion", idRelacion);
+				j.put("idUser", user.getId());
 			}
 			else{
 				return Constants.noPrivilegesJ(user, logManager, actionId, "Visualización de detalle de objeto");

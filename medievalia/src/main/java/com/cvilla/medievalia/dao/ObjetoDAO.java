@@ -111,6 +111,7 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String GET_TYPE_RELACION_FOR_CA = "SELECT `idObjetoRelacion` FROM `AtributoComplejoObjeto` WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ?";
 	private static final String IS_CON_FECHA = "SELECT `conFecha` FROM `AtributoComplejoObjeto` WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ?";
 	private static final String UPDATE_COMPLEX_ATTRIBUTE = "UPDATE `InstanciaAtributoComplejo` SET `idInstanciaRelacion`= ?, `diaI`=?,`mesI`=?,`anioI`=?,`diaF`=?,`mesF`=?,`anioF`=? WHERE `idObjetoPadre`=? and `idObjetoHijo`=? and `idInstanciaPadre`=? and `idInstanciaHijo`=?";
+	private static final String IS_CON_RELACION = "SELECT `idObjetoRelacion` FROM `AtributoComplejoObjeto` WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ?";
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -274,7 +275,37 @@ public class ObjetoDAO implements IObjetoDAO {
 
 	public String addComplexAttribute(InstanciaAtributoComplejoDOM ao, int idInstanciaPadre) {
 		try{
-			int i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),ao.getInstanciaObjetoRelacion().getIdInstancia(),ao.getConFecha(),ao.getFechaInicio().getDia(),ao.getFechaInicio().getMes(),ao.getFechaInicio().getAnio(),ao.getFechaFin().getDia(),ao.getFechaFin().getMes(),ao.getFechaFin().getAnio()});
+			SpecialDate ini = ao.getFechaInicio();
+			SpecialDate fin = ao.getFechaFin();
+			int i = 0;
+			if(ao.getInstanciaObjetoRelacion() != null){
+				if(ini != null && fin != null){
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),ao.getInstanciaObjetoRelacion().getIdInstancia(),ao.getConFecha(),ao.getFechaInicio().getDia(),ao.getFechaInicio().getMes(),ao.getFechaInicio().getAnio(),ao.getFechaFin().getDia(),ao.getFechaFin().getMes(),ao.getFechaFin().getAnio()});
+				}
+				else if(ini != null){
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),ao.getInstanciaObjetoRelacion().getIdInstancia(),ao.getConFecha(),ao.getFechaInicio().getDia(),ao.getFechaInicio().getMes(),ao.getFechaInicio().getAnio(),null,null,null});
+				}
+				else if(fin != null){
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),ao.getInstanciaObjetoRelacion().getIdInstancia(),ao.getConFecha(),null,null,null,ao.getFechaFin().getDia(),ao.getFechaFin().getMes(),ao.getFechaFin().getAnio()});
+				}
+				else {
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),ao.getInstanciaObjetoRelacion().getIdInstancia(),ao.getConFecha(),null,null,null,null,null,null});
+				}
+			}
+			else{
+				if(ini != null && fin != null){
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),null,ao.getConFecha(),ao.getFechaInicio().getDia(),ao.getFechaInicio().getMes(),ao.getFechaInicio().getAnio(),ao.getFechaFin().getDia(),ao.getFechaFin().getMes(),ao.getFechaFin().getAnio()});
+				}
+				else if(ini != null){
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),null,ao.getConFecha(),ao.getFechaInicio().getDia(),ao.getFechaInicio().getMes(),ao.getFechaInicio().getAnio(),null,null,null});
+				}
+				else if(fin != null){
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),null,ao.getConFecha(),null,null,null,ao.getFechaFin().getDia(),ao.getFechaFin().getMes(),ao.getFechaFin().getAnio()});
+				}
+				else {
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),null,ao.getConFecha(),null,null,null,null,null,null});
+				}
+			}
 			if(i == 1)
 				return "añadido";
 			else
@@ -627,6 +658,16 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 		catch(Exception e){
 			return "errorDB";
+		}
+	}
+
+	public boolean hasRelationObject(int tipoDOM, int tipoH) {
+		try{
+			int i = jdbcTemplate.queryForInt(IS_CON_RELACION,new Object[]{tipoDOM,tipoH});
+			return i != 0;
+		}
+		catch(Exception e){
+			return false;
 		}
 	}
 }

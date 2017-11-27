@@ -74,6 +74,9 @@ public class ViewObjectInstanceDetailAjaxController {
 				else{
 					obj= objectManager.getObjetoDOMUnvalidated(tipo, idInstancia,groupA,user);
 				}
+				if(obj == null){
+					return Constants.paramError(logManager, actionId, user.getId());
+				}
 				//Lista de tipoAtributoComplejo para crear las pestañas del modal
 				List<TipoAtributoComplejoDOM> ac = objectManager.getTiposAtributosCompleos(tipo);
 				Map<Integer, Integer> badges = objectManager.getBadgesFromObject(obj);
