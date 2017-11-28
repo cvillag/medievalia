@@ -672,6 +672,9 @@ public class ObjectManager implements IObjectManager {
 			tipoHijo.setTipoDOM(tac.getIdTipoHijo());
 			InstanciaObjetoDOM oh = objetoDAO.getObjectInstance(tipoHijo, idInstHijo);
 			InstanciaAtributoComplejoDOM ioc = objetoDAO.getAtributoComplejo(tipo.getTipoDOM(), idInstPadre, idTipoAttr, idInstHijo);
+			if(ioc == null){
+				ioc = objetoDAO.getAtributoComplejoNotVal(tipo.getTipoDOM(), idInstPadre, idTipoAttr, idInstHijo);
+			}
 			if(oh == null || ioc == null){
 				message = "noType";
 			}
