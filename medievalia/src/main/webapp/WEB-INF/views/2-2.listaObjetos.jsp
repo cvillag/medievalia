@@ -1375,6 +1375,66 @@ else{ %>
 	</div>
 </div>
 
+<div id="modalMuestraTextoNoOBAC" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal90"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-info">
+					<fmt:message key="p2-2.modal94"></fmt:message><span id="modalTextoNoValidacionOBAC"></span>
+				</div>
+				<div id="marcarleidotextovalNV" class="checkbox">
+					<label>
+						<input type="checkbox" checked id="marcaleidonvac"> <fmt:message key="p2-2.modal95"></fmt:message>
+						<input type="hidden" id="idPadreAC">
+						<input type="hidden" id="idHijoAC">
+						<input type="hidden" id="tipoHijoAC">
+					</label>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-info" id="botonmarcaleidonvac" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modalMuestraTextoOBAC" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">
+					<fmt:message key="p2-2.modal90"></fmt:message>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-info">
+					<fmt:message key="p2-2.modal93"></fmt:message><span id="modalTextoValidacionOBAC"></span>
+				</div>
+				<div id="marcarleidotextoval" class="checkbox">
+					<label>
+						<input type="checkbox" checked id="marcaleidoac"> <fmt:message key="p2-2.modal95"></fmt:message>
+						<input type="hidden" id="idPadreAC2">
+						<input type="hidden" id="idHijoAC2">
+						<input type="hidden" id="tipoHijoAC2">
+					</label>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-info"  id="botonmarcaleidoac" data-dismiss="modal">
+					<fmt:message key="general.aceptar" ></fmt:message>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- Modales de tipos de relación con sus instancias -->
 
 <%
@@ -1610,7 +1670,7 @@ if(listarel != null && listarel.size() > 0 ){
 				</h4>
 			</div>
 			<div class="modal-body">
-				<div class="alert alert-info">
+				<div class="alert alert-danger">
 					<fmt:message key="p2-2.modal131"></fmt:message>
 				</div>
 			</div>
@@ -1632,7 +1692,7 @@ if(listarel != null && listarel.size() > 0 ){
 				</h4>
 			</div>
 			<div class="modal-body">
-				<div class="alert alert-info">
+				<div class="alert alert-danger">
 					<fmt:message key="p2-2.modal132"></fmt:message>
 				</div>
 			</div>

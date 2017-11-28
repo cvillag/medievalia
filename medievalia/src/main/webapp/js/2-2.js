@@ -200,7 +200,12 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 			if(rol == 3){
 				if(val == 0){
 					if(idUser == obj[d].creador){
-						$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+'</li>');
+						if(obj[d].textoLeido == 1){
+							$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+'</li>');
+						}
+						else{
+							$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+' <span class="label label-info acNoLeido" data-textval="'+obj[d].textoValidacion+'">1</span></li>');
+						}
 					}
 					else{
 						$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" class="btn btn-xs btn-warning pendienteValOtro"><span class="glyphicon glyphicon-ban-circle"></span></button><button type="button" class="btn btn-xs btn-default viewRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-eye-open"></span></button> '+nom+'</li>');
@@ -236,6 +241,22 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 
 //Esta función únicamente se llama la primera vez que se construye el modal
 function postCargaDetalle(mod){
+	$(".textoNoValidaOBAC").click(function(){
+		$("#modalTextoNoValidacionOBAC").html($(this).data('textvalidacion'));
+		$("#idPadreAC").val($(this).data('idpadretv'));
+		$("#idHijoAC").val($(this).data('idhijopv'));
+		$("#tipoHijoAC").val($(this).data('tipoh'));
+		$("#modalMuestraTextoNoOBAC").modal();
+	});
+	
+	$(".textoValidaOBAC").click(function(){
+		$("#modalTextoValidacionOBAC").html($(this).data('textvalidacion'));
+		$("#idPadreAC2").val($(this).data('idpadretv'));
+		$("#idHijoAC2").val($(this).data('idhijopv'));
+		$("#tipoHijoAC2").val($(this).data('tipoh'));
+		$("#modalMuestraTextoOBAC").modal();
+	});
+	
 	$("#modDetAtributos0").show();
 	$(".modDetAtributosC").hide();
 	$(".listaA").click(function(){
@@ -1392,6 +1413,56 @@ $(document).ready(function(){
 				var json = JSON.parse(data);
 				if(json.message == "ok"){
 					cargaListaAlumno();
+				}
+				else if(json.message == "noType"){
+					$("#marcaTextoLeido1").modal();
+				}
+				else if(json.message == "errorDB"){
+					$("#marcaTextoLeido2").modal();
+				}
+			});
+		}
+	});
+	
+	$("#botonmarcaleidonvac").click(function(){
+		if($("#marcaleidonvac").is(':checked')){
+			idP = $("#idPadreAC").val();
+			idH = $("#idHijoAC").val();
+			tipoH = $("#tipoHijoAC").val();
+			$.post("setComplexAttributeTextReaded.do",{
+				idPadre : idP,
+				idHijo : idH,
+				tipoHijo : tipoH
+			},
+			function(data){
+				var json = JSON.parse(data);
+				if(json.message == "ok"){
+					cargaAtributosComplejosPorPagina(json.pag,1);
+				}
+				else if(json.message == "noType"){
+					$("#marcaTextoLeido1").modal();
+				}
+				else if(json.message == "errorDB"){
+					$("#marcaTextoLeido2").modal();
+				}
+			});
+		}
+	});
+	
+	$("#botonmarcaleidoac").click(function(){
+		if($("#marcaleidoac").is(':checked')){
+			idP = $("#idPadreAC2").val();
+			idH = $("#idHijoAC2").val();
+			tipoH = $("#tipoHijoAC2").val();
+			$.post("setComplexAttributeTextReaded.do",{
+				idPadre : idP,
+				idHijo : idH,
+				tipoHijo : tipoH
+			},
+			function(data){
+				var json = JSON.parse(data);
+				if(json.message == "ok"){
+					cargaAtributosComplejosPorPagina(json.pag,1);
 				}
 				else if(json.message == "noType"){
 					$("#marcaTextoLeido1").modal();

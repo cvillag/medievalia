@@ -168,8 +168,14 @@ if(objeto != null){
 				<div class="col-xs-<%=cols%>">
 				<%=ac.getInstanciaHijo().getNombre() %>
 				<%if(!ac.isValidado()){ %>
-					<span class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span>
-				<%} %>
+					<span id="validado<%=ac.getInstanciaHijo().getIdInstancia() %>" class="label label-warning textoNoValidaOBAC" data-textvalidacion="<%=ac.getInstanciaHijo().getTextoValidacion()%>" data-idPadretv="<%=ac.getIdInstanciaPadre() %>" data-idHijopv="<%=ac.getInstanciaHijo().getIdInstancia()%>" data-tipoH="<%=ac.getInstanciaHijo().getTipo().getTipoDOM()%>"><fmt:message key="general.novalidado"></fmt:message><%if(!ac.isTextoLeido()){ %><span class="label label-info">1</span> <%} %></span>
+				<%}
+				else{
+					%>
+					<span id="validado<%=ac.getInstanciaHijo().getIdInstancia() %>" class="label label-success textoValidaOBAC" data-textvalidacion="<%=ac.getInstanciaHijo().getTextoValidacion()%>" data-idPadretv="<%=ac.getIdInstanciaPadre() %>" data-idHijopv="<%=ac.getInstanciaHijo().getIdInstancia()%>" data-tipoH="<%=ac.getInstanciaHijo().getTipo().getTipoDOM()%>"><fmt:message key="general.validado"></fmt:message><%if(!ac.isTextoLeido()){ %><span class="label label-info">1</span> <%} %></span>
+					<%
+				}
+				%>
 				</div>
 				<%if(ac.getConFecha() == 1){
 					SpecialDate in = ac.getFechaInicio();

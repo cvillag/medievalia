@@ -303,6 +303,10 @@ public class ObjectManager implements IObjectManager {
 				}
 				if(val == Constants.OBJETO_VALIDADO){
 					ao.setTextoValidacion(Constants.TEXTO_VALIDACION_PROFESOR);
+					ao.setTextoLeido(Constants.TEXTO_LEIDO);
+				}
+				else{
+					ao.setTextoLeido(Constants.TEXTO_NO_LEIDO);
 				}
 				String ret = objetoDAO.addComplexAttribute(ao,padre);
 				if(ret.equals("añadido") && !ao.isValidado()){
@@ -706,5 +710,44 @@ public class ObjectManager implements IObjectManager {
 
 	public boolean isConFecha(int tipoDOM, int idTipoAttr) {
 		return objetoDAO.isConFecha(tipoDOM, idTipoAttr);
+	}
+
+	public String setComplexAttributeTextReaded(int idPadre, int idHijo,int tipoHijo, User user, TipoObjetoDOM tipo, Group groupA) {
+		TipoObjetoDOM th = getTipoObjetoDOM(tipoHijo);
+		if(th != null){
+			InstanciaObjetoDOM ip = getObjetoDOM(tipo, idPadre);
+			if(ip == null){
+				ip = getObjetoDOMUnvalidated(tipo, idPadre, groupA, user);
+			}
+			if(ip != null){
+				InstanciaObjetoDOM ih = getObjetoDOM(th, idHijo);
+				if(ih != null){
+					InstanciaAtributoComplejoDOM ac = getComplexAttribute(tipo, tipoHijo, idPadre, idHijo, groupA, user);
+					if(ac == null){
+						ac = getComplexAttributeNotVal(tipo, tipoHijo, idPadre, idHijo, groupA, user);
+					}
+					if(ac != null){
+						if(ac.getCreador() == user.getId()){
+							return objetoDAO.setComplexAttributeTextReaded(tipo.getTipoDOM(),tipoHijo,idPadre,idHijo);
+						}
+						else{
+							return "noOwner";
+						}
+					}
+					else{
+						return "noType";
+					}
+				}
+				else{
+					return "noType";
+				}
+			}
+			else{
+				return "noType";
+			}
+		}
+		else{
+			return "noType";
+		}
 	}
 }

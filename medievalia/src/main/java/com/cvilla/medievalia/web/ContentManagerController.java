@@ -49,6 +49,7 @@ public class ContentManagerController {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		Group activeGroup  = (Group) sesion.getAttribute("grupoActual");
+		sesion.removeAttribute("tipoObjeto");
 		
 		if(authManager.isAutorized(actionInt, user)){
 			if(errorParam(request) && activeGroup==null){

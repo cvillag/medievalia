@@ -27,7 +27,7 @@ public class AtributoComplejoDOMMapper implements RowMapper<InstanciaAtributoCom
 		a.setTipoHijo(tipoHijo);
 		InstanciaObjetoDOM iHijo = new InstanciaObjetoDOM();
 		iHijo.setIdInstancia(rs.getInt("idInstanciaHijo"));
-		iHijo.setTipo(tipoPadre);
+		iHijo.setTipo(tipoHijo);
 		iHijo.setNombre(rs.getString("nombreObjetoHijo"));
 		iHijo.setValidado(rs.getInt("validadoHijo"));
 		iHijo.setTextoValidacion(rs.getString("textoValidacionHijo"));

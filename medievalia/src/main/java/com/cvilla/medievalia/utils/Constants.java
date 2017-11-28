@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.ILogManager;
 
@@ -200,18 +201,19 @@ public class Constants {
 			index++;
 		}
 		else{
-			if(role == 2){
-				lista.add(new Header("docencia","Docencia","",new ArrayList<Header>()));
+			if(role == 2 || role == 3){
+				lista.add(new Header("groups","Grupos","",new ArrayList<Header>()));
 				index++;
-				if(ses.getAttribute("grupoActual") !=  null){
-					lista.get(index).getSons().add(new Header("temas","Temas","topicManager.do",null));
+				Group g = (Group) ses.getAttribute("grupoActual");
+				if(g !=  null){
+					lista.get(index).getSons().add(new Header("actual","Actual","contentManager.do?idGroup=" + g.getIdGrupo(),null));
 				}
-				lista.get(index).getSons().add(new Header("matriculacion","Alumnos", "student.do", null));
+				lista.get(index).getSons().add(new Header("anteriores","Otros", "", null));
 			}
-			lista.add(new Header("investigacion","Investigación","",new ArrayList<Header>()));
-			index++;
-			lista.get(index).getSons().add(new Header("gestionContenido","Gestión de contenido", "contentManager.do",null));
-			lista.get(index).getSons().add(new Header("temas","Temas", "topics.do",null));
+//			lista.add(new Header("investigacion","Investigación","",new ArrayList<Header>()));
+//			index++;
+//			lista.get(index).getSons().add(new Header("gestionContenido","Gestión de contenido", "contentManager.do",null));
+//			lista.get(index).getSons().add(new Header("temas","Temas", "topics.do",null));
 		}
 		lista.add(new Header("profile","Perfil","profile.do",null));
 		index++;

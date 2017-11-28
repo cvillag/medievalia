@@ -1,3 +1,4 @@
+<%@page import="com.cvilla.medievalia.domain.TipoObjetoDOM"%>
 <%@page import="com.cvilla.medievalia.domain.Group"%>
 <%@ page session="false"%>
 
@@ -35,6 +36,7 @@
 		}
 	}
 %>
+<script src="js/common/header.js"></script>
 <title>Medievalia</title>
 </head>
 <body>
@@ -44,6 +46,7 @@
 	List<Header> headers = (List<Header>) request.getAttribute("headers");
 	HttpSession ses = request.getSession();
 	Group grupoactual = (Group) ses.getAttribute("grupoActual");
+	TipoObjetoDOM tipoAct = (TipoObjetoDOM) ses.getAttribute("tipoObjeto");
 	%>
 		<div class="container">
 			<div class="navbar-header">
@@ -57,9 +60,21 @@
 				<a class="navbar-brand" href="main.do">Medievalia</a>
 				<%}
           	else{
+          		if(tipoAct == null){
           	%>
 				<a class="navbar-brand" href="main.do">Medievalia </a><a class="navbar-brand" href="contentManager.do">/&nbsp;<%=grupoactual.getName()%></a>
-				<%} %>
+				<%}
+          		else{
+          			%>
+          		<a class="navbar-brand" href="main.do">Medievalia </a>
+          		<a class="navbar-brand" href="contentManager.do">/&nbsp;<%=grupoactual.getName()%></a>
+          		<a class="navbar-brand">/&nbsp;<%=tipoAct.getNombreDOM() %></a>
+<!--           		<form id="formHeader" method="post" action="objectController.do"> -->
+<%-- 					<input type="hidden" name="idTipo" id="idTipo" value="<%=tipoAct.getTipoDOM()%>"> --%>
+<!-- 				</form> -->
+          			<%
+          		}
+			}%>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">

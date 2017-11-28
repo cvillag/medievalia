@@ -112,6 +112,7 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String IS_CON_FECHA = "SELECT `conFecha` FROM `AtributoComplejoObjeto` WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ?";
 	private static final String UPDATE_COMPLEX_ATTRIBUTE = "UPDATE `InstanciaAtributoComplejo` SET `idInstanciaRelacion`= ?, `diaI`=?,`mesI`=?,`anioI`=?,`diaF`=?,`mesF`=?,`anioF`=? WHERE `idObjetoPadre`=? and `idObjetoHijo`=? and `idInstanciaPadre`=? and `idInstanciaHijo`=?";
 	private static final String IS_CON_RELACION = "SELECT `idObjetoRelacion` FROM `AtributoComplejoObjeto` WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ?";
+	private static final String CHECK_COMMENT_COMPLEX_ATTRIBUTE = "UPDATE `InstanciaAtributoComplejo` SET `textoLeido`= ? WHERE `idObjetoPadre`= ? and `idObjetoHijo`= ? and `idInstanciaPadre`= ? and `idInstanciaHijo`= ?";
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -668,6 +669,21 @@ public class ObjetoDAO implements IObjetoDAO {
 		}
 		catch(Exception e){
 			return false;
+		}
+	}
+
+	public String setComplexAttributeTextReaded(int tipoDOM, int tipoHijo,int idPadre, int idHijo) {
+		try{
+			int i = jdbcTemplate.update(CHECK_COMMENT_COMPLEX_ATTRIBUTE, new Object[]{Constants.TEXTO_LEIDO,tipoDOM,tipoHijo,idPadre,idHijo});
+			if(i == 1){
+				return "ok";
+			}
+			else{
+				return "errorBD";
+			}
+		}
+		catch(Exception e){
+			return "errorBD";
 		}
 	}
 }
