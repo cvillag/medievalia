@@ -71,8 +71,8 @@ public class ValidateObjectInstanceAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idInstancia") == null &&
-				request.getParameter("text") == null && 
-				request.getParameter("val") == null ;
+		return request.getParameter("idInstancia") == null || !Constants.isNumeric(request.getParameter("idInstancia")) ||
+				request.getParameter("text") == null ||
+				request.getParameter("val") == null || !Constants.isNumeric(request.getParameter("val"));
 	}
 }

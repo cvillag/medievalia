@@ -72,7 +72,7 @@ public class CreateGroupAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("nombreGrupo") == null &&
+		return request.getParameter("nombreGrupo") == null ||
 				request.getParameter("descripcionGrupo") == null;
 	}
 }

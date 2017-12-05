@@ -97,6 +97,6 @@ public class DeleteObjectAjaxController {
 	}
 
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idInstancia") == null;
+		return request.getParameter("idInstancia") == null || !Constants.isNumeric(request.getParameter("idInstancia"));
 	}
 }

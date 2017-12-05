@@ -97,11 +97,11 @@ public class UpdateComplexAttributeAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("select") == null &&
-				request.getParameter("confecha") == null &&
-				request.getParameter("instanciaH") == null &&
-				request.getParameter("tipoH") == null &&
-				request.getParameter("instanciaP") == null;
+		return request.getParameter("select") == null || !Constants.isNumeric(request.getParameter("select")) ||
+				request.getParameter("confecha") == null || !Constants.isNumeric(request.getParameter("confecha")) ||
+				request.getParameter("instanciaH") == null || !Constants.isNumeric(request.getParameter("instanciaH")) ||
+				request.getParameter("tipoH") == null || !Constants.isNumeric(request.getParameter("tipoH")) ||
+				request.getParameter("instanciaP") == null || !Constants.isNumeric(request.getParameter("instanciaP"));
 	}
 	
 

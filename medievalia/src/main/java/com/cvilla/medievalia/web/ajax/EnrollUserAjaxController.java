@@ -105,7 +105,7 @@ public class EnrollUserAjaxController {
 	}
 	
 	private boolean paramError(HttpServletRequest request){
-		return request.getParameter("role") == null ||
-				request.getParameter("userId") == null;
+		return request.getParameter("role") == null || !Constants.isNumeric(request.getParameter("role")) ||
+				request.getParameter("userId") == null || !Constants.isNumeric(request.getParameter("userId"));
 	}
 }

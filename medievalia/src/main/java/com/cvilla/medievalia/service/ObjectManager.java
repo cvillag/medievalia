@@ -309,11 +309,8 @@ public class ObjectManager implements IObjectManager {
 				}
 				if(val == Constants.OBJETO_VALIDADO){
 					ao.setTextoValidacion(Constants.TEXTO_VALIDACION_PROFESOR);
-					ao.setTextoLeido(Constants.TEXTO_LEIDO);
 				}
-				else{
-					ao.setTextoLeido(Constants.TEXTO_NO_LEIDO);
-				}
+				ao.setTextoLeido(Constants.TEXTO_LEIDO);
 				String ret = objetoDAO.addComplexAttribute(ao,padre);
 				if(ret.equals("añadido") && !ao.isValidado()){
 					return "añadidoS";

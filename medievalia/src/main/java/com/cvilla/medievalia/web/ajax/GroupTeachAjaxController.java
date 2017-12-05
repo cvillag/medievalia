@@ -73,7 +73,7 @@ public class GroupTeachAjaxController {
 		return model;
 	}
 	boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idTeach") == null;
+		return request.getParameter("idTeach") == null || !Constants.isNumeric(request.getParameter("idTeach"));
 	}
 	
 }

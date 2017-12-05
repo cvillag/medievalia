@@ -111,9 +111,9 @@ public class ModifyUserController2 {
 	private boolean errorParam(HttpServletRequest request){
 		return request.getParameter("name") == null 
 				|| request.getParameter("longname") == null
-				|| request.getParameter("role") == null
+				|| request.getParameter("role") == null || !Constants.isNumeric(request.getParameter("role"))
 				|| request.getParameter("pass") == null
 				|| request.getParameter("pass2") == null
-				|| request.getParameter("id") == null;
+				|| request.getParameter("id") == null || !Constants.isNumeric(request.getParameter("id"));
 	}
 }

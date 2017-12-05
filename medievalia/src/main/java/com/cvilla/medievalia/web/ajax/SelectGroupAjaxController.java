@@ -63,6 +63,6 @@ public class SelectGroupAjaxController {
 	}
 	
 	boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idGroup") == null;
+		return request.getParameter("idGroup") == null || !Constants.isNumeric(request.getParameter("idGroup"));
 	}
 }

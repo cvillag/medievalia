@@ -86,9 +86,9 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idInstancia") == null &&
-				request.getParameter("modo") == null &&
-				request.getParameter("pag") == null &&
-				request.getParameter("recarga") == null;
+		return request.getParameter("idInstancia") == null || !Constants.isNumeric(request.getParameter("idInstancia")) ||
+				request.getParameter("modo") == null || !Constants.isNumeric(request.getParameter("modo")) ||
+				request.getParameter("pag") == null || !Constants.isNumeric(request.getParameter("pag")) ||
+				request.getParameter("recarga") == null || !Constants.isNumeric(request.getParameter("recarga"));
 	}
 }

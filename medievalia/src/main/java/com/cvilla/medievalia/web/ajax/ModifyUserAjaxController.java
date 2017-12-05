@@ -70,7 +70,7 @@ public class ModifyUserAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("nombre") == null &&
-				request.getParameter("nombreC") == null;
+		return request.getParameter("nombre") == null || request.getParameter("nombre").length() < 1 ||
+				request.getParameter("nombreC") == null  || request.getParameter("nombreC").length() < 1;
 	}
 }

@@ -77,6 +77,6 @@ public class ModifyUserController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("modifyId") == null;
+		return request.getParameter("modifyId") == null || !Constants.isNumeric(request.getParameter("modifyId"));
 	}
 }

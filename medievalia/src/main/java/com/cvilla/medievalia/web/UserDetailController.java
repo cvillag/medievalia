@@ -73,6 +73,6 @@ public class UserDetailController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("detailId") == null;
+		return request.getParameter("detailId") == null || !Constants.isNumeric(request.getParameter("detailId"));
 	}
 }

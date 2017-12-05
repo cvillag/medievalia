@@ -74,8 +74,8 @@ public class SetComplexAttributeTextReadedAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idPadre") == null &&
-		request.getParameter("idHijo") == null &&
-		request.getParameter("tipoHijo") == null;
+		return request.getParameter("idPadre") == null  || !Constants.isNumeric(request.getParameter("idPadre")) ||
+		request.getParameter("idHijo") == null  || !Constants.isNumeric(request.getParameter("idHijo")) ||
+		request.getParameter("tipoHijo") == null || !Constants.isNumeric(request.getParameter("tipoHijo"));
 	}
 }

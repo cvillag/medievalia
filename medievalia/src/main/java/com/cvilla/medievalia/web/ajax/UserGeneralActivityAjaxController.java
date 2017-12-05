@@ -87,7 +87,7 @@ public class UserGeneralActivityAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return  request.getParameter("pag") == null 
-				|| request.getParameter("tamPag") == null;
+		return  request.getParameter("pag") == null || !Constants.isNumeric(request.getParameter("pag")) || 
+				request.getParameter("tamPag") == null || !Constants.isNumeric(request.getParameter("tamPag"));
 	}
 }

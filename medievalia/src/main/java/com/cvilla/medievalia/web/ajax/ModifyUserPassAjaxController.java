@@ -68,8 +68,8 @@ public class ModifyUserPassAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("pass1") == null &&
-				request.getParameter("pass2") == null &&
-				request.getParameter("pass3") == null;
+		return request.getParameter("pass1") == null  || request.getParameter("pass1").length() < 1 ||
+				request.getParameter("pass2") == null  || request.getParameter("pass2").length() < 1 ||
+				request.getParameter("pass3") == null || request.getParameter("pass3").length() < 1;
 	}
 }

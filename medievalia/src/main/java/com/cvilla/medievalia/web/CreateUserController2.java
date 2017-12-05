@@ -72,7 +72,7 @@ public class CreateUserController2 {
 		return request.getParameter("name") == null 
 				|| request.getParameter("longname") == null
 				|| request.getParameter("pass") == null
-				|| request.getParameter("role") == null;
+				|| request.getParameter("role") == null || !Constants.isNumeric(request.getParameter("role"));
 	}
 	
 	@Autowired

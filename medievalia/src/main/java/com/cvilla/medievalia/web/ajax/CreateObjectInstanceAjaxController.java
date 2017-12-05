@@ -78,6 +78,6 @@ public class CreateObjectInstanceAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("type") == null;
+		return request.getParameter("type") == null || !Constants.isNumeric(request.getParameter("type"));
 	}
 }

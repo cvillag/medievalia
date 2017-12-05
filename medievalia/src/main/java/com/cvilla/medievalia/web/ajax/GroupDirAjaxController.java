@@ -72,6 +72,6 @@ public class GroupDirAjaxController {
 		return model;
 	}
 	boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idDir") == null;
+		return request.getParameter("idDir") == null || !Constants.isNumeric(request.getParameter("idDir"));
 	}
 }

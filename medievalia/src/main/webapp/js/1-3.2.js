@@ -30,49 +30,41 @@ $(document).ready(function(){
 		
 	$("#siguiente").click(function(){
 		pagAct++;
-		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
 		cargaPagina(pagAct,userId,tamPag);
 	});
 	
 	$("#anterior").click(function(){
 		pagAct--;
-		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
 		cargaPagina(pagAct,userId,tamPag);
 	});
 	
 	$("#primero").click(function(){
 		pagAct=1;
-		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
 		cargaPagina(pagAct,userId,tamPag);
 	});
 	
 	$("#ultimo").click(function(){
 		pagAct = maxPag;
-		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
 		cargaPagina(pagAct,userId,tamPag);
 	});
 	
 	$("#pagA").click(function(){
 		pagAct = pagAct - 2;
-		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
 		cargaPagina(pagAct,userId,tamPag);
 	});
 	
 	$("#pagB").click(function(){
 		pagAct--;
-		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
 		cargaPagina(pagAct,userId,tamPag);
 	});
 	
 	$("#pagC").click(function(){
 		pagAct++;
-		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
 		cargaPagina(pagAct,userId,tamPag);
 	});
 	
 	$("#pagD").click(function(){
 		pagAct = pagAct + 2;
-		alert("Página siguiente " + pagAct + " detailID " + userId + " tamPag " + tamPag );
 		cargaPagina(pagAct,userId,tamPag);
 	});
 	

@@ -76,10 +76,10 @@ public class ValidateComplexAttributeAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idHijo") == null &&
-				request.getParameter("tipoHijo") == null &&
-				request.getParameter("textoVal") == null &&
-				request.getParameter("val") == null &&
-				request.getParameter("idPadre") == null;
+		return request.getParameter("idHijo") == null || !Constants.isNumeric(request.getParameter("idHijo")) ||
+				request.getParameter("tipoHijo") == null || !Constants.isNumeric(request.getParameter("tipoHijo")) ||
+				request.getParameter("textoVal") == null ||
+				request.getParameter("val") == null || !Constants.isNumeric(request.getParameter("val")) ||
+				request.getParameter("idPadre") == null || !Constants.isNumeric(request.getParameter("idPadre"));
 	}
 }

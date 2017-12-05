@@ -56,7 +56,7 @@ public class AddComplexAttributeAjaxController {
 		JSONObject j = new JSONObject();
 		
 		if(authManager.isAutorized(actionInt, user)){
-			if((errorParam(request) && tipo == null) || groupA == null){
+			if((errorParam(request) || tipo == null) || groupA == null){
 				j.put("message","noType");
 				logManager.log(user.getId(), actionInt, "Fallo al añadir atributo complejo a instancia de objeto. Parámetros o sesión incorrectos.", Constants.P_NOK);
 			}
@@ -100,10 +100,10 @@ public class AddComplexAttributeAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idInstPadre") == null &&
-				request.getParameter("idTipoAttr") == null &&
-				request.getParameter("idInstHijo") == null &&
-				request.getParameter("selRel") == null;
+		return request.getParameter("idInstPadre") == null || !Constants.isNumeric(request.getParameter("idInstPadre")) ||
+				request.getParameter("idTipoAttr") == null || !Constants.isNumeric(request.getParameter("idTipoAttr")) ||
+				request.getParameter("idInstHijo") == null || !Constants.isNumeric(request.getParameter("idInstHijo")) ||
+				request.getParameter("selRel") == null || !Constants.isNumeric(request.getParameter("selRel"));
 	}
 	
 

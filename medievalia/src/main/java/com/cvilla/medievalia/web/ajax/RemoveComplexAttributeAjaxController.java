@@ -82,8 +82,8 @@ public class RemoveComplexAttributeAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idInstPadre") == null &&
-				request.getParameter("idTipoAttr") == null &&
-				request.getParameter("idInstHijo") == null;
+		return request.getParameter("idInstPadre") == null || !Constants.isNumeric(request.getParameter("idInstPadre")) ||
+				request.getParameter("idTipoAttr") == null  || !Constants.isNumeric(request.getParameter("idTipoAttr")) ||
+				request.getParameter("idInstHijo") == null  || !Constants.isNumeric(request.getParameter("idInstHijo"));
 	}
 }

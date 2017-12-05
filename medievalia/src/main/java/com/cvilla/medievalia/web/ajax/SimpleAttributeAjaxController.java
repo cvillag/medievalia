@@ -173,6 +173,6 @@ public class SimpleAttributeAjaxController {
 	}
 
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idInstanciaObjeto") == null;
+		return request.getParameter("idInstanciaObjeto") == null || !Constants.isNumeric(request.getParameter("idInstanciaObjeto"));
 	}
 }

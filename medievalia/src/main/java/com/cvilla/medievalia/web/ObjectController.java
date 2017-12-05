@@ -83,7 +83,7 @@ public class ObjectController {
 		return model;
 	}
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idTipo") == null;
+		return request.getParameter("idTipo") == null || !Constants.isNumeric(request.getParameter("idTipo"));
 	}
 	
 }

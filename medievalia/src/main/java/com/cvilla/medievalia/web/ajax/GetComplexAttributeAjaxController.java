@@ -109,8 +109,8 @@ public class GetComplexAttributeAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("instp") == null &&
-				request.getParameter("insth") == null &&
-				request.getParameter("tipoh") == null;
+		return request.getParameter("instp") == null  || !Constants.isNumeric(request.getParameter("instp")) ||
+				request.getParameter("insth") == null  || !Constants.isNumeric(request.getParameter("insth")) ||
+				request.getParameter("tipoh") == null  || !Constants.isNumeric(request.getParameter("tipoh"));
 	}
 }

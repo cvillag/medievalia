@@ -127,8 +127,8 @@ public class ViewObjectInstanceDetailAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idInstancia") == null &&
-				request.getParameter("modo") == null &&
-				request.getParameter("val") == null;
+		return request.getParameter("idInstancia") == null || !Constants.isNumeric(request.getParameter("idInstancia")) ||
+				request.getParameter("modo") == null || !Constants.isNumeric(request.getParameter("modo")) ||
+				request.getParameter("val") == null || !Constants.isNumeric(request.getParameter("val"));
 	}
 }

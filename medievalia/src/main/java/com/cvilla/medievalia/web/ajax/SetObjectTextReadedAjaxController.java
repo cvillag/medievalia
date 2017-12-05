@@ -71,6 +71,6 @@ public class SetObjectTextReadedAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idObjeto") == null;
+		return request.getParameter("idObjeto") == null  || !Constants.isNumeric(request.getParameter("idObjeto"));
 	}
 }

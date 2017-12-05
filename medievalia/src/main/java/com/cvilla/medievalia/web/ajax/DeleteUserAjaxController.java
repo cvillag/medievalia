@@ -63,6 +63,6 @@ public class DeleteUserAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("deleteId") == null;
+		return request.getParameter("deleteId") == null || !Constants.isNumeric(request.getParameter("deleteId"));
 	}
 }
