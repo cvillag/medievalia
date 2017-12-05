@@ -68,9 +68,13 @@ public class UpdateComplexAttributeAjaxController {
 				int confecha = (new Integer(request.getParameter("confecha"))).intValue();
 				SpecialDate inicio = null;
 				SpecialDate fin = null;
+				int paginaDoc = 0;
 				if(confecha == 1){
 					inicio = Fechas.getDate(request,"i");
 					fin = Fechas.getDate(request,"f");
+				}
+				if(objectManager.isConPag(tipo.getTipoDOM(), idTipoAttr)){
+					paginaDoc = (new Integer(request.getParameter("paginaDoc"))).intValue();
 				}
 				int val;
 				if(authManager.isAutorized(actionInt2, user)){
@@ -79,7 +83,7 @@ public class UpdateComplexAttributeAjaxController {
 				else{
 					val = Constants.OBJETO_NO_VALIDADO;
 				}
-				String message = objectManager.updateObjetoDOMAttributeByType(idInstPadre, idInstHijo, tipo, idTipoAttr, val, user, groupA,selRel,inicio,fin);
+				String message = objectManager.updateObjetoDOMAttributeByType(idInstPadre, idInstHijo, tipo, idTipoAttr, val, user, groupA,selRel,inicio,fin,paginaDoc);
 				logManager.log(user.getId(), actionInt, "Actualización de atributo complejo de instancia padre" + idInstPadre + " idObjeto " + tipo.getNombreDOM(), Constants.P_OK);
 				j.put("message", message);
 				j.put("pag", idTipoAttr);

@@ -83,7 +83,7 @@ public class GetComplexAttributeAjaxController {
 					else{
 						j.put("fechaINull", "1");
 					}
-					if(iac.getFechaInicio() != null){
+					if(iac.getFechaFin() != null){
 						j.put("diaFM", iac.getFechaFin().getDia());
 						j.put("mesFM", iac.getFechaFin().getMes());
 						j.put("anioFM", iac.getFechaFin().getAnio());
@@ -92,6 +92,8 @@ public class GetComplexAttributeAjaxController {
 					else{
 						j.put("fechaFNull", "1");
 					}
+					j.put("conPaginaDoc", iac.getConPaginaDoc());
+					j.put("paginaDoc", iac.getPaginaDoc());
 				}
 				else{
 					logManager.log(user.getId(), actionInt, "Consulta de atributo complejo de instancia padre" + idInstPadre + " idObjeto " + tipo.getNombreDOM(), Constants.P_NOK);

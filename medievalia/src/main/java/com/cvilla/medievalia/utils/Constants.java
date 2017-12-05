@@ -65,6 +65,9 @@ public class Constants {
 	public static final int P_SET_OBJECT_TEXT_READED = 50;
 	public static final int P_SET_COMPLEX_ATTRIBUTE_TEXT_READED = 51;
 	
+	public static final int P_VIEW_AUTHORS_STATISTICS_PER_TYPE = 52;
+	public static final int P_VIEW_OWN_AUTHORS_STATISTICS_PER_TYPE = 53;
+	
 	//TODO: Permisos a eliminar tras la refactorización
 //	public static final int P_TOPIC_LIST = 21;
 //	public static final int P_TOPIC_MANAGER = 22;
@@ -178,6 +181,7 @@ public class Constants {
 	public static final String TEXTO_SIN_VALIDAR = "";
 	public static final int TEXTO_LEIDO = 1;
 	public static final int TEXTO_NO_LEIDO = 0;
+	
 		
 	public static String getKey(){
 		return PASS_KEY;

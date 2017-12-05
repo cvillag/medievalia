@@ -43,4 +43,7 @@ public interface IObjetoDAO {
 	public String updateComplexAttribute(InstanciaAtributoComplejoDOM ao,int idInstPadre);
 	public boolean hasRelationObject(int tipoDOM, int tipoH);
 	public String setComplexAttributeTextReaded(int tipoDOM, int tipoHijo,int idPadre, int idHijo);
+	public int getNumUnvalidatedInstances(int tipo, int group);
+	public int getNumValidatedInstancesWithUnvalidatedAC(int tipo, int group);
+	public int getNumStudentsUnvalidatedInstances(int tipo, int group);
 }

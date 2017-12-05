@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.Attributes;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cvilla.medievalia.dao.intfc.IObjetoDAO;
 import com.cvilla.medievalia.dao.intfc.IUserDAO;
 import com.cvilla.medievalia.dao.mappers.AtributoSencilloDOMMapper;
+import com.cvilla.medievalia.dao.mappers.TipoObjetoDOMMapper;
 import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
 import com.cvilla.medievalia.domain.Group;
@@ -244,7 +246,7 @@ public class ObjectManager implements IObjectManager {
 		return null;
 	}
 
-	public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA, int selRel, SpecialDate inicio, SpecialDate fin) {
+	public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA, int selRel, SpecialDate inicio, SpecialDate fin, int paginaDoc) {
 		String message = "";
 		InstanciaObjetoDOM op = objetoDAO.getObjectInstance(tipoP, padre);
 		TipoAtributoComplejoDOM tac  = null;
@@ -294,6 +296,10 @@ public class ObjectManager implements IObjectManager {
 				ao.setValidado(val);
 				ao.setIdTipoObjetoRelacion(tac.getIdTipoRelacion());
 				ao.setInstanciaObjetoRelacion(docrel);
+				ao.setConPaginaDoc(tac.getConPaginaDoc());
+				if(ao.isConPagina() && paginaDoc != 0){
+					ao.setPaginaDoc(paginaDoc);
+				}
 				if(objetoDAO.isConFecha(tipoP.getTipoDOM(),tipoH)){
 					if(!Fechas.fechaIncorrecta(inicio) && !Fechas.fechaIncorrecta(fin)){
 						ao.setConFecha(1);
@@ -321,7 +327,6 @@ public class ObjectManager implements IObjectManager {
 	}
 
 	public String deleteObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA) {
-		// FIXME:  Comprobar si tiene privilegios de borrar un atributo validado. Los alumnos no lo tendrán.
 		String message = "";
 		InstanciaObjetoDOM op = objetoDAO.getObjectInstance(tipoP, padre);
 		TipoAtributoComplejoDOM tac  = null;
@@ -638,7 +643,7 @@ public class ObjectManager implements IObjectManager {
 		return null;
 	}
 
-	public String updateObjetoDOMAttributeByType(int idInstPadre, int idInstHijo, TipoObjetoDOM tipo, int idTipoAttr, int val, User user, Group groupA, int selRel, SpecialDate inicio,	SpecialDate fin) {
+	public String updateObjetoDOMAttributeByType(int idInstPadre, int idInstHijo, TipoObjetoDOM tipo, int idTipoAttr, int val, User user, Group groupA, int selRel, SpecialDate inicio,	SpecialDate fin, int paginaDoc) {
 		String message = "";
 		InstanciaObjetoDOM op = objetoDAO.getObjectInstance(tipo, idInstPadre);
 		TipoAtributoComplejoDOM tac  = null;
@@ -689,6 +694,10 @@ public class ObjectManager implements IObjectManager {
 				ao.setValidado(val);
 				ao.setIdTipoObjetoRelacion(tac.getIdTipoRelacion());
 				ao.setInstanciaObjetoRelacion(docrel);
+				ao.setConPaginaDoc(tac.getConPaginaDoc());
+				if(ao.isConPagina()){
+					ao.setPaginaDoc(paginaDoc);
+				}
 				if(objetoDAO.isConFecha(tipo.getTipoDOM(),idTipoAttr)){
 					if(!Fechas.fechaIncorrecta(inicio) && !Fechas.fechaIncorrecta(fin)){
 						ao.setConFecha(1);
@@ -752,5 +761,134 @@ public class ObjectManager implements IObjectManager {
 		else{
 			return "noType";
 		}
+	}
+
+	public boolean isConPag(int tipoDOM, int idTipoAttr) {
+		TipoObjetoDOM to = objetoDAO.getObjectType(tipoDOM);
+		if(to != null){
+			List<TipoAtributoComplejoDOM> ta = objetoDAO.getTiposAtributosCompleos(to);
+			boolean enc = false;
+			int i = 0;
+			TipoAtributoComplejoDOM tac = null;
+			while(!enc &&  i < ta.size()){
+				enc = ta.get(i).getIdTipoHijo() == idTipoAttr;
+				tac = ta.get(i);
+				i++;
+			}
+			if(enc){
+				return tac.isConPaginaDoc();
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			return false;
+		}
+	}
+	
+	public Map<Integer,Integer> getStatisticsToValidate(Group g){
+		Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+		List<TipoObjetoDOM> tipos = getTiposObjetosDOM();
+		for(TipoObjetoDOM t : tipos){
+			int a = objetoDAO.getNumUnvalidatedInstances(t.getTipoDOM(),g.getIdGrupo());
+			a += objetoDAO.getNumValidatedInstancesWithUnvalidatedAC(t.getTipoDOM(), g.getIdGrupo());
+			map.put(t.getTipoDOM(), a);
+		}
+		return map;
+	}
+	
+	public Map<Integer,Integer> getStatisticsUsersToValidate(Group g){
+		Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+		List<TipoObjetoDOM> tipos = getTiposObjetosDOM();
+		for(TipoObjetoDOM t : tipos){
+			int a = objetoDAO.getNumStudentsUnvalidatedInstances(t.getTipoDOM(), g.getIdGrupo());
+			map.put(t.getTipoDOM(), a);
+		}
+		return map;
+	}
+	
+	public Map<Integer,Integer> getUserStatisticsObjetsToVal(User u, Group g){
+		Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+		List<TipoObjetoDOM> tipos = getTiposObjetosDOM();
+		for(TipoObjetoDOM t : tipos){
+			List<InstanciaObjetoDOM> l = getStudentObjetoDOMList(t,u,g);
+			int total = 0;
+			for (InstanciaObjetoDOM i : l){
+				if(!i.isValidado()){
+					total++;
+				}
+			}
+			map.put(t.getTipoDOM(), total);
+		}
+		return map;
+	}
+	
+	public Map<Integer,Integer> getUserStatisticsObjetsTotal(User u, Group g){
+		Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+		List<TipoObjetoDOM> tipos = getTiposObjetosDOM();
+		for(TipoObjetoDOM t : tipos){
+			List<InstanciaObjetoDOM> l = getStudentObjetoDOMList(t,u,g);
+			int total = 0;
+			for (InstanciaObjetoDOM i : l){
+				if(i.getCreador().getId() == u.getId()){
+					total++;
+				}
+			}
+			map.put(t.getTipoDOM(), total);
+		}
+		return map;
+	}
+	
+	public Map<Integer,Integer> getUserStatisticsObjetsToValAC(User u, Group g){
+		Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+		List<TipoObjetoDOM> tipos = getTiposObjetosDOM();
+		for(TipoObjetoDOM t : tipos){
+			List<InstanciaObjetoDOM> l = getStudentObjetoDOMList(t,u,g);
+			int total = 0;
+			for (InstanciaObjetoDOM i : l){
+				i.setAtributosComplejos(objetoDAO.getAtributosComplejos(t, i.getIdInstancia()));
+				if(i.getAtributosComplejos() != null){
+					for(InstanciaAtributoComplejoDOM iac : i.getAtributosComplejos()){
+						if(iac.getCreador() == u.getId() && !iac.isValidado()){
+							total++;
+						}
+					}
+				}
+			}
+			map.put(t.getTipoDOM(), total);
+		}
+		return map;
+	}
+	
+	public Map<Integer,Integer> getUserStatisticsObjetsTotalAC(User u, Group g){
+		Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+		List<TipoObjetoDOM> tipos = getTiposObjetosDOM();
+		for(TipoObjetoDOM t : tipos){
+			List<InstanciaObjetoDOM> l = getStudentObjetoDOMList(t,u,g);
+			int total = 0;
+			for (InstanciaObjetoDOM i : l){
+				i.setAtributosComplejos(objetoDAO.getAtributosComplejos(t, i.getIdInstancia()));
+				if(i.getAtributosComplejos() != null){
+					for(InstanciaAtributoComplejoDOM iac : i.getAtributosComplejos()){
+						if(iac.getCreador() == u.getId()){
+							total++;
+						}
+					}
+				}
+			}
+			map.put(t.getTipoDOM(), total);
+		}
+		return map;
+	}
+
+	public Object getStatisticsTotalInstancesPerType() {
+		Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+		List<TipoObjetoDOM> tipos = getTiposObjetosDOM();
+		for(TipoObjetoDOM t : tipos){
+			List<InstanciaObjetoDOM> lis = objetoDAO.getObjectListByTipe(t);
+			map.put(t.getTipoDOM(), lis.size());
+		}
+		return map;
 	}
 }

@@ -1496,8 +1496,17 @@ if(listarel != null && listarel.size() > 0 ){
 							<input type="number" name="anioF<%=rel.getAc().getIdTipoHijo() %>" id="anioF<%=rel.getAc().getIdTipoHijo() %>" size="4" class="inputDays form-control">
 						</div>
 					</form>
+				<%}
+				if(rel.getAc().isConPaginaDoc()){
+				%>
+				<br>
+				<div class="form-group">
+					<label for="paginaDoc<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.pagina"></fmt:message></label>
+					<input type="number" name="paginaDoc<%=rel.getAc().getIdTipoHijo() %>" id="paginaDoc<%=rel.getAc().getIdTipoHijo() %>" min="1" size="4" class="form-control">
+				</div>
 				<%} %>
 				<input type="hidden" name="conFecha" id="conFecha<%=rel.getAc().getIdTipoHijo()%>">
+				<input type="hidden" name="conPaginaDoc" id="conPaginaDoc<%=rel.getAc().getIdTipoHijo()%>">
 				<input type="hidden" name="inst" id="instHR<%=rel.getAc().getIdTipoHijo()%>">
 				<input type="hidden" name="tipo" id="tipoHR<%=rel.getAc().getIdTipoHijo()%>">
 				<input type="hidden" name="pag" id="pag<%=rel.getAc().getIdTipoHijo()%>">
@@ -1571,8 +1580,17 @@ if(listarel != null && listarel.size() > 0 ){
 							<input type="number" name="anioFM<%=rel.getAc().getIdTipoHijo() %>" id="anioFM<%=rel.getAc().getIdTipoHijo() %>" size="4" class="inputDays form-control">
 						</div>
 					</form>
+				<%}
+				if(rel.getAc().isConPaginaDoc()){
+				%>
+				<br>
+				<div class="form-group">
+					<label for="paginaDocM<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.pagina"></fmt:message></label>
+					<input type="number" name="paginaDocM<%=rel.getAc().getIdTipoHijo() %>" id="paginaDocM<%=rel.getAc().getIdTipoHijo() %>" min="1" size="4" class="form-control">
+				</div>
 				<%} %>
 				<input type="hidden" name="conFechaM" id="conFechaM<%=rel.getAc().getIdTipoHijo()%>">
+				<input type="hidden" name="conPaginaDocM" id="conPaginaDocM<%=rel.getAc().getIdTipoHijo()%>">
 				<input type="hidden" name="instM" id="instHRM<%=rel.getAc().getIdTipoHijo()%>">
 				<input type="hidden" name="tipoM" id="tipoHRM<%=rel.getAc().getIdTipoHijo()%>">
 				<input type="hidden" name="pagM" id="pagM<%=rel.getAc().getIdTipoHijo()%>">
@@ -1646,6 +1664,14 @@ if(listarel != null && listarel.size() > 0 ){
 							<input DISABLED type="number" name="anioFV<%=rel.getAc().getIdTipoHijo() %>" id="anioFV<%=rel.getAc().getIdTipoHijo() %>" size="4" class="inputDays form-control">
 						</div>
 					</form>
+				<%}
+				if(rel.getAc().isConPaginaDoc()){
+				%>
+				<br>
+				<div class="form-group">
+					<label for="paginaDocV<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.pagina"></fmt:message></label>
+					<input DISABLED type="number" name="paginaDocV<%=rel.getAc().getIdTipoHijo() %>" id="paginaDocV<%=rel.getAc().getIdTipoHijo() %>" min="1" size="4" class="form-control">
+				</div>
 				<%} %>				
 			</div>
 			<div class="modal-footer">

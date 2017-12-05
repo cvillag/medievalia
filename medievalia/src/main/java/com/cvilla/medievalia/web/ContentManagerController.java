@@ -2,6 +2,7 @@ package com.cvilla.medievalia.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -100,11 +101,22 @@ public class ContentManagerController {
 						logManager.log(user.getId(), Constants.P_OBJECT_TYPE_LIST, "Visualización de gestor de contenido. Lista vacía.", Constants.P_NOK);
 					}
 					model.addObject("listaObjetos", lo);
-					if(user.getUser_role() == Constants.ROLE_PROFESOR){
-						model.addObject("profe", "ok");
-					}
-					else{
+				}
+				
+				if(authManager.isAutorized(Constants.P_VIEW_AUTHORS_STATISTICS_PER_TYPE, user)){
+					model.addObject("profe", "ok");
+					model.addObject("objectsToValidate",objectManager.getStatisticsToValidate(activeGroup));
+					model.addObject("usersToValidate", objectManager.getStatisticsUsersToValidate(activeGroup));
+					model.addObject("totalObjsVal", objectManager.getStatisticsTotalInstancesPerType());
+					
+				}
+				else{
+					if(authManager.isAutorized(Constants.P_VIEW_OWN_AUTHORS_STATISTICS_PER_TYPE, user) && activeGroup != null){
 						model.addObject("profe", "nok");
+						model.addObject("ownObjectsToValidate", objectManager.getUserStatisticsObjetsToVal(user, activeGroup));
+						model.addObject("totalOwnObjects", objectManager.getUserStatisticsObjetsTotal(user,activeGroup));
+						model.addObject("ownObjectsToValidateAC", objectManager.getUserStatisticsObjetsToValAC(user, activeGroup));
+						model.addObject("totalOwnObjectsAC", objectManager.getUserStatisticsObjetsTotalAC(user,activeGroup));
 					}
 				}
 				//Resumen de autores

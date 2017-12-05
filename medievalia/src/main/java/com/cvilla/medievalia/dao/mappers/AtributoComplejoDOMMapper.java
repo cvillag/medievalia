@@ -72,6 +72,10 @@ public class AtributoComplejoDOMMapper implements RowMapper<InstanciaAtributoCom
 				a.setFechaFin(sf);
 			}
 		}
+		a.setConPaginaDoc(rs.getInt("conPaginaDoc"));
+		if(a.isConPagina()){
+			a.setPaginaDoc(rs.getInt("paginaDoc"));
+		}
 		
 		return a;
 	}

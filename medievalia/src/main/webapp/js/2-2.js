@@ -196,15 +196,16 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 			var idInst = obj[d].instanciaHijo.idInstancia;
 			var idInstP = obj[d].idInstanciaPadre;
 			var cfecha = obj[d].conFecha;
+			var cpagina = obj[d].conPaginaDoc;
 			var val = obj[d].validado;
 			if(rol == 3){
 				if(val == 0){
 					if(idUser == obj[d].creador){
 						if(obj[d].textoLeido == 1){
-							$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+'</li>');
+							$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'" data-cpagina="'+cpagina+'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+'</li>');
 						}
 						else{
-							$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+' <span class="label label-info acNoLeido" data-textval="'+obj[d].textoValidacion+'">1</span></li>');
+							$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'" data-cpagina="'+cpagina+'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+' <span class="label label-info acNoLeido" data-textval="'+obj[d].textoValidacion+'">1</span></li>');
 						}
 					}
 					else{
@@ -217,7 +218,7 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 			}
 			else{
 				if(val == 1){
-					$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+'</li>');
+					$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'" data-cpagina="'+cpagina+'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+'</li>');
 				}
 				else{
 					$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" class="btn btn-xs btn-warning pendienteVal"><span class="glyphicon glyphicon-ban-circle"></span></button><button type="button" class="btn btn-xs btn-default viewRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-eye-open"></span></button> '+nom+'</li>');
@@ -231,7 +232,7 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 			var tipo = disp[d].instanciaHijo.tipo.tipoDOM;
 			var idInst = disp[d].instanciaHijo.idInstancia;
 			var val = disp[d].validado;
-			$("#listD"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="addAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default addComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'">&nbsp;<span class="glyphicon glyphicon-arrow-left"></span></button> '+nom+'</li>');
+			$("#listD"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="addAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default addComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'" data-cpagina="'+cpagina+'">&nbsp;<span class="glyphicon glyphicon-arrow-left"></span></button> '+nom+'</li>');
 		}
 //		if(recarga == 1){
 			postCargaDetalle2();
@@ -241,6 +242,10 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 
 //Esta función únicamente se llama la primera vez que se construye el modal
 function postCargaDetalle(mod){
+	
+	$(".viewRelation").unbind("click",handViewRel);
+	$(".viewRelation").click(handViewRel);
+	
 	$(".textoNoValidaOBAC").click(function(){
 		$("#modalTextoNoValidacionOBAC").html($(this).data('textvalidacion'));
 		$("#idPadreAC").val($(this).data('idpadretv'));
@@ -376,7 +381,13 @@ var handViewRel = function botonViewVal(){
 					$("#mesFV" + tipo).val("");
 					$("#anioFV" + tipo).val("");
 				}
-			}	
+			}
+			if(json.conPaginaDoc == 1 && json.paginaDoc != 0){
+				$("#paginaDocV" + tipo).val(json.paginaDoc);
+			}
+			else{
+				$("#paginaDocM" + tipo).val("");
+			}
 			$("#modalViewRelacion" + tipo).modal();
 		}
 	});
@@ -419,7 +430,14 @@ var handModifyRel = function botonModifyVal(){
 					$("#anioFM" + tipo).val("");
 				}
 			}
+			if(json.conPaginaDoc == 1 && json.paginaDoc != 0){
+				$("#paginaDocM" + tipo).val(json.paginaDoc);
+			}
+			else{
+				$("#paginaDocM" + tipo).val("");
+			}
 			$("#conFechaM" + tipo).val(json.conFecha);
+			$("#conPaginaDoc" + tipo).val(json.conPaginaDoc);
 			$("#instHRM" + tipo).val(json.instH);
 			$("#tipoHRM" + tipo).val(json.tipoH);
 			$("#idInstanciaModificarM" + tipo).val(json.instP);	
@@ -439,6 +457,7 @@ var handBotAdd = function botonAddComplesAttr(){
 	pag = $(this).data('pag');
 	name = $(this).data('name');
 	cfecha = $(this).data('cfecha');
+	cpagina = $(this).data('cpagina');
 	tipoRel = $(this).data('tiporelacion');
 	$("#instHR" + tipo).val(inst);
 	$("#tipoHR" + tipo).val(tipo);
@@ -1293,6 +1312,8 @@ $(document).ready(function(){
 		inst = $("#instHR" + tipoR).val();
 		selRel = $("#selectRelacion" + tipoR).val();
 		confecha = $("#conFecha" + tipoR).val();
+		conPaginaDoc = $("#conPaginaDoc" + tipoR).val();
+		paginaDoc = $("#paginaDoc" + tipoR).val();
 		diai = $("#diaI" + tipoR).val();
 		mesi = $("#mesI" + tipoR).val();
 		anioi = $("#anioI" + tipoR).val();
@@ -1311,7 +1332,8 @@ $(document).ready(function(){
 			 		anioi : anioi,
 			 		diaf : diaf,
 			 		mesf : mesf,
-			 		aniof : aniof
+			 		aniof : aniof,
+			 		paginaDoc : paginaDoc
 				 },
 				 function(data){
 					 var json = JSON.parse(data);
@@ -1346,6 +1368,8 @@ $(document).ready(function(){
 		tiporm = $(this).data("tipo");
 		select = $("#selectRelacionM" + tiporm).val();
 		confecham = $("#conFechaM" + tiporm).val();
+		conPaginaDoc = $("#conPaginaDocM" + tiporm).val();
+		paginaDoc = $("#paginaDocM" + tiporm).val();
 		instanciaHijom = $("#instHRM" +tiporm).val();
 		tipoHijoM = $("#tipoHRM" + tiporm).val();
 		instanciaPadreM = $("#idInstanciaModificarM" + tiporm).val();
@@ -1366,7 +1390,8 @@ $(document).ready(function(){
 			anioi : anioim,
 			diaf : diafm,
 			mesf : mesfm,
-			aniof : aniofm
+			aniof : aniofm,
+			paginaDoc : paginaDoc
 		},
 		function(data){
 			var json = JSON.parse(data);

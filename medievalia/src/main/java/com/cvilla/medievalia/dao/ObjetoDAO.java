@@ -14,6 +14,7 @@ import com.cvilla.medievalia.dao.mappers.SpecialDateDOMMapper;
 import com.cvilla.medievalia.dao.mappers.StringDOMMapper;
 import com.cvilla.medievalia.dao.mappers.TipoAtributoComplejoDOMMapper;
 import com.cvilla.medievalia.dao.mappers.TipoObjetoDOMMapper;
+import com.cvilla.medievalia.dao.mappers.UserIDMapper;
 import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
 import com.cvilla.medievalia.domain.Group;
@@ -51,11 +52,11 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String GET_OBJECT_INT_ATTRIBUTES_VALUE = "SELECT `valor` FROM `InstanciaAtributoInt` WHERE idObjeto = ? and idInstancia = ? and idAtributoSencillo = ?";
 	private static final String GET_OBJECT_STRING_ATTRIBUTES_VALUE = "SELECT `idInstancia`, `idAtributoSencillo`, `idObjeto`, `valor` FROM `InstanciaAtributoString` WHERE idObjeto = ? and idInstancia = ? and idAtributoSencillo = ?";
 	private static final String GET_OBJECT_TEXT_ATTRIBUTES_VALUE = "SELECT `idInstancia`, `idAtributoSencillo`, `idObjeto`, `valor` FROM `InstanciaAtributoText` WHERE idObjeto = ? and idInstancia = ? and idAtributoSencillo = ?";
-	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES = "select `idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validadoPadre`, `textoValidacionHijo`, `idGrupoPadre`, `creadorPadre`, `textoLeidoAC`, `nombreAtributo`, `nombreObjetoHijo`, `validadoHijo`, `textoValidacionPadre`, `idGrupoHijo`, `creadorHijo`, `idObjetoRelacion`,`idInstanciaRelacion`, `nombreObjeto`, `nombreInstancia`, sel4.`conFecha`, sel4.`diaI`, sel4.`mesI`, sel4.`anioI`, sel4.`diaF`, sel4.`mesF`, sel4.`anioF` from (" 
-			+ "select `idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validadoPadre`, `textoValidacionHijo`, `idGrupoPadre`, `creadorPadre`, `textoLeidoAC`, `nombreAtributo`, `nombreObjetoHijo`, `validadoHijo`, `textoValidacionPadre`, `idGrupoHijo`, `creadorHijo`, `idObjetoRelacion`,`idInstanciaRelacion`, `nombreObjeto`, sel3.`conFecha`, sel3.`diaI`, sel3.`mesI`, sel3.`anioI`, sel3.`diaF`, sel3.`mesF`, sel3.`anioF` from (" 
-				+"select `idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionHijo`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, sel2.`textoLeidoAC`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, 		InstanciaObjeto.textoValidacion as `textoValidacionPadre`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo`, sel2.`idObjetoRelacion`,sel2.`idInstanciaRelacion`, sel2.`conFecha`, sel2.`diaI`, sel2.`mesI`, sel2.`anioI`, sel2.`diaF`, sel2.`mesF`, sel2.`anioF` from " 
-					+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`,`creador`, `textoLeido` as `textoLeidoAC`, `nombreAtributo`, sel1.`idObjetoRelacion`,sel1.`idInstanciaRelacion`, sel1.`conFecha`, sel1.`diaI`, sel1.`mesI`, sel1.`anioI`, sel1.`diaF`, sel1.`mesF`, sel1.`anioF` from " 
-						+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido`, `idObjetoRelacion`,`idInstanciaRelacion`, `conFecha`, `diaI`, `mesI`, `anioI`, `diaF`, `mesF`, `anioF` " 
+	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES = "select `idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validadoPadre`, `textoValidacionHijo`, `idGrupoPadre`, `creadorPadre`, `textoLeidoAC`, `nombreAtributo`, `nombreObjetoHijo`, `validadoHijo`, `textoValidacionPadre`, `idGrupoHijo`, `creadorHijo`, `idObjetoRelacion`,`idInstanciaRelacion`, `nombreObjeto`, `nombreInstancia`, sel4.`conFecha`, sel4.`diaI`, sel4.`mesI`, sel4.`anioI`, sel4.`diaF`, sel4.`mesF`, sel4.`anioF`,sel4.`conPaginaDoc`,sel4.`paginaDoc` from (" 
+			+ "select `idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validadoPadre`, `textoValidacionHijo`, `idGrupoPadre`, `creadorPadre`, `textoLeidoAC`, `nombreAtributo`, `nombreObjetoHijo`, `validadoHijo`, `textoValidacionPadre`, `idGrupoHijo`, `creadorHijo`, `idObjetoRelacion`,`idInstanciaRelacion`, `nombreObjeto`, sel3.`conFecha`, sel3.`diaI`, sel3.`mesI`, sel3.`anioI`, sel3.`diaF`, sel3.`mesF`, sel3.`anioF`,sel3.`conPaginaDoc`,sel3.`paginaDoc` from (" 
+				+"select `idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionHijo`, sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, sel2.`textoLeidoAC`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, 		InstanciaObjeto.textoValidacion as `textoValidacionPadre`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo`, sel2.`idObjetoRelacion`,sel2.`idInstanciaRelacion`, sel2.`conFecha`, sel2.`diaI`, sel2.`mesI`, sel2.`anioI`, sel2.`diaF`, sel2.`mesF`, sel2.`anioF`,sel2.`conPaginaDoc`,sel2.`paginaDoc` from " 
+					+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`,`creador`, `textoLeido` as `textoLeidoAC`, `nombreAtributo`, sel1.`idObjetoRelacion`,sel1.`idInstanciaRelacion`, sel1.`conFecha`, sel1.`diaI`, sel1.`mesI`, sel1.`anioI`, sel1.`diaF`, sel1.`mesF`, sel1.`anioF`,sel1.`conPaginaDoc`,sel1.`paginaDoc` from " 
+						+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido`, `idObjetoRelacion`,`idInstanciaRelacion`, `conFecha`, `diaI`, `mesI`, `anioI`, `diaF`, `mesF`, `anioF`,`conPaginaDoc`,`paginaDoc` " 
 							+ "FROM `InstanciaAtributoComplejo` left join ObjetoDOM on idObjetoPadre = idObjeto WHERE idObjetoPadre = ? and idInstanciaPadre = ?) as sel1 " 
 							+ "left join AtributoComplejoObjeto on sel1.idObjetoPadre = AtributoComplejoObjeto.idObjetoPadre and sel1.idObjetoHijo = AtributoComplejoObjeto.idObjetoHijo) as sel2 " 
 						+ "left join InstanciaObjeto on InstanciaObjeto.idInstancia = sel2.idInstanciaHijo and InstanciaObjeto.idObjeto = sel2.idObjetoHijo) as sel3 " 
@@ -65,13 +66,13 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String ADD_OBJECT_INSTANCE = "INSERT INTO `InstanciaObjeto`(`idInstancia`, `idObjeto`, `nombreInstancia`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido`) VALUES (?,?,?,?,?,?,?,?)";
 	private static final String GET_MAX_INSTANCE_ID_BY_OBJECT = "select max(idInstancia) from InstanciaObjeto where idObjeto = ?";
 	private static final String GET_OBJECT_INSTANCE_BY_NAME ="SELECT count(*) FROM `InstanciaObjeto` WHERE idObjeto = ? and nombreInstancia = ?";
-	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES_TYPES = "SELECT `idObjetoPadre`, `idObjetoHijo`, `NombreAtributo`, `idObjetoRelacion`, `conFecha` FROM `AtributoComplejoObjeto` WHERE idObjetoPadre = ?";
-	private static final String ADD_COMPLEX_ATTRIBUTE = "INSERT INTO `InstanciaAtributoComplejo`(`idObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`,`idObjetoRelacion`,`idInstanciaRelacion`,`conFecha`,`diaI`,`mesI`,`anioI`,`diaF`,`mesF`,`anioF`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	private static final String GET_COMPLEX_ATTRIBUTE = "select `idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validadoPadre`, `textoValidacionHijo`, `idGrupoPadre`, `creadorPadre`, `textoLeidoAC`, `nombreAtributo`, `nombreObjetoHijo`, `validadoHijo`, `textoValidacionPadre`, `idGrupoHijo`, `creadorHijo`, `idObjetoRelacion`,`idInstanciaRelacion`, `nombreObjeto`, `nombreInstancia`, sel4.`conFecha`, sel4.`diaI`, sel4.`mesI`, sel4.`anioI`, sel4.`diaF`, sel4.`mesF`, sel4.`anioF` from( " 
-			+ "select `idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validadoPadre`, `textoValidacionHijo`, `idGrupoPadre`, `creadorPadre`, `textoLeidoAC`, `nombreAtributo`, `nombreObjetoHijo`, `validadoHijo`, `textoValidacionPadre`, `idGrupoHijo`, `creadorHijo`, `idObjetoRelacion`,`idInstanciaRelacion`, `nombreObjeto`, sel3.`conFecha`, sel3.`diaI`, sel3.`mesI`, sel3.`anioI`, sel3.`diaF`, sel3.`mesF`, sel3.`anioF` from( " 
-				+ "select `idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionHijo`, 			sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, sel2.`textoLeidoAC`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, 	InstanciaObjeto.textoValidacion as `textoValidacionPadre`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo`, sel2.`idObjetoRelacion`,sel2.`idInstanciaRelacion`, sel2.`conFecha`, sel2.`diaI`, sel2.`mesI`, sel2.`anioI`, sel2.`diaF`, sel2.`mesF`, sel2.`anioF` from " 
-					+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, 			`creador`, `textoLeido` as `textoLeidoAC`, `nombreAtributo`, sel1.`idObjetoRelacion`,sel1.`idInstanciaRelacion`, sel1.`conFecha`, sel1.`diaI`, sel1.`mesI`, sel1.`anioI`, sel1.`diaF`, sel1.`mesF`, sel1.`anioF` from "
-						+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido`, `idObjetoRelacion`,`idInstanciaRelacion`, `conFecha`, `diaI`, `mesI`, `anioI`, `diaF`, `mesF`, `anioF` FROM `InstanciaAtributoComplejo` " 
+	private static final String GET_OBJECT_COMPLEX_ATTRIBUTES_TYPES = "SELECT `idObjetoPadre`, `idObjetoHijo`, `NombreAtributo`, `idObjetoRelacion`, `conFecha`, `conPaginaDoc` FROM `AtributoComplejoObjeto` WHERE idObjetoPadre = ?";
+	private static final String ADD_COMPLEX_ATTRIBUTE = "INSERT INTO `InstanciaAtributoComplejo`(`idObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`,`idObjetoRelacion`,`idInstanciaRelacion`,`conFecha`,`diaI`,`mesI`,`anioI`,`diaF`,`mesF`,`anioF`,`conPaginaDoc`,`paginaDoc`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String GET_COMPLEX_ATTRIBUTE = "select `idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validadoPadre`, `textoValidacionHijo`, `idGrupoPadre`, `creadorPadre`, `textoLeidoAC`, `nombreAtributo`, `nombreObjetoHijo`, `validadoHijo`, `textoValidacionPadre`, `idGrupoHijo`, `creadorHijo`, `idObjetoRelacion`,`idInstanciaRelacion`, `nombreObjeto`, `nombreInstancia`, sel4.`conFecha`, sel4.`diaI`, sel4.`mesI`, sel4.`anioI`, sel4.`diaF`, sel4.`mesF`, sel4.`anioF`,sel4.`conPaginaDoc`,sel4.`paginaDoc` from( " 
+			+ "select `idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validadoPadre`, `textoValidacionHijo`, `idGrupoPadre`, `creadorPadre`, `textoLeidoAC`, `nombreAtributo`, `nombreObjetoHijo`, `validadoHijo`, `textoValidacionPadre`, `idGrupoHijo`, `creadorHijo`, `idObjetoRelacion`,`idInstanciaRelacion`, `nombreObjeto`, sel3.`conFecha`, sel3.`diaI`, sel3.`mesI`, sel3.`anioI`, sel3.`diaF`, sel3.`mesF`, sel3.`anioF`,sel3.`conPaginaDoc`,sel3.`paginaDoc` from( " 
+				+ "select `idObjetoPadre`, `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, sel2.`validado` as `validadoPadre`, sel2.`textoValidacion` as `textoValidacionHijo`, 			sel2.`idGrupo` as `idGrupoPadre`, sel2.`creador` as `creadorPadre`, sel2.`textoLeidoAC`, `nombreAtributo`, `nombreInstancia` as `nombreObjetoHijo`, InstanciaObjeto.validado as `validadoHijo`, 	InstanciaObjeto.textoValidacion as `textoValidacionPadre`, InstanciaObjeto.idGrupo as `idGrupoHijo`, InstanciaObjeto.creador as `creadorHijo`, sel2.`idObjetoRelacion`,sel2.`idInstanciaRelacion`, sel2.`conFecha`, sel2.`diaI`, sel2.`mesI`, sel2.`anioI`, sel2.`diaF`, sel2.`mesF`, sel2.`anioF`,sel2.`conPaginaDoc`,sel2.`paginaDoc` from " 
+					+ "(select sel1.`idObjetoPadre` as `idObjetoPadre`, `nombreObjetoPadre`, sel1.`idObjetoHijo` as `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, 			`creador`, `textoLeido` as `textoLeidoAC`, `nombreAtributo`, sel1.`idObjetoRelacion`,sel1.`idInstanciaRelacion`, sel1.`conFecha`, sel1.`diaI`, sel1.`mesI`, sel1.`anioI`, sel1.`diaF`, sel1.`mesF`, sel1.`anioF`,sel1.`conPaginaDoc`,sel1.`paginaDoc` from "
+						+ "(SELECT `idObjetoPadre`, nombreObjeto as `nombreObjetoPadre`, `idObjetoHijo`, `idInstanciaPadre`, `idInstanciaHijo`, `validado`, `textoValidacion`, `idGrupo`, `creador`, `textoLeido`, `idObjetoRelacion`,`idInstanciaRelacion`, `conFecha`, `diaI`, `mesI`, `anioI`, `diaF`, `mesF`, `anioF`,`conPaginaDoc`,`paginaDoc` FROM `InstanciaAtributoComplejo` " 
 						+ "left join ObjetoDOM on idObjetoPadre = idObjeto WHERE idObjetoPadre = ? and idInstanciaPadre = ? and idObjetoHijo = ? and idInstanciaHijo = ? and validado = ?) as sel1 " 
 					+ "left join AtributoComplejoObjeto on sel1.idObjetoPadre = AtributoComplejoObjeto.idObjetoPadre and sel1.idObjetoHijo = AtributoComplejoObjeto.idObjetoHijo) as sel2 " 
 				+ "left join InstanciaObjeto on InstanciaObjeto.idInstancia = sel2.idInstanciaHijo and InstanciaObjeto.idObjeto = sel2.idObjetoHijo) as sel3 " 
@@ -110,9 +111,14 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String CHECK_COMMENT_OBJECT = "UPDATE `InstanciaObjeto` SET `textoLeido`=? WHERE `idInstancia`=? and `idObjeto`=?";
 	private static final String GET_TYPE_RELACION_FOR_CA = "SELECT `idObjetoRelacion` FROM `AtributoComplejoObjeto` WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ?";
 	private static final String IS_CON_FECHA = "SELECT `conFecha` FROM `AtributoComplejoObjeto` WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ?";
-	private static final String UPDATE_COMPLEX_ATTRIBUTE = "UPDATE `InstanciaAtributoComplejo` SET `idInstanciaRelacion`= ?, `diaI`=?,`mesI`=?,`anioI`=?,`diaF`=?,`mesF`=?,`anioF`=? WHERE `idObjetoPadre`=? and `idObjetoHijo`=? and `idInstanciaPadre`=? and `idInstanciaHijo`=?";
+	private static final String UPDATE_COMPLEX_ATTRIBUTE = "UPDATE `InstanciaAtributoComplejo` SET `idInstanciaRelacion`= ?, `diaI`=?,`mesI`=?,`anioI`=?,`diaF`=?,`mesF`=?,`anioF`=?, `conPaginaDoc` = ?, `paginaDoc` = ? WHERE `idObjetoPadre`=? and `idObjetoHijo`=? and `idInstanciaPadre`=? and `idInstanciaHijo`=?";
 	private static final String IS_CON_RELACION = "SELECT `idObjetoRelacion` FROM `AtributoComplejoObjeto` WHERE `idObjetoPadre` = ? and `idObjetoHijo` = ?";
 	private static final String CHECK_COMMENT_COMPLEX_ATTRIBUTE = "UPDATE `InstanciaAtributoComplejo` SET `textoLeido`= ? WHERE `idObjetoPadre`= ? and `idObjetoHijo`= ? and `idInstanciaPadre`= ? and `idInstanciaHijo`= ?";
+	
+	private static final String NUM_UNVALIDATED_INSTANCES_BY_GROUP_AND_TYPE = "select count(*) from InstanciaObjeto where `idGrupo` = ? and idObjeto = ? and validado = ?";
+	private static final String NUM_VALIDATED_INSTANCES_WITH_UNVALIDATED_AC_BY_GROUP_AND_TYPE = "select count(*) from (select distinct(sel1.idInstancia),validado,idObjetoPadre from (select idInstancia, idObjeto from InstanciaObjeto where idObjeto = ? and validado = ?) as sel1 left join InstanciaAtributoComplejo on sel1.idInstancia = idInstanciaPadre and idObjeto = idObjetoPadre where validado = ? and idGrupo = ?) as sel2";
+	private static final String STUDENTS_CREATORS_OF_UNVALIDATED_INSTANCES_BY_GROUP_AND_TYPE  = "select user_id  from (select distinct(creador) as num from InstanciaObjeto where `idGrupo` = ? and idObjeto = ? and validado = ?) as sel1 left join users on num = user_id where user_role = ?";
+	private static final String STUDENTS_CREATORS_OF_UNVALIDATED_AC_BY_GROUP_AND_TYPE   = "select distinct(creador) as user_id from (select sel1.idInstancia,validado,idObjetoPadre, InstanciaAtributoComplejo.creador from (select idInstancia, idObjeto from InstanciaObjeto where idObjeto = ? and validado = ?) as sel1 left join InstanciaAtributoComplejo on sel1.idInstancia = idInstanciaPadre and idObjeto = idObjetoPadre where validado = ? and idGrupo = ?) as sel2";
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -281,30 +287,30 @@ public class ObjetoDAO implements IObjetoDAO {
 			int i = 0;
 			if(ao.getInstanciaObjetoRelacion() != null){
 				if(ini != null && fin != null){
-					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),ao.getInstanciaObjetoRelacion().getIdInstancia(),ao.getConFecha(),ao.getFechaInicio().getDia(),ao.getFechaInicio().getMes(),ao.getFechaInicio().getAnio(),ao.getFechaFin().getDia(),ao.getFechaFin().getMes(),ao.getFechaFin().getAnio()});
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),ao.getInstanciaObjetoRelacion().getIdInstancia(),ao.getConFecha(),ao.getFechaInicio().getDia(),ao.getFechaInicio().getMes(),ao.getFechaInicio().getAnio(),ao.getFechaFin().getDia(),ao.getFechaFin().getMes(),ao.getFechaFin().getAnio(),ao.getConPaginaDoc(),ao.getPaginaDoc()});
 				}
 				else if(ini != null){
-					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),ao.getInstanciaObjetoRelacion().getIdInstancia(),ao.getConFecha(),ao.getFechaInicio().getDia(),ao.getFechaInicio().getMes(),ao.getFechaInicio().getAnio(),null,null,null});
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),ao.getInstanciaObjetoRelacion().getIdInstancia(),ao.getConFecha(),ao.getFechaInicio().getDia(),ao.getFechaInicio().getMes(),ao.getFechaInicio().getAnio(),null,null,null,ao.getConPaginaDoc(),ao.getPaginaDoc()});
 				}
 				else if(fin != null){
-					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),ao.getInstanciaObjetoRelacion().getIdInstancia(),ao.getConFecha(),null,null,null,ao.getFechaFin().getDia(),ao.getFechaFin().getMes(),ao.getFechaFin().getAnio()});
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),ao.getInstanciaObjetoRelacion().getIdInstancia(),ao.getConFecha(),null,null,null,ao.getFechaFin().getDia(),ao.getFechaFin().getMes(),ao.getFechaFin().getAnio(),ao.getConPaginaDoc(),ao.getPaginaDoc()});
 				}
 				else {
-					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),ao.getInstanciaObjetoRelacion().getIdInstancia(),ao.getConFecha(),null,null,null,null,null,null});
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),ao.getInstanciaObjetoRelacion().getIdInstancia(),ao.getConFecha(),null,null,null,null,null,null,ao.getConPaginaDoc(),ao.getPaginaDoc()});
 				}
 			}
 			else{
 				if(ini != null && fin != null){
-					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),null,ao.getConFecha(),ao.getFechaInicio().getDia(),ao.getFechaInicio().getMes(),ao.getFechaInicio().getAnio(),ao.getFechaFin().getDia(),ao.getFechaFin().getMes(),ao.getFechaFin().getAnio()});
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),null,ao.getConFecha(),ao.getFechaInicio().getDia(),ao.getFechaInicio().getMes(),ao.getFechaInicio().getAnio(),ao.getFechaFin().getDia(),ao.getFechaFin().getMes(),ao.getFechaFin().getAnio(),ao.getConPaginaDoc(),ao.getPaginaDoc()});
 				}
 				else if(ini != null){
-					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),null,ao.getConFecha(),ao.getFechaInicio().getDia(),ao.getFechaInicio().getMes(),ao.getFechaInicio().getAnio(),null,null,null});
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),null,ao.getConFecha(),ao.getFechaInicio().getDia(),ao.getFechaInicio().getMes(),ao.getFechaInicio().getAnio(),null,null,null,ao.getConPaginaDoc(),ao.getPaginaDoc()});
 				}
 				else if(fin != null){
-					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),null,ao.getConFecha(),null,null,null,ao.getFechaFin().getDia(),ao.getFechaFin().getMes(),ao.getFechaFin().getAnio()});
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),null,ao.getConFecha(),null,null,null,ao.getFechaFin().getDia(),ao.getFechaFin().getMes(),ao.getFechaFin().getAnio(),ao.getConPaginaDoc(),ao.getPaginaDoc()});
 				}
 				else {
-					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),null,ao.getConFecha(),null,null,null,null,null,null});
+					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),null,ao.getConFecha(),null,null,null,null,null,null,ao.getConPaginaDoc(),ao.getPaginaDoc()});
 				}
 			}
 			if(i == 1)
@@ -641,16 +647,16 @@ public class ObjetoDAO implements IObjetoDAO {
 			SpecialDate fi = ao.getFechaFin();
 			int i = 0;
 			if(in != null && fi != null){
-				i = jdbcTemplate.update(UPDATE_COMPLEX_ATTRIBUTE, new Object[]{ao.getInstanciaObjetoRelacion().getIdInstancia(),in.getDia(),in.getMes(),in.getAnio(),fi.getDia(),fi.getMes(),fi.getAnio(),ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstPadre,ao.getInstanciaHijo().getIdInstancia()});
+				i = jdbcTemplate.update(UPDATE_COMPLEX_ATTRIBUTE, new Object[]{ao.getInstanciaObjetoRelacion().getIdInstancia(),in.getDia(),in.getMes(),in.getAnio(),fi.getDia(),fi.getMes(),fi.getAnio(),ao.getConPaginaDoc(),ao.getPaginaDoc(),ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstPadre,ao.getInstanciaHijo().getIdInstancia()});
 			}
 			else if(fi != null){
-				i = jdbcTemplate.update(UPDATE_COMPLEX_ATTRIBUTE, new Object[]{ao.getInstanciaObjetoRelacion().getIdInstancia(),in.getDia(),in.getMes(),in.getAnio(),null,null,null,ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstPadre,ao.getInstanciaHijo().getIdInstancia()});
+				i = jdbcTemplate.update(UPDATE_COMPLEX_ATTRIBUTE, new Object[]{ao.getInstanciaObjetoRelacion().getIdInstancia(),in.getDia(),in.getMes(),in.getAnio(),null,null,null,ao.getConPaginaDoc(),ao.getPaginaDoc(),ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstPadre,ao.getInstanciaHijo().getIdInstancia()});
 			}
 			else if(in != null){
-				i = jdbcTemplate.update(UPDATE_COMPLEX_ATTRIBUTE, new Object[]{ao.getInstanciaObjetoRelacion().getIdInstancia(),null,null,null,fi.getDia(),fi.getMes(),fi.getAnio(),ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstPadre,ao.getInstanciaHijo().getIdInstancia()});
+				i = jdbcTemplate.update(UPDATE_COMPLEX_ATTRIBUTE, new Object[]{ao.getInstanciaObjetoRelacion().getIdInstancia(),null,null,null,fi.getDia(),fi.getMes(),fi.getAnio(),ao.getConPaginaDoc(),ao.getPaginaDoc(),ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstPadre,ao.getInstanciaHijo().getIdInstancia()});
 			}
 			else{
-				i = jdbcTemplate.update(UPDATE_COMPLEX_ATTRIBUTE, new Object[]{ao.getInstanciaObjetoRelacion().getIdInstancia(),null,null,null,null,null,null,ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstPadre,ao.getInstanciaHijo().getIdInstancia()});
+				i = jdbcTemplate.update(UPDATE_COMPLEX_ATTRIBUTE, new Object[]{ao.getInstanciaObjetoRelacion().getIdInstancia(),null,null,null,null,null,null,ao.getConPaginaDoc(),ao.getPaginaDoc(),ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstPadre,ao.getInstanciaHijo().getIdInstancia()});
 			}
 			if(i == 1)
 				return "actualizado";
@@ -686,4 +692,39 @@ public class ObjetoDAO implements IObjetoDAO {
 			return "errorBD";
 		}
 	}
+	public int getNumUnvalidatedInstances(int tipo, int group){
+		try{
+			int i = jdbcTemplate.queryForInt(NUM_UNVALIDATED_INSTANCES_BY_GROUP_AND_TYPE,new Object[]{group,tipo,Constants.OBJETO_NO_VALIDADO});
+			return i;
+		}
+		catch(Exception e){
+			return 0;
+		}
+	}
+	
+	public int getNumValidatedInstancesWithUnvalidatedAC(int tipo, int group){
+		try{
+			int i = jdbcTemplate.queryForInt(NUM_VALIDATED_INSTANCES_WITH_UNVALIDATED_AC_BY_GROUP_AND_TYPE,new Object[]{tipo,Constants.OBJETO_VALIDADO,Constants.OBJETO_NO_VALIDADO,group});
+			return i;
+		}
+		catch(Exception e){
+			return 0;
+		}
+	}
+	public int getNumStudentsUnvalidatedInstances(int tipo, int group){
+		try{
+			List<Integer> lest = jdbcTemplate.query(STUDENTS_CREATORS_OF_UNVALIDATED_INSTANCES_BY_GROUP_AND_TYPE,new Object[]{group,tipo,Constants.OBJETO_NO_VALIDADO,Constants.ROLE_ALUMNO},new UserIDMapper());
+			List<Integer> lest2 = jdbcTemplate.query(STUDENTS_CREATORS_OF_UNVALIDATED_AC_BY_GROUP_AND_TYPE, new Object[]{tipo,Constants.OBJETO_VALIDADO,Constants.OBJETO_NO_VALIDADO,group},new UserIDMapper());
+			for(Integer i : lest2){
+				if(!lest.contains(i)){
+					lest.add(i);
+				}
+			}
+			return lest.size();
+		}
+		catch(Exception e){
+			return 0;
+		}
+	}
+	
 }

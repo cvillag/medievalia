@@ -7,6 +7,7 @@ public class TipoAtributoComplejoDOM {
 	private String nombreAtributo;
 	private int idTipoRelacion;
 	private int conFecha;
+	private int conPaginaDoc;
 	public TipoAtributoComplejoDOM() {
 		super();
 	}
@@ -39,5 +40,14 @@ public class TipoAtributoComplejoDOM {
 	}
 	public void setConFecha(int conFecha) {
 		this.conFecha = conFecha;
+	}
+	public int getConPaginaDoc() {
+		return conPaginaDoc;
+	}
+	public void setConPaginaDoc(int conPaginaDoc) {
+		this.conPaginaDoc = conPaginaDoc;
+	}
+	public boolean isConPaginaDoc(){
+		return this.conPaginaDoc == 1;
 	}
 }

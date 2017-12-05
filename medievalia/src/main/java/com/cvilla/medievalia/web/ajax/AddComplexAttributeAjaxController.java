@@ -67,9 +67,16 @@ public class AddComplexAttributeAjaxController {
 				int selRel = (new Integer(request.getParameter("selRel"))).intValue();
 				SpecialDate inicio = null;
 				SpecialDate fin = null;
+				int paginaDoc = 0;
 				if(objectManager.isConFecha(tipo.getTipoDOM(),idTipoAttr)){
 					inicio = Fechas.getDate(request,"i");
 					fin = Fechas.getDate(request,"f");
+				}
+				if(objectManager.isConPag(tipo.getTipoDOM(),idTipoAttr)){
+					String pd = request.getParameter("paginaDoc");
+					if(pd!=null && Constants.isNumeric(pd)){
+						paginaDoc = (new Integer(pd).intValue());
+					}
 				}
 				int val;
 				if(authManager.isAutorized(actionInt2, user)){
@@ -78,7 +85,7 @@ public class AddComplexAttributeAjaxController {
 				else{
 					val = Constants.OBJETO_NO_VALIDADO;
 				}
-				String message = objectManager.addObjetoDOMAttributeByType(idInstPadre, idInstHijo, tipo, idTipoAttr, val, user, groupA,selRel,inicio,fin);
+				String message = objectManager.addObjetoDOMAttributeByType(idInstPadre, idInstHijo, tipo, idTipoAttr, val, user, groupA,selRel,inicio,fin,paginaDoc);
 				logManager.log(user.getId(), actionInt, "Adición de atributo complejo de instancia padre" + idInstPadre + " idObjeto " + tipo.getNombreDOM(), Constants.P_OK);
 				j.put("message", message);
 				j.put("pag", idTipoAttr);

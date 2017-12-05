@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@page import="com.cvilla.medievalia.domain.TipoObjetoDOM"%>
 <%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
@@ -16,6 +17,27 @@
 	
 	@SuppressWarnings("unchecked")
 	List<TipoObjetoDOM> listaTipos = (List<TipoObjetoDOM>) request.getAttribute("listaObjetos");
+	
+	@SuppressWarnings("unchecked")
+	Map<Integer,Integer> profe1 = (Map<Integer,Integer>) request.getAttribute("objectsToValidate"); 
+	
+	@SuppressWarnings("unchecked")
+	Map<Integer,Integer> profe2 = (Map<Integer,Integer>) request.getAttribute("usersToValidate");
+	
+	@SuppressWarnings("unchecked")
+	Map<Integer,Integer> alum1 = (Map<Integer,Integer>) request.getAttribute("ownObjectsToValidate");
+	
+	@SuppressWarnings("unchecked")
+	Map<Integer,Integer> alum2 = (Map<Integer,Integer>) request.getAttribute("totalOwnObjects");
+	
+	@SuppressWarnings("unchecked")
+	Map<Integer,Integer> alum3 = (Map<Integer,Integer>) request.getAttribute("ownObjectsToValidateAC");
+	
+	@SuppressWarnings("unchecked")
+	Map<Integer,Integer> alum4 = (Map<Integer,Integer>) request.getAttribute("totalOwnObjectsAC");
+	
+	@SuppressWarnings("unchecked")
+	Map<Integer,Integer> totalObjsVal = (Map<Integer,Integer>) request.getAttribute("totalObjsVal");
 %>
 <%if(message.equals("p3.1.msg.ok") && g != null){ %>
 <div class="container">
@@ -60,34 +82,49 @@
 			<div class="panel-body">
 				<p>
 				<%if(profe.equals("ok")){ %>
+				<fmt:message key="p2-1.objeto-total"></fmt:message>&nbsp;
+				<span class="label label-info"><%=totalObjsVal.get(tipo.getTipoDOM()).intValue() %></span>
+				</p><p>
 				<fmt:message key="p2-1.objeto02"></fmt:message>
-<%-- 					<%if(numChar == 0){ %> --%>
-<%-- 					<span class="label label-success"><%=numChar %></span> --%>
-<%-- 					<%}else{%> --%>
-					<span class="label label-warning"><%=0 %></span>
-<%-- 					<% --%>
-<%--  					}%> --%>
-				&nbsp;<fmt:message key="p2-1.objeto03"></fmt:message>
-<%-- 					<%if(numStud == 0){ %> --%>
-<%-- 					<span class="label label-success"><%=numStud %></span> --%>
-<%-- 					<%}else{%> --%>
-					<span class="label label-warning"><%=0 %></span>
-<%-- 					<% --%>
-<%--  					}%> --%>
+					<% int numToVal = profe1.get(tipo.getTipoDOM()).intValue();
+					if(numToVal == 0){ %>
+					<span class="label label-success"><%=numToVal %></span>
+					<%}else{%>
+					<span class="label label-warning"><%=numToVal %></span>
+					<%
+  					}%>	
+					<%
+					int numStudents = profe2.get(tipo.getTipoDOM()).intValue();
+					if(numStudents > 0){ %>
+					&nbsp;<fmt:message key="p2-1.objeto03"></fmt:message>
+					<span class="label label-warning"><%=numStudents %></span>
+					<%}%>
 				&nbsp;<fmt:message key="p2-1.objeto04"></fmt:message>
 				<%}
  				else{%>
 					<fmt:message key="p2-1.objetosPropios"></fmt:message>
-					<span class="label label-info"><%=0 %></span>
-					</p><p>
-					<fmt:message key="p2-1.objeto02"></fmt:message>
-<%-- 					<%if(numChSt == 0){ %> --%>
-<%-- 					<span class="label label-success"><%=numChSt %></span> --%>
-<%-- 					<%}else{%> --%>
-					<span class="label label-warning"><%=0 %></span>
+					<span class="label label-info"><%=alum2.get(tipo.getTipoDOM()).intValue() %></span>
+					
 					<%
- 					//}
-				} %>
+					int numStudentToVal = alum1.get(tipo.getTipoDOM()).intValue();
+					if(numStudentToVal > 0){ %>
+					.&nbsp;
+					<fmt:message key="p2-1.objeto02"></fmt:message>
+					<span class="label label-warning"><%=numStudentToVal %></span>
+					<%}
+ 					%>
+					</p><p>
+					<fmt:message key="p2-1.atributosPropios"></fmt:message>
+					<span class="label label-info"><%=alum4.get(tipo.getTipoDOM()).intValue() %></span>
+					<%
+					int numStudentToValAC = alum3.get(tipo.getTipoDOM()).intValue();
+					if(numStudentToValAC > 0){ %>
+					.&nbsp;
+					<fmt:message key="p2-1.objeto02"></fmt:message>
+					<span class="label label-warning"><%=numStudentToValAC %></span>
+					<%
+ 					}%>
+				<%} %>
 				</p>
 				<p><button type="button" class="btn btn-sm btn-info btnGestionObjetos" data-val="<%=tipo.getTipoDOM()%>"><fmt:message key="p2-1.objeto.btn"></fmt:message></button></p>
 			</div>

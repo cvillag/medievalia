@@ -20,6 +20,8 @@ public class InstanciaAtributoComplejoDOM {
 	private int conFecha;
 	private SpecialDate fechaInicio;
 	private SpecialDate fechaFin;
+	private int conPaginaDoc;
+	private int paginaDoc;
 	
 	public InstanciaAtributoComplejoDOM() {
 		super();
@@ -126,5 +128,20 @@ public class InstanciaAtributoComplejoDOM {
 	}
 	public void setIdInstanciaPadre(int idInstanciaPadre) {
 		this.idInstanciaPadre = idInstanciaPadre;
+	}
+	public int getConPaginaDoc() {
+		return conPaginaDoc;
+	}
+	public void setConPaginaDoc(int conPaginaDoc) {
+		this.conPaginaDoc = conPaginaDoc;
+	}
+	public int getPaginaDoc() {
+		return paginaDoc;
+	}
+	public void setPaginaDoc(int paginaDoc) {
+		this.paginaDoc = paginaDoc;
+	}
+	public boolean isConPagina(){
+		return this.conPaginaDoc == 1;
 	}
 }

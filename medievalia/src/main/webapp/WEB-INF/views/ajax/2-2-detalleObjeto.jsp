@@ -196,7 +196,7 @@ if(objeto != null){
 				<%} %>
 				<% if(ac.getIdTipoObjetoRelacion() != null && ac.getIdTipoObjetoRelacion() != 0){%>
 				<div class="col-xs-<%=cols%>">
-					<span class="pull-right"><%=ac.getInstanciaObjetoRelacion()!=null?ac.getInstanciaObjetoRelacion().getNombre():"" %></span>
+					<span class="pull-right"><%=ac.getInstanciaObjetoRelacion()!=null?ac.getInstanciaObjetoRelacion().getNombre():"" %><%if(ac.isConPagina()){ %>, <fmt:message key="general.pagina"></fmt:message> <%=ac.getPaginaDoc() %><%} %></span>
 				</div>
 				<%} %>
 			</div>

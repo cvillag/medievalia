@@ -67,7 +67,7 @@ public interface IObjectManager extends Serializable{
 	//Ver lista de objetosDOM-atributo de un objetoDOM concreto, ACCION 1
 	/**/public List<InstanciaObjetoDOM> getObjetoDOMAtributeByType(TipoObjetoDOM tipoPadre, TipoObjetoDOM tipoHijo);
 	//Añadir objetoDOM-atributo de un objetoDOM concreto, ACCION 8
-	/**/public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA, int selRel, SpecialDate inicio, SpecialDate fin);
+	/**/public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA, int selRel, SpecialDate inicio, SpecialDate fin, int paginaDoc);
 	//Eliminar objetoDOM-atributo de un objetoDOM concreto, ACCION 8
 	/**/public String deleteObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA);
 	
@@ -93,9 +93,18 @@ public interface IObjectManager extends Serializable{
 	public String setObjectTextReaded(int idInstancia, User user, TipoObjetoDOM tipo, Group groupA);
 	public int getTypeRelacionForComplexAttribute(InstanciaObjetoDOM obj,int pag);
 	public InstanciaAtributoComplejoDOM getComplexAttribute(TipoObjetoDOM tipo,int idTipoHijo, int idInstPadre, int idInstHijo, Group groupA, User user);
-	public String updateObjetoDOMAttributeByType(int idInstPadre,int idInstHijo, TipoObjetoDOM tipo, int idTipoAttr, int val,User user, Group groupA, int selRel, SpecialDate inicio,SpecialDate fin);
+	public String updateObjetoDOMAttributeByType(int idInstPadre,int idInstHijo, TipoObjetoDOM tipo, int idTipoAttr, int val,User user, Group groupA, int selRel, SpecialDate inicio,SpecialDate fin, int paginaDoc);
 	public InstanciaAtributoComplejoDOM getComplexAttributeNotVal(TipoObjetoDOM tipo,	int idTipoHijo, int idInstPadre, int idInstHijo, Group g, User u);
 	public boolean isConFecha(int tipoDOM, int idTipoAttr);
 	public String setComplexAttributeTextReaded(int idPadre, int idHijo,int tipoHijo, User user, TipoObjetoDOM tipo, Group groupA);
+	public boolean isConPag(int tipoDOM, int idTipoAttr);
+	
+	public Map<Integer,Integer> getStatisticsToValidate(Group g);
+	public Map<Integer,Integer> getStatisticsUsersToValidate(Group g);
+	public Map<Integer,Integer> getUserStatisticsObjetsToVal(User u, Group g);
+	public Map<Integer,Integer> getUserStatisticsObjetsTotal(User u, Group g);
+	public Map<Integer,Integer> getUserStatisticsObjetsToValAC(User u, Group g);
+	public Map<Integer,Integer> getUserStatisticsObjetsTotalAC(User u, Group g);
+	public Object getStatisticsTotalInstancesPerType();
 	
 }
