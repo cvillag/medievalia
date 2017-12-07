@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Component;
 
 import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
@@ -22,6 +24,7 @@ public interface IObjectManager extends Serializable{
 	
 	//Lista de objetosDOM diferentes y sus atributos
 	public List<TipoObjetoDOM> getTiposObjetosDOM();
+	
 	public TipoObjetoDOM getTipoObjetoDOM(int idType);
 	/**/public List<TipoObjetoDOM> getAtributosCObjetoDOM(TipoObjetoDOM tipo);
 	/**/public List<InstanciaAtributoSencilloDOM> getAtributosSObjetoDOM(TipoObjetoDOM tipo);
@@ -35,6 +38,7 @@ public interface IObjectManager extends Serializable{
 	public InstanciaObjetoDOM getObjetoDOMUnvalidated(TipoObjetoDOM tipo, int id, Group g, User u);
 	
 	//Lista de objetos completa, ACCION 1
+	public List<InstanciaObjetoDOM> getObjetoDOMListByTypeFilter(TipoObjetoDOM tipo, HttpServletRequest req);
 	public List<InstanciaObjetoDOM> getObjetoDOMListByType(TipoObjetoDOM tipo);
 	//Crear objeto, ACCION 4
 	public String addObjetoDOM(TipoObjetoDOM tipo, InstanciaObjetoDOM o, Group groupA, User user);

@@ -24,7 +24,7 @@ import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller
-public class CompleteObjectListAjaxController {
+public class FilteredObjectListAjaxController {
 	
 	private int actionInt = Constants.P_OBJECT_LIST_BY_TYPE;
 	
@@ -43,7 +43,7 @@ public class CompleteObjectListAjaxController {
 	@Autowired
 	private IObjectManager objectManager;
 	
-	@RequestMapping(value = "completeObjectList.do")
+	@RequestMapping(value = "filteredObjectList.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView model = new ModelAndView("ajax/2-2-listaCompleta");
@@ -53,50 +53,32 @@ public class CompleteObjectListAjaxController {
 		TipoObjetoDOM tipo = (TipoObjetoDOM) sesion.getAttribute("tipoObjeto");
 		JSONObject j = new JSONObject();
 		
-		if((errorParam(request) && tipo == null) || groupA == null){
+		if( tipo == null || groupA == null){
 			return Constants.paramError(logManager, actionInt, user.getId());
 		}
 		else{
 			if(authManager.isAutorized(actionInt, user)){
-				if(errorParam(request)){
-					j.put("message","noType");
-					logManager.log(user.getId(), actionInt, "Fallo en listado de objetos. Parámetros incorrectos.", Constants.P_NOK);
+				List<InstanciaObjetoDOM> listag = objectManager.getObjetoDOMListByTypeFilter(tipo, request);
+				model.addObject("listaObjetos", listag);
+				model.addObject("type",request.getParameter("type"));
+				logManager.log(user.getId(), actionInt, "Visualización lista de instancias de objeto con filtro", Constants.P_OK);
+				if(authManager.isAutorized(Constants.P_DELETE_OBJECT_INSTANCE, user)){
+					model.addObject("permisoborrado","ok");
 				}
-				else{
-					List<InstanciaObjetoDOM> listag;
-					String t2 = request.getParameter("tipo");
-					if(t2 != null && t2.length()>0 && Constants.isNumeric(t2)){
-						TipoObjetoDOM to = new TipoObjetoDOM();
-						to.setTipoDOM(new Integer(t2));
-						listag = objectManager.getObjetoDOMListByType(to);
-					}
-					else{
-						listag = objectManager.getObjetoDOMListByType(tipo);
-					}
-					model.addObject("listaObjetos", listag);
-					model.addObject("type",request.getParameter("type"));
-					logManager.log(user.getId(), actionInt, "Visualización lista de instancias de objeto", Constants.P_OK);
-					if(authManager.isAutorized(Constants.P_DELETE_OBJECT_INSTANCE, user)){
-						model.addObject("permisoborrado","ok");
-					}
-					if(authManager.isAutorized(Constants.P_RENAME_OBJECT_INSTANCE, user)){
-						model.addObject("permisoRenombrado", "ok");
-					}
-					if(authManager.isAutorized(Constants.P_MODIFY_OBJECT_INSTANCE, user)){
-						model.addObject("permisoModificar","ok");
-					}
+				if(authManager.isAutorized(Constants.P_RENAME_OBJECT_INSTANCE, user)){
+					model.addObject("permisoRenombrado", "ok");
 				}
-				logManager.log(user.getId(), actionInt, "Listado completo de objeto " + tipo.getNombreDOM() + " del grupo " + groupA.getName(), Constants.P_OK);
+				if(authManager.isAutorized(Constants.P_MODIFY_OBJECT_INSTANCE, user)){
+					model.addObject("permisoModificar","ok");
+				}
+				model.addObject("type", "table");
+				logManager.log(user.getId(), actionInt, "Listado filtrado de objeto " + tipo.getNombreDOM() + " del grupo " + groupA.getName(), Constants.P_OK);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,actionInt,"Visualización de objetos no permitida (grupo: " + groupA.getName() + ")");
+				model = Constants.noPrivilegesA(user,logManager,actionInt,"Visualización de objetos con filtro no permitida (grupo: " + groupA.getName() + ")");
 			}
 		}
 		
 		return model;
-	}
-	
-	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("type") == null;
 	}
 }

@@ -11,6 +11,7 @@ List<InstanciaObjetoDOM> objetos = (List<InstanciaObjetoDOM>) request.getAttribu
 String delete = (String) request.getAttribute("permisoborrado");
 String rename = (String) request.getAttribute("permisoRenombrado");
 String modify = (String) request.getAttribute("permisoModificar");
+int i = 0;
 if (objetos != null && objetos.size() > 0){
 	for(InstanciaObjetoDOM c : objetos){
 		if(type.equals("table")){%>
@@ -57,6 +58,11 @@ if (objetos != null && objetos.size() > 0){
 <%		
 		}
 		else if(type.equals("select")){
+			if(i++ == 0){
+				%>
+				<option value="0" selected></option>
+				<%
+			}
 			%>
 			<option value="<%=c.getIdInstancia()%>"><%=c.getNombre() %></option>
 			<%

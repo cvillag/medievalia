@@ -1,3 +1,4 @@
+<%@page import="com.cvilla.medievalia.domain.TipoAtributoComplejoDOM"%>
 <%@page import="com.cvilla.medievalia.domain.InstanciaObjetoDOM"%>
 <%@page import="com.cvilla.medievalia.utils.ListaRelaciones"%>
 <%@page import="com.cvilla.medievalia.domain.TipoObjetoDOM"%>
@@ -14,6 +15,9 @@ String validar = (String) request.getAttribute("validar");
 TipoObjetoDOM tipo = (TipoObjetoDOM) request.getAttribute("tipo");
 @SuppressWarnings("unchecked")
 List<ListaRelaciones> listarel = (List<ListaRelaciones>) request.getAttribute("listasRelacion");
+
+@SuppressWarnings("unchecked")
+List<TipoAtributoComplejoDOM> lto = (List<TipoAtributoComplejoDOM>) request.getAttribute("tipoAtributosC");
 %>
 <form id="formUser">
 	<input type="hidden" id="userrole" value="<%=usr.getUser_role()%>">
@@ -25,7 +29,7 @@ List<ListaRelaciones> listarel = (List<ListaRelaciones>) request.getAttribute("l
 		</h1>
 	</div>
 	<div class="row">
-		<div class="panel panel-default col-sm-12">
+		<div class="panel panel-default col-sm-6">
 			<div class="panel-heading">
 				<button id="displayCreate" class="btn btn-sm btn-info btn-xs">
 					<span id="displayCreatei" class="glyphicon glyphicon-chevron-down"></span>
@@ -35,12 +39,65 @@ List<ListaRelaciones> listarel = (List<ListaRelaciones>) request.getAttribute("l
 			</div>	
 			<div id="group-block1" class="panel-body">
 				<p><fmt:message key="p2.2.objetos.nombre"></fmt:message><input type="text" id="newObjectName">
-				<button type="button" class="btn btn-sm btn-info" id="createButton">
+				<button type="button" class="btn btn-xs btn-info" id="createButton">
 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 				</button>
-				<button type="button" class="btn btn-sm btn-info" id="cancelButton">
+				<button type="button" class="btn btn-xs btn-info" id="cancelButton">
 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 				</button></p>
+			</div>
+		</div>
+		<div class="panel panel-default col-sm-6">
+			<div class="panel-heading">
+				<button id="displayFilters" class="btn btn-sm btn-info btn-xs">
+					<span id="displayFilteri" class="glyphicon glyphicon-chevron-down"></span>
+				</button>
+				&nbsp;
+				<fmt:message key="p2-2.filtrar" />
+			</div>	
+			<div id="group-blockf" class="panel-body">
+				<div class="row" id="filtro0">
+					<div class="col-sm-4">
+						<div class="input-group">
+							<label for="idoh0"><fmt:message key="p2-2.filtrarPor"></fmt:message></label>
+							<select class="tipoFiltro form-control selectpicker" id="idoh0" data-pos="0">
+								<option value="0" selected></option>
+								<%for(TipoAtributoComplejoDOM to : lto){ %>
+								<option value="<%=to.getIdTipoHijo()%>"><%=to.getNombreAtributo() %></option>
+								<%} %>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-5">
+						<div class="input-group">
+							<label for="idih0"><fmt:message key="p2-2.valor"></fmt:message></label>
+							<select class="idFiltro form-control selectpicker" id="idih0" disabled>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<span class="pull-right">
+							<label for="prep0"><fmt:message key="p2-2.conj"></fmt:message></label>
+							<select class="idFiltro form-control selectpicker" id="prep0" disabled>
+								<option value="0">AND</option>
+								<option value="1">OR</option>
+							</select>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div id="group-blockf2" class="panel-footer">
+				<div class="input-group">
+					<button type="button" class="btn btn-xs btn-info" id="filterButton">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					</button>&nbsp;
+					<button type="button" class="btn btn-xs btn-info" id="cancelFButton">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>&nbsp;
+					<button type="button" class="btn btn-xs btn-info" id="getInstancesFiltered">
+						<fmt:message key="p2-2.botonfiltrar"></fmt:message>
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>

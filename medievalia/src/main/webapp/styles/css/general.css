@@ -41,3 +41,11 @@ p{
 	cursor: pointer;
 	cursor: hand;
 }
+
+hr {
+    height: 2px;
+    background-color:#555;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 75%;
+}

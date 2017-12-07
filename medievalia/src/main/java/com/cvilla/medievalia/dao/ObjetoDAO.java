@@ -120,6 +120,10 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String STUDENTS_CREATORS_OF_UNVALIDATED_INSTANCES_BY_GROUP_AND_TYPE  = "select user_id  from (select distinct(creador) as num from InstanciaObjeto where `idGrupo` = ? and idObjeto = ? and validado = ?) as sel1 left join users on num = user_id where user_role = ?";
 	private static final String STUDENTS_CREATORS_OF_UNVALIDATED_AC_BY_GROUP_AND_TYPE   = "select distinct(creador) as user_id from (select sel1.idInstancia,validado,idObjetoPadre, InstanciaAtributoComplejo.creador from (select idInstancia, idObjeto from InstanciaObjeto where idObjeto = ? and validado = ?) as sel1 left join InstanciaAtributoComplejo on sel1.idInstancia = idInstanciaPadre and idObjeto = idObjetoPadre where validado = ? and idGrupo = ?) as sel2";
 	
+	private static final String FILTER_FIRST_INSTANCES_LIST_BY_AC = " and (idInstancia in (select idInstanciaPadre from InstanciaAtributoComplejo where idObjetoPadre = ? and idObjetoHijo = ? and idInstanciaHijo = ? and validado = ?)";
+	private static final String FILTER_AND_INSTANCES_LIST_BY_AC = " and idInstancia in (select idInstanciaPadre from InstanciaAtributoComplejo where idObjetoPadre = ? and idObjetoHijo = ? and idInstanciaHijo = ? and validado = ?)";
+	private static final String FILTER_OR_INSTANCES_LIST_BY_AC = " or idInstancia in (select idInstanciaPadre from InstanciaAtributoComplejo where idObjetoPadre = ? and idObjetoHijo = ? and idInstanciaHijo = ? and validado = ?)";
+	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
 			return jdbcTemplate.query(GET_OBJECT_TYPE_LIST, new TipoObjetoDOMMapper());
@@ -141,6 +145,40 @@ public class ObjetoDAO implements IObjetoDAO {
 	public List<InstanciaObjetoDOM> getObjectListByTipe(TipoObjetoDOM tipo) {
 		try{
 			return jdbcTemplate.query(GET_OBJECT_INSTANCES_BY_TYPE, new Object[]{tipo.getTipoDOM(),Constants.OBJETO_VALIDADO}, new ObjetoDOMMapper());
+		}
+		catch(Exception e){
+			return null;
+		}
+	}
+	
+	public List<InstanciaObjetoDOM> getObjectListByTipeFilter(TipoObjetoDOM tipo,List<InstanciaAtributoComplejoDOM> filtros) {
+		String query = GET_OBJECT_INSTANCES_BY_TYPE;
+		Object[] param = new Object[2+filtros.size()*4];
+		int i = 0;
+		param[i++]=tipo.getTipoDOM();
+		param[i++]=Constants.OBJETO_VALIDADO;
+		int last = 0, numf = 0;
+		for(InstanciaAtributoComplejoDOM iac : filtros){
+			param[i++]=tipo.getTipoDOM();
+			param[i++]=iac.getTipoHijo().getTipoDOM();
+			param[i++]=iac.getInstanciaHijo().getIdInstancia();
+			param[i++]=Constants.OBJETO_VALIDADO;
+			if(numf++ == 0){
+				query += FILTER_FIRST_INSTANCES_LIST_BY_AC;
+			}
+			else{
+				if(last == 0){
+					query += FILTER_AND_INSTANCES_LIST_BY_AC;
+				}
+				else{
+					query += FILTER_OR_INSTANCES_LIST_BY_AC;
+				}
+			}
+			last = iac.getConFecha();
+		}
+		query += ")";
+		try{
+			return jdbcTemplate.query(query, param, new ObjetoDOMMapper());
 		}
 		catch(Exception e){
 			return null;

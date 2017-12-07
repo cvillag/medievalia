@@ -25,6 +25,8 @@ var idPadre = 0;
 
 var rol;
 
+var idexfilter = 0;
+
 function cancelaEdicion(val,ol){
 	$("#objetoName" + val).val(ol);
 	activadoCom = 0;
@@ -1085,10 +1087,13 @@ function cargaListaProfe(){
 }
 
 var btncreate = 1;
+var btnfilter = 1;
 
 $(document).ready(function(){
 	
 	$("#group-block1").hide();
+	$("#group-blockf").hide();
+	$("#group-blockf2").hide();
 	
 	cargaListaCompleta();
 	
@@ -1116,12 +1121,36 @@ $(document).ready(function(){
 		}
 	}
 	
+	function swipBotonFiltro(){
+		if(btnfilter == 0){
+			$("#group-blockf").slideUp(500);
+			$("#group-blockf2").slideUp(500);
+			$("#idoh0").val(0);
+			$("#idih0").val(0);
+			$("#idih0").attr("disabled",true);
+			$("#displayFilteri").removeClass();
+			$("#displayFilteri").addClass("glyphicon glyphicon-chevron-down");
+			btnfilter = 1;
+		}
+		else{
+			$("#group-blockf").slideDown(500);
+			$("#group-blockf2").slideDown(500);
+			$("#displayFilteri").removeClass();
+			$("#displayFilteri").addClass("glyphicon glyphicon-chevron-up");
+			btnfilter = 0;
+		}
+	}
+	
 	$("#displayCreate").click(function(){
 		swipBotonCrear();
 	});
 	
 	$("#cancelButton").click(function(){
 		swipBotonCrear();
+	});
+	
+	$("#displayFilters").click(function(){
+		swipBotonFiltro();
 	});
 	
 	//Filtro de objetos por fila según se rellena el campo imput
@@ -1499,7 +1528,115 @@ $(document).ready(function(){
 		}
 	});
 	
+	$(".tipoFiltro").change(handTipoFiltro);
+	
+	$("#filterButton").click(function(){
+		if($("#idoh" + idexfilter).val() != 0){
+			$("#prep" + idexfilter).attr("disabled",false);
+			idexfilter++;
+			$("#group-blockf").append(''+
+			'<div class="row" id="filtro'+ idexfilter+'">'+
+				'<hr>'+
+				'<div class="col-sm-4">'+
+					'<div class="input-group">'+
+						'<select class="tipoFiltro form-control selectpicker" id="idoh'+ idexfilter+'" data-pos="0">'+
+							'<option value="0"></option>'+
+						'</select>'+
+					'</div>'+
+				'</div>'+
+				'<div class="col-sm-5">'+
+					'<div class="input-group">'+
+						'<select class="idFiltro form-control selectpicker" id="idih'+ idexfilter+'" disabled>'+
+						'</select>'+
+					'</div>'+
+				'</div>'+
+				'<div class="col-sm-3">'+
+					'<span class="pull-right">'+
+						'<select class="idFiltro form-control selectpicker" id="prep'+ idexfilter+'" disabled>'+
+							'<option value="0">AND</option>'+
+							'<option value="1">OR</option>'+
+						'</select>'+
+					'</span>'+
+				'</div>'+
+			'</div>');
+			$.post("getComplexAttributeTypes.do",{},
+					function(data){
+				$("#idoh"+idexfilter).append(data);
+				$("#idoh"+idexfilter).change(handTipoFiltro);
+			});
+		}
+	});
+	
+	$("#getInstancesFiltered").click(function(){
+		i = 0;
+		ok = 1;
+		while(i <= idexfilter){
+			if($("#idih" + i).val() > 0 && $("#idoh"+ i).val() > 0){
+				ok = 1;
+			}
+			else{
+				ok = 0;
+				break;
+			}
+			i++;
+		}
+		if(ok == 1){
+			filtrarObjetos();
+		}
+	});
+	
+	$("#cancelFButton").click(function(){
+		if(idexfilter > 0){
+			$("#filtro" + idexfilter).remove();
+			idexfilter--;
+			$("#prep" + idexfilter).attr("disabled",true);
+			filtrarObjetos();
+		}
+		else{
+			$("#idih0").val(0);
+			$("#idih0").attr("disabled",true);
+			$("#prep0").attr("disabled",true);
+			$("#idoh0").val(0);
+			cargaListaCompleta();
+		}
+	});
+	
 });
+
+var handTipoFiltro = function(){
+	pos = $(this).data("pos");
+	tipo = $(this).val();
+	$("#idih"+pos).attr("disabled",true);
+	//alert("Posición " + pos + " tipo " + tipo);
+	if(tipo != 0){
+		$("#idih"+pos).attr("disabled",false);
+		$.post("completeObjectList.do",{
+			type : "select",
+			tipo : tipo},
+			function(data){
+				$("#idih" + idexfilter).html(data);
+				$("#idih" + idexfilter).attr("disabled",false);
+		});
+	}
+}
+
+function filtrarObjetos(){
+	getp = "filteredObjectList.do?";
+	for(i = 0; i <= idexfilter; i++){
+		getp +="idih"+i+"="+$("#idih"+i).val()+"&";
+		getp +="prep"+i+"="+$("#prep"+i).val()+"&";
+		if(i == idexfilter){
+			getp +="idoh"+i+"="+$("#idoh"+i).val();
+		}
+		else{
+			getp +="idoh"+i+"="+$("#idoh"+i).val()+"&";
+		}
+	}
+	$.post(getp,{},function(data){
+		$("#listaCompleta").html(data);
+		postCarga();
+	});
+}
 
 function modalesValidacionObj(data){
 	var json = JSON.parse(data);

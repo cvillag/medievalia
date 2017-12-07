@@ -46,4 +46,5 @@ public interface IObjetoDAO {
 	public int getNumUnvalidatedInstances(int tipo, int group);
 	public int getNumValidatedInstancesWithUnvalidatedAC(int tipo, int group);
 	public int getNumStudentsUnvalidatedInstances(int tipo, int group);
+	public List<InstanciaObjetoDOM> getObjectListByTipeFilter(TipoObjetoDOM tipo,List<InstanciaAtributoComplejoDOM> filtros);
 }

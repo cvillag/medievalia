@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.jar.Attributes;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cvilla.medievalia.dao.intfc.IObjetoDAO;
@@ -87,6 +89,37 @@ public class ObjectManager implements IObjectManager {
 
 	public List<InstanciaObjetoDOM> getObjetoDOMListByType(TipoObjetoDOM tipo) {
 		return objetoDAO.getObjectListByTipe(tipo);
+	}
+	
+	public List<InstanciaObjetoDOM> getObjetoDOMListByTypeFilter(TipoObjetoDOM tipo, HttpServletRequest req) {
+		boolean nulo = false;
+		int index = 0;
+		List<InstanciaAtributoComplejoDOM> filtros = new ArrayList<InstanciaAtributoComplejoDOM>();
+		while(!nulo){
+			String idoh = req.getParameter("idoh"+index);
+			String idih = req.getParameter("idih"+index);
+			String prep = req.getParameter("prep"+index);
+			nulo = idoh == null || idoh.length() < 1 || !Constants.isNumeric(idoh) || idih == null || idih.length() < 1 || !Constants.isNumeric(idih);
+			if(!nulo){
+				InstanciaAtributoComplejoDOM ia = new InstanciaAtributoComplejoDOM();
+				ia.setTipoPadre(tipo);
+				InstanciaObjetoDOM ih = new InstanciaObjetoDOM();
+				ih.setIdInstancia(new Integer(idih));
+				ia.setInstanciaHijo(ih);
+				TipoObjetoDOM t = new TipoObjetoDOM();
+				t.setTipoDOM(new Integer(idoh));
+				ia.setTipoHijo(t);
+				if(Constants.isNumeric(prep) && prep.equals("1")){
+					ia.setConFecha(1);
+				}
+				else{
+					ia.setConFecha(0);
+				}
+				filtros.add(ia);
+			}
+			index++;
+		}
+		return objetoDAO.getObjectListByTipeFilter(tipo, filtros);
 	}
 
 	public String addObjetoDOM(TipoObjetoDOM tipo, InstanciaObjetoDOM o, Group groupA, User user) {

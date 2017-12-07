@@ -63,6 +63,7 @@ public class ObjectController {
 					model = new ModelAndView("2-2.listaObjetos");
 					model.addObject("tipo", tipoNuevo);
 					List<TipoAtributoComplejoDOM> ac = objectManager.getTiposAtributosCompleos(tipoNuevo);
+					model.addObject("tipoAtributosC", ac);
 					List<ListaRelaciones> listaBiblio = objectManager.getRelaciones(ac);
 					model.addObject("listasRelacion", listaBiblio);
 					
