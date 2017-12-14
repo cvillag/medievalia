@@ -41,9 +41,11 @@ public class GetEnrolledStudensListAjaxController {
 		if(groupA == null){
 			model = new ModelAndView("5-2-errorAjax");
 			model.addObject("mensaje2", "p5-2.errorGroup");
+			logManager.log(user.getId(), Constants.P_PARTICIPANT_LIST, "Consulta de lista de matriculados erronea. Sin grupo seleccionado.", Constants.P_NOK);
 		}
 		else{
 			if(authManager.isAutorized(Constants.P_PARTICIPANT_LIST, user)){
+				logManager.log(user.getId(), Constants.P_PARTICIPANT_LIST, "Consulta de lista de matriculados.", Constants.P_OK);
 				model = new ModelAndView("ajax/4-1-listaSMatriculados");
 				List<Students> listaS = groupManager.getStudentParticipantList(groupA);
 				model.addObject("listaS", listaS);

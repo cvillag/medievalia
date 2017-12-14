@@ -50,7 +50,7 @@ public class CreateUserController2 {
 				String pass2 = request.getParameter("pass2");
 				
 				String message = userManager.createUser(name, longname, pass,pass2, role);
-				logManager.log(user.getId(), Constants.P_CREATE_USER, "Inicio crear usuario", Constants.P_OK);
+				logManager.log(user.getId(), Constants.P_CREATE_USER, "Creación de usuario con resultado: " + message, Constants.P_OK);
 				ArrayList<User> users = (ArrayList<User>) userManager.listar();
 				ArrayList<Role> roles = (ArrayList<Role>) roleManager.getRoleList();
 				model.addObject("users", users);

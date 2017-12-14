@@ -60,13 +60,12 @@ public class TeacherObjectListAjaxController {
 			if(authManager.isAutorized(actionInt, user)){
 				if(errorParam(request)){
 					j.put("message","noType");
-					logManager.log(user.getId(), actionInt, "Fallo en listado de objetos. Parámetros incorrectos.", Constants.P_NOK);
+					logManager.log(user.getId(), actionInt, "Fallo en listado de objetos de profesor. Parámetros incorrectos.", Constants.P_NOK);
 				}
 				else{
 					List<InstanciaObjetoDOM> listag = objectManager.getTeachersObjetoDOMList(tipo, user, groupA);
 					model.addObject("listaObjetos", listag);
 					model.addObject("type",request.getParameter("type"));
-					logManager.log(user.getId(), actionInt, "Visualización lista de instancias de objeto", Constants.P_OK);
 					if(authManager.isAutorized(Constants.P_VALIDATE_OBJECT_INSTANCE, user)){
 						model.addObject("permisovalidar","ok");
 					}

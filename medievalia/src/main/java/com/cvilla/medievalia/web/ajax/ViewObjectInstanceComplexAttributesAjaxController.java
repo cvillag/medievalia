@@ -26,7 +26,6 @@ import com.cvilla.medievalia.utils.Constants;
 public class ViewObjectInstanceComplexAttributesAjaxController {
 	
 	final static int actionId = Constants.P_VIEW_OBJECT_INSTANCE_DETAIL; 
-	final static int actionId2 = Constants.P_MODIFY_OBJECT_INSTANCE;
 
 	@Autowired
 	private IAutorizationManager authManager;
@@ -60,7 +59,7 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 				InstanciaObjetoDOM obj = objectManager.getObjetoDOMUnvalidated(tipo, idInstancia, groupA, user);
 				if(obj != null){
 					model = new ModelAndView("ajax/empty");
-					logManager.log(user.getId(), actionId2, "Visualización de detalle de objeto a modificar ", Constants.P_OK);
+					logManager.log(user.getId(), actionId, "Visualización de detalle de objeto a modificar ", Constants.P_OK);
 					List<InstanciaAtributoComplejoDOM> ac2 = objectManager.getAtributosCDisponiblesObjetoDOM(tipo,obj,pag);
 					j.put("disponibles", ac2);
 				}

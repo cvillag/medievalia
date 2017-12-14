@@ -56,7 +56,7 @@ public class RemoveComplexAttributeAjaxController {
 		if(authManager.isAutorized(actionInt, user)){
 			if((errorParam(request) && tipo == null) || groupA == null){
 				j.put("message","noType");
-				logManager.log(user.getId(), actionInt, "Fallo en creación de instancia de objeto. Parámetros o sesión incorrectos.", Constants.P_NOK);
+				logManager.log(user.getId(), actionInt, "Fallo en borrado de atributos complejos. Parámetros o sesión incorrectos.", Constants.P_NOK);
 			}
 			else{
 				int idInstPadre = (new Integer(request.getParameter("idInstPadre"))).intValue();
@@ -70,13 +70,14 @@ public class RemoveComplexAttributeAjaxController {
 					val = Constants.OBJETO_NO_VALIDADO;
 				}
 				String message = objectManager.deleteObjetoDOMAttributeByType(idInstPadre, idInstHijo, tipo, idTipoAttr, val, user, groupA);
+				logManager.log(user.getId(), actionInt, "Eliminación  de atributo complejo, con resultado: " + message, Constants.P_OK);
 				j.put("message", message);
 				j.put("pag", idTipoAttr);
 			}
 			model.addObject("json", j);
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Creación de objeto no permitida ");
+			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Eliminación de atributo complejo no permitida ");
 		}
 		return model;
 	}

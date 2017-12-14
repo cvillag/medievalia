@@ -56,7 +56,7 @@ public class RenameObjectAjaxController {
 		if(authManager.isAutorized(actionInt, user) || authManager.isAutorized(actionInt2, user)){
 			if((errorParam(request) && tipo == null) || groupA == null){
 				j.put("message","noType");
-				logManager.log(user.getId(), actionInt, "Fallo en modificación de instancia de objeto. Parámetros o sesión incorrectos.", Constants.P_NOK);
+				logManager.log(user.getId(), actionInt, "Fallo en renombrado de instancia de objeto. Parámetros o sesión incorrectos.", Constants.P_NOK);
 			}
 			else{
 				int id = (new Integer(request.getParameter("idInstancia"))).intValue();
@@ -68,7 +68,7 @@ public class RenameObjectAjaxController {
 					else if(authManager.isAutorized(actionInt2, user)){
 						obj = objectManager.getObjetoDOMUnvalidated(tipo, id, groupA, user);
 						if(obj.getCreador().getId() != user.getId()){
-							return Constants.noPrivilegesJ(user,logManager,actionInt,"Modificación de objeto no permitida ");
+							return Constants.noPrivilegesJ(user,logManager,actionInt,"Renombrado de objeto no permitida ");
 						}
 					} 
 				}
@@ -81,7 +81,8 @@ public class RenameObjectAjaxController {
 					}
 					else if(authManager.isAutorized(actionInt2, user)){
 						message = objectManager.renameObjetoDOMOwn(tipo, newName, id, user, groupA);
-					}			
+					}
+					logManager.log(user.getId(), actionInt, "Renombrado de objeto. Nuevo nombre " + newName, Constants.P_OK);
 				}
 				else{
 					j.put("message", "noObject");
@@ -91,7 +92,7 @@ public class RenameObjectAjaxController {
 			model.addObject("json", j);
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Modificación de objeto no permitida ");
+			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Renombrado de objeto no permitida ");
 		}
 		return model;
 	}

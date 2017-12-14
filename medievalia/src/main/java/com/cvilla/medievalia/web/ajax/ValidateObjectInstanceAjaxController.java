@@ -60,7 +60,9 @@ public class ValidateObjectInstanceAjaxController {
 				int id = new Integer(request.getParameter("idInstancia")).intValue();
 				String text = request.getParameter("text");
 				int val = new Integer(request.getParameter("val")).intValue();
-				j.put("message",objectManager.validateObjetoDOM(tipo, id, user, groupA,val,text));
+				String message = objectManager.validateObjetoDOM(tipo, id, user, groupA,val,text);
+				logManager.log(user.getId(), actionInt, "Validación de objeto con éxito", Constants.P_OK);
+				j.put("message",message);
 			}
 			model.addObject("json", j);
 		}

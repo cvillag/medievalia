@@ -44,7 +44,7 @@ public class CuentasController {
 		
 		if(authManager.isAutorized(Constants.P_USER_LIST, user)){
 			model = new ModelAndView("1-3-listausuarios");
-			logManager.log(user.getId(), Constants.P_USER_LIST, "Listado de usuarios", Constants.P_OK);
+			logManager.log(user.getId(), Constants.P_USER_LIST, "Visualización de listado de usuarios", Constants.P_OK);
 			
 			ArrayList<User> users = (ArrayList<User>) userManager.listar();
 			ArrayList<Role> roles = (ArrayList<Role>) roleManager.getRoleList();

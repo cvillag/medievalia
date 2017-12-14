@@ -62,6 +62,7 @@ public class SetComplexAttributeTextReadedAjaxController {
 				int idHijo = (new Integer(request.getParameter("idHijo"))).intValue();
 				int tipoHijo = (new Integer(request.getParameter("tipoHijo"))).intValue();
 				String message = objectManager.setComplexAttributeTextReaded(idPadre,idHijo,tipoHijo,user,tipo,groupA);
+				logManager.log(user.getId(), actionInt, "Comentario de validación de atributo complejo marcado como leído", Constants.P_OK);
 				j.put("message", message);
 				j.put("pag", tipo.getTipoDOM());
 			}

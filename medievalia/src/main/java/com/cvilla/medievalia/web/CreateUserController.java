@@ -44,7 +44,7 @@ public class CreateUserController {
 		User user = (User) sesion.getAttribute("user");
 		
 		if(authManager.isAutorized(Constants.P_USER_LIST, user)){
-			logManager.log(user.getId(), Constants.P_CREATE_USER, "Inicio crear usuario", Constants.P_OK);
+			logManager.log(user.getId(), Constants.P_CREATE_USER, "Visaulización de página de creación de usuario", Constants.P_OK);
 			model = new ModelAndView("1-2-creaUsuarios");
 			List<Role> roles = roleManager.getRoleList();
 			List<String> scripts = new ArrayList<String>();

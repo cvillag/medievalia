@@ -60,6 +60,7 @@ public class SetObjectTextReadedAjaxController {
 			else{
 				int idObjeto = (new Integer(request.getParameter("idObjeto"))).intValue();
 				String message = objectManager.setObjectTextReaded(idObjeto,user,tipo,groupA);
+				logManager.log(user.getId(), actionInt, "Comentario de validación de objeto marcado como leído", Constants.P_OK);
 				j.put("message", message);
 			}
 			model.addObject("json", j);

@@ -51,6 +51,7 @@ public class GroupController {
 					directors.add(u);
 				}
 			}
+			logManager.log(user.getId(), Constants.P_GROUP_LIST, "Visualización de lista de grupos", Constants.P_OK);
 			model = new ModelAndView("1-7-listaGrupos");
 			model.addObject("listaGrupos", list);
 			model.addObject("user", user);

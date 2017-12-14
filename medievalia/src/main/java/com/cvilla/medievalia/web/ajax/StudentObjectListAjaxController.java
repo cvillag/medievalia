@@ -66,7 +66,6 @@ public class StudentObjectListAjaxController {
 					List<InstanciaObjetoDOM> listag = objectManager.getStudentObjetoDOMList(tipo, user, groupA);
 					model.addObject("listaObjetos", listag);
 					model.addObject("type",request.getParameter("type"));
-					logManager.log(user.getId(), actionInt, "Visualización lista de instancias de objeto", Constants.P_OK);
 					
 					if(authManager.isAutorized(Constants.P_MODIFY_OBJECT_INSTANCE_OWN, user)){
 						model.addObject("permisomodificar", "ok");

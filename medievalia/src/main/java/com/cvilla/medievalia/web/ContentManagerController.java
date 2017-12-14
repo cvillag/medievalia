@@ -63,6 +63,7 @@ public class ContentManagerController {
 				if(activeGroup != null && request.getParameter("change") == null){
 					director = userManager.getUser(activeGroup.getDirector());
 					message = "p3.1.msg.ok";
+					logManager.log(user.getId(), actionInt, "Visualización de la página de gestión de contenido con grupo activo previamente", Constants.P_OK);
 				}
 				else{
 					int idGroup = (new Integer(request.getParameter("idGroup"))).intValue();

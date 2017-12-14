@@ -63,7 +63,7 @@ public class PossibleUserListToGroupAjaxController {
 				}
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,actionInt,"Intento de listar usuarios para matriculación");
+				model = Constants.noPrivilegesA(user,logManager,actionInt,"Intento de listar usuarios para matriculación, sin  privilegios");
 			}
 		}
 		return model;

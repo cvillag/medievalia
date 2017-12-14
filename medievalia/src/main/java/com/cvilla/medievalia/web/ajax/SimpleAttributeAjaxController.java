@@ -61,7 +61,7 @@ public class SimpleAttributeAjaxController {
 		if(authManager.isAutorized(actionInt, user) || authManager.isAutorized(actionInt2, user)){
 			if((errorParam(request) && tipo == null) || groupA == null){
 				j.put("message","noType");
-				logManager.log(user.getId(), actionInt, "Fallo en modificación de instancia de objeto. Parámetros o sesión incorrectos.", Constants.P_NOK);
+				logManager.log(user.getId(), actionInt, "Modificación de atributos sencillos incorrecta. Parámetros o sesión incorrectos.", Constants.P_NOK);
 			}
 			else{
 				int id = (new Integer(request.getParameter("idInstanciaObjeto"))).intValue();
@@ -72,13 +72,14 @@ public class SimpleAttributeAjaxController {
 				else if(authManager.isAutorized(actionInt2, user)){
 					obj = objectManager.getObjetoDOMUnvalidated(tipo, id, groupA, user);
 					if(obj.getCreador().getId() != user.getId()){
-						return Constants.noPrivilegesJ(user,logManager,actionInt,"Modificación de objeto no permitida ");
+						return Constants.noPrivilegesJ(user,logManager,actionInt,"Modificación de atributos sencillos de objeto.");
 					}
 				}
 				if(obj != null){
 					String m = cambiaAtributosS(obj,request); 
 					if(m.equals("ok")){
 						String message = objectManager.modifySimpleAttribute(obj,groupA,user);
+						logManager.log(user.getId(), actionInt, "Modificación de atributos sencillos de objeto", Constants.P_OK);
 						j.put("message", message);
 					}
 					else{
@@ -93,7 +94,7 @@ public class SimpleAttributeAjaxController {
 			model.addObject("json", j);
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Modificación de objeto no permitida ");
+			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Modificación de atributos sencillos de objeto no permitida ");
 		}
 		return model;
 	}

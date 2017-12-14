@@ -61,7 +61,6 @@ public class FilteredObjectListAjaxController {
 				List<InstanciaObjetoDOM> listag = objectManager.getObjetoDOMListByTypeFilter(tipo, request);
 				model.addObject("listaObjetos", listag);
 				model.addObject("type",request.getParameter("type"));
-				logManager.log(user.getId(), actionInt, "Visualización lista de instancias de objeto con filtro", Constants.P_OK);
 				if(authManager.isAutorized(Constants.P_DELETE_OBJECT_INSTANCE, user)){
 					model.addObject("permisoborrado","ok");
 				}
@@ -72,7 +71,7 @@ public class FilteredObjectListAjaxController {
 					model.addObject("permisoModificar","ok");
 				}
 				model.addObject("type", "table");
-				logManager.log(user.getId(), actionInt, "Listado filtrado de objeto " + tipo.getNombreDOM() + " del grupo " + groupA.getName(), Constants.P_OK);
+				logManager.log(user.getId(), actionInt, "Listado filtrado de tipo de objeto " + tipo.getNombreDOM() + " del grupo " + groupA.getName(), Constants.P_OK);
 			}
 			else{
 				model = Constants.noPrivilegesA(user,logManager,actionInt,"Visualización de objetos con filtro no permitida (grupo: " + groupA.getName() + ")");

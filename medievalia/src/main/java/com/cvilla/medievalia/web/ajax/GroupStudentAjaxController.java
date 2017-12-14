@@ -47,10 +47,10 @@ public class GroupStudentAjaxController {
 				model.addObject("message", "ok");
 				model.addObject("gruposStud",lista);
 				model.addObject("play",true);
-				logManager.log(user.getId(), Constants.P_DETAIL_STUDENT_GROUPS_OWN, "Detalle de grupos propios como alumno", Constants.P_OK);
+				logManager.log(user.getId(), Constants.P_DETAIL_STUDENT_GROUPS_OWN, "Listado de grupos propios como alumno", Constants.P_OK);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_STUDENT_GROUPS_OWN,"Sin permiso para ver detalle de grupos propios como alumno");
+				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_STUDENT_GROUPS_OWN,"Sin permiso para ver listado de grupos propios como alumno");
 			}
 		}else{
 			if(authManager.isAutorized(Constants.P_DETAIL_STUDENT_GROUPS_OTHER, user) || authManager.isAutorized(Constants.P_DETAIL_STUDENT_GROUPS_OWN, user) ){
@@ -62,10 +62,10 @@ public class GroupStudentAjaxController {
 				model.addObject("message", "ok");
 				model.addObject("gruposStud",lista);
 				model.addObject("play",false);
-				logManager.log(user.getId(), Constants.P_DETAIL_STUDENT_GROUPS_OTHER, "Detalle de grupos ajenos como alumno", Constants.P_OK);
+				logManager.log(user.getId(), Constants.P_DETAIL_STUDENT_GROUPS_OTHER, "Listado de grupos ajenos como alumno", Constants.P_OK);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_STUDENT_GROUPS_OTHER,"Sin permiso para ver detalle de grupos de otros usuarios como alumno");
+				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_STUDENT_GROUPS_OTHER,"Sin permiso para ver listado de grupos de otros usuarios como alumno");
 			}	
 		}
 		return model;

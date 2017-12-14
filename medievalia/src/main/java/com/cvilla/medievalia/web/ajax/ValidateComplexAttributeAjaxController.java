@@ -62,7 +62,9 @@ public class ValidateComplexAttributeAjaxController {
 				int idPadre = new Integer(request.getParameter("idPadre")).intValue();
 				int val = new Integer(request.getParameter("val")).intValue();
 				String textV = request.getParameter("textoVal");
-				j.put("message",objectManager.validateAtributoC(idHijo,tipoHijo,idPadre,tipo,user,groupA,textV,val));
+				String message = objectManager.validateAtributoC(idHijo,tipoHijo,idPadre,tipo,user,groupA,textV,val);
+				logManager.log(user.getId(), actionInt, "Validación de atributo complejo correcta", Constants.P_OK);
+				j.put("message",message);
 				j.put("idHijo", idHijo);
 				j.put("tipoHijo", tipoHijo);
 				j.put("texts", textV);

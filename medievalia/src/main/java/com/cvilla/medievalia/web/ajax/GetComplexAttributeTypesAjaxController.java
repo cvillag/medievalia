@@ -59,7 +59,7 @@ public class GetComplexAttributeTypesAjaxController {
 		if(authManager.isAutorized(actionInt, user)){
 			if((errorParam(request) && tipo == null) || groupA == null){
 				j.put("message","noType");
-				logManager.log(user.getId(), actionInt, "Fallo al consultar detalle de atributo complejo. Parámetros o sesión incorrectos.", Constants.P_NOK);
+				logManager.log(user.getId(), actionInt, "Fallo al consultar tipos de atributos complejos. Parámetros o sesión incorrectos.", Constants.P_NOK);
 			}
 			else{
 				List<TipoAtributoComplejoDOM> tipos = objectManager.getTiposAtributosCompleos(tipo);
@@ -68,7 +68,7 @@ public class GetComplexAttributeTypesAjaxController {
 			model.addObject("json", j);
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Consulta de detalle de atributo complejo no permitida.");
+			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Consulta de tipos de atributos complejos no permitida.");
 		}
 		return model;
 	}
