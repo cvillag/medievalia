@@ -14,6 +14,7 @@ import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -33,6 +34,9 @@ public class SelectGroupAjaxController {
 	@Autowired
 	private ILoginManager loginManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "selectActiveGroup.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -42,7 +46,7 @@ public class SelectGroupAjaxController {
 		User user = (User) sesion.getAttribute("user");
 		if(authManager.isAutorized(Constants.P_SELECT_ACTIVE_GROUP, user)){
 			if(errorParam(request)){
-				return Constants.noPrivilegesJ(user, logManager, Constants.P_SELECT_ACTIVE_GROUP, "Error al seleccionar grupo activo");
+				return htmlManager.noPrivilegesJ(user, logManager, Constants.P_SELECT_ACTIVE_GROUP, "Error al seleccionar grupo activo");
 			}
 			else{
 				int idGroup = (new Integer(request.getParameter("idGroup"))).intValue();
@@ -63,6 +67,6 @@ public class SelectGroupAjaxController {
 	}
 	
 	boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idGroup") == null || !Constants.isNumeric(request.getParameter("idGroup"));
+		return request.getParameter("idGroup") == null || !htmlManager.isNumeric(request.getParameter("idGroup"));
 	}
 }

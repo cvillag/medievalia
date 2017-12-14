@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +17,7 @@ import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
@@ -43,6 +43,9 @@ public class FilteredObjectListAjaxController {
 	@Autowired
 	private IObjectManager objectManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "filteredObjectList.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -51,10 +54,9 @@ public class FilteredObjectListAjaxController {
 		User user = (User) sesion.getAttribute("user");
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
 		TipoObjetoDOM tipo = (TipoObjetoDOM) sesion.getAttribute("tipoObjeto");
-		JSONObject j = new JSONObject();
 		
 		if( tipo == null || groupA == null){
-			return Constants.paramError(logManager, actionInt, user.getId());
+			return htmlManager.paramError(logManager, actionInt, user.getId());
 		}
 		else{
 			if(authManager.isAutorized(actionInt, user)){
@@ -74,7 +76,7 @@ public class FilteredObjectListAjaxController {
 				logManager.log(user.getId(), actionInt, "Listado filtrado de tipo de objeto " + tipo.getNombreDOM() + " del grupo " + groupA.getName(), Constants.P_OK);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,actionInt,"Visualización de objetos con filtro no permitida (grupo: " + groupA.getName() + ")");
+				model = htmlManager.noPrivilegesA(user,logManager,actionInt,"Visualización de objetos con filtro no permitida (grupo: " + groupA.getName() + ")");
 			}
 		}
 		

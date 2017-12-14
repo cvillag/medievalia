@@ -18,6 +18,7 @@ import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -36,6 +37,8 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 	@Autowired
 	private IObjectManager objectManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@RequestMapping(value = "objectDetailComplexAttributes.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -47,7 +50,7 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 		ModelAndView model;
 		JSONObject j = new JSONObject();
 		if(errorParam(request) || groupA == null || tipo == null){
-			return Constants.paramError(logManager, actionId, user.getId());
+			return htmlManager.paramError(logManager, actionId, user.getId());
 		}
 		else{
 			int idInstancia = (new Integer(request.getParameter("idInstancia"))).intValue();
@@ -64,7 +67,7 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 					j.put("disponibles", ac2);
 				}
 				else{
-					return Constants.noPrivilegesJ(user, logManager, actionId, "El objeto seleccionado no existe");
+					return htmlManager.noPrivilegesJ(user, logManager, actionId, "El objeto seleccionado no existe");
 				}
 				List<InstanciaAtributoComplejoDOM> actual = objectManager.getAtributosCPorTipo(obj,pag);
 				int idRelacion = objectManager.getTypeRelacionForComplexAttribute(obj,pag);
@@ -77,7 +80,7 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 				j.put("idUser", user.getId());
 			}
 			else{
-				return Constants.noPrivilegesJ(user, logManager, actionId, "Visualización de detalle de objeto");
+				return htmlManager.noPrivilegesJ(user, logManager, actionId, "Visualización de detalle de objeto");
 			}
 		}
 		model.addObject("json", j);
@@ -85,9 +88,9 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idInstancia") == null || !Constants.isNumeric(request.getParameter("idInstancia")) ||
-				request.getParameter("modo") == null || !Constants.isNumeric(request.getParameter("modo")) ||
-				request.getParameter("pag") == null || !Constants.isNumeric(request.getParameter("pag")) ||
-				request.getParameter("recarga") == null || !Constants.isNumeric(request.getParameter("recarga"));
+		return request.getParameter("idInstancia") == null || !htmlManager.isNumeric(request.getParameter("idInstancia")) ||
+				request.getParameter("modo") == null || !htmlManager.isNumeric(request.getParameter("modo")) ||
+				request.getParameter("pag") == null || !htmlManager.isNumeric(request.getParameter("pag")) ||
+				request.getParameter("recarga") == null || !htmlManager.isNumeric(request.getParameter("recarga"));
 	}
 }

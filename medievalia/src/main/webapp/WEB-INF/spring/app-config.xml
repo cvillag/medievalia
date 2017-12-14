@@ -39,6 +39,9 @@
 	
 	<bean id="objectManager" class="com.cvilla.medievalia.service.ObjectManager">
 	</bean>
+	
+	<bean id="htmlManager" class="com.cvilla.medievalia.service.HtmlManager">
+	</bean>
 
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

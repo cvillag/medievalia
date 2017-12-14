@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IRoleManager;
@@ -36,6 +37,9 @@ public class CreateGroupAjaxController {
 	@Autowired
 	private IGroupManager groupManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "createGroupA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -45,7 +49,7 @@ public class CreateGroupAjaxController {
 		JSONObject j = new JSONObject();
 		if(authManager.isAutorized(Constants.P_CREATE_GROUP, user)){
 			if(errorParam(request)){
-				model = Constants.paramError(logManager,user.getId(),Constants.P_CREATE_GROUP);
+				model = htmlManager.paramError(logManager,user.getId(),Constants.P_CREATE_GROUP);
 				logManager.log(user.getId(), Constants.P_CREATE_GROUP, "Fallo en creación de grupo. Parámetros incorrectos.", Constants.P_NOK);
 				return model;
 			}
@@ -63,7 +67,7 @@ public class CreateGroupAjaxController {
 			}
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,Constants.P_DELETE_USER,"Intento de borrado de usuario con ID: " + request.getParameter("deleteId"));
+			model = htmlManager.noPrivilegesJ(user,logManager,Constants.P_DELETE_USER,"Intento de borrado de usuario con ID: " + request.getParameter("deleteId"));
 			logManager.log(user.getId(), Constants.P_CREATE_GROUP, "Creación de nuevo grupo no permitida", Constants.P_NOK);
 			j.put("message", "noPrivileges");
 		}

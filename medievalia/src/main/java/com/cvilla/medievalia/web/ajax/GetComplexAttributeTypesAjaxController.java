@@ -12,19 +12,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
-import com.cvilla.medievalia.utils.SpecialDate;
 
 @Controller
 public class GetComplexAttributeTypesAjaxController {
@@ -45,6 +43,9 @@ public class GetComplexAttributeTypesAjaxController {
 	
 	@Autowired
 	private IObjectManager objectManager;
+	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@RequestMapping(value = "getComplexAttributeTypes.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -68,14 +69,14 @@ public class GetComplexAttributeTypesAjaxController {
 			model.addObject("json", j);
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Consulta de tipos de atributos complejos no permitida.");
+			model = htmlManager.noPrivilegesJ(user,logManager,actionInt,"Consulta de tipos de atributos complejos no permitida.");
 		}
 		return model;
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("instp") == null  || !Constants.isNumeric(request.getParameter("instp")) ||
-				request.getParameter("insth") == null  || !Constants.isNumeric(request.getParameter("insth")) ||
-				request.getParameter("tipoh") == null  || !Constants.isNumeric(request.getParameter("tipoh"));
+		return request.getParameter("instp") == null  || !htmlManager.isNumeric(request.getParameter("instp")) ||
+				request.getParameter("insth") == null  || !htmlManager.isNumeric(request.getParameter("insth")) ||
+				request.getParameter("tipoh") == null  || !htmlManager.isNumeric(request.getParameter("tipoh"));
 	}
 }

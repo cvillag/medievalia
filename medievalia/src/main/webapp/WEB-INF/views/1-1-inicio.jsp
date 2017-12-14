@@ -7,9 +7,9 @@ User u = (User)request.getAttribute("usuario");
 %>
 <div class="container">
 	<div class="jumbotron">
-		<h1>
+		<h3>
 			<fmt:message key="p1-1.bienvenida" />
-		</h1>
+		</h3>
 		<p><%=u.getUser_long_name() %></p>
 	</div>
 </div>

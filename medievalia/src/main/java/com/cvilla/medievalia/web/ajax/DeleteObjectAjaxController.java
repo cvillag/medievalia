@@ -17,6 +17,7 @@ import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
@@ -42,6 +43,9 @@ public class DeleteObjectAjaxController {
 	
 	@Autowired
 	private IObjectManager objectManager;
+	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@RequestMapping(value = "removeObjectA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -91,12 +95,12 @@ public class DeleteObjectAjaxController {
 			model.addObject("json", j);
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Borrado de objeto no permitido ");
+			model = htmlManager.noPrivilegesJ(user,logManager,actionInt,"Borrado de objeto no permitido ");
 		}
 		return model;
 	}
 
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idInstancia") == null || !Constants.isNumeric(request.getParameter("idInstancia"));
+		return request.getParameter("idInstancia") == null || !htmlManager.isNumeric(request.getParameter("idInstancia"));
 	}
 }

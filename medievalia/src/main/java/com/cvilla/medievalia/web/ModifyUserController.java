@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cvilla.medievalia.domain.Role;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IRoleManager;
@@ -35,6 +36,9 @@ public class ModifyUserController {
 	@Autowired
 	private ILogManager logManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "modifyUser.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -44,8 +48,8 @@ public class ModifyUserController {
 		User user = (User) sesion.getAttribute("user");
 		
 		if(errorParam(request)){
-			model = Constants.paramError(logManager,user.getId(),Constants.P_MODIFY_USER);
-			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+			model = htmlManager.paramError(logManager,user.getId(),Constants.P_MODIFY_USER);
+			model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 			return model;
 		}
 		else{
@@ -67,16 +71,16 @@ public class ModifyUserController {
 				model.addObject("scripts",scripts);
 				List<Role> roles = roleManager.getRoleList();
 				model.addObject("roles",roles);
-				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+				model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 			}
 			else{
-				model = Constants.noPrivileges(user,logManager,Constants.P_MODIFY_USER,"Intento de modificación de usuario. ID: " + request.getParameter("modifyId"),request);
+				model = htmlManager.noPrivileges(user,logManager,Constants.P_MODIFY_USER,"Intento de modificación de usuario. ID: " + request.getParameter("modifyId"),request);
 			}
 			return model;
 		}
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("modifyId") == null || !Constants.isNumeric(request.getParameter("modifyId"));
+		return request.getParameter("modifyId") == null || !htmlManager.isNumeric(request.getParameter("modifyId"));
 	}
 }

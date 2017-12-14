@@ -17,6 +17,7 @@ import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
@@ -43,6 +44,9 @@ public class RenameObjectAjaxController {
 	@Autowired
 	private IObjectManager objectManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "renameObjectA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -68,7 +72,7 @@ public class RenameObjectAjaxController {
 					else if(authManager.isAutorized(actionInt2, user)){
 						obj = objectManager.getObjetoDOMUnvalidated(tipo, id, groupA, user);
 						if(obj.getCreador().getId() != user.getId()){
-							return Constants.noPrivilegesJ(user,logManager,actionInt,"Renombrado de objeto no permitida ");
+							return htmlManager.noPrivilegesJ(user,logManager,actionInt,"Renombrado de objeto no permitida ");
 						}
 					} 
 				}
@@ -92,13 +96,13 @@ public class RenameObjectAjaxController {
 			model.addObject("json", j);
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Renombrado de objeto no permitida ");
+			model = htmlManager.noPrivilegesJ(user,logManager,actionInt,"Renombrado de objeto no permitida ");
 		}
 		return model;
 	}
 
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idInstancia") == null  || !Constants.isNumeric(request.getParameter("idInstancia")) ||
+		return request.getParameter("idInstancia") == null  || !htmlManager.isNumeric(request.getParameter("idInstancia")) ||
 				request.getParameter("newNombre") == null || request.getParameter("newNombre").length() < 1;
 	}
 }

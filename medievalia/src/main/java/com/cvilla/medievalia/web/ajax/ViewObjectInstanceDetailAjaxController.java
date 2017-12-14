@@ -19,12 +19,12 @@ import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
 import com.cvilla.medievalia.utils.ListaAtributoSimple;
-import com.cvilla.medievalia.utils.ListaRelaciones;
 
 @Controller 
 public class ViewObjectInstanceDetailAjaxController {
@@ -48,6 +48,9 @@ public class ViewObjectInstanceDetailAjaxController {
 	@Autowired
 	private IGroupManager groupManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "objectDetail.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -60,7 +63,7 @@ public class ViewObjectInstanceDetailAjaxController {
 		String message;
 		if(authManager.isAutorized(actionId, user) || authManager.isAutorized(actionId3, user)){
 			if(errorParam(request) || groupA == null || tipo == null){
-				return Constants.paramError(logManager, actionId, user.getId());
+				return htmlManager.paramError(logManager, actionId, user.getId());
 			}
 			else{
 				int idInstancia = (new Integer(request.getParameter("idInstancia"))).intValue();
@@ -75,7 +78,7 @@ public class ViewObjectInstanceDetailAjaxController {
 					obj= objectManager.getObjetoDOMUnvalidated(tipo, idInstancia,groupA,user);
 				}
 				if(obj == null){
-					return Constants.paramError(logManager, actionId, user.getId());
+					return htmlManager.paramError(logManager, actionId, user.getId());
 				}
 				//Lista de tipoAtributoComplejo para crear las pestañas del modal
 				List<TipoAtributoComplejoDOM> ac = objectManager.getTiposAtributosCompleos(tipo);
@@ -91,7 +94,6 @@ public class ViewObjectInstanceDetailAjaxController {
 						}
 						else{
 							model = new ModelAndView("ajax/2-2-detalleObjeto");
-//							return Constants.noPrivilegesA(user, logManager, actionId, "Visualización de detalle de objeto no validado");
 						}
 					}
 					logManager.log(user.getId(), actionId, "Visualización de detalle de objeto ", Constants.P_OK);
@@ -105,7 +107,7 @@ public class ViewObjectInstanceDetailAjaxController {
 					logManager.log(user.getId(), actionId3, "Visualización de detalle de objeto a validar ", Constants.P_OK);
 				}
 				else{
-					return Constants.paramError(logManager, actionId, user.getId());
+					return htmlManager.paramError(logManager, actionId, user.getId());
 				}
 				if(groupManager.isTeacherOrDirector(user, groupA.getIdGrupo()) || user.getId() == obj.getCreador().getId()){
 					model.addObject("editSimple", "ok");
@@ -121,14 +123,14 @@ public class ViewObjectInstanceDetailAjaxController {
 		model.addObject("message", message);
 		}
 		else{
-			return Constants.noPrivilegesA(user, logManager, actionId, "Visualización de detalle de objeto");
+			return htmlManager.noPrivilegesA(user, logManager, actionId, "Visualización de detalle de objeto");
 		}
 		return model;
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idInstancia") == null || !Constants.isNumeric(request.getParameter("idInstancia")) ||
-				request.getParameter("modo") == null || !Constants.isNumeric(request.getParameter("modo")) ||
-				request.getParameter("val") == null || !Constants.isNumeric(request.getParameter("val"));
+		return request.getParameter("idInstancia") == null || !htmlManager.isNumeric(request.getParameter("idInstancia")) ||
+				request.getParameter("modo") == null || !htmlManager.isNumeric(request.getParameter("modo")) ||
+				request.getParameter("val") == null || !htmlManager.isNumeric(request.getParameter("val"));
 	}
 }

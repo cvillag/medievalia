@@ -15,6 +15,7 @@ import com.cvilla.medievalia.domain.Log;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -37,6 +38,9 @@ public class UserGeneralActivityAjaxController {
 	@Autowired
 	private ILoginManager loginManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "activityLogA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -51,8 +55,8 @@ public class UserGeneralActivityAjaxController {
 		else{
 			if(authManager.isAutorized(activityid, user)){
 				model = new ModelAndView("ajax/a-1-3.2-actividad");
-				int pag = Constants.nullParameterInt(request, "pag", 1);
-				int tamPag = Constants.nullParameterInt(request, "tamPag", 10);
+				int pag = htmlManager.nullParameterInt(request, "pag", 1);
+				int tamPag = htmlManager.nullParameterInt(request, "tamPag", 10);
 				int pags = 0;
 				try{
 					pags = logManager.getNumPag(tamPag);
@@ -80,14 +84,14 @@ public class UserGeneralActivityAjaxController {
 				model.addObject("actual",pag);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,activityid,"Intento de visionado de actividad de todos los usuarios ");
+				model = htmlManager.noPrivilegesA(user,logManager,activityid,"Intento de visionado de actividad de todos los usuarios ");
 			}
 		}
 		return model;
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return  request.getParameter("pag") == null || !Constants.isNumeric(request.getParameter("pag")) || 
-				request.getParameter("tamPag") == null || !Constants.isNumeric(request.getParameter("tamPag"));
+		return  request.getParameter("pag") == null || !htmlManager.isNumeric(request.getParameter("pag")) || 
+				request.getParameter("tamPag") == null || !htmlManager.isNumeric(request.getParameter("tamPag"));
 	}
 }

@@ -23,7 +23,7 @@ User u = (User)request.getAttribute("usuario");
 				</p>				
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="modalok" class="btn btn-sm btn-info" data-dismiss="modal">
+				<button type="button" id="modalokcreate" class="btn btn-sm btn-info">
 					<fmt:message key="general.aceptar" ></fmt:message>
 				</button>
 			</div>

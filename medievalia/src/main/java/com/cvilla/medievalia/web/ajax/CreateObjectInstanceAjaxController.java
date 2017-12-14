@@ -16,6 +16,7 @@ import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
@@ -40,6 +41,9 @@ public class CreateObjectInstanceAjaxController {
 	
 	@Autowired
 	private IObjectManager objectManager;
+	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@RequestMapping(value = "createObjectA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -72,12 +76,12 @@ public class CreateObjectInstanceAjaxController {
 			model.addObject("json", j);
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Creación de objeto no permitida ");
+			model = htmlManager.noPrivilegesJ(user,logManager,actionInt,"Creación de objeto no permitida ");
 		}
 		return model;
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("type") == null || !Constants.isNumeric(request.getParameter("type"));
+		return request.getParameter("type") == null || !htmlManager.isNumeric(request.getParameter("type"));
 	}
 }

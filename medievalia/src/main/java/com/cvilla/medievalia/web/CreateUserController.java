@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cvilla.medievalia.domain.Role;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IRoleManager;
@@ -23,6 +24,9 @@ import com.cvilla.medievalia.utils.Constants;
 @Controller
 public class CreateUserController {
 
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@Autowired
 	private IAutorizationManager authManager;
 	
@@ -51,10 +55,10 @@ public class CreateUserController {
 			scripts.add("js/1-2.js");
 			model.addObject("scripts",scripts);
 			model.addObject("roles",roles);
-			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+			model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 		}
 		else{
-			model = Constants.noPrivileges(user,logManager,Constants.P_CREATE_USER,"Intento de crear usuario en primera ventana, no permitido",request);
+			model = htmlManager.noPrivileges(user,logManager,Constants.P_CREATE_USER,"Intento de crear usuario en primera ventana, no permitido",request);
 		}
 		
 		return model;

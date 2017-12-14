@@ -16,6 +16,7 @@ import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -34,6 +35,9 @@ public class GroupController {
 	
 	@Autowired
 	private ILoginManager loginManager;
+	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@RequestMapping(value = "groups.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -56,10 +60,10 @@ public class GroupController {
 			model.addObject("listaGrupos", list);
 			model.addObject("user", user);
 			model.addObject("directors", directors);
-			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+			model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 		}
 		else{
-			model = Constants.noPrivileges(user,logManager,Constants.P_GROUP_LIST,"Intento de visualización de grupos no permitida",request);
+			model = htmlManager.noPrivileges(user,logManager,Constants.P_GROUP_LIST,"Intento de visualización de grupos no permitida",request);
 		}			
 		return model;
 	}

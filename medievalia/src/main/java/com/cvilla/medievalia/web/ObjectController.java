@@ -17,6 +17,7 @@ import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -36,6 +37,9 @@ public class ObjectController {
 	@Autowired
 	private IObjectManager objectManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "objectController.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -48,13 +52,13 @@ public class ObjectController {
 		
 		if(authManager.isAutorized(actionInt, user)){
 			if((errorParam(request) && tipo == null) || groupA == null){
-				return Constants.paramError(logManager, actionInt, user.getId());
+				return htmlManager.paramError(logManager, actionInt, user.getId());
 			}
 			else{
 				int idTipoObjeto = (new Integer(request.getParameter("idTipo"))).intValue();
 				TipoObjetoDOM tipoNuevo = objectManager.getTipoObjetoDOM(idTipoObjeto);
 				if(tipoNuevo == null){
-					return Constants.paramError(logManager, actionInt, user.getId());
+					return htmlManager.paramError(logManager, actionInt, user.getId());
 				}
 				else{
 					if(tipo == null || tipo.getTipoDOM() != tipoNuevo.getTipoDOM()){
@@ -68,7 +72,7 @@ public class ObjectController {
 					model.addObject("listasRelacion", listaBiblio);
 					
 					logManager.log(user.getId(), actionInt, "Pantalla de gestión de " + tipoNuevo.getNombreDOM(), Constants.P_OK);
-					model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+					model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 					List<String> scripts = new ArrayList<String>();
 					scripts.add("js/2-2.js");
 					model.addObject("scripts",scripts);
@@ -79,12 +83,12 @@ public class ObjectController {
 			}
 		}
 		else{
-			model = Constants.noPrivileges(user,logManager,actionInt,"mensaje",request);
+			model = htmlManager.noPrivileges(user,logManager,actionInt,"mensaje",request);
 		}	
 		return model;
 	}
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idTipo") == null || !Constants.isNumeric(request.getParameter("idTipo"));
+		return request.getParameter("idTipo") == null || !htmlManager.isNumeric(request.getParameter("idTipo"));
 	}
 	
 }

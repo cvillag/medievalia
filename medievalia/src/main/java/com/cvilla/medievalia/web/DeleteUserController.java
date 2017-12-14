@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cvilla.medievalia.domain.Role;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IRoleManager;
@@ -22,6 +23,9 @@ import com.cvilla.medievalia.utils.Constants;
 
 @Controller
 public class DeleteUserController {
+	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@Autowired
 	private ILoginManager userManager;
@@ -42,8 +46,8 @@ public class DeleteUserController {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		if(errorParam(request)){
-			model = Constants.paramError(logManager,user.getId(),Constants.P_DELETE_USER);
-			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+			model = htmlManager.paramError(logManager,user.getId(),Constants.P_DELETE_USER);
+			model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 			return model;
 		}
 		else{
@@ -66,15 +70,15 @@ public class DeleteUserController {
 				List<String> scripts = new ArrayList<String>();
 				scripts.add("js/1-3.js");
 				model.addObject("scripts",scripts);
-				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+				model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 			}
 			else{
-				model = Constants.noPrivileges(user,logManager,Constants.P_DELETE_USER,"Intento de borrado de usuario con ID: " + request.getParameter("deleteId"),request);
+				model = htmlManager.noPrivileges(user,logManager,Constants.P_DELETE_USER,"Intento de borrado de usuario con ID: " + request.getParameter("deleteId"),request);
 			}
 			return model;
 		}
 	}
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("deleteId") == null || !Constants.isNumeric(request.getParameter("deleteId"));
+		return request.getParameter("deleteId") == null || !htmlManager.isNumeric(request.getParameter("deleteId"));
 	}
 }

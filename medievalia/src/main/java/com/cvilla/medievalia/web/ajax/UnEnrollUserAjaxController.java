@@ -14,6 +14,7 @@ import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IRoleManager;
@@ -39,6 +40,9 @@ public class UnEnrollUserAjaxController {
 	
 	@Autowired
 	private ILoginManager userManager;
+	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@RequestMapping(value = "unenrollA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -115,7 +119,7 @@ public class UnEnrollUserAjaxController {
 	}
 	
 	private boolean paramError(HttpServletRequest request){
-		return request.getParameter("role") == null  || !Constants.isNumeric(request.getParameter("role")) ||
-				request.getParameter("userId") == null || !Constants.isNumeric(request.getParameter("userId"));
+		return request.getParameter("role") == null  || !htmlManager.isNumeric(request.getParameter("role")) ||
+				request.getParameter("userId") == null || !htmlManager.isNumeric(request.getParameter("userId"));
 	}
 }

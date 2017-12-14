@@ -10,13 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
@@ -44,6 +43,9 @@ public class UpdateComplexAttributeAjaxController {
 	
 	@Autowired
 	private IObjectManager objectManager;
+	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@RequestMapping(value = "updateRelation.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -91,17 +93,17 @@ public class UpdateComplexAttributeAjaxController {
 			model.addObject("json", j);
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Actualización de atributo complejo no permitida ");
+			model = htmlManager.noPrivilegesJ(user,logManager,actionInt,"Actualización de atributo complejo no permitida ");
 		}
 		return model;
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("select") == null || !Constants.isNumeric(request.getParameter("select")) ||
-				request.getParameter("confecha") == null || !Constants.isNumeric(request.getParameter("confecha")) ||
-				request.getParameter("instanciaH") == null || !Constants.isNumeric(request.getParameter("instanciaH")) ||
-				request.getParameter("tipoH") == null || !Constants.isNumeric(request.getParameter("tipoH")) ||
-				request.getParameter("instanciaP") == null || !Constants.isNumeric(request.getParameter("instanciaP"));
+		return request.getParameter("select") == null || !htmlManager.isNumeric(request.getParameter("select")) ||
+				request.getParameter("confecha") == null || !htmlManager.isNumeric(request.getParameter("confecha")) ||
+				request.getParameter("instanciaH") == null || !htmlManager.isNumeric(request.getParameter("instanciaH")) ||
+				request.getParameter("tipoH") == null || !htmlManager.isNumeric(request.getParameter("tipoH")) ||
+				request.getParameter("instanciaP") == null || !htmlManager.isNumeric(request.getParameter("instanciaP"));
 	}
 	
 

@@ -18,6 +18,7 @@ import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
@@ -43,6 +44,9 @@ public class CompleteObjectListAjaxController {
 	@Autowired
 	private IObjectManager objectManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "completeObjectList.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -54,7 +58,7 @@ public class CompleteObjectListAjaxController {
 		JSONObject j = new JSONObject();
 		
 		if((errorParam(request) && tipo == null) || groupA == null){
-			return Constants.paramError(logManager, actionInt, user.getId());
+			return htmlManager.paramError(logManager, actionInt, user.getId());
 		}
 		else{
 			if(authManager.isAutorized(actionInt, user)){
@@ -65,7 +69,7 @@ public class CompleteObjectListAjaxController {
 				else{
 					List<InstanciaObjetoDOM> listag;
 					String t2 = request.getParameter("tipo");
-					if(t2 != null && t2.length()>0 && Constants.isNumeric(t2)){
+					if(t2 != null && t2.length()>0 && htmlManager.isNumeric(t2)){
 						TipoObjetoDOM to = new TipoObjetoDOM();
 						to.setTipoDOM(new Integer(t2));
 						listag = objectManager.getObjetoDOMListByType(to);
@@ -89,7 +93,7 @@ public class CompleteObjectListAjaxController {
 				logManager.log(user.getId(), actionInt, "Listado completo de objeto " + tipo.getNombreDOM() + " del grupo " + groupA.getName(), Constants.P_OK);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,actionInt,"Visualización de objetos no permitida (grupo: " + groupA.getName() + ")");
+				model = htmlManager.noPrivilegesA(user,logManager,actionInt,"Visualización de objetos no permitida (grupo: " + groupA.getName() + ")");
 			}
 		}
 		

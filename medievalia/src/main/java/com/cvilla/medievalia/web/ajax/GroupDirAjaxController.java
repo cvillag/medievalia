@@ -15,6 +15,7 @@ import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -34,6 +35,9 @@ public class GroupDirAjaxController {
 	@Autowired
 	private ILoginManager loginManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "belongGroupA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -50,7 +54,7 @@ public class GroupDirAjaxController {
 				logManager.log(user.getId(), Constants.P_DETAIL_DIRECTOR_GROUPS_OWN, "Listado de grupos propios", Constants.P_OK);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_DIRECTOR_GROUPS_OWN,"Sin permiso de ver listado de grupos propios");
+				model = htmlManager.noPrivilegesA(user,logManager,Constants.P_DETAIL_DIRECTOR_GROUPS_OWN,"Sin permiso de ver listado de grupos propios");
 			}			
 		}
 		else{
@@ -66,12 +70,12 @@ public class GroupDirAjaxController {
 				logManager.log(user.getId(), Constants.P_DETAIL_DIRECTOR_GROUPS_OTHER, "Listado de grupos de otros usuarios o propios", Constants.P_OK);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_DIRECTOR_GROUPS_OTHER,"Sin permiso de ver listado de grupos de otros usuarios");
+				model = htmlManager.noPrivilegesA(user,logManager,Constants.P_DETAIL_DIRECTOR_GROUPS_OTHER,"Sin permiso de ver listado de grupos de otros usuarios");
 			}			
 		}
 		return model;
 	}
 	boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idDir") == null || !Constants.isNumeric(request.getParameter("idDir"));
+		return request.getParameter("idDir") == null || !htmlManager.isNumeric(request.getParameter("idDir"));
 	}
 }

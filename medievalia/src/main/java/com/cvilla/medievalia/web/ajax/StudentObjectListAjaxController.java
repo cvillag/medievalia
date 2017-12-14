@@ -18,6 +18,7 @@ import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
@@ -43,6 +44,9 @@ public class StudentObjectListAjaxController {
 	@Autowired
 	private IObjectManager objectManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "studentObjectListA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -54,7 +58,7 @@ public class StudentObjectListAjaxController {
 		JSONObject j = new JSONObject();
 		
 		if((errorParam(request) && tipo == null) || groupA == null){
-			return Constants.paramError(logManager, actionInt, user.getId());
+			return htmlManager.paramError(logManager, actionInt, user.getId());
 		}
 		else{
 			if(authManager.isAutorized(actionInt, user)){
@@ -80,7 +84,7 @@ public class StudentObjectListAjaxController {
 				}
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,actionInt,"Visualización de listado de objetos modificados por el usuario (alumno) no permitida (grupo: " + groupA.getName() + ")");
+				model = htmlManager.noPrivilegesA(user,logManager,actionInt,"Visualización de listado de objetos modificados por el usuario (alumno) no permitida (grupo: " + groupA.getName() + ")");
 			}
 		}
 		

@@ -6,43 +6,43 @@
 
 $(document).ready(function(){
 	
-	$.post("belongGroupA.do",{
-		idDir : userId,
-	}, function(responseText){
-		$("#group-block1").html(responseText);
-		$(".selgrp").click(function(){
-			idGroup = $(this).data('val');
-			grSel = idGroup;
-			$("#idGroup").val(grSel);
-			$("#activeGroupForm").submit();
-		});
-	}
-	);
-	
-	$.post("teacherGroupA.do",{
-		idTeach : userId,
-	}, function(responseText){
-		$("#group-block2").html(responseText);
-		$(".selgrp").click(function(){
-			idGroup = $(this).data('val');
-			grSel = idGroup;
-			$("#idGroup").val(grSel);
-			$("#activeGroupForm").submit();
-		});
-	}
-	);
-	$.post("studentGroupA.do",{
-		idStud : userId,
-	}, function(responseText){
-		$("#group-block3").html(responseText);
-		$(".selgrp").click(function(){
-			idGroup = $(this).data('val');
-			grSel = idGroup;
-			$("#idGroup").val(grSel);
-			$("#activeGroupForm").submit();
-		});
-	}
-	);
+//	$.post("belongGroupA.do",{
+//		idDir : userId,
+//	}, function(responseText){
+//		$("#group-block1").html(responseText);
+//		$(".selgrp").click(function(){
+//			idGroup = $(this).data('val');
+//			grSel = idGroup;
+//			$("#idGroup").val(grSel);
+//			$("#activeGroupForm").submit();
+//		});
+//	}
+//	);
+//	
+//	$.post("teacherGroupA.do",{
+//		idTeach : userId,
+//	}, function(responseText){
+//		$("#group-block2").html(responseText);
+//		$(".selgrp").click(function(){
+//			idGroup = $(this).data('val');
+//			grSel = idGroup;
+//			$("#idGroup").val(grSel);
+//			$("#activeGroupForm").submit();
+//		});
+//	}
+//	);
+//	$.post("studentGroupA.do",{
+//		idStud : userId,
+//	}, function(responseText){
+//		$("#group-block3").html(responseText);
+//		$(".selgrp").click(function(){
+//			idGroup = $(this).data('val');
+//			grSel = idGroup;
+//			$("#idGroup").val(grSel);
+//			$("#activeGroupForm").submit();
+//		});
+//	}
+//	);
 	
 	$("#displayGroup1").click(function(){
 		display1();
@@ -82,17 +82,6 @@ $(document).ready(function(){
 				var json = JSON.parse(data);
 				if(json.message == "creado"){
 					$("#modalCrearGrupo").modal();
-					$.post("belongGroupA.do",
-						function(responseText){
-						$("#group-block1").html(responseText);
-						$(".selectgrp").click(function(){
-							idGroup = $(this).data('val');
-							grSel = idGroup;
-							$("#idGroup").val(grSel);
-							$("#activeGroupForm").submit();
-						});
-					}
-					);
 					$("#nombreGrupo").val("");
 					$("#firstForm").show(200);
 					$("#secondForm").hide(200);
@@ -104,6 +93,10 @@ $(document).ready(function(){
 				}
 			});
 		}
+	});
+	
+	$("#modalokcreate").click(function(){
+		location.reload();
 	});
 });
 

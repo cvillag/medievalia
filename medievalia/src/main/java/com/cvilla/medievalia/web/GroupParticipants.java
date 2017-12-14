@@ -18,6 +18,7 @@ import com.cvilla.medievalia.domain.Teachers;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.utils.Constants;
 
@@ -35,6 +36,9 @@ public class GroupParticipants {
 	@Autowired
 	private ILogManager logManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "groupParticipants.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -47,17 +51,17 @@ public class GroupParticipants {
 				logManager.log(user.getId(), actionInt, "Ventana de lista de participantes", Constants.P_OK);
 				model = new ModelAndView("4-1.listaParticipantes");
 				model.addObject("group",groupA);
-				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+				model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 				List<String> scripts = new ArrayList<String>();
 				scripts.add("js/4-1.js");
 				model.addObject("scripts",scripts);
 			}
 			else{
-				model = Constants.noPrivileges(user,logManager,actionInt,"Intento de ver lista de participantes de un grupo ajeno",request);
+				model = htmlManager.noPrivileges(user,logManager,actionInt,"Intento de ver lista de participantes de un grupo ajeno",request);
 			}
 		}
 		else{
-			model = Constants.noPrivileges(user,logManager,actionInt,"mensaje",request);
+			model = htmlManager.noPrivileges(user,logManager,actionInt,"mensaje",request);
 		}			
 		return model;
 	}

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -29,6 +30,9 @@ public class ProfileController {
 	
 	@Autowired
 	private ILogManager logManager;
+	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@RequestMapping(value="profile.do")
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -50,7 +54,7 @@ public class ProfileController {
 				scripts.add("js/common/groups-list.js");
 				model.addObject("scripts",scripts);
 				logManager.log(user.getId(), Constants.P_EDIT_PROFILE, "Visualización de perfil propio", Constants.P_OK);
-				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+				model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 			}
 		}
 		return model;

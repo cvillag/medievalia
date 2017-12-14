@@ -15,6 +15,7 @@ import com.cvilla.medievalia.domain.Students;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -34,6 +35,9 @@ public class GroupStudentAjaxController {
 	@Autowired
 	private ILoginManager loginManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "studentGroupA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -50,7 +54,7 @@ public class GroupStudentAjaxController {
 				logManager.log(user.getId(), Constants.P_DETAIL_STUDENT_GROUPS_OWN, "Listado de grupos propios como alumno", Constants.P_OK);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_STUDENT_GROUPS_OWN,"Sin permiso para ver listado de grupos propios como alumno");
+				model = htmlManager.noPrivilegesA(user,logManager,Constants.P_DETAIL_STUDENT_GROUPS_OWN,"Sin permiso para ver listado de grupos propios como alumno");
 			}
 		}else{
 			if(authManager.isAutorized(Constants.P_DETAIL_STUDENT_GROUPS_OTHER, user) || authManager.isAutorized(Constants.P_DETAIL_STUDENT_GROUPS_OWN, user) ){
@@ -65,13 +69,13 @@ public class GroupStudentAjaxController {
 				logManager.log(user.getId(), Constants.P_DETAIL_STUDENT_GROUPS_OTHER, "Listado de grupos ajenos como alumno", Constants.P_OK);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_STUDENT_GROUPS_OTHER,"Sin permiso para ver listado de grupos de otros usuarios como alumno");
+				model = htmlManager.noPrivilegesA(user,logManager,Constants.P_DETAIL_STUDENT_GROUPS_OTHER,"Sin permiso para ver listado de grupos de otros usuarios como alumno");
 			}	
 		}
 		return model;
 	}
 	boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idStud") == null || !Constants.isNumeric(request.getParameter("idStud"));
+		return request.getParameter("idStud") == null || !htmlManager.isNumeric(request.getParameter("idStud"));
 	}
 	
 }

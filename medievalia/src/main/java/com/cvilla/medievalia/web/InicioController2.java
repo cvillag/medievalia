@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.utils.Constants;
 
@@ -25,6 +26,9 @@ public class InicioController2 {
 
 	@Autowired
 	private ILogManager logManager;
+	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@RequestMapping(value = "main.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -57,13 +61,13 @@ public class InicioController2 {
 			}
 			model.addObject("scripts",scripts);
 			model.addObject("user",user.getUser_name());
-			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+			model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 		}
 		else{
-			model = Constants.noPrivileges(user,logManager,Constants.P_LOGIN,"Visualización de página principal no permitida",request);
+			model = htmlManager.noPrivileges(user,logManager,Constants.P_LOGIN,"Visualización de página principal no permitida",request);
 		}
 		if(user != null){
-			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+			model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 		}
 		return model;
 	}

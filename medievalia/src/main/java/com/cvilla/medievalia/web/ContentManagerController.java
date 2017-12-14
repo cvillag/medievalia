@@ -18,6 +18,7 @@ import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
@@ -27,6 +28,9 @@ import com.cvilla.medievalia.utils.Constants;
 public class ContentManagerController {
 
 	private int actionInt = Constants.P_SELECT_ACTIVE_GROUP;
+	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@Autowired
 	private IAutorizationManager authManager;
@@ -54,7 +58,7 @@ public class ContentManagerController {
 		
 		if(authManager.isAutorized(actionInt, user)){
 			if(errorParam(request) && activeGroup==null){
-				return Constants.paramError(logManager, actionInt, user.getId());
+				return htmlManager.paramError(logManager, actionInt, user.getId());
 			}
 			else{
 				String message;
@@ -145,7 +149,7 @@ public class ContentManagerController {
 				//Fin resúmenes
 				
 				model.addObject("message", message);
-				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+				model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 				model.addObject("director",director);
 				model.addObject("user",user);
 				List<String> scripts = new ArrayList<String>();
@@ -154,13 +158,13 @@ public class ContentManagerController {
 			}		
 		}
 		else{
-			model = Constants.noPrivileges(user,logManager,actionInt,"mensaje",request);
+			model = htmlManager.noPrivileges(user,logManager,actionInt,"mensaje",request);
 		}	
 		return model;
 	}
 	
 	//true si hay error
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idGroup") == null || !Constants.isNumeric(request.getParameter("idGroup"));
+		return request.getParameter("idGroup") == null || !htmlManager.isNumeric(request.getParameter("idGroup"));
 	}
 }

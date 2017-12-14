@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IRoleManager;
@@ -33,6 +33,9 @@ public class ModifyUserPassAjaxController {
 	@Autowired
 	private ILogManager logManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "modifyUserPassA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -42,7 +45,7 @@ public class ModifyUserPassAjaxController {
 		JSONObject j = new JSONObject();
 		if(authManager.isAutorized(Constants.P_MODIFY_USER_PASS_OWN, user)){
 			if(errorParam(request)){
-				model = Constants.paramError(logManager,user.getId(),Constants.P_MODIFY_USER_PASS_OWN);
+				model = htmlManager.paramError(logManager,user.getId(),Constants.P_MODIFY_USER_PASS_OWN);
 				return model;
 			}
 			else{

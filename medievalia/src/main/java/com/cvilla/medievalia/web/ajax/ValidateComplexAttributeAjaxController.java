@@ -10,13 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
@@ -41,6 +40,9 @@ public class ValidateComplexAttributeAjaxController {
 	
 	@Autowired
 	private IObjectManager objectManager;
+	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@RequestMapping(value = "validateComplexAttributeA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -72,16 +74,16 @@ public class ValidateComplexAttributeAjaxController {
 			model.addObject("json", j);
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Validación de atributo complejo de objeto no permitida ");
+			model = htmlManager.noPrivilegesJ(user,logManager,actionInt,"Validación de atributo complejo de objeto no permitida ");
 		}
 		return model;
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idHijo") == null || !Constants.isNumeric(request.getParameter("idHijo")) ||
-				request.getParameter("tipoHijo") == null || !Constants.isNumeric(request.getParameter("tipoHijo")) ||
+		return request.getParameter("idHijo") == null || !htmlManager.isNumeric(request.getParameter("idHijo")) ||
+				request.getParameter("tipoHijo") == null || !htmlManager.isNumeric(request.getParameter("tipoHijo")) ||
 				request.getParameter("textoVal") == null ||
-				request.getParameter("val") == null || !Constants.isNumeric(request.getParameter("val")) ||
-				request.getParameter("idPadre") == null || !Constants.isNumeric(request.getParameter("idPadre"));
+				request.getParameter("val") == null || !htmlManager.isNumeric(request.getParameter("val")) ||
+				request.getParameter("idPadre") == null || !htmlManager.isNumeric(request.getParameter("idPadre"));
 	}
 }

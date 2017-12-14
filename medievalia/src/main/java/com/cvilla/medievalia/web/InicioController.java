@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -31,6 +32,9 @@ public class InicioController {
 
 	@Autowired
 	private ILogManager logManager;
+	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@RequestMapping(value = "inicio.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -72,11 +76,11 @@ public class InicioController {
 			}
 			model.addObject("scripts",scripts);
 			model.addObject("user",nombre);
-			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+			model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 		}
 		else{
 			if(errorParam(request)){
-				model = Constants.paramError(logManager,Constants.P_NOUSER,Constants.P_LOGIN);
+				model = htmlManager.paramError(logManager,Constants.P_NOUSER,Constants.P_LOGIN);
 				return model;
 			}
 			else{

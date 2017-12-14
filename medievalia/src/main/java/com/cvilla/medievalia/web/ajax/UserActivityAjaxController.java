@@ -15,6 +15,7 @@ import com.cvilla.medievalia.domain.Log;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -35,6 +36,9 @@ public class UserActivityAjaxController {
 	@Autowired
 	private ILoginManager loginManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "activityUserA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -51,13 +55,13 @@ public class UserActivityAjaxController {
 			User u = loginManager.getUser((new Integer(id).intValue()));
 			if(u == null){
 				logManager.log(user.getId(), Constants.P_DETAIL_OTHER_USER, "Detalle de actividad de otro usuario " + id + " fallida en acceso a BD", Constants.P_NOK);
-				model = Constants.processError("Error: el usuario seleccionado no existe");
+				model = htmlManager.processError("Error: el usuario seleccionado no existe");
 			}
 			else{
 				if(authManager.isAutorized(Constants.P_DETAIL_OTHER_USER, user)){
 					model = new ModelAndView("ajax/a-1-3.2-actividad");
-					int pag = Constants.nullParameterInt(request, "pag", 1);
-					int tamPag = Constants.nullParameterInt(request, "tamPag", 10);
+					int pag = htmlManager.nullParameterInt(request, "pag", 1);
+					int tamPag = htmlManager.nullParameterInt(request, "tamPag", 10);
 					int pags = 0;
 					try{
 						pags = logManager.getNumPag(u.getId(), tamPag);
@@ -85,7 +89,7 @@ public class UserActivityAjaxController {
 					model.addObject("actual",pag);
 				}
 				else{
-					model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_OTHER_USER,"Intento de visionado de actividad de otro usuario con ID: " + id);
+					model = htmlManager.noPrivilegesA(user,logManager,Constants.P_DETAIL_OTHER_USER,"Intento de visionado de actividad de otro usuario con ID: " + id);
 				}
 			}
 		}
@@ -93,8 +97,8 @@ public class UserActivityAjaxController {
 	}
 	
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("detailId") == null || !Constants.isNumeric(request.getParameter("detailId")) || 
-				request.getParameter("pag") == null || !Constants.isNumeric(request.getParameter("pag")) ||
-				request.getParameter("tamPag") == null || !Constants.isNumeric(request.getParameter("tamPag"));
+		return request.getParameter("detailId") == null || !htmlManager.isNumeric(request.getParameter("detailId")) || 
+				request.getParameter("pag") == null || !htmlManager.isNumeric(request.getParameter("pag")) ||
+				request.getParameter("tamPag") == null || !htmlManager.isNumeric(request.getParameter("tamPag"));
 	}
 }

@@ -16,6 +16,7 @@ import com.cvilla.medievalia.domain.Role;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.IRoleManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -36,6 +37,9 @@ public class PossibleUserListToGroupAjaxController {
 	
 	@Autowired
 	private IGroupManager groupManager;
+	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@RequestMapping(value = "possibleUserListA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -63,7 +67,7 @@ public class PossibleUserListToGroupAjaxController {
 				}
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,actionInt,"Intento de listar usuarios para matriculación, sin  privilegios");
+				model = htmlManager.noPrivilegesA(user,logManager,actionInt,"Intento de listar usuarios para matriculación, sin  privilegios");
 			}
 		}
 		return model;

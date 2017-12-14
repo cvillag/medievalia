@@ -10,21 +10,15 @@ int idGr =0;
 if(grsel != null){
 	idGr = grsel.getIdGrupo();
 }
+%>
+<div class="container">
+	<p><fmt:message key="intro.general.txt1"></fmt:message></p>
+<%
 if (ugl.getUser_role() == Constants.ROLE_PROFESOR || ugl.getUser_role() == Constants.ROLE_ADMIN){ %>
-<div class="container">
-	<legend>
-		<h3>
-			<button id="displayGroup1" class="btn btn-sm btn-info btn-xs">
-				<span id="displayGroup1i" class="glyphicon glyphicon-chevron-down"></span>
-			</button>
-			&nbsp;
-			<fmt:message key="p1-3.2.gruposDir" />
-		</h3>
-	</legend>
-</div>
-<div id="group-block1" class="container"></div>
+
 <%if (ugl.getUser_role() == Constants.ROLE_PROFESOR){%>
-<div class="container">
+<p><fmt:message key="intro.general.txt2"></fmt:message></p>
+<p><fmt:message key="intro.general.txt3"></fmt:message></p>
 	<form class="form-inline" role="form" id="firstForm">
 		<div class="form-group">
 			<label class="control-label formGroup" for="showform"><fmt:message key="p4-0.crearGrupo"></fmt:message></label>
@@ -52,34 +46,13 @@ if (ugl.getUser_role() == Constants.ROLE_PROFESOR || ugl.getUser_role() == Const
 			</button>
 		</div>
 	</form>
-</div>
 <%}}
-if (ugl.getUser_role() == Constants.ROLE_PROFESOR || ugl.getUser_role() == Constants.ROLE_ADMIN){ %>
-<div class="container">
-	<legend>
-		<h3>
-			<button id="displayGroup2" class="btn btn-sm btn-info btn-xs">
-				<span id="displayGroup2i" class="glyphicon glyphicon-chevron-down"></span>
-			</button>
-			&nbsp;
-			<fmt:message key="p1-3.2.gruposProf" />
-		</h3>
-	</legend>
-</div>
-<div id="group-block2" class="container"></div>
+else if(ugl.getUser_role() == Constants.ROLE_ALUMNO){
+%>
+<p><fmt:message key="intro.general.txt4"></fmt:message></p>
 <%} %>
-<div class="container">
-	<legend>
-		<h3>
-			<button id="displayGroup3" class="btn btn-sm btn-info btn-xs">
-				<span id="displayGroup3i" class="glyphicon glyphicon-chevron-down"></span>
-			</button>
-			&nbsp;
-			<fmt:message key="p1-3.2.gruposAlum" />
-		</h3>
-	</legend>
+<p><fmt:message key="intro.general.txt5"></fmt:message></p>
 </div>
-<div id="group-block3" class="container"></div>
 <form action="contentManager.do" method="post" id="activeGroupForm">
 	<input type="hidden" name="idGroup" id="idGroup">
 	<input type="hidden" name="groupSelected" id="groupSelected" value="<%=idGr%>" />

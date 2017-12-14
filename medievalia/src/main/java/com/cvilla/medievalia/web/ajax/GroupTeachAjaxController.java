@@ -15,6 +15,7 @@ import com.cvilla.medievalia.domain.Teachers;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -34,6 +35,9 @@ public class GroupTeachAjaxController {
 	@Autowired
 	private ILoginManager loginManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "teacherGroupA.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -50,7 +54,7 @@ public class GroupTeachAjaxController {
 				logManager.log(user.getId(), Constants.P_DETAIL_DIRECTOR_GROUPS_OWN, "Visualización de lista de grupos propios", Constants.P_OK);
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_TEACHER_GROUPS_OWN,"Sin permisos para ver lista de grupos propio");
+				model = htmlManager.noPrivilegesA(user,logManager,Constants.P_DETAIL_TEACHER_GROUPS_OWN,"Sin permisos para ver lista de grupos propio");
 			}		
 		}
 		else{
@@ -67,13 +71,13 @@ public class GroupTeachAjaxController {
 
 			}
 			else{
-				model = Constants.noPrivilegesA(user,logManager,Constants.P_DETAIL_TEACHER_GROUPS_OTHER,"mensaje");
+				model = htmlManager.noPrivilegesA(user,logManager,Constants.P_DETAIL_TEACHER_GROUPS_OTHER,"mensaje");
 			}			
 		}
 		return model;
 	}
 	boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idTeach") == null || !Constants.isNumeric(request.getParameter("idTeach"));
+		return request.getParameter("idTeach") == null || !htmlManager.isNumeric(request.getParameter("idTeach"));
 	}
 	
 }

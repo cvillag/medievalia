@@ -3,7 +3,7 @@
 	<div class="clearfooter"></div>
 	<div class="footer">
       <div class="container">
-        <p class="text-muted">Medievalia 0.3</p>
+        <p class="text-muted">Medievalia 1.0</p>
       </div>
     </footer>
 </body>

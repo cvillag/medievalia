@@ -1,22 +1,11 @@
 package com.cvilla.medievalia.utils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.json.JSONObject;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.User;
-import com.cvilla.medievalia.service.intf.ILogManager;
-
 public class Constants {
 	
-	private static final String PASS_KEY = "28165A0B371ED2D9441B830D21A30887";
+	public static final String PASS_KEY = "28165A0B371ED2D9441B830D21A30887";
 	public static final int P_LOGIN = 1;
 	public static final int P_EDIT_PROFILE = 2;
 	public static final int P_USER_LIST = 3;
@@ -68,77 +57,6 @@ public class Constants {
 	public static final int P_VIEW_AUTHORS_STATISTICS_PER_TYPE = 52;
 	public static final int P_VIEW_OWN_AUTHORS_STATISTICS_PER_TYPE = 53;
 	
-	//TODO: Permisos a eliminar tras la refactorización
-//	public static final int P_TOPIC_LIST = 21;
-//	public static final int P_TOPIC_MANAGER = 22;
-//	public static final int P_CREATE_TOPIC = 23;
-//	public static final int P_TOPIC_DETAIL = 24;
-//	public static final int P_CREATE_SUB_TOPIC = 25;
-//	public static final int P_SUBTOPIC_LIST = 26;
-//	public static final int P_RENAME_TOPIC = 27;
-//	
-//	public static final int P_DELETE_TOPIC = 36;
-//	public static final int P_RENAME_SUBTOPIC = 37;
-//	public static final int P_DELETE_STOPIC = 38;
-//	public static final int P_VIEW_CHARGES = 39;
-//	public static final int P_CREATE_CHARGE = 40;
-//	public static final int P_RENAME_CHARGE = 41;
-//	public static final int P_RENAME_CHARGE_OWN = 42;
-//	public static final int P_DELETE_CHARGE = 43;
-//	public static final int P_VALIDAR_CARGO = 44;
-//	public static final int P_VIEW_OWN_CHARGES = 45;
-//	public static final int P_DELETE_OWN_CHARGES = 46;
-//	public static final int P_VIEW_CHARGE_STATISTICS = 47;
-//	public static final int P_VIEW_OWN_CHARGE_STATISTICS = 48;
-//	
-//	public static final int P_VIEW_STUDIES = 49;
-//	public static final int P_VALIDATE_STUDY = 50;
-//	public static final int P_CREATE_STUDY = 51;
-//	public static final int P_RENAME_STUDY = 52;
-//	public static final int P_RENAME_STUDY_OWN = 53;
-//	public static final int P_DELETE_STUDY = 54;
-//	public static final int P_VIEW_OWN_STUDY = 55;
-//	public static final int P_DELETE_OWN_STUDIES = 56;
-//	public static final int P_VIEW_STUDIES_STATISTICS = 47;
-//	public static final int P_VIEW_OWN_STUDIES_STATISTICS = 48;
-//	
-//	public static final int P_VIEW_PLACES = 57;
-//	public static final int P_VALIDATE_PLACE = 58;
-//	public static final int P_CREATE_PLACE = 59;
-//	public static final int P_RENAME_PLACE = 60;
-//	public static final int P_RENAME_PLACE_OWN = 61;
-//	public static final int P_DELETE_PLACE = 62;
-//	public static final int P_VIEW_OWN_PLACE = 63;
-//	public static final int P_DELETE_OWN_PLACES = 64;
-//	public static final int P_VIEW_PLACES_STATISTICS = 47;
-//	public static final int P_VIEW_OWN_PLACES_STATISTICS = 48;
-//	
-//	public static final int P_VIEW_AUTHORS = 65;
-//	public static final int P_VALIDATE_AUTHOR = 66;
-//	public static final int P_CREATE_AUTHOR = 67;
-//	public static final int P_RENAME_AUTHOR = 68;
-//	public static final int P_RENAME_AUTHOR_OWN = 69;
-//	public static final int P_DELETE_AUTHOR = 70;
-//	public static final int P_VIEW_OWN_AUTHOR = 71;
-//	public static final int P_DELETE_OWN_AUTHORS = 72;
-//	public static final int P_VIEW_AUTHORS_STATISTICS = 47;
-//	public static final int P_VIEW_OWN_AUTHORS_STATISTICS = 48;
-//	
-//	public static final int P_VIEW_CHARACTER_LIST = 73;
-//	public static final int P_VALIDATE_CHARACTER = 74;
-//	public static final int P_DELETE_CHARACTER = 75;
-//	public static final int P_RENAME_CHARACTER = 76;
-//	public static final int P_CREATE_CHARACTER = 77;
-//	public static final int P_MODIFY_CHARACTER = 78;
-//	
-//	public static final int P_DELETE_OWN_CHARACTER = 79;
-//	public static final int P_RENAME_CHARACTER_OWN = 80;
-//	public static final int P_MODIFY_DATA_CHARACTER_OWN = 81;
-//	public static final int P_VIEW_CHARGES_BY_CHARACTER = 82;
-//	public static final int P_VALIDATE_CHARGE_CHARACTER = 83;
-	
-	//FIN PERMISOS A BORRAR
-	
 	public static final int P_OK = 1;
 	public static final int P_NOK = 0;
 	public static final int P_NOUSER = 0;
@@ -181,132 +99,9 @@ public class Constants {
 	public static final String TEXTO_SIN_VALIDAR = "";
 	public static final int TEXTO_LEIDO = 1;
 	public static final int TEXTO_NO_LEIDO = 0;
-	
 		
 	public static String getKey(){
 		return PASS_KEY;
-	}
-	
-	public static boolean isAcceptedRoleInGroup(int role){
-		return ROLES_ACCEPTED_IN_GROUP.contains(role);
-	}
-	
-	public static  List<Header> getHeaders(int role, HttpServletRequest req){
-		HttpSession ses = req.getSession();
-		ArrayList<Header> lista = new ArrayList<Header>();
-		int index=-1;
-		if(role == 1){
-			lista.add(new Header("admin","Administración","",new ArrayList<Header>()));
-			index++;
-			lista.get(index).getSons().add(new Header("users","Usuarios","users.do",null));
-			lista.get(index).getSons().add(new Header("groups", "Grupos", "groups.do",null));
-			lista.get(index).getSons().add(new Header("logs","Logs","generalLog.do",null));
-			lista.add(new Header("actions", "Acciones", "actions.do", null));
-			index++;
-		}
-		else{
-			if(role == 2 || role == 3){
-				lista.add(new Header("groups","Grupos","",new ArrayList<Header>()));
-				index++;
-				Group g = (Group) ses.getAttribute("grupoActual");
-				if(g !=  null){
-					lista.get(index).getSons().add(new Header("actual","Actual","contentManager.do?idGroup=" + g.getIdGrupo(),null));
-				}
-				lista.get(index).getSons().add(new Header("anteriores","Otros", "", null));
-			}
-//			lista.add(new Header("investigacion","Investigación","",new ArrayList<Header>()));
-//			index++;
-//			lista.get(index).getSons().add(new Header("gestionContenido","Gestión de contenido", "contentManager.do",null));
-//			lista.get(index).getSons().add(new Header("temas","Temas", "topics.do",null));
-		}
-		lista.add(new Header("profile","Perfil","profile.do",null));
-		index++;
-		
-		return lista;
-	}
-	
-	public static ModelAndView processError(String message){
-		ModelAndView model = new ModelAndView("5-2-error");
-		model.addObject("mensaje2", message);
-		return model;
-	}
-	
-	public static ModelAndView noPrivileges(User user, ILogManager logManager, int action, String message, HttpServletRequest req){
-		if(user != null){
-			logManager.log(user.getId(), action, message, Constants.P_NOK);
-			ModelAndView model = new ModelAndView("5-2-error");
-			String mensaje2 = "test.noPermiso";
-			model.addObject("mensaje2", mensaje2);
-			model.addObject("headers",getHeaders(user.getUser_role(),req));
-			return model;
-		}
-		else{
-			logManager.log(Constants.P_NOUSER, action, "Sesión posiblemente expirada (usuario nulo)", Constants.P_NOK);
-			ModelAndView model = new ModelAndView("0-bienvenida");
-			model.addObject("mensaje2", "test.noSesion");
-			return model;
-		}
-	}
-	
-	public static ModelAndView noPrivilegesA(User user, ILogManager logManager, int action, String message){
-		if(user != null){
-			logManager.log(user.getId(), action, message, Constants.P_NOK);
-			ModelAndView model = new ModelAndView("5-2-errorAjax");
-			String mensaje2 = "test.noPermiso";
-			model.addObject("mensaje2", mensaje2);
-			return model;
-		}
-		else{
-			logManager.log(Constants.P_NOUSER, action, "Sesión posiblemente expirada (usuario nulo)", Constants.P_NOK);
-			ModelAndView model = new ModelAndView("5-2-errorAjax");
-			model.addObject("mensaje2", "test.noSesion");
-			return model;
-		}
-	}
-	
-	public static ModelAndView noPrivilegesJ(User user, ILogManager logManager, int action, String message){
-		ModelAndView model = new ModelAndView("ajax/empty");
-		JSONObject j = new JSONObject();
-		String m;
-		if(user != null){
-			logManager.log(user.getId(), action, message, Constants.P_NOK);
-			m = "sinPrivilegios";
-		}
-		else{
-			logManager.log(Constants.P_NOUSER, action, "Sesión posiblemente expirada (usuario nulo)", Constants.P_NOK);
-			m = "sinSesion";
-		}
-		j.put("message", m);
-		model.addObject("json", j);
-		return model;
-	}
-	
-	public static ModelAndView paramError(ILogManager log,int idaction,int iduser){
-		log.log(iduser, idaction, "Error de falta de parámetros", Constants.P_NOK);
-		ModelAndView model = new ModelAndView("5-2-error");
-		String mensaje2 = "test.noParam";
-		model.addObject("mensaje2", mensaje2);
-		return model;
-	}
-	
-	public static String nullParameterString(HttpServletRequest request, String name, String defValue){
-		String par = request.getParameter(name);
-		if(par == null || par.equals("")){
-			return defValue;
-		}
-		else{
-			return par;
-		}
-	}
-	
-	public static int nullParameterInt(HttpServletRequest request, String name, int defValue){
-		String par = request.getParameter(name);
-		if(par != null && ! par.equals("")){
-			return (new Integer(par)).intValue();
-		}
-		else{
-			return defValue;
-		}
 	}
 	
 	public static boolean isNumeric(String cadena){

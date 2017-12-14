@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cvilla.medievalia.dao.intfc.IGroupDAO;
-import com.cvilla.medievalia.dao.mappers.UserMapper;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.Students;
 import com.cvilla.medievalia.domain.Teachers;

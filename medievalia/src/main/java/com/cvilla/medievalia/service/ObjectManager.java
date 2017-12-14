@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.jar.Attributes;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cvilla.medievalia.dao.intfc.IObjetoDAO;
-import com.cvilla.medievalia.dao.intfc.IUserDAO;
-import com.cvilla.medievalia.dao.mappers.AtributoSencilloDOMMapper;
-import com.cvilla.medievalia.dao.mappers.TipoObjetoDOMMapper;
 import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
 import com.cvilla.medievalia.domain.Group;
@@ -23,6 +19,7 @@ import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -37,6 +34,9 @@ public class ObjectManager implements IObjectManager {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@Autowired
 	private IAutorizationManager authManager;
@@ -99,7 +99,7 @@ public class ObjectManager implements IObjectManager {
 			String idoh = req.getParameter("idoh"+index);
 			String idih = req.getParameter("idih"+index);
 			String prep = req.getParameter("prep"+index);
-			nulo = idoh == null || idoh.length() < 1 || !Constants.isNumeric(idoh) || idih == null || idih.length() < 1 || !Constants.isNumeric(idih);
+			nulo = idoh == null || idoh.length() < 1 || !htmlManager.isNumeric(idoh) || idih == null || idih.length() < 1 || !htmlManager.isNumeric(idih);
 			if(!nulo){
 				InstanciaAtributoComplejoDOM ia = new InstanciaAtributoComplejoDOM();
 				ia.setTipoPadre(tipo);
@@ -109,7 +109,7 @@ public class ObjectManager implements IObjectManager {
 				TipoObjetoDOM t = new TipoObjetoDOM();
 				t.setTipoDOM(new Integer(idoh));
 				ia.setTipoHijo(t);
-				if(Constants.isNumeric(prep) && prep.equals("1")){
+				if(htmlManager.isNumeric(prep) && prep.equals("1")){
 					ia.setConFecha(1);
 				}
 				else{

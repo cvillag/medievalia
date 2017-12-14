@@ -16,6 +16,7 @@ import com.cvilla.medievalia.domain.Students;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.utils.Constants;
 
@@ -30,6 +31,9 @@ public class GetEnrolledStudensListAjaxController {
 	
 	@Autowired
 	private IGroupManager groupManager;
+	
+	@Autowired
+	private IHtmlManager htmlManager;
 	
 	@RequestMapping(value = "getStudentsEnrolled.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
@@ -51,7 +55,7 @@ public class GetEnrolledStudensListAjaxController {
 				model.addObject("listaS", listaS);
 			}
 			else{
-				model = Constants.noPrivilegesA(user, logManager, Constants.P_PARTICIPANT_LIST, "Sin permisos para ver la lista de usuarios matriculados en grupo (" + groupA.getName() + ")"  + groupA.getIdGrupo());
+				model = htmlManager.noPrivilegesA(user, logManager, Constants.P_PARTICIPANT_LIST, "Sin permisos para ver la lista de usuarios matriculados en grupo (" + groupA.getName() + ")"  + groupA.getIdGrupo());
 			}
 		}
 		return model;

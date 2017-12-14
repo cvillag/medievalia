@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cvilla.medievalia.domain.Role;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IRoleManager;
@@ -35,6 +36,9 @@ public class CuentasController {
 	@Autowired
 	private ILogManager logManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "users.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -53,10 +57,10 @@ public class CuentasController {
 			List<String> scripts = new ArrayList<String>();
 			scripts.add("js/1-3.js");
 			model.addObject("scripts",scripts);
-			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+			model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 		}
 		else{
-			model = Constants.noPrivileges(user,logManager,Constants.P_USER_LIST,"Intento de listado de usuarios no permitido",request);
+			model = htmlManager.noPrivileges(user,logManager,Constants.P_USER_LIST,"Intento de listado de usuarios no permitido",request);
 		}
 		return model;
 	}	

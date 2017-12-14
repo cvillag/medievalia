@@ -14,12 +14,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.utils.Constants;
 
 @Controller
 public class GeneralLogController {
 
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@Autowired
 	private IAutorizationManager authManager;
 	
@@ -35,7 +39,7 @@ public class GeneralLogController {
 		if(authManager.isAutorized(Constants.P_GENERAL_LOG, user)){
 			logManager.log(user.getId(), Constants.P_GENERAL_LOG, "Acceso a página de log general", Constants.P_OK);
 			model = new ModelAndView("1-8-logGeneral");
-			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+			model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 			int numLog = logManager.getNumPag(20);
 			model.addObject("numPag", numLog);
 			model.addObject("tamPag",10);
@@ -44,7 +48,7 @@ public class GeneralLogController {
 			model.addObject("scripts",scripts);
 		}
 		else{
-			model = Constants.noPrivileges(user,logManager,Constants.P_GENERAL_LOG,"mensaje",request);
+			model = htmlManager.noPrivileges(user,logManager,Constants.P_GENERAL_LOG,"mensaje",request);
 		}			
 		return model;
 	}

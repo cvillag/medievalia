@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cvilla.medievalia.domain.Role;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IRoleManager;
@@ -27,6 +28,9 @@ public class CreateUserController2 {
 	@Autowired
 	private ILogManager logManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "createUserAction.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -35,8 +39,8 @@ public class CreateUserController2 {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		if(errorParam(request)){
-			model = Constants.paramError(logManager,user.getId(),Constants.P_CREATE_USER);
-			model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+			model = htmlManager.paramError(logManager,user.getId(),Constants.P_CREATE_USER);
+			model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 			return model;
 		}
 		else{
@@ -59,10 +63,10 @@ public class CreateUserController2 {
 				List<String> scripts = new ArrayList<String>();
 				scripts.add("js/1-3.js");
 				model.addObject("scripts",scripts);
-				model.addObject("headers",Constants.getHeaders(user.getUser_role(),request));
+				model.addObject("headers",htmlManager.getHeaders(user.getUser_role(),request));
 			}
 			else{
-				model = Constants.noPrivileges(user,logManager,Constants.P_CREATE_USER,"Intento de crear usuario no permitido en segudo paso. Nombre: " + request.getParameter("user"),request);
+				model = htmlManager.noPrivileges(user,logManager,Constants.P_CREATE_USER,"Intento de crear usuario no permitido en segudo paso. Nombre: " + request.getParameter("user"),request);
 			}
 		return model;
 		}
@@ -72,7 +76,7 @@ public class CreateUserController2 {
 		return request.getParameter("name") == null 
 				|| request.getParameter("longname") == null
 				|| request.getParameter("pass") == null
-				|| request.getParameter("role") == null || !Constants.isNumeric(request.getParameter("role"));
+				|| request.getParameter("role") == null || !htmlManager.isNumeric(request.getParameter("role"));
 	}
 	
 	@Autowired

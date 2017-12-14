@@ -1,6 +1,5 @@
 package com.cvilla.medievalia.web.ajax;
 
-import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
@@ -20,6 +18,7 @@ import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
+import com.cvilla.medievalia.service.intf.IHtmlManager;
 import com.cvilla.medievalia.service.intf.ILogManager;
 import com.cvilla.medievalia.service.intf.ILoginManager;
 import com.cvilla.medievalia.service.intf.IObjectManager;
@@ -48,6 +47,9 @@ public class SimpleAttributeAjaxController {
 	@Autowired
 	private IObjectManager objectManager;
 	
+	@Autowired
+	private IHtmlManager htmlManager;
+	
 	@RequestMapping(value = "simpleAttributes.do")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -72,7 +74,7 @@ public class SimpleAttributeAjaxController {
 				else if(authManager.isAutorized(actionInt2, user)){
 					obj = objectManager.getObjetoDOMUnvalidated(tipo, id, groupA, user);
 					if(obj.getCreador().getId() != user.getId()){
-						return Constants.noPrivilegesJ(user,logManager,actionInt,"Modificación de atributos sencillos de objeto.");
+						return htmlManager.noPrivilegesJ(user,logManager,actionInt,"Modificación de atributos sencillos de objeto.");
 					}
 				}
 				if(obj != null){
@@ -94,7 +96,7 @@ public class SimpleAttributeAjaxController {
 			model.addObject("json", j);
 		}
 		else{
-			model = Constants.noPrivilegesJ(user,logManager,actionInt,"Modificación de atributos sencillos de objeto no permitida ");
+			model = htmlManager.noPrivilegesJ(user,logManager,actionInt,"Modificación de atributos sencillos de objeto no permitida ");
 		}
 		return model;
 	}
@@ -174,6 +176,6 @@ public class SimpleAttributeAjaxController {
 	}
 
 	private boolean errorParam(HttpServletRequest request){
-		return request.getParameter("idInstanciaObjeto") == null || !Constants.isNumeric(request.getParameter("idInstanciaObjeto"));
+		return request.getParameter("idInstanciaObjeto") == null || !htmlManager.isNumeric(request.getParameter("idInstanciaObjeto"));
 	}
 }

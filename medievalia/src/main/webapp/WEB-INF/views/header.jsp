@@ -89,15 +89,33 @@
 						else{
 							%>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false"><%= h.getServiceName() %><span
+						data-toggle="dropdown"><%= h.getServiceName() %><span
 							class="caret"></span></a>
-						<ul class="dropdown-menu" role="menu">
+						<ul class="dropdown-menu">
 							<%
 							for(Header h2 : h.getSons()){
+								if(h2.getSons() == null || h2.getSons().size() < 1){
 								%>
 							<li><a class="dropdown-toggle"
 								href="<%= h2.getServiceUrl() %>"><%= h2.getServiceName() %></a></li>
 							<%
+								}
+								else{
+								%>
+								<li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle"
+									data-toggle="dropdown"><%= h2.getServiceName() %></a>
+									<ul class="dropdown-menu">
+								<%
+									for(Header h3 : h2.getSons()){
+										%>
+										<li><a class="dropdown-toggle"
+											href="<%= h3.getServiceUrl() %>"><%= h3.getServiceName() %></a></li>
+										<%
+									}
+									%>
+									</ul></li>
+								<%
+								}
 							}
 							%>
 						</ul></li>
