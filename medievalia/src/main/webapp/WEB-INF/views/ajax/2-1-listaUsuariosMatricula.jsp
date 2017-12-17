@@ -12,14 +12,14 @@ if(lu == null){%>
 	<p><fmt:message key="p2-1.listaUsuarios.empty"></fmt:message>
 <%}
 else{%>
-<p><fmt:message key="p2-1.listaUsuarios.roles"></fmt:message>:
-<select class="form-control" id="roleSelected">
+<label for="roleSelected"><fmt:message key="p2-1.listaUsuarios.roles"></fmt:message>:</label>
+<select class="form-control selectpicker" id="roleSelected">
 	<%for(Role r : lr){ 
 		if(Constants.isAcceptedRoleInGroup(r.getRol())){%>
 		<option value="<%=r.getRol()%>" <%if(r.getRol() == Constants.ROLE_ALUMNO){ %> selected <% } %>><%=r.getNombreRol()%></option>
 		<%} %>
 	<%} %>
-</select></p>
+</select>
 <table class="table table-striped">
 	<thead>
 		<tr>

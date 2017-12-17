@@ -1,3 +1,7 @@
+var rol;
+var usid;
+
+
 $(document).ready(function(){
 	$("#desresultOk").hide();
 	$("#desresultNok").hide();
@@ -5,6 +9,15 @@ $(document).ready(function(){
 	cargaDobleLista();
 	
 	cargaLista(0);
+	
+	$("#modalUnenroll").click(function(){
+		$.post("unenrollA.do",{
+			role : rol,
+			userId : usid
+		},function(data){ 
+			desmat(data);
+		});
+	});
 	
 });
 
@@ -14,21 +27,13 @@ function cargaDobleLista(){
 	},function(data){
 		$("#listaAlumnos").html(data);
 		$(".unenrollS").click(function(){
-			$.post("unenrollA.do",{
-				role : "3",
-				userId : $(this).data('val')
-			}, function(data){
-				var json = JSON.parse(data);
-				if(json.error == "no"){
-					$("#desresultOk").slideDown(200).delay(2000).slideUp(500);
-					//$("#enroll"+idus).remove();
-					setTimeout(cargaDobleLista(),3000);
-					setTimeout(cargaLista(0),3000);
-				}
-				else{
-					$("#desresultNok").slideDown(200).delay(2000).slideUp(500);
-				}
-			});
+			rol = 3;
+			usid = $(this).data('val');
+			$("#modalDesmatricula0").modal();
+//			$.post("unenrollA.do",{
+//				role : "3",
+//				userId : $(this).data('val')
+//			}, modalesDesmat);
 		});//TODO: Activar la de profesor, eliminar fila y mostrar modales de error
 	});
 	
@@ -37,24 +42,39 @@ function cargaDobleLista(){
 	},function(data){
 		$("#listaProfesores").html(data);
 		$(".unenrollT").click(function(){
-			$.post("unenrollA.do",{
-				role : "2",
-				userId : $(this).data('val')
-			}, function(data){
-				var json = JSON.parse(data);
-				if(json.error == "no"){
-					$("#desresultOk").slideDown(200).delay(2000).slideUp(500);
-					//$("#enroll"+idus).remove();
-					setTimeout(cargaDobleLista(),3000);
-					setTimeout(cargaLista(0),3000);
-				}
-				else{
-					$("#desresultNok").slideDown(200).delay(2000).slideUp(500);
-				}
-			});
+			rol = 2;
+			usid = $(this).data('val');
+			$("#modalDesmatricula0").modal();
+//			$.post("unenrollA.do",{
+//				role : "2",
+//				userId : $(this).data('val')
+//			}, modalesDesmat);
 		});//TODO: Activar la de profesor, eliminar fila y mostrar modales de error
 	});
 	
+}
+
+function desmat(data){
+	var json = JSON.parse(data);
+	if(json.message == "ok"){
+		$("#modalDesmatricula1").modal();
+		cargaDobleLista();
+	}
+	else if(json.message == "noTeacherOrDirector"){
+		$("#modalDesmatricula2").modal();
+		cargaDobleLista();
+	}
+	else if(json.message == "errorBD"){
+		$("#modalDesmatricula3").modal();
+		cargaDobleLista();
+	}
+	else if(json.message == "sinSesion"){
+		window.location.href="hello.do";
+	}
+	else{
+		$("#modalDesmatricula4").modal();
+		cargaDobleLista();
+	}
 }
 
 function cargaLista(h){

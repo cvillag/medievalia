@@ -1,3 +1,4 @@
+<%@page import="com.cvilla.medievalia.domain.TipoObjetoDOM"%>
 <%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
 <%@page import="com.cvilla.medievalia.domain.InstanciaObjetoDOM"%>
@@ -11,6 +12,7 @@ List<InstanciaObjetoDOM> objetos = (List<InstanciaObjetoDOM>) request.getAttribu
 String delete = (String) request.getAttribute("permisoborrado");
 String modify = (String) request.getAttribute("permisomodificar");
 String rename = (String) request.getAttribute("permisorenombrar");
+
 if (objetos != null && objetos.size() > 0){
 	for(InstanciaObjetoDOM c : objetos){
 		if(type.equals("table")){%>
@@ -58,7 +60,7 @@ if (objetos != null && objetos.size() > 0){
 								<%if(rename != null && c.getCreador().getId() == user.getId()){ %>
 								<li class="activarStudentSNombre" data-val="<%=c.getIdInstancia()%>"><fmt:message key="p2.2.objetos.acciones.cnombre"></fmt:message></li>
 								<%} 
-								if(modify != null){ %>
+								if(modify != null && (c.getAtributosComplejos().size() > 0 || c.getAtributosSencillos().size() > 0)){ %>
 								<li class="modifyObjetoS" data-val="<%=c.getIdInstancia()%>" data-name="<%=c.getNombre()%>" data-validado="<%=c.isValidado()?"1":"0"%>"><fmt:message key="p2.2.objetos.acciones.modify"></fmt:message></li>
 								<%} 
 								if(delete != null && user.getId() == c.getCreador().getId() && !c.isValidado()){ %>

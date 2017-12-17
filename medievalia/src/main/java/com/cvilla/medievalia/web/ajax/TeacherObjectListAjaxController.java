@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
+import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
@@ -73,7 +74,9 @@ public class TeacherObjectListAjaxController {
 					if(authManager.isAutorized(Constants.P_VALIDATE_OBJECT_INSTANCE, user)){
 						model.addObject("permisovalidar","ok");
 					}
-					if(authManager.isAutorized(Constants.P_MODIFY_OBJECT_INSTANCE, user)){
+					List<TipoAtributoComplejoDOM> lac = objectManager.getTiposAtributosCompleos(tipo);
+					boolean btnModify = objectManager.hasSimpleAttributes(tipo) || lac.size()>0;
+					if(btnModify && authManager.isAutorized(Constants.P_MODIFY_OBJECT_INSTANCE, user)){
 						model.addObject("permisomodificar", "ok");
 					}
 					if(authManager.isAutorized(Constants.P_RENAME_OBJECT_INSTANCE, user)){

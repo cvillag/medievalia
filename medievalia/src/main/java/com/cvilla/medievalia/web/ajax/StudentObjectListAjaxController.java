@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
+import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
 import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
+import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
@@ -71,7 +73,9 @@ public class StudentObjectListAjaxController {
 					model.addObject("listaObjetos", listag);
 					model.addObject("type",request.getParameter("type"));
 					
-					if(authManager.isAutorized(Constants.P_MODIFY_OBJECT_INSTANCE_OWN, user)){
+					List<TipoAtributoComplejoDOM> lac = objectManager.getTiposAtributosCompleos(tipo);
+					boolean btnModify = objectManager.hasSimpleAttributes(tipo) || lac.size()>0;
+					if(btnModify && authManager.isAutorized(Constants.P_MODIFY_OBJECT_INSTANCE_OWN, user)){
 						model.addObject("permisomodificar", "ok");
 					}
 					if(authManager.isAutorized(Constants.P_RENAME_OBJECT_INSTANCE_OWN, user)){
@@ -80,6 +84,7 @@ public class StudentObjectListAjaxController {
 					if(authManager.isAutorized(Constants.P_DELETE_OBJECT_INSTANCE_OWN, user)){
 						model.addObject("permisoborrado", "ok");
 					}
+					
 					logManager.log(user.getId(), actionInt, "Listado de objetos modificados por el usuario (alumno) " + tipo.getNombreDOM() + " del grupo " + groupA.getName(), Constants.P_OK);
 				}
 			}

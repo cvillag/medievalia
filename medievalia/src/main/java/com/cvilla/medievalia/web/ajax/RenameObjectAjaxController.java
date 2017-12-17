@@ -77,7 +77,7 @@ public class RenameObjectAjaxController {
 					} 
 				}
 				String message = "";
-				if(obj != null){
+				if(obj != null || obj.getIdInstancia() == id){
 					j.put("oldname", obj.getNombre());
 					String newName = request.getParameter("newNombre");
 					if(authManager.isAutorized(actionInt, user)){

@@ -111,4 +111,5 @@ public interface IObjectManager extends Serializable{
 	public Map<Integer,Integer> getUserStatisticsObjetsTotalAC(User u, Group g);
 	public Object getStatisticsTotalInstancesPerType();
 	
+	public boolean hasSimpleAttributes(TipoObjetoDOM t);
 }

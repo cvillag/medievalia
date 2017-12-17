@@ -11,6 +11,7 @@ List<InstanciaObjetoDOM> objetos = (List<InstanciaObjetoDOM>) request.getAttribu
 String delete = (String) request.getAttribute("permisoborrado");
 String rename = (String) request.getAttribute("permisoRenombrado");
 String modify = (String) request.getAttribute("permisoModificar");
+
 int i = 0;
 if (objetos != null && objetos.size() > 0){
 	for(InstanciaObjetoDOM c : objetos){

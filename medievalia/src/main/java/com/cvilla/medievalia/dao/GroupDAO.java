@@ -265,14 +265,14 @@ public class GroupDAO implements IGroupDAO {
 				return "desmatriculado";
 			}
 			else{
-				return "error";
+				return "errorBD";
 			}
 		}
 		catch(DataIntegrityViolationException e){
-			return "duplicado";
+			return "errorBD";
 		}
 		catch (Exception e){
-			return "error";
+			return "errorBD";
 		}
 	}
 
@@ -283,14 +283,14 @@ public class GroupDAO implements IGroupDAO {
 				return "desmatriculado";
 			}
 			else{
-				return "error";
+				return "errorBD";
 			}
 		}
 		catch(DataIntegrityViolationException e){
-			return "duplicado";
+			return "errorBD";
 		}
 		catch (Exception e){
-			return "error";
+			return "errorBD";
 		}
 	}
 }

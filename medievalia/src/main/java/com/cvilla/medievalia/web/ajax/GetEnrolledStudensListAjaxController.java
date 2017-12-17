@@ -42,20 +42,27 @@ public class GetEnrolledStudensListAjaxController {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
-		if(groupA == null){
+		if(user == null){
 			model = new ModelAndView("5-2-errorAjax");
 			model.addObject("mensaje2", "p5-2.errorGroup");
-			logManager.log(user.getId(), Constants.P_PARTICIPANT_LIST, "Consulta de lista de matriculados erronea. Sin grupo seleccionado.", Constants.P_NOK);
+			logManager.log(Constants.P_NOUSER, Constants.P_PARTICIPANT_LIST, "Consulta de lista de matriculados erronea. Sin grupo seleccionado.", Constants.P_NOK);
 		}
 		else{
-			if(authManager.isAutorized(Constants.P_PARTICIPANT_LIST, user)){
-				logManager.log(user.getId(), Constants.P_PARTICIPANT_LIST, "Consulta de lista de matriculados.", Constants.P_OK);
-				model = new ModelAndView("ajax/4-1-listaSMatriculados");
-				List<Students> listaS = groupManager.getStudentParticipantList(groupA);
-				model.addObject("listaS", listaS);
+			if(groupA == null){
+				model = new ModelAndView("5-2-errorAjax");
+				model.addObject("mensaje2", "p5-2.errorGroup");
+				logManager.log(user.getId(), Constants.P_PARTICIPANT_LIST, "Consulta de lista de matriculados erronea. Sin grupo seleccionado.", Constants.P_NOK);
 			}
 			else{
-				model = htmlManager.noPrivilegesA(user, logManager, Constants.P_PARTICIPANT_LIST, "Sin permisos para ver la lista de usuarios matriculados en grupo (" + groupA.getName() + ")"  + groupA.getIdGrupo());
+				if(authManager.isAutorized(Constants.P_PARTICIPANT_LIST, user)){
+					logManager.log(user.getId(), Constants.P_PARTICIPANT_LIST, "Consulta de lista de matriculados.", Constants.P_OK);
+					model = new ModelAndView("ajax/4-1-listaSMatriculados");
+					List<Students> listaS = groupManager.getStudentParticipantList(groupA);
+					model.addObject("listaS", listaS);
+				}
+				else{
+					model = htmlManager.noPrivilegesA(user, logManager, Constants.P_PARTICIPANT_LIST, "Sin permisos para ver la lista de usuarios matriculados en grupo (" + groupA.getName() + ")"  + groupA.getIdGrupo());
+				}
 			}
 		}
 		return model;

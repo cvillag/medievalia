@@ -52,66 +52,69 @@ public class UnEnrollUserAjaxController {
 		ModelAndView model = new ModelAndView("ajax/empty");
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
 		JSONObject j = new JSONObject();
-		if(groupA == null){
-			j.put("error", "noGroup");
-			logManager.log(user.getId(), actionIntS, "Intento de desmatriculación en grupo sin grupo activo", Constants.P_OK);
+		if(user == null || !(authManager.isAutorized(actionIntS, user) || authManager.isAutorized(actionIntT, user))){
+			return htmlManager.noPrivilegesJ(user, logManager, actionIntT, "Intento de desmatriculación sin sesión");
 		}
 		else{
-			if(paramError(request)){
-				j.put("error", "noParam");
-				logManager.log(user.getId(), actionIntS, "Intento de desmatriculación en grupo "+ groupA.getIdGrupo()+ " sin parámetros.", Constants.P_OK);
+			if(groupA == null){
+				j.put("error", "noGroup");
+				logManager.log(user.getId(), actionIntS, "Intento de desmatriculación en grupo sin grupo activo", Constants.P_OK);
 			}
 			else{
-				int role;
-				int idUser;
-				try{
-					role = (new Integer(request.getParameter("role"))).intValue();
-					idUser = (new Integer(request.getParameter("userId"))).intValue();
-				}
-				catch(Exception e){
-					j.put("error", "paramError");
-					logManager.log(user.getId(), actionIntS, "Intento de desmatriculación parámetros erróneos ", Constants.P_NOK);
-					model.addObject("json", j);
-					return model;
-				}
-				if(role == Constants.ROLE_ALUMNO){
-					if(authManager.isAutorized(actionIntS, user)){
-						String message = groupManager.removeStudent(groupA, idUser, user);
-						if(message.equals("desmatriculado")){
-							j.put("error", "no");
-							logManager.log(user.getId(), actionIntS, "Desmatriculación del usuario " + idUser + " en grupo" + groupA.getIdGrupo() + " como alumno", Constants.P_OK);
-						}
-						else{
-							j.put("error", message);
-							logManager.log(user.getId(), actionIntS, "Intento de matriculación del usuario " + idUser + " en grupo" + groupA.getIdGrupo() + " como alumno. Error: "+ message, Constants.P_NOK);
-						}
-					}
-					else{
-						logManager.log(user.getId(), actionIntS, "Intento de matriculación del usuario " + idUser + " en grupo" + groupA.getIdGrupo() + " como alumno. Sin privilegios ", Constants.P_NOK);
-						j.put("error", "noPrivileges");
-					}
-				}
-				else if(role == Constants.ROLE_PROFESOR){
-					if(authManager.isAutorized(actionIntT, user)){
-						String message = groupManager.removeTeacher(groupA, idUser, user);
-						if(message.equals("desmatriculado")){
-							j.put("error", "no");
-							logManager.log(user.getId(), actionIntT, "Desmatriculación del usuario " + idUser + " en grupo" + groupA.getIdGrupo() + " como profesor", Constants.P_OK);
-						}
-						else{
-							j.put("error", message);
-							logManager.log(user.getId(), actionIntT, "Intento de desmatriculación del usuario " + idUser + " en grupo" + groupA.getIdGrupo() + " como profesor. Error: "+ message, Constants.P_NOK);
-						}
-					}
-					else{
-						logManager.log(user.getId(), actionIntS, "Intento de desmatriculación del usuario " + idUser + " en grupo" + groupA.getIdGrupo() + " como profesor. Sin privilegios ", Constants.P_NOK);
-						j.put("error", "noPrivileges");
-					}
+				if(paramError(request)){
+					j.put("error", "noParam");
+					logManager.log(user.getId(), actionIntS, "Intento de desmatriculación en grupo "+ groupA.getIdGrupo()+ " sin parámetros.", Constants.P_OK);
 				}
 				else{
-					j.put("error", "roleError");
-					logManager.log(user.getId(), actionIntS, "Intento de desmatriculación del usuario " + idUser + " en grupo" + groupA.getIdGrupo() + " con rol erróneo ", Constants.P_NOK);
-				}	
+					int role;
+					int idUser;
+					try{
+						role = (new Integer(request.getParameter("role"))).intValue();
+						idUser = (new Integer(request.getParameter("userId"))).intValue();
+					}
+					catch(Exception e){
+						j.put("error", "paramError");
+						logManager.log(user.getId(), actionIntS, "Intento de desmatriculación parámetros erróneos ", Constants.P_NOK);
+						model.addObject("json", j);
+						return model;
+					}
+					if(role == Constants.ROLE_ALUMNO){
+						if(authManager.isAutorized(actionIntS, user)){
+							String message = groupManager.removeStudent(groupA, idUser, user);
+							if(message.equals("desmatriculado")){
+								j.put("message", "ok");
+								logManager.log(user.getId(), actionIntS, "Desmatriculación del usuario " + idUser + " en grupo" + groupA.getIdGrupo() + " como alumno", Constants.P_OK);
+							}
+							else{
+								j.put("message", message);
+								logManager.log(user.getId(), actionIntS, "Intento de matriculación del usuario " + idUser + " en grupo" + groupA.getIdGrupo() + " como alumno. Error: "+ message, Constants.P_NOK);
+							}
+						}
+						else{
+							return htmlManager.noPrivilegesJ(user, logManager, actionIntS, "Intento de matriculación del usuario " + idUser + " en grupo" + groupA.getIdGrupo() + " como alumno. Sin privilegios ");
+						}
+					}
+					else if(role == Constants.ROLE_PROFESOR){
+						if(authManager.isAutorized(actionIntT, user)){
+							String message = groupManager.removeTeacher(groupA, idUser, user);
+							if(message.equals("desmatriculado")){
+								j.put("message", "ok");
+								logManager.log(user.getId(), actionIntT, "Desmatriculación del usuario " + idUser + " en grupo" + groupA.getIdGrupo() + " como profesor", Constants.P_OK);
+							}
+							else{
+								j.put("message", message);
+								logManager.log(user.getId(), actionIntT, "Intento de desmatriculación del usuario " + idUser + " en grupo" + groupA.getIdGrupo() + " como profesor. Error: "+ message, Constants.P_NOK);
+							}
+						}
+						else{
+							return htmlManager.noPrivilegesJ(user, logManager, actionIntT, "Intento de desmatriculación del usuario " + idUser + " en grupo" + groupA.getIdGrupo() + " como profesor. Sin privilegios ");
+						}
+					}
+					else{
+						j.put("message", "roleError");
+						logManager.log(user.getId(), actionIntS, "Intento de desmatriculación del usuario " + idUser + " en grupo" + groupA.getIdGrupo() + " con rol erróneo ", Constants.P_NOK);
+					}	
+				}
 			}
 		}
 		model.addObject("json", j);

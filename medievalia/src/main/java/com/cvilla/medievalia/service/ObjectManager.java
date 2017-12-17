@@ -150,7 +150,7 @@ public class ObjectManager implements IObjectManager {
 		}
 		if(nombre.length() >= Constants.MIN_PERSONAGE_NAME){
 			InstanciaObjetoDOM o2 = objetoDAO.getObjectByName(tipo,nombre);
-			if(o2 == null){
+			if(o2 == null || o2.getIdInstancia() == id){
 				return objetoDAO.renameObject(tipo,id,nombre);
 			}
 			else{
@@ -173,7 +173,7 @@ public class ObjectManager implements IObjectManager {
 		if(obj.getCreador().getId() == user.getId()){
 			if(nombre.length() >= Constants.MIN_PERSONAGE_NAME){
 				InstanciaObjetoDOM o = objetoDAO.getObjectByName(tipo,nombre);
-				if(o == null){
+				if(o == null || o.getIdInstancia() == id){
 					return objetoDAO.renameObject(tipo,id,nombre);
 				}
 				else{
@@ -920,5 +920,15 @@ public class ObjectManager implements IObjectManager {
 			map.put(t.getTipoDOM(), lis.size());
 		}
 		return map;
+	}
+
+	public boolean hasSimpleAttributes(TipoObjetoDOM t) {
+		TipoObjetoDOM o2 = objetoDAO.getObjectType(t.getTipoDOM());
+		if(o2 == null){
+			return false;
+		}
+		else{
+			return objetoDAO.numAtributosSencillos(t.getTipoDOM()) > 0;
+		}
 	}
 }

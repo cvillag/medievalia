@@ -123,6 +123,7 @@ public class ObjetoDAO implements IObjetoDAO {
 	private static final String FILTER_FIRST_INSTANCES_LIST_BY_AC = " and (idInstancia in (select idInstanciaPadre from InstanciaAtributoComplejo where idObjetoPadre = ? and idObjetoHijo = ? and idInstanciaHijo = ? and validado = ?)";
 	private static final String FILTER_AND_INSTANCES_LIST_BY_AC = " and idInstancia in (select idInstanciaPadre from InstanciaAtributoComplejo where idObjetoPadre = ? and idObjetoHijo = ? and idInstanciaHijo = ? and validado = ?)";
 	private static final String FILTER_OR_INSTANCES_LIST_BY_AC = " or idInstancia in (select idInstanciaPadre from InstanciaAtributoComplejo where idObjetoPadre = ? and idObjetoHijo = ? and idInstanciaHijo = ? and validado = ?)";
+	private static final String NUM_SIMPLE_ATTRIBUTES = "SELECT count(*) FROM `AtributoSencilloObjeto` WHERE `idObjeto` = ?";
 	
 	public List<TipoObjetoDOM> getObjectTypeList() {
 		try{
@@ -455,7 +456,12 @@ public class ObjetoDAO implements IObjetoDAO {
 						if(o.getIdInstancia() == 0){
 							if(atributoSimpleObjetoInstanciaExists(obj.getTipo().getTipoDOM(),obj.getIdInstancia(),a.getIdAtributo(),a.getSubtipo(),o.getIdInstancia())){
 								int res = jdbcTemplate.update(DELETE_SIMPLE_ATRIBUTE_OBJECT, new Object[]{obj.getTipo().getTipoDOM(),obj.getIdInstancia(),a.getIdAtributo(),a.getSubtipo()});
-								return "ok";
+								if(res == 1){
+									return "ok";
+								}
+								else{
+									return "errorDB";
+								}
 							}
 						}
 						else{
@@ -759,6 +765,16 @@ public class ObjetoDAO implements IObjetoDAO {
 				}
 			}
 			return lest.size();
+		}
+		catch(Exception e){
+			return 0;
+		}
+	}
+
+	public int numAtributosSencillos(int tipo) {
+		try{
+			int i = jdbcTemplate.queryForInt(NUM_SIMPLE_ATTRIBUTES,new Object[]{tipo});
+			return i;
 		}
 		catch(Exception e){
 			return 0;

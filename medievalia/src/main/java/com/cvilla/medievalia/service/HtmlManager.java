@@ -31,10 +31,6 @@ public class HtmlManager implements IHtmlManager {
 		return Constants.PASS_KEY;
 	}
 	
-	public boolean isAcceptedRoleInGroup(int role){
-		return Constants.ROLES_ACCEPTED_IN_GROUP.contains(role);
-	}
-	
 	public   List<Header> getHeaders(int role, HttpServletRequest req){
 		HttpSession ses = req.getSession();
 		ArrayList<Header> lista = new ArrayList<Header>();

@@ -112,4 +112,8 @@ public class Constants {
 			return false;
 		}
 	}
+	
+	public static boolean isAcceptedRoleInGroup(int role){
+		return Constants.ROLES_ACCEPTED_IN_GROUP.contains(role);
+	}
 }
