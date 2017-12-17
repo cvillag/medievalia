@@ -12,13 +12,10 @@ if(grsel != null){
 }
 %>
 <div class="container">
-	<p><fmt:message key="intro.general.txt1"></fmt:message></p>
 <%
 if (ugl.getUser_role() == Constants.ROLE_PROFESOR || ugl.getUser_role() == Constants.ROLE_ADMIN){ %>
 
 <%if (ugl.getUser_role() == Constants.ROLE_PROFESOR){%>
-<p><fmt:message key="intro.general.txt2"></fmt:message></p>
-<p><fmt:message key="intro.general.txt3"></fmt:message></p>
 	<form class="form-inline" role="form" id="firstForm">
 		<div class="form-group">
 			<label class="control-label formGroup" for="showform"><fmt:message key="p4-0.crearGrupo"></fmt:message></label>
@@ -47,11 +44,7 @@ if (ugl.getUser_role() == Constants.ROLE_PROFESOR || ugl.getUser_role() == Const
 		</div>
 	</form>
 <%}}
-else if(ugl.getUser_role() == Constants.ROLE_ALUMNO){
 %>
-<p><fmt:message key="intro.general.txt4"></fmt:message></p>
-<%} %>
-<p><fmt:message key="intro.general.txt5"></fmt:message></p>
 </div>
 <form action="contentManager.do" method="post" id="activeGroupForm">
 	<input type="hidden" name="idGroup" id="idGroup">

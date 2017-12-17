@@ -34,6 +34,7 @@ public class HtmlManager implements IHtmlManager {
 	public   List<Header> getHeaders(int role, HttpServletRequest req){
 		HttpSession ses = req.getSession();
 		ArrayList<Header> lista = new ArrayList<Header>();
+		User user = (User) ses.getAttribute("user");
 		int index=-1;
 		if(role == 1){
 			lista.add(new Header("admin","Administración","",new ArrayList<Header>()));
@@ -49,7 +50,6 @@ public class HtmlManager implements IHtmlManager {
 				lista.add(new Header("groups","Grupos","",new ArrayList<Header>()));
 				index++;
 				Group g = (Group) ses.getAttribute("grupoActual");
-				User user = (User) ses.getAttribute("user");
 				if(g !=  null){
 					lista.get(index).getSons().add(new Header("actual","Actual","contentManager.do?idGroup=" + g.getIdGrupo(),null));
 				}
@@ -86,7 +86,7 @@ public class HtmlManager implements IHtmlManager {
 				}
 			}
 		}
-		lista.add(new Header("profile","Perfil","profile.do",null));
+		lista.add(new Header("profile",user.getUser_long_name(),"profile.do",null));
 		index++;
 		
 		return lista;

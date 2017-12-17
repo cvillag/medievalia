@@ -101,17 +101,20 @@ $(document).ready(function(){
 							$("#formNombre").removeClass("has-error");
 							$("#formNombreC").removeClass("has-error");
 						}
-						else if(json.message == "p1-3.1.error.nok"){
-							$("#nombre").val($("#nameO").val());
-							$("#nombreC").val($("#nameLO").val());
-							$("#modalModUser3").modal();
-						}
 						else if(json.message == "noLength"){
 							$("#nombre").val($("#nameO").val());
 							$("#nombreC").val($("#nameLO").val());
 							$("#formNombre").addClass("has-error");
 							$("#formNombreC").addClass("has-error");
 							$("#modalModUser4").modal();
+						}
+						else if(json.message == "sinSesion"){
+							window.location.href="hello.do";
+						}
+						else{
+							$("#nombre").val($("#nameO").val());
+							$("#nombreC").val($("#nameLO").val());
+							$("#modalModUser3").modal();
 						}
 					}
 			);

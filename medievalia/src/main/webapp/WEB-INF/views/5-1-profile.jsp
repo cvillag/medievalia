@@ -109,9 +109,9 @@ User u = (User)request.getAttribute("usuario");
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-warning">
 					<fmt:message key="p5-1.modal1"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalok" class="btn btn-sm btn-info" data-dismiss="modal">
@@ -131,9 +131,9 @@ User u = (User)request.getAttribute("usuario");
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-success">
 					<fmt:message key="p5-1.modal2"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalok" class="btn btn-sm btn-info" data-dismiss="modal">
@@ -153,9 +153,9 @@ User u = (User)request.getAttribute("usuario");
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-danger">
 					<fmt:message key="p5-1.modal3"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalok" class="btn btn-sm btn-info" data-dismiss="modal">
@@ -175,9 +175,9 @@ User u = (User)request.getAttribute("usuario");
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-warning">
 					<fmt:message key="p5-1.modal4"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalok" class="btn btn-sm btn-info" data-dismiss="modal">
@@ -199,9 +199,9 @@ User u = (User)request.getAttribute("usuario");
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-success">
 					<fmt:message key="p5-1.modal5"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalok" class="btn btn-sm btn-info" data-dismiss="modal">
@@ -221,9 +221,9 @@ User u = (User)request.getAttribute("usuario");
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-danger">
 					<fmt:message key="p5-1.modal6"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalok" class="btn btn-sm btn-info" data-dismiss="modal">
@@ -243,9 +243,9 @@ User u = (User)request.getAttribute("usuario");
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-warning">
 					<fmt:message key="p5-1.modal7"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalok" class="btn btn-sm btn-info" data-dismiss="modal">
@@ -265,9 +265,9 @@ User u = (User)request.getAttribute("usuario");
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-warning">
 					<fmt:message key="p5-1.modal8"></fmt:message>
-				</p>				
+				</div>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalok" class="btn btn-sm btn-info" data-dismiss="modal">
@@ -287,9 +287,9 @@ User u = (User)request.getAttribute("usuario");
 				</h4>
 			</div>
 			<div class="modal-body">
-				<p>
+				<div class="alert alert-warning">
 					<fmt:message key="p5-1.modal9"></fmt:message>
-				</p>				
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="modalok" class="btn btn-sm btn-info" data-dismiss="modal">

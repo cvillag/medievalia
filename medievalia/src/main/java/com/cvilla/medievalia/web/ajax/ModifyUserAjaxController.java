@@ -65,8 +65,7 @@ public class ModifyUserAjaxController {
 			}
 		}
 		else{
-			j.put("message", "noPrivileges");
-			logManager.log(user.getId(), Constants.P_MODIFY_USER_OWN, "Intento de modificación de datos personales sin permisos", Constants.P_NOK);
+			return htmlManager.noPrivilegesJ(user, logManager, Constants.P_MODIFY_USER_OWN, "Intento de modificación de datos personales sin permisos");
 		}
 		model.addObject("json", j);
 		return model;
