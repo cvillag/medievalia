@@ -1,5 +1,6 @@
 package com.cvilla.medievalia.web.ajax;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
 import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
+import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
@@ -62,6 +64,13 @@ public class FilteredObjectListAjaxController {
 			if(authManager.isAutorized(actionInt, user)){
 				List<InstanciaObjetoDOM> listag = objectManager.getObjetoDOMListByTypeFilter(tipo, request);
 				model.addObject("listaObjetos", listag);
+				
+				sesion.removeAttribute("listainforme");
+				sesion.setAttribute("listainforme",listag);
+				List<TipoAtributoComplejoDOM> ac = objectManager.getTiposAtributosCompleos(tipo);
+				sesion.removeAttribute("tiposacinforme");
+				sesion.setAttribute("tiposacinforme",ac);
+				
 				model.addObject("type",request.getParameter("type"));
 				if(authManager.isAutorized(Constants.P_DELETE_OBJECT_INSTANCE, user)){
 					model.addObject("permisoborrado","ok");

@@ -99,6 +99,8 @@ public class Constants {
 	public static final String TEXTO_SIN_VALIDAR = "";
 	public static final int TEXTO_LEIDO = 1;
 	public static final int TEXTO_NO_LEIDO = 0;
+	public static final int OBJETO_CNC = 11;
+	public static final int OBJETO_ATT_CNC = 1;
 		
 	public static String getKey(){
 		return PASS_KEY;

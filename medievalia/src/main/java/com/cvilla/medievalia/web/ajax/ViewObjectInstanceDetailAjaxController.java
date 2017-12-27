@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
+import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
 import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
@@ -116,6 +118,7 @@ public class ViewObjectInstanceDetailAjaxController {
 				model.addObject("users",loginManager.listar());
 				model.addObject("badges",badges);
 				model.addObject("modo",modo);
+				fillNames(obj);
 				model.addObject("object", obj);
 				model.addObject("tatributoc",ac);
 				
@@ -132,5 +135,26 @@ public class ViewObjectInstanceDetailAjaxController {
 		return request.getParameter("idInstancia") == null || !htmlManager.isNumeric(request.getParameter("idInstancia")) ||
 				request.getParameter("modo") == null || !htmlManager.isNumeric(request.getParameter("modo")) ||
 				request.getParameter("val") == null || !htmlManager.isNumeric(request.getParameter("val"));
+	}
+	
+	private void fillNames(InstanciaObjetoDOM o){
+		for(InstanciaAtributoComplejoDOM iao : o.getAtributosComplejos()){
+			fillNames(iao);
+		}
+	}
+	
+	private void fillNames(InstanciaAtributoComplejoDOM iao){
+		if(iao.getInstanciaHijo().getTipo().getTipoDOM() == Constants.OBJETO_CNC){
+			InstanciaObjetoDOM n2 = objectManager.getObjetoDOM(iao.getInstanciaHijo().getTipo(), iao.getInstanciaHijo().getNombre());
+			String sub = "";
+			if(n2 != null){
+				for(InstanciaAtributoSencilloDOM ias : n2.getAtributosSencillos()){
+					if(ias.getIdAtributo() == Constants.OBJETO_ATT_CNC && ias.getValor() != null){
+						sub = " ," + ((InstanciaObjetoDOM)ias.getValor()).getNombre();
+					}
+				}
+				iao.getInstanciaHijo().setNombre(iao.getInstanciaHijo().getNombre() + sub);
+			}
+		}
 	}
 }

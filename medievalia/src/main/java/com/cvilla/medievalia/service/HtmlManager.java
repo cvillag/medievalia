@@ -42,7 +42,6 @@ public class HtmlManager implements IHtmlManager {
 			lista.get(index).getSons().add(new Header("users","Usuarios","users.do",null));
 			lista.get(index).getSons().add(new Header("groups", "Grupos", "groups.do",null));
 			lista.get(index).getSons().add(new Header("logs","Logs","generalLog.do",null));
-			lista.add(new Header("actions", "Acciones", "actions.do", null));
 			index++;
 		}
 		else{

@@ -191,7 +191,7 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 		var relacion = json.relacion;
 		var idUser = json.idUser;
 		$("#modDetAtributos" + pagina).append('<div class="row" id="rowPag'+pagina+'"></div>');
-		$("#rowPag"+pagina).append('<div class="col-xs-6 form-group"><label>Actual</fmt:message></label><ul class="list-group" id="list'+pagina+'"></ul></div>');
+		$("#rowPag"+pagina).append('<div class="col-xs-6 form-group">'+ '<br><div class="form-group"><label for="filtroacnombre1-'+pagina+'">Filtro:</label><input type="text" class="filtroacnombre1" data-lado="1" data-pag="'+pagina+'"/></div> ' + '<label>Actual</label><ul class="list-group listaACscroll" id="list'+pagina+'"></ul></div>');
 		for(var d in obj){
 			var nom = obj[d].instanciaHijo.nombre;
 			var tipo = obj[d].instanciaHijo.tipo.tipoDOM;
@@ -204,38 +204,39 @@ function cargaAtributosComplejosPorPagina(pag2,recarga){
 				if(val == 0){
 					if(idUser == obj[d].creador){
 						if(obj[d].textoLeido == 1){
-							$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'" data-cpagina="'+cpagina+'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+'</li>');
+							$("#list"+pagina).append('<li class="list-group-item liac1-'+pagina+'" data-name="'+nom+'" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'" data-cpagina="'+cpagina+'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+'</li>');
 						}
 						else{
-							$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'" data-cpagina="'+cpagina+'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+' <span class="label label-info acNoLeido" data-textval="'+obj[d].textoValidacion+'">1</span></li>');
+							$("#list"+pagina).append('<li class="list-group-item liac1-'+pagina+'" data-name="'+nom+'" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'" data-cpagina="'+cpagina+'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+' <span class="label label-info acNoLeido" data-textval="'+obj[d].textoValidacion+'">1</span></li>');
 						}
 					}
 					else{
-						$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" class="btn btn-xs btn-warning pendienteValOtro"><span class="glyphicon glyphicon-ban-circle"></span></button><button type="button" class="btn btn-xs btn-default viewRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-eye-open"></span></button> '+nom+'</li>');
+						$("#list"+pagina).append('<li class="list-group-item liac1-'+pagina+'" data-name="'+nom+'" id="'+tipo+'-'+idInst+'"><button type="button" class="btn btn-xs btn-warning pendienteValOtro"><span class="glyphicon glyphicon-ban-circle"></span></button><button type="button" class="btn btn-xs btn-default viewRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-eye-open"></span></button> '+nom+'</li>');
 					}
 				}
 				else{
-					$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" class="btn btn-xs btn-success yavalidado"><span class="glyphicon glyphicon-ban-circle"></span></button><button type="button" class="btn btn-xs btn-default viewRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-eye-open"></span></button> '+nom+'</li>');
+					$("#list"+pagina).append('<li class="list-group-item liac1-'+pagina+'" data-name="'+nom+'" id="'+tipo+'-'+idInst+'"><button type="button" class="btn btn-xs btn-success yavalidado"><span class="glyphicon glyphicon-ban-circle"></span></button><button type="button" class="btn btn-xs btn-default viewRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-eye-open"></span></button> '+nom+'</li>');
 				}
 			}
 			else{
 				if(val == 1){
-					$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'" data-cpagina="'+cpagina+'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+'</li>');
+					$("#list"+pagina).append('<li class="list-group-item liac1-'+pagina+'" data-name="'+nom+'" id="'+tipo+'-'+idInst+'"><button type="button" id="remAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default remComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'" data-cpagina="'+cpagina+'"><span class="glyphicon glyphicon-arrow-right"></span></button><button type="button" class="btn btn-xs btn-default modifyRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-pencil"></span></button> '+nom+'</li>');
 				}
 				else{
-					$("#list"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" class="btn btn-xs btn-warning pendienteVal"><span class="glyphicon glyphicon-ban-circle"></span></button><button type="button" class="btn btn-xs btn-default viewRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-eye-open"></span></button> '+nom+'</li>');
+					$("#list"+pagina).append('<li class="list-group-item liac1-'+pagina+'" data-name="'+nom+'" id="'+tipo+'-'+idInst+'"><button type="button" class="btn btn-xs btn-warning pendienteVal"><span class="glyphicon glyphicon-ban-circle"></span></button><button type="button" class="btn btn-xs btn-default viewRelation" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-instp="' + idInstP + '"><span class="glyphicon glyphicon-eye-open"></span></button> '+nom+'</li>');
 				}
 			}
 		}
-		
-		$("#rowPag"+pagina).append('<div class="col-xs-6 form-group"><label>Disponible</fmt:message></label><ul class="list-group" id="listD'+pagina+'"></ul></div>');
+		$("#rowPag"+pagina).append('<div class="col-xs-6 form-group">'+ '<br><div class="form-group"><label for="filtroacnombre2">Filtro:</label><input type="text"  class="filtroacnombre2" data-lado="2" data-pag="'+pagina+'"/></div> ' + '<label>Disponible</fmt:message></label><ul class="list-group listaACscroll" id="listD'+pagina+'"></ul></div>');
 		for(var d in disp){
 			var nom = disp[d].instanciaHijo.nombre;
 			var tipo = disp[d].instanciaHijo.tipo.tipoDOM;
 			var idInst = disp[d].instanciaHijo.idInstancia;
 			var val = disp[d].validado;
-			$("#listD"+pagina).append('<li class="list-group-item" id="'+tipo+'-'+idInst+'"><button type="button" id="addAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default addComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'" data-cpagina="'+cpagina+'">&nbsp;<span class="glyphicon glyphicon-arrow-left"></span></button> '+nom+'</li>');
+			$("#listD"+pagina).append('<li class="list-group-item liac2-'+pagina+'" data-name="'+nom+'" id="'+tipo+'-'+idInst+'"><button type="button" id="addAtC'+tipo+'-'+idInst+'" class="btn btn-xs btn-default addComplexAttribute" data-tipo="'+pagina+'" data-inst="'+idInst+'" data-pag="'+pagina+'" data-name="'+nom+'" data-tiporelacion="'+relacion+'" data-cfecha="'+ cfecha +'" data-cpagina="'+cpagina+'">&nbsp;<span class="glyphicon glyphicon-arrow-left"></span></button> '+nom+'</li>');
 		}
+		
+		
 //		if(recarga == 1){
 			postCargaDetalle2();
 //		}
@@ -337,7 +338,50 @@ function postCargaDetalle2(){
 	$(".yavalidado").click(handYaVal);
 	$(".pendienteValOtro").unbind("click",handPendienteValOtro);
 	$(".pendienteValOtro").click(handPendienteValOtro);
+	$(".filtroacnombre1").unbind("keyup",filtroacfun1);
+	$(".filtroacnombre1").keyup(filtroacfun1);
+	$(".filtroacnombre2").unbind("keyup",filtroacfun2);
+	$(".filtroacnombre2").keyup(filtroacfun2);
+	
 }
+
+var filtroacfun1 = function(){
+	if($(".filtroacnombre1").val().length > 0){
+		lado = $(this).data("lado");
+		pag = $(this).data("pag");
+		tex = $(this).val();
+		$(".liac1-"+pag).each(function(){
+			if($(this).data("name").indexOf(tex) == -1){
+				$(this).hide();
+			}
+			else{
+				$(this).show();
+			}
+		});
+	}
+	else{
+		$(".liac1-"+pag).show();
+	}
+}
+
+var filtroacfun2 = function(){
+	if($(".filtroacnombre2").val().length > 0){
+		lado = $(this).data("lado");
+		pag = $(this).data("pag");
+		tex = $(this).val();
+		$(".liac2-"+pag).each(function(){
+			if($(this).data("name").indexOf(tex) == -1){
+				$(this).hide();
+			}
+			else{
+				$(this).show();
+			}
+		});
+	}
+	else{
+		$(".liac2-"+pag).show();
+	}
+};
 
 var handPendienteValOtro = function(){
 	$("#modalPendienteValidacionAtributoOtro").modal();
@@ -1599,6 +1643,10 @@ $(document).ready(function(){
 			$("#idoh0").val(0);
 			cargaListaCompleta();
 		}
+	});
+	
+	$("#informe").click(function(){
+		$("<a>").attr("href", "downloadPDF.do").attr("target", "_blank")[0].click();
 	});
 	
 });

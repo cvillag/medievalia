@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.Group;
+import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
 import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
@@ -60,10 +61,14 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 			j.put("recarga", recarga);
 			if(authManager.isAutorized(actionId, user)){
 				InstanciaObjetoDOM obj = objectManager.getObjetoDOMUnvalidated(tipo, idInstancia, groupA, user);
+				fillNames(obj, tipo);
 				if(obj != null){
 					model = new ModelAndView("ajax/empty");
 					logManager.log(user.getId(), actionId, "Visualización de detalle de objeto a modificar ", Constants.P_OK);
 					List<InstanciaAtributoComplejoDOM> ac2 = objectManager.getAtributosCDisponiblesObjetoDOM(tipo,obj,pag);
+					for(InstanciaAtributoComplejoDOM ia : ac2){
+						fillNames(ia);
+					}
 					j.put("disponibles", ac2);
 				}
 				else{
@@ -92,5 +97,26 @@ public class ViewObjectInstanceComplexAttributesAjaxController {
 				request.getParameter("modo") == null || !htmlManager.isNumeric(request.getParameter("modo")) ||
 				request.getParameter("pag") == null || !htmlManager.isNumeric(request.getParameter("pag")) ||
 				request.getParameter("recarga") == null || !htmlManager.isNumeric(request.getParameter("recarga"));
+	}
+	
+	private void fillNames(InstanciaObjetoDOM o,TipoObjetoDOM tipo){
+		for(InstanciaAtributoComplejoDOM iao : o.getAtributosComplejos()){
+			fillNames(iao);
+		}
+	}
+	
+	private void fillNames(InstanciaAtributoComplejoDOM iao){
+		if(iao.getInstanciaHijo().getTipo().getTipoDOM() == Constants.OBJETO_CNC){
+			InstanciaObjetoDOM n2 = objectManager.getObjetoDOM(iao.getInstanciaHijo().getTipo(), iao.getInstanciaHijo().getNombre());
+			String sub = "";
+			if(n2 != null){
+				for(InstanciaAtributoSencilloDOM ias : n2.getAtributosSencillos()){
+					if(ias.getIdAtributo() == Constants.OBJETO_ATT_CNC && ias.getValor() != null){
+						sub = " ," + ((InstanciaObjetoDOM)ias.getValor()).getNombre();
+					}
+				}
+				iao.getInstanciaHijo().setNombre(iao.getInstanciaHijo().getNombre() + sub);
+			}
+		}
 	}
 }

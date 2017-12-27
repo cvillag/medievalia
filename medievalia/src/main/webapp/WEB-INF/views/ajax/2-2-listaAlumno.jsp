@@ -60,7 +60,7 @@ if (objetos != null && objetos.size() > 0){
 								<%if(rename != null && c.getCreador().getId() == user.getId()){ %>
 								<li class="activarStudentSNombre" data-val="<%=c.getIdInstancia()%>"><fmt:message key="p2.2.objetos.acciones.cnombre"></fmt:message></li>
 								<%} 
-								if(modify != null && (c.getAtributosComplejos().size() > 0 || c.getAtributosSencillos().size() > 0)){ %>
+								if(modify != null){ %>
 								<li class="modifyObjetoS" data-val="<%=c.getIdInstancia()%>" data-name="<%=c.getNombre()%>" data-validado="<%=c.isValidado()?"1":"0"%>"><fmt:message key="p2.2.objetos.acciones.modify"></fmt:message></li>
 								<%} 
 								if(delete != null && user.getId() == c.getCreador().getId() && !c.isValidado()){ %>

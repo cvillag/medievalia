@@ -161,7 +161,7 @@ else{ %>
 <%} %>
 		<div class="panel panel-default col-sm-6">
 			<div class="panel-heading">
-				<p><fmt:message key="p2.2.objetos.todos"></fmt:message></p>
+				<p><fmt:message key="p2.2.objetos.todos"></fmt:message><span class="pull-right"><button id="informe" class="btn btn-sm btn-info"><fmt:message key="p2.2.boton.informe"></fmt:message></button></span></p>
 			</div>
 			<div class="panel-body">
 				<p><form><fmt:message key="p2.2.objetos.filtro"></fmt:message><input id="filtroBusquedaCompleta" type="text"></form></p>

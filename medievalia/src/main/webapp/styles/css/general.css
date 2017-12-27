@@ -95,3 +95,8 @@ hr {
 @media (min-width: 1200px) { 
 
 }
+
+.listaACscroll{
+    max-height: 300px;
+    overflow-y:auto; 
+}

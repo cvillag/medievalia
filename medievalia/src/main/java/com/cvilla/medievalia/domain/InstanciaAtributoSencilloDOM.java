@@ -1,5 +1,8 @@
 package com.cvilla.medievalia.domain;
 
+import com.cvilla.medievalia.utils.Constants;
+import com.cvilla.medievalia.utils.SpecialDate;
+
 public class InstanciaAtributoSencilloDOM {
 	private int tipoAtributo;
 	private Object valor;
@@ -49,6 +52,34 @@ public class InstanciaAtributoSencilloDOM {
 
 	public void setSubtipo(int subtipo) {
 		this.subtipo = subtipo;
+	}
+	
+	@Override
+	public String toString(){
+		if(this.valor != null){
+			if(this.tipoAtributo == Constants.TIPO_ATRIBUTO_DOUBLE){
+				return ((Double)this.valor).toString();
+			}
+			else if(this.tipoAtributo == Constants.TIPO_ATRIBUTO_FECHA){
+				SpecialDate sd = ((SpecialDate)this.valor);
+				return sd.toString();
+			}
+			else if(this.tipoAtributo == Constants.TIPO_ATRIBUTO_INT){
+				return ((Integer)this.valor).toString();
+			}
+			else if(this.tipoAtributo == Constants.TIPO_ATRIBUTO_STRING || this.tipoAtributo == Constants.TIPO_ATRIBUTO_TEXT){
+				return (String)this.valor;
+			}
+			else if(this.tipoAtributo == Constants.TIPO_ATRIBUTO_OBJECT){
+				return ((InstanciaObjetoDOM)this.valor).getNombre();
+			}
+			else{
+				return "";
+			}
+		}
+		else{
+			return "";
+		}
 	}
 	
 }

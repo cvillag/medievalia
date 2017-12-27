@@ -1,5 +1,6 @@
 package com.cvilla.medievalia.web.ajax;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -79,6 +80,13 @@ public class CompleteObjectListAjaxController {
 						listag = objectManager.getObjetoDOMListByType(tipo);
 					}
 					model.addObject("listaObjetos", listag);
+					
+					sesion.removeAttribute("listainforme");
+					sesion.setAttribute("listainforme",listag);
+					List<TipoAtributoComplejoDOM> ac = objectManager.getTiposAtributosCompleos(tipo);
+					sesion.removeAttribute("tiposacinforme");
+					sesion.setAttribute("tiposacinforme",ac);
+					
 					model.addObject("type",request.getParameter("type"));
 					logManager.log(user.getId(), actionInt, "Visualización lista de instancias de objeto", Constants.P_OK);
 					if(authManager.isAutorized(Constants.P_DELETE_OBJECT_INSTANCE, user)){

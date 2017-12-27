@@ -112,4 +112,6 @@ public interface IObjectManager extends Serializable{
 	public Object getStatisticsTotalInstancesPerType();
 	
 	public boolean hasSimpleAttributes(TipoObjetoDOM t);
+
+	public InstanciaObjetoDOM getObjetoDOM(TipoObjetoDOM tipo, String nombre);
 }

@@ -86,6 +86,14 @@ public class ObjectManager implements IObjectManager {
 		}
 		return o;
 	}
+	public InstanciaObjetoDOM getObjetoDOM(TipoObjetoDOM tipo, String nombre) {
+		InstanciaObjetoDOM o = objetoDAO.getObjectByName(tipo, nombre);
+		if(o != null){
+			o.setAtributosSencillos(objetoDAO.getAtributosSencillos(tipo,o.getIdInstancia()));
+			o.setAtributosComplejos(objetoDAO.getAtributosComplejos(tipo,o.getIdInstancia()));
+		}
+		return o;
+	}
 
 	public List<InstanciaObjetoDOM> getObjetoDOMListByType(TipoObjetoDOM tipo) {
 		return objetoDAO.getObjectListByTipe(tipo);

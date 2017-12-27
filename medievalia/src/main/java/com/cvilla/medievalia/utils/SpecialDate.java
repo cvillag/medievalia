@@ -27,6 +27,24 @@ public class SpecialDate {
 		this.dia = dia;
 	}
 	
-	
+	@Override
+	public String toString(){
+		if(anio != null){
+			if(mes != null){
+				if(dia != null){
+					return dia + " - " + mes + " - " + anio;
+				}
+				else{
+					return mes + " - " + anio;
+				}
+			}
+			else{
+				return anio.toString();
+			}
+		}
+		else{
+			return " - ";
+		}
+	}
 
 }

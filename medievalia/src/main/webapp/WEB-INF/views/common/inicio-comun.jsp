@@ -5,7 +5,7 @@
 <div class="container">
 	<div class="jumbotron">
 		<h3>
-			<fmt:message key="p4-0.bienvenida" /><%=usr.getUser_long_name()%>
+			<fmt:message key="p4-0.bienvenida" />&nbsp;<%=usr.getUser_long_name()%>
 		</h3>
 	</div>
 	<p class="text-justify"><fmt:message key="intro.general.txt1"></fmt:message></p>

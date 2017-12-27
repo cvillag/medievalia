@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
+import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
+import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
 import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
 import com.cvilla.medievalia.domain.TipoObjetoDOM;
 import com.cvilla.medievalia.domain.User;
@@ -69,6 +71,13 @@ public class ObjectController {
 					List<TipoAtributoComplejoDOM> ac = objectManager.getTiposAtributosCompleos(tipoNuevo);
 					model.addObject("tipoAtributosC", ac);
 					List<ListaRelaciones> listaBiblio = objectManager.getRelaciones(ac);
+					for(ListaRelaciones li : listaBiblio){
+						if(li != null && li.getLi() != null){
+							for(InstanciaObjetoDOM i : li.getLi()){
+								fillNames(i);
+							}
+						}
+					}
 					model.addObject("listasRelacion", listaBiblio);
 					
 					logManager.log(user.getId(), actionInt, "Pantalla de gestión de " + tipoNuevo.getNombreDOM(), Constants.P_OK);
@@ -91,4 +100,16 @@ public class ObjectController {
 		return request.getParameter("idTipo") == null || !htmlManager.isNumeric(request.getParameter("idTipo"));
 	}
 	
+	private void fillNames(InstanciaObjetoDOM n2){
+		String sub = "";
+		if(n2 != null){
+			InstanciaObjetoDOM io = objectManager.getObjetoDOM(n2.getTipo(), n2.getIdInstancia());
+			for(InstanciaAtributoSencilloDOM ias : io.getAtributosSencillos()){
+				if(ias.getIdAtributo() == Constants.OBJETO_ATT_CNC && ias.getValor() != null){
+					sub = " ," + ((InstanciaObjetoDOM)ias.getValor()).getNombre();
+				}
+			}
+			n2.setNombre(n2.getNombre() + sub);
+		}
+	}
 }
