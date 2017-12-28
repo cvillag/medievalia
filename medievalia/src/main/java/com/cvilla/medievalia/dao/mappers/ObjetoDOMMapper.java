@@ -5,16 +5,16 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
-import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaObjeto;
+import com.cvilla.medievalia.domain.TipoObjeto;
 import com.cvilla.medievalia.domain.User;
 
-public class ObjetoDOMMapper implements RowMapper<InstanciaObjetoDOM> {
+public class ObjetoDOMMapper implements RowMapper<InstanciaObjeto> {
 
-	public InstanciaObjetoDOM mapRow(ResultSet rs, int rowNum) throws SQLException {
-		InstanciaObjetoDOM o = new InstanciaObjetoDOM();
+	public InstanciaObjeto mapRow(ResultSet rs, int rowNum) throws SQLException {
+		InstanciaObjeto o = new InstanciaObjeto();
 		o.setIdInstancia(rs.getInt("idInstancia"));
-		TipoObjetoDOM t = new TipoObjetoDOM();
+		TipoObjeto t = new TipoObjeto();
 		t.setTipoDOM(rs.getInt("idObjeto"));
 		o.setTipo(t);
 		o.setNombre(rs.getString("nombreInstancia"));

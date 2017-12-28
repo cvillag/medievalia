@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
-import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
-import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
-import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
-import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoComplejo;
+import com.cvilla.medievalia.domain.InstanciaAtributoSencillo;
+import com.cvilla.medievalia.domain.InstanciaObjeto;
+import com.cvilla.medievalia.domain.TipoAtributoComplejo;
+import com.cvilla.medievalia.domain.TipoObjeto;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
@@ -59,7 +59,7 @@ public class ViewObjectInstanceDetailAjaxController {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
-		TipoObjetoDOM tipo = (TipoObjetoDOM) sesion.getAttribute("tipoObjeto");
+		TipoObjeto tipo = (TipoObjeto) sesion.getAttribute("tipoObjeto");
 		ModelAndView model;
 //		JSONObject j = new JSONObject();
 		String message;
@@ -72,7 +72,7 @@ public class ViewObjectInstanceDetailAjaxController {
 				int modo = (new Integer(request.getParameter("modo"))).intValue();
 				int validado = (new Integer(request.getParameter("val")).intValue());
 				message = "ok";
-				InstanciaObjetoDOM obj;
+				InstanciaObjeto obj;
 				if(validado == 1){
 					obj= objectManager.getObjetoDOM(tipo, idInstancia);
 				}
@@ -83,7 +83,7 @@ public class ViewObjectInstanceDetailAjaxController {
 					return htmlManager.paramError(logManager, actionId, user.getId());
 				}
 				//Lista de tipoAtributoComplejo para crear las pestañas del modal
-				List<TipoAtributoComplejoDOM> ac = objectManager.getTiposAtributosCompleos(tipo);
+				List<TipoAtributoComplejo> ac = objectManager.getTiposAtributosCompleos(tipo);
 				Map<Integer, Integer> badges = objectManager.getBadgesFromObject(obj);
 				List<ListaAtributoSimple> atrob = objectManager.getListaDisponibleAtributoSimpleObjeto(obj);
 				if(modo == 1){
@@ -137,20 +137,20 @@ public class ViewObjectInstanceDetailAjaxController {
 				request.getParameter("val") == null || !htmlManager.isNumeric(request.getParameter("val"));
 	}
 	
-	private void fillNames(InstanciaObjetoDOM o){
-		for(InstanciaAtributoComplejoDOM iao : o.getAtributosComplejos()){
+	private void fillNames(InstanciaObjeto o){
+		for(InstanciaAtributoComplejo iao : o.getAtributosComplejos()){
 			fillNames(iao);
 		}
 	}
 	
-	private void fillNames(InstanciaAtributoComplejoDOM iao){
+	private void fillNames(InstanciaAtributoComplejo iao){
 		if(iao.getInstanciaHijo().getTipo().getTipoDOM() == Constants.OBJETO_CNC){
-			InstanciaObjetoDOM n2 = objectManager.getObjetoDOM(iao.getInstanciaHijo().getTipo(), iao.getInstanciaHijo().getNombre());
+			InstanciaObjeto n2 = objectManager.getObjetoDOM(iao.getInstanciaHijo().getTipo(), iao.getInstanciaHijo().getNombre());
 			String sub = "";
 			if(n2 != null){
-				for(InstanciaAtributoSencilloDOM ias : n2.getAtributosSencillos()){
+				for(InstanciaAtributoSencillo ias : n2.getAtributosSencillos()){
 					if(ias.getIdAtributo() == Constants.OBJETO_ATT_CNC && ias.getValor() != null){
-						sub = " ," + ((InstanciaObjetoDOM)ias.getValor()).getNombre();
+						sub = " ," + ((InstanciaObjeto)ias.getValor()).getNombre();
 					}
 				}
 				iao.getInstanciaHijo().setNombre(iao.getInstanciaHijo().getNombre() + sub);

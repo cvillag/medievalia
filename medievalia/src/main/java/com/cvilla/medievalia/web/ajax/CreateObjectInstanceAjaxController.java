@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
-import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaObjeto;
+import com.cvilla.medievalia.domain.TipoObjeto;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
@@ -52,7 +52,7 @@ public class CreateObjectInstanceAjaxController {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
-		TipoObjetoDOM tipo = (TipoObjetoDOM) sesion.getAttribute("tipoObjeto");
+		TipoObjeto tipo = (TipoObjeto) sesion.getAttribute("tipoObjeto");
 		JSONObject j = new JSONObject();
 		
 		if(authManager.isAutorized(actionInt, user)){
@@ -62,7 +62,7 @@ public class CreateObjectInstanceAjaxController {
 			}
 			else{
 				String nombre = request.getParameter("nombre");
-				InstanciaObjetoDOM o = new InstanciaObjetoDOM();
+				InstanciaObjeto o = new InstanciaObjeto();
 				o.setNombre(nombre);
 				String message = objectManager.addObjetoDOM(tipo, o, groupA, user);
 				j.put("message", message);

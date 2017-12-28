@@ -2,26 +2,26 @@ package com.cvilla.medievalia.utils;
 
 import java.util.List;
 
-import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
-import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
+import com.cvilla.medievalia.domain.InstanciaObjeto;
+import com.cvilla.medievalia.domain.TipoAtributoComplejo;
 
 public class ListaRelaciones {
 	
-	private TipoAtributoComplejoDOM ac;
-	private List<InstanciaObjetoDOM> li;
+	private TipoAtributoComplejo ac;
+	private List<InstanciaObjeto> li;
 	public ListaRelaciones() {
 		super();
 	}
-	public TipoAtributoComplejoDOM getAc() {
+	public TipoAtributoComplejo getAc() {
 		return ac;
 	}
-	public void setAc(TipoAtributoComplejoDOM ac) {
+	public void setAc(TipoAtributoComplejo ac) {
 		this.ac = ac;
 	}
-	public List<InstanciaObjetoDOM> getLi() {
+	public List<InstanciaObjeto> getLi() {
 		return li;
 	}
-	public void setLi(List<InstanciaObjetoDOM> li) {
+	public void setLi(List<InstanciaObjeto> li) {
 		this.li = li;
 	}
 

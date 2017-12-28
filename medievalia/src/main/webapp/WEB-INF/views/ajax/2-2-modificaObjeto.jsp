@@ -1,9 +1,9 @@
 <%@page import="com.cvilla.medievalia.utils.ListaAtributoSimple"%>
-<%@page import="com.cvilla.medievalia.domain.TipoAtributoComplejoDOM"%>
-<%@page import="com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM"%>
+<%@page import="com.cvilla.medievalia.domain.TipoAtributoComplejo"%>
+<%@page import="com.cvilla.medievalia.domain.InstanciaAtributoComplejo"%>
 <%@page import="com.cvilla.medievalia.utils.SpecialDate"%>
-<%@page import="com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM"%>
-<%@page import="com.cvilla.medievalia.domain.InstanciaObjetoDOM"%>
+<%@page import="com.cvilla.medievalia.domain.InstanciaAtributoSencillo"%>
+<%@page import="com.cvilla.medievalia.domain.InstanciaObjeto"%>
 <%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
 <%@page import="java.util.List"%>
@@ -11,24 +11,24 @@
 <%
 User user = (User) session.getAttribute("user");
 String type= (String) request.getAttribute("message");
-InstanciaObjetoDOM objeto = (InstanciaObjetoDOM) request.getAttribute("object");
+InstanciaObjeto objeto = (InstanciaObjeto) request.getAttribute("object");
 @SuppressWarnings("unchecked")
-List<TipoAtributoComplejoDOM> listaTipos = (List<TipoAtributoComplejoDOM>) request.getAttribute("tatributoc");
+List<TipoAtributoComplejo> listaTipos = (List<TipoAtributoComplejo>) request.getAttribute("tatributoc");
 @SuppressWarnings("unchecked")
-List<InstanciaAtributoComplejoDOM> disp = (List<InstanciaAtributoComplejoDOM>) request.getAttribute("disponibles");
+List<InstanciaAtributoComplejo> disp = (List<InstanciaAtributoComplejo>) request.getAttribute("disponibles");
 @SuppressWarnings("unchecked")
 List<ListaAtributoSimple> atributosSimplesObjeto = (List<ListaAtributoSimple>) request.getAttribute("simplesDisponibles");
 String editSimple = (String) request.getAttribute("editSimple");
 boolean editS = editSimple != null;
 
 if(objeto != null){
-	List<InstanciaAtributoComplejoDOM> acl = objeto.getAtributosComplejos();
+	List<InstanciaAtributoComplejo> acl = objeto.getAtributosComplejos();
 	%>
 	<ul class="nav nav-tabs">
 		<li class="active listaA" data-val="0"><a href="#"><fmt:message key="p2.2.detalle.atributos"></fmt:message></a></li>
 		<%
 		if(listaTipos != null && listaTipos.size() > 0){
-			for(TipoAtributoComplejoDOM ac : listaTipos){
+			for(TipoAtributoComplejo ac : listaTipos){
 			%>
 		<li class="listaA" data-val="<%=ac.getIdTipoHijo()%>"><a href="#"><%=ac.getNombreAtributo() %></a></li>
 		<%	}
@@ -37,14 +37,14 @@ if(objeto != null){
 	<div id="modDetAtributos0">
 	<%
 	
-	List<InstanciaAtributoSencilloDOM> atrS = objeto.getAtributosSencillos();
+	List<InstanciaAtributoSencillo> atrS = objeto.getAtributosSencillos();
 	if(atrS != null && atrS.size() > 0){
 		%>
 		
 			<form id="simpleAttributeForm">
 			<input type="hidden" name="idInstanciaObjeto" value="<%=objeto.getIdInstancia()%>">
 			<%
-			for(InstanciaAtributoSencilloDOM as : atrS){
+			for(InstanciaAtributoSencillo as : atrS){
 				if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_FECHA){
 					%>
 					<div class="row">
@@ -138,9 +138,9 @@ if(objeto != null){
 							<select class="form-control atrSim" name="object<%=as.getIdAtributo()%>" <%=editS?"":"disabled" %>>
 								<option value="0"></option>
 								<%
-								InstanciaObjetoDOM seleccionado = (InstanciaObjetoDOM) as.getValor();
+								InstanciaObjeto seleccionado = (InstanciaObjeto) as.getValor();
 								if(aso != null){
-									for(InstanciaObjetoDOM objAtr : aso.getDisponibles()){
+									for(InstanciaObjeto objAtr : aso.getDisponibles()){
 									%>
 									<option value="<%=objAtr.getIdInstancia()%>" <%=seleccionado!=null && seleccionado.getIdInstancia()==objAtr.getIdInstancia()?"selected":"" %>>
 										<%=objAtr.getNombre() %>
@@ -173,7 +173,7 @@ if(objeto != null){
 	</div>
 	<%if(listaTipos != null && listaTipos.size() > 0){
 		int idPag = 0;
-		for(TipoAtributoComplejoDOM act : listaTipos){
+		for(TipoAtributoComplejo act : listaTipos){
 			idPag++;	
 			%>
 	<div id="modDetAtributos<%=act.getIdTipoHijo() %>" class="modDetAtributosC" data-num="<%=act.getIdTipoHijo()%>" data-tiporelacion="<%=act.getIdTipoRelacion()%>">

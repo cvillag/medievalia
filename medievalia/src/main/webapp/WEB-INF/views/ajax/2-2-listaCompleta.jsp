@@ -1,4 +1,4 @@
-<%@page import="com.cvilla.medievalia.domain.InstanciaObjetoDOM"%>
+<%@page import="com.cvilla.medievalia.domain.InstanciaObjeto"%>
 <%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
 <%@page import="java.util.List"%>
@@ -7,14 +7,14 @@
 User user = (User) session.getAttribute("user");
 String type= (String) request.getAttribute("type");
 @SuppressWarnings("unchecked")
-List<InstanciaObjetoDOM> objetos = (List<InstanciaObjetoDOM>) request.getAttribute("listaObjetos");
+List<InstanciaObjeto> objetos = (List<InstanciaObjeto>) request.getAttribute("listaObjetos");
 String delete = (String) request.getAttribute("permisoborrado");
 String rename = (String) request.getAttribute("permisoRenombrado");
 String modify = (String) request.getAttribute("permisoModificar");
 
 int i = 0;
 if (objetos != null && objetos.size() > 0){
-	for(InstanciaObjetoDOM c : objetos){
+	for(InstanciaObjeto c : objetos){
 		if(type.equals("table")){%>
 			<tr class="trobjeto" id="objeto<%=c.getIdInstancia()%>" data-nom="<%=c.getNombre()%>">
 				<td>

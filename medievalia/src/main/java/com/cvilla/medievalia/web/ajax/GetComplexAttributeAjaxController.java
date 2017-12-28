@@ -10,9 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoComplejo;
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.TipoObjeto;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
@@ -52,7 +52,7 @@ public class GetComplexAttributeAjaxController {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
-		TipoObjetoDOM tipo = (TipoObjetoDOM) sesion.getAttribute("tipoObjeto");
+		TipoObjeto tipo = (TipoObjeto) sesion.getAttribute("tipoObjeto");
 		JSONObject j = new JSONObject();
 		
 		if(authManager.isAutorized(actionInt, user)){
@@ -64,7 +64,7 @@ public class GetComplexAttributeAjaxController {
 				int idInstPadre = (new Integer(request.getParameter("instp"))).intValue();
 				int idTipoHijo = (new Integer(request.getParameter("tipoh"))).intValue();
 				int idInstHijo = (new Integer(request.getParameter("insth"))).intValue();
-				InstanciaAtributoComplejoDOM iac = objectManager.getComplexAttribute(tipo,idTipoHijo,idInstPadre,idInstHijo, groupA,  user);
+				InstanciaAtributoComplejo iac = objectManager.getComplexAttribute(tipo,idTipoHijo,idInstPadre,idInstHijo, groupA,  user);
 				if(iac == null){
 					iac = objectManager.getComplexAttributeNotVal(tipo,idTipoHijo,idInstPadre,idInstHijo, groupA,  user);
 				}

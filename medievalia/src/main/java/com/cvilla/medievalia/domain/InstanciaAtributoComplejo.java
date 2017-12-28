@@ -3,11 +3,11 @@ package com.cvilla.medievalia.domain;
 import com.cvilla.medievalia.utils.Constants;
 import com.cvilla.medievalia.utils.SpecialDate;
 
-public class InstanciaAtributoComplejoDOM {
+public class InstanciaAtributoComplejo {
 	
-	private TipoObjetoDOM tipoPadre;
-	private TipoObjetoDOM tipoHijo;
-	private InstanciaObjetoDOM instanciaHijo;
+	private TipoObjeto tipoPadre;
+	private TipoObjeto tipoHijo;
+	private InstanciaObjeto instanciaHijo;
 	private int idInstanciaPadre;
 	private String nombreAtributo;
 	private int validado;
@@ -16,36 +16,36 @@ public class InstanciaAtributoComplejoDOM {
 	private int creador;
 	private int textoLeido;
 	private Integer idTipoObjetoRelacion;
-	private InstanciaObjetoDOM instanciaObjetoRelacion;
+	private InstanciaObjeto instanciaObjetoRelacion;
 	private int conFecha;
 	private SpecialDate fechaInicio;
 	private SpecialDate fechaFin;
 	private int conPaginaDoc;
 	private String paginaDoc;
 	
-	public InstanciaAtributoComplejoDOM() {
+	public InstanciaAtributoComplejo() {
 		super();
 	}
-	public InstanciaAtributoComplejoDOM(TipoObjetoDOM tipoPadre) {
+	public InstanciaAtributoComplejo(TipoObjeto tipoPadre) {
 		super();
 		this.tipoPadre = tipoPadre;
 	}
-	public TipoObjetoDOM getTipoPadre() {
+	public TipoObjeto getTipoPadre() {
 		return tipoPadre;
 	}
-	public void setTipoPadre(TipoObjetoDOM tipoPadre) {
+	public void setTipoPadre(TipoObjeto tipoPadre) {
 		this.tipoPadre = tipoPadre;
 	}
-	public TipoObjetoDOM getTipoHijo() {
+	public TipoObjeto getTipoHijo() {
 		return tipoHijo;
 	}
-	public void setTipoHijo(TipoObjetoDOM tipoHijo) {
+	public void setTipoHijo(TipoObjeto tipoHijo) {
 		this.tipoHijo = tipoHijo;
 	}
-	public InstanciaObjetoDOM getInstanciaHijo() {
+	public InstanciaObjeto getInstanciaHijo() {
 		return instanciaHijo;
 	}
-	public void setInstanciaHijo(InstanciaObjetoDOM instanciaHijo) {
+	public void setInstanciaHijo(InstanciaObjeto instanciaHijo) {
 		this.instanciaHijo = instanciaHijo;
 	}
 	public String getNombreAtributo() {
@@ -90,10 +90,10 @@ public class InstanciaAtributoComplejoDOM {
 	public boolean isTextoLeido(){
 		return this.textoLeido == 1 || this.textoValidacion.length() < 1;
 	}
-	public InstanciaObjetoDOM getInstanciaObjetoRelacion() {
+	public InstanciaObjeto getInstanciaObjetoRelacion() {
 		return instanciaObjetoRelacion;
 	}
-	public void setInstanciaObjetoRelacion(InstanciaObjetoDOM idInstanciaObjetoRelacion) {
+	public void setInstanciaObjetoRelacion(InstanciaObjeto idInstanciaObjetoRelacion) {
 		this.instanciaObjetoRelacion = idInstanciaObjetoRelacion;
 	}
 	public Integer getIdTipoObjetoRelacion() {

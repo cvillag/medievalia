@@ -1,16 +1,16 @@
 package com.cvilla.medievalia.domain;
 
-public class TipoObjetoDOM {
+public class TipoObjeto {
 	private int tipoDOM;
 	private String nombreDOM;
 	
-	public TipoObjetoDOM(int tipoDOM, String nombreDOM) {
+	public TipoObjeto(int tipoDOM, String nombreDOM) {
 		super();
 		this.tipoDOM = tipoDOM;
 		this.nombreDOM = nombreDOM;
 	}
 	
-	public TipoObjetoDOM() {
+	public TipoObjeto() {
 		super();
 	}
 

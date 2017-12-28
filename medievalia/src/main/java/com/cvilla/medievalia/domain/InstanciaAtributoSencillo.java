@@ -3,14 +3,14 @@ package com.cvilla.medievalia.domain;
 import com.cvilla.medievalia.utils.Constants;
 import com.cvilla.medievalia.utils.SpecialDate;
 
-public class InstanciaAtributoSencilloDOM {
+public class InstanciaAtributoSencillo {
 	private int tipoAtributo;
 	private Object valor;
 	private String nombreTipoAtributo;
 	private int idAtributo;
 	private int subtipo;
 	
-	public InstanciaAtributoSencilloDOM() {
+	public InstanciaAtributoSencillo() {
 		super();
 	}
 
@@ -71,7 +71,7 @@ public class InstanciaAtributoSencilloDOM {
 				return (String)this.valor;
 			}
 			else if(this.tipoAtributo == Constants.TIPO_ATRIBUTO_OBJECT){
-				return ((InstanciaObjetoDOM)this.valor).getNombre();
+				return ((InstanciaObjeto)this.valor).getNombre();
 			}
 			else{
 				return "";

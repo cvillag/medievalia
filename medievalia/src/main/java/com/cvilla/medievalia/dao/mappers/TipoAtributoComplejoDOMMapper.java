@@ -5,13 +5,13 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
-import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.TipoAtributoComplejo;
+import com.cvilla.medievalia.domain.TipoObjeto;
 
-public class TipoAtributoComplejoDOMMapper implements RowMapper<TipoAtributoComplejoDOM> {
+public class TipoAtributoComplejoDOMMapper implements RowMapper<TipoAtributoComplejo> {
 
-	public TipoAtributoComplejoDOM mapRow(ResultSet rs, int rowNum) throws SQLException {
-		TipoAtributoComplejoDOM t = new TipoAtributoComplejoDOM();
+	public TipoAtributoComplejo mapRow(ResultSet rs, int rowNum) throws SQLException {
+		TipoAtributoComplejo t = new TipoAtributoComplejo();
 		t.setIdTipoPadre(rs.getInt("idObjetoPadre"));
 		t.setIdTipoHijo(rs.getInt("idObjetoHijo"));
 		t.setNombreAtributo(rs.getString("NombreAtributo"));

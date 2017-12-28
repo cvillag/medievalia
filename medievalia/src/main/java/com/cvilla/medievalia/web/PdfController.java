@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.dao.ObjetoDAO;
-import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
-import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
-import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
-import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
-import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoComplejo;
+import com.cvilla.medievalia.domain.InstanciaAtributoSencillo;
+import com.cvilla.medievalia.domain.InstanciaObjeto;
+import com.cvilla.medievalia.domain.TipoAtributoComplejo;
+import com.cvilla.medievalia.domain.TipoObjeto;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IObjectManager;
 import com.cvilla.medievalia.utils.Constants;
@@ -42,11 +42,11 @@ public class PdfController {
         
         HttpSession sesion = request.getSession();
         @SuppressWarnings("unchecked")
-        List<InstanciaObjetoDOM> listag = (List<InstanciaObjetoDOM>) sesion.getAttribute("listainforme");
-        TipoObjetoDOM tipo = (TipoObjetoDOM) sesion.getAttribute("tipoObjeto");
-        List<InstanciaObjetoDOM> listaComp = new ArrayList<InstanciaObjetoDOM>();
-		for(InstanciaObjetoDOM io : listag){
-			InstanciaObjetoDOM ioc = objectManager.getObjetoDOM(tipo, io.getIdInstancia());
+        List<InstanciaObjeto> listag = (List<InstanciaObjeto>) sesion.getAttribute("listainforme");
+        TipoObjeto tipo = (TipoObjeto) sesion.getAttribute("tipoObjeto");
+        List<InstanciaObjeto> listaComp = new ArrayList<InstanciaObjeto>();
+		for(InstanciaObjeto io : listag){
+			InstanciaObjeto ioc = objectManager.getObjetoDOM(tipo, io.getIdInstancia());
 			fillNames(ioc);
 			listaComp.add(ioc);
 		}
@@ -58,33 +58,33 @@ public class PdfController {
         return new ModelAndView("pdfView", "listBooks", listag);
     }
     
-    private void fillNames(InstanciaObjetoDOM o){
-    	for(InstanciaAtributoComplejoDOM iao : o.getAtributosComplejos()){
+    private void fillNames(InstanciaObjeto o){
+    	for(InstanciaAtributoComplejo iao : o.getAtributosComplejos()){
     		fillNames(iao);
     	}
     }
 
-    private void fillNames(InstanciaAtributoComplejoDOM iao){
+    private void fillNames(InstanciaAtributoComplejo iao){
     	if(iao.getInstanciaHijo().getTipo().getTipoDOM() == Constants.OBJETO_CNC){
-    		InstanciaObjetoDOM n2 = objectManager.getObjetoDOM(iao.getInstanciaHijo().getTipo(), iao.getInstanciaHijo().getNombre());
+    		InstanciaObjeto n2 = objectManager.getObjetoDOM(iao.getInstanciaHijo().getTipo(), iao.getInstanciaHijo().getNombre());
     		
     		String sub = fill(n2);
     		iao.getInstanciaHijo().setNombre(iao.getInstanciaHijo().getNombre() + sub);
     	}
-    	TipoObjetoDOM t = objectManager.getTipoObjetoDOM(iao.getIdTipoObjetoRelacion());
+    	TipoObjeto t = objectManager.getTipoObjetoDOM(iao.getIdTipoObjetoRelacion());
     	if(t != null){
-			InstanciaObjetoDOM n3 = objectManager.getObjetoDOM(t, iao.getInstanciaObjetoRelacion().getIdInstancia());
+			InstanciaObjeto n3 = objectManager.getObjetoDOM(t, iao.getInstanciaObjetoRelacion().getIdInstancia());
 			String sub = fill(n3);
 			iao.getInstanciaObjetoRelacion().setNombre(iao.getInstanciaObjetoRelacion().getNombre()+sub);
     	}
     }
     
-    private String fill(InstanciaObjetoDOM x){
+    private String fill(InstanciaObjeto x){
     	String sub = "";
     	if(x != null){
-			for(InstanciaAtributoSencilloDOM ias : x.getAtributosSencillos()){
+			for(InstanciaAtributoSencillo ias : x.getAtributosSencillos()){
 				if(ias.getIdAtributo() == Constants.OBJETO_ATT_CNC && ias.getValor() != null){
-					sub = " ," + ((InstanciaObjetoDOM)ias.getValor()).getNombre();
+					sub = " ," + ((InstanciaObjeto)ias.getValor()).getNombre();
 				}
 			}
 		}

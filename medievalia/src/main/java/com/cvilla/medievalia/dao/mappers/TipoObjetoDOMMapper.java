@@ -5,12 +5,12 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.TipoObjeto;
 
-public class TipoObjetoDOMMapper implements RowMapper<TipoObjetoDOM> {
+public class TipoObjetoDOMMapper implements RowMapper<TipoObjeto> {
 
-	public TipoObjetoDOM mapRow(ResultSet rs, int rowNum) throws SQLException {
-		TipoObjetoDOM t = new TipoObjetoDOM();
+	public TipoObjeto mapRow(ResultSet rs, int rowNum) throws SQLException {
+		TipoObjeto t = new TipoObjeto();
 		t.setTipoDOM(rs.getInt("idObjeto"));
 		t.setNombreDOM(rs.getString("nombreObjeto"));
 		return t;

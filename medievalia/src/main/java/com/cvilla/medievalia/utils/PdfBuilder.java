@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
-import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
-import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
-import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
-import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoComplejo;
+import com.cvilla.medievalia.domain.InstanciaAtributoSencillo;
+import com.cvilla.medievalia.domain.InstanciaObjeto;
+import com.cvilla.medievalia.domain.TipoAtributoComplejo;
+import com.cvilla.medievalia.domain.TipoObjeto;
 import com.cvilla.medievalia.domain.User;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -40,14 +40,14 @@ public class PdfBuilder extends AbstractITextPdfView {
         @SuppressWarnings("unchecked")
         HttpSession sesion = request.getSession();
         User user = (User) sesion.getAttribute("user");
-        TipoObjetoDOM tipo = (TipoObjetoDOM) sesion.getAttribute("tipoObjeto");
-        List<TipoAtributoComplejoDOM> ac = (List<TipoAtributoComplejoDOM>) sesion.getAttribute("tiposacinforme");
+        TipoObjeto tipo = (TipoObjeto) sesion.getAttribute("tipoObjeto");
+        List<TipoAtributoComplejo> ac = (List<TipoAtributoComplejo>) sesion.getAttribute("tiposacinforme");
         @SuppressWarnings("unchecked")
-		List<InstanciaObjetoDOM> listObj = (List<InstanciaObjetoDOM>) sesion.getAttribute("listainforme");
+		List<InstanciaObjeto> listObj = (List<InstanciaObjeto>) sesion.getAttribute("listainforme");
          
         doc.add(new Paragraph("Informe de " + tipo.getNombreDOM() + " creado por " + user.getUser_long_name()));
          
-        for(InstanciaObjetoDOM io : listObj){
+        for(InstanciaObjeto io : listObj){
 	        PdfPTable table = new PdfPTable(4);
 	        table.setWidthPercentage(100.0f);
 	        table.setWidths(new float[] {2.0f, 3.0f, 3.0f, 1.0f});
@@ -71,17 +71,17 @@ public class PdfBuilder extends AbstractITextPdfView {
 	        cas.setPadding(5);
 	        cas.setColspan(2);
 	        
-	        for(InstanciaAtributoSencilloDOM ia : io.getAtributosSencillos()){
+	        for(InstanciaAtributoSencillo ia : io.getAtributosSencillos()){
 	        	cas.setPhrase(new Phrase(ia.getNombreTipoAtributo()));
 	        	table.addCell(cas);
 	        	cas.setPhrase(new Phrase(ia.toString()));
 	        	table.addCell(cas);
 	        }
-	        for(TipoAtributoComplejoDOM ta : ac){
+	        for(TipoAtributoComplejo ta : ac){
 	        	PdfPCell celtipoAC = new PdfPCell();
 	        	celtipoAC.setPadding(5);
 	        	celtipoAC.setBackgroundColor(BaseColor.LIGHT_GRAY);
-	        	List<InstanciaAtributoComplejoDOM> la = getACinTAC(ta, io.getAtributosComplejos());
+	        	List<InstanciaAtributoComplejo> la = getACinTAC(ta, io.getAtributosComplejos());
 	        	celtipoAC.setRowspan(la.size()+1);
 	        	celtipoAC.setPhrase(new Phrase(ta.getNombreAtributo()));
 	        	table.addCell(celtipoAC);
@@ -94,7 +94,7 @@ public class PdfBuilder extends AbstractITextPdfView {
 	        	table.addCell(head);
 	        	head.setPhrase(new Phrase("Página"));
 	        	table.addCell(head);
-	        	for(InstanciaAtributoComplejoDOM a : la){
+	        	for(InstanciaAtributoComplejo a : la){
 	        		PdfPCell c = new PdfPCell();
 	        		c.setPadding(5);
 	        		String n = a.getInstanciaHijo().getNombre();
@@ -133,9 +133,9 @@ public class PdfBuilder extends AbstractITextPdfView {
          
     }
     
-    private List<InstanciaAtributoComplejoDOM> getACinTAC(TipoAtributoComplejoDOM tac, List<InstanciaAtributoComplejoDOM> lac){
-    	List<InstanciaAtributoComplejoDOM> lista = new ArrayList<InstanciaAtributoComplejoDOM>();
-    	for(InstanciaAtributoComplejoDOM ac : lac){
+    private List<InstanciaAtributoComplejo> getACinTAC(TipoAtributoComplejo tac, List<InstanciaAtributoComplejo> lac){
+    	List<InstanciaAtributoComplejo> lista = new ArrayList<InstanciaAtributoComplejo>();
+    	for(InstanciaAtributoComplejo ac : lac){
     		if(ac.getTipoHijo().getTipoDOM() == tac.getIdTipoHijo()){
     			lista.add(ac);
     		}

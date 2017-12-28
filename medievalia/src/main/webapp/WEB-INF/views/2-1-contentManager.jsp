@@ -1,5 +1,5 @@
 <%@page import="java.util.Map"%>
-<%@page import="com.cvilla.medievalia.domain.TipoObjetoDOM"%>
+<%@page import="com.cvilla.medievalia.domain.TipoObjeto"%>
 <%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -16,7 +16,7 @@
 	String profe = (String) request.getAttribute("profe");
 	
 	@SuppressWarnings("unchecked")
-	List<TipoObjetoDOM> listaTipos = (List<TipoObjetoDOM>) request.getAttribute("listaObjetos");
+	List<TipoObjeto> listaTipos = (List<TipoObjeto>) request.getAttribute("listaObjetos");
 	
 	@SuppressWarnings("unchecked")
 	Map<Integer,Integer> profe1 = (Map<Integer,Integer>) request.getAttribute("objectsToValidate"); 
@@ -70,7 +70,7 @@
 	
 <%
 	int i = 0;
-	for(TipoObjetoDOM tipo : listaTipos){ 
+	for(TipoObjeto tipo : listaTipos){ 
 		if(i % 3 == 0){
 	%>	
 	<div class="row">

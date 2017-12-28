@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
-import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.TipoAtributoComplejo;
+import com.cvilla.medievalia.domain.TipoObjeto;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
@@ -54,7 +54,7 @@ public class GetComplexAttributeTypesAjaxController {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
-		TipoObjetoDOM tipo = (TipoObjetoDOM) sesion.getAttribute("tipoObjeto");
+		TipoObjeto tipo = (TipoObjeto) sesion.getAttribute("tipoObjeto");
 		JSONObject j = new JSONObject();
 		
 		if(authManager.isAutorized(actionInt, user)){
@@ -63,7 +63,7 @@ public class GetComplexAttributeTypesAjaxController {
 				logManager.log(user.getId(), actionInt, "Fallo al consultar tipos de atributos complejos. Parámetros o sesión incorrectos.", Constants.P_NOK);
 			}
 			else{
-				List<TipoAtributoComplejoDOM> tipos = objectManager.getTiposAtributosCompleos(tipo);
+				List<TipoAtributoComplejo> tipos = objectManager.getTiposAtributosCompleos(tipo);
 				model.addObject("tipos", tipos);
 			}
 			model.addObject("json", j);

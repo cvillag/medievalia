@@ -11,10 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoSencillo;
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
-import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaObjeto;
+import com.cvilla.medievalia.domain.TipoObjeto;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
@@ -57,7 +57,7 @@ public class SimpleAttributeAjaxController {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
-		TipoObjetoDOM tipo = (TipoObjetoDOM) sesion.getAttribute("tipoObjeto");
+		TipoObjeto tipo = (TipoObjeto) sesion.getAttribute("tipoObjeto");
 		JSONObject j = new JSONObject();
 		
 		if(authManager.isAutorized(actionInt, user) || authManager.isAutorized(actionInt2, user)){
@@ -67,7 +67,7 @@ public class SimpleAttributeAjaxController {
 			}
 			else{
 				int id = (new Integer(request.getParameter("idInstanciaObjeto"))).intValue();
-				InstanciaObjetoDOM obj = objectManager.getObjetoDOM(tipo, id);
+				InstanciaObjeto obj = objectManager.getObjetoDOM(tipo, id);
 				if(authManager.isAutorized(actionInt, user)){
 					obj = objectManager.getObjetoDOMUnvalidated(tipo, id, groupA, user);
 				}
@@ -101,8 +101,8 @@ public class SimpleAttributeAjaxController {
 		return model;
 	}
 	
-	private String cambiaAtributosS(InstanciaObjetoDOM obj, HttpServletRequest request) {
-		for(InstanciaAtributoSencilloDOM as : obj.getAtributosSencillos()){
+	private String cambiaAtributosS(InstanciaObjeto obj, HttpServletRequest request) {
+		for(InstanciaAtributoSencillo as : obj.getAtributosSencillos()){
 			int idAt = as.getIdAtributo();
 			int tipoA = as.getTipoAtributo();
 			int pos = numAtributo(obj, idAt);
@@ -154,7 +154,7 @@ public class SimpleAttributeAjaxController {
 			}
 			else if(tipoA == Constants.TIPO_ATRIBUTO_OBJECT){
 				String dat = request.getParameter("object"+idAt);
-				InstanciaObjetoDOM o = new InstanciaObjetoDOM();
+				InstanciaObjeto o = new InstanciaObjeto();
 				o.setIdInstancia(new Integer(dat));
 				obj.getAtributosSencillos().get(pos).setValor(o);
 			}
@@ -162,7 +162,7 @@ public class SimpleAttributeAjaxController {
 		return "ok";
 	}
 	
-	private int numAtributo(InstanciaObjetoDOM o, int idAtributo){
+	private int numAtributo(InstanciaObjeto o, int idAtributo){
 		int i = 0;
 		while(i < o.getAtributosSencillos().size()){
 			if(idAtributo == o.getAtributosSencillos().get(i).getIdAtributo()){

@@ -1,7 +1,7 @@
-<%@page import="com.cvilla.medievalia.domain.TipoAtributoComplejoDOM"%>
-<%@page import="com.cvilla.medievalia.domain.InstanciaObjetoDOM"%>
+<%@page import="com.cvilla.medievalia.domain.TipoAtributoComplejo"%>
+<%@page import="com.cvilla.medievalia.domain.InstanciaObjeto"%>
 <%@page import="com.cvilla.medievalia.utils.ListaRelaciones"%>
-<%@page import="com.cvilla.medievalia.domain.TipoObjetoDOM"%>
+<%@page import="com.cvilla.medievalia.domain.TipoObjeto"%>
 <%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -12,12 +12,12 @@
 User usr = (User)ses.getAttribute("user");
 String validar = (String) request.getAttribute("validar");
 
-TipoObjetoDOM tipo = (TipoObjetoDOM) request.getAttribute("tipo");
+TipoObjeto tipo = (TipoObjeto) request.getAttribute("tipo");
 @SuppressWarnings("unchecked")
 List<ListaRelaciones> listarel = (List<ListaRelaciones>) request.getAttribute("listasRelacion");
 
 @SuppressWarnings("unchecked")
-List<TipoAtributoComplejoDOM> lto = (List<TipoAtributoComplejoDOM>) request.getAttribute("tipoAtributosC");
+List<TipoAtributoComplejo> lto = (List<TipoAtributoComplejo>) request.getAttribute("tipoAtributosC");
 %>
 <form id="formUser">
 	<input type="hidden" id="userrole" value="<%=usr.getUser_role()%>">
@@ -62,7 +62,7 @@ List<TipoAtributoComplejoDOM> lto = (List<TipoAtributoComplejoDOM>) request.getA
 							<label for="idoh0"><fmt:message key="p2-2.filtrarPor"></fmt:message></label>
 							<select class="tipoFiltro form-control selectpicker" id="idoh0" data-pos="0">
 								<option value="0" selected></option>
-								<%for(TipoAtributoComplejoDOM to : lto){ %>
+								<%for(TipoAtributoComplejo to : lto){ %>
 								<option value="<%=to.getIdTipoHijo()%>"><%=to.getNombreAtributo() %></option>
 								<%} %>
 							</select>
@@ -1514,8 +1514,8 @@ if(listarel != null && listarel.size() > 0 ){
 					<label for="selectRelacion"><fmt:message key="p2-2.modal122"></fmt:message></label>
 					<select id="selectRelacion<%=rel.getAc().getIdTipoHijo()%>" name="selectRelacion" class="form-control selectpicker" data-live-search="true">
 						<%
-						List<InstanciaObjetoDOM> li = rel.getLi();
-						for(InstanciaObjetoDOM o : li){
+						List<InstanciaObjeto> li = rel.getLi();
+						for(InstanciaObjeto o : li){
 						%>
 						<option value="<%=o.getIdInstancia()%>" data-tokens="<%=o.getNombre()%>"><%=o.getNombre() %></option>
 						<%} %>
@@ -1598,8 +1598,8 @@ if(listarel != null && listarel.size() > 0 ){
 					<label for="selectRelacionM"><fmt:message key="p2-2.modal122"></fmt:message></label>
 					<select id="selectRelacionM<%=rel.getAc().getIdTipoHijo()%>" name="selectRelacionM" class="form-control selectpicker" data-live-search="true">
 						<%
-						List<InstanciaObjetoDOM> li2 = rel.getLi();
-						for(InstanciaObjetoDOM o : li2){
+						List<InstanciaObjeto> li2 = rel.getLi();
+						for(InstanciaObjeto o : li2){
 						%>
 						<option value="<%=o.getIdInstancia()%>" data-tokens="<%=o.getNombre()%>"><%=o.getNombre() %></option>
 						<%} %>
@@ -1682,8 +1682,8 @@ if(listarel != null && listarel.size() > 0 ){
 					<label for="selectRelacionV"><fmt:message key="p2-2.modal122"></fmt:message></label>
 					<select id="selectRelacionV<%=rel.getAc().getIdTipoHijo()%>" class="form-control selectpicker" data-live-search="true" DISABLED>
 						<%
-						List<InstanciaObjetoDOM> li3 = rel.getLi();
-						for(InstanciaObjetoDOM o : li3){
+						List<InstanciaObjeto> li3 = rel.getLi();
+						for(InstanciaObjeto o : li3){
 						%>
 						<option value="<%=o.getIdInstancia()%>" data-tokens="<%=o.getNombre()%>"><%=o.getNombre() %></option>
 						<%} %>

@@ -1,4 +1,4 @@
-<%@page import="com.cvilla.medievalia.domain.TipoAtributoComplejoDOM"%>
+<%@page import="com.cvilla.medievalia.domain.TipoAtributoComplejo"%>
 <%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
 <%@page import="java.util.List"%>
@@ -7,10 +7,10 @@
 User user = (User) session.getAttribute("user");
 String type= (String) request.getAttribute("type");
 @SuppressWarnings("unchecked")
-List<TipoAtributoComplejoDOM> objetos = (List<TipoAtributoComplejoDOM>) request.getAttribute("tipos");
+List<TipoAtributoComplejo> objetos = (List<TipoAtributoComplejo>) request.getAttribute("tipos");
 int i = 0;
 if (objetos != null && objetos.size() > 0){
-	for(TipoAtributoComplejoDOM c : objetos){
+	for(TipoAtributoComplejo c : objetos){
 
 			if(i++ == 0){
 				%>

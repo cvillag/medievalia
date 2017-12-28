@@ -5,27 +5,27 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM;
-import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
-import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoComplejo;
+import com.cvilla.medievalia.domain.InstanciaObjeto;
+import com.cvilla.medievalia.domain.TipoObjeto;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.utils.Fechas;
 import com.cvilla.medievalia.utils.SpecialDate;
 
-public class AtributoComplejoDOMMapper implements RowMapper<InstanciaAtributoComplejoDOM>{
+public class AtributoComplejoDOMMapper implements RowMapper<InstanciaAtributoComplejo>{
 	
-	public InstanciaAtributoComplejoDOM mapRow(ResultSet rs, int rowNum) throws SQLException {
-		InstanciaAtributoComplejoDOM a = new InstanciaAtributoComplejoDOM();
+	public InstanciaAtributoComplejo mapRow(ResultSet rs, int rowNum) throws SQLException {
+		InstanciaAtributoComplejo a = new InstanciaAtributoComplejo();
 		a.setIdInstanciaPadre(rs.getInt("idInstanciaPadre"));
-		TipoObjetoDOM tipoPadre = new TipoObjetoDOM();
+		TipoObjeto tipoPadre = new TipoObjeto();
 		tipoPadre.setTipoDOM(rs.getInt("idObjetoPadre"));
 		tipoPadre.setNombreDOM(rs.getString("nombreObjetoPadre"));
 		a.setTipoPadre(tipoPadre);
-		TipoObjetoDOM tipoHijo = new TipoObjetoDOM();
+		TipoObjeto tipoHijo = new TipoObjeto();
 		tipoHijo.setTipoDOM(rs.getInt("idObjetoHijo"));
 		tipoHijo.setNombreDOM(rs.getString("nombreObjetoHijo"));
 		a.setTipoHijo(tipoHijo);
-		InstanciaObjetoDOM iHijo = new InstanciaObjetoDOM();
+		InstanciaObjeto iHijo = new InstanciaObjeto();
 		iHijo.setIdInstancia(rs.getInt("idInstanciaHijo"));
 		iHijo.setTipo(tipoHijo);
 		iHijo.setNombre(rs.getString("nombreObjetoHijo"));
@@ -43,9 +43,9 @@ public class AtributoComplejoDOMMapper implements RowMapper<InstanciaAtributoCom
 		a.setValidado(rs.getInt("validadoPadre"));
 		a.setTextoLeido(rs.getInt("textoLeidoAC"));
 		a.setIdTipoObjetoRelacion(rs.getInt("idObjetoRelacion"));
-		InstanciaObjetoDOM irel = new InstanciaObjetoDOM();
+		InstanciaObjeto irel = new InstanciaObjeto();
 		irel.setIdInstancia(rs.getInt("idInstanciaRelacion"));
-		irel.setTipo(new TipoObjetoDOM(rs.getInt("idObjetoRelacion"),rs.getString("nombreObjeto")));
+		irel.setTipo(new TipoObjeto(rs.getInt("idObjetoRelacion"),rs.getString("nombreObjeto")));
 		irel.setNombre(rs.getString("nombreInstancia"));
 		a.setInstanciaObjetoRelacion(irel);
 		

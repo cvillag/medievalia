@@ -1,20 +1,20 @@
-<%@page import="com.cvilla.medievalia.domain.TipoObjetoDOM"%>
+<%@page import="com.cvilla.medievalia.domain.TipoObjeto"%>
 <%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
-<%@page import="com.cvilla.medievalia.domain.InstanciaObjetoDOM"%>
+<%@page import="com.cvilla.medievalia.domain.InstanciaObjeto"%>
 <%@page import="java.util.List"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt"%>
 <%
 User user = (User) session.getAttribute("user");
 String type= (String) request.getAttribute("type");
 @SuppressWarnings("unchecked")
-List<InstanciaObjetoDOM> objetos = (List<InstanciaObjetoDOM>) request.getAttribute("listaObjetos");
+List<InstanciaObjeto> objetos = (List<InstanciaObjeto>) request.getAttribute("listaObjetos");
 String delete = (String) request.getAttribute("permisoborrado");
 String modify = (String) request.getAttribute("permisomodificar");
 String rename = (String) request.getAttribute("permisorenombrar");
 
 if (objetos != null && objetos.size() > 0){
-	for(InstanciaObjetoDOM c : objetos){
+	for(InstanciaObjeto c : objetos){
 		if(type.equals("table")){%>
 			<tr class="trobjetoU" id="objetoStudent<%=c.getIdInstancia()%>" data-nom="<%=c.getNombre()%>">
 				<td>

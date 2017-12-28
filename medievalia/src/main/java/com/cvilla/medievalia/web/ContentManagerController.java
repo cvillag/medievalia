@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.TipoObjeto;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
@@ -98,7 +98,7 @@ public class ContentManagerController {
 				}
 				
 				if(authManager.isAutorized(Constants.P_OBJECT_TYPE_LIST, user)){
-					List<TipoObjetoDOM> lo = objectManager.getTiposObjetosDOM();
+					List<TipoObjeto> lo = objectManager.getTiposObjetosDOM();
 					if(lo != null){
 						logManager.log(user.getId(), Constants.P_OBJECT_TYPE_LIST, "Visualización de gestor de contenido", Constants.P_OK);
 					}

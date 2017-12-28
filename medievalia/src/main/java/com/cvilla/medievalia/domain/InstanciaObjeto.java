@@ -4,20 +4,20 @@ import java.util.List;
 
 import com.cvilla.medievalia.utils.Constants;
 
-public class InstanciaObjetoDOM {
+public class InstanciaObjeto {
 	
 	private int idInstancia;
-	private TipoObjetoDOM tipo;
+	private TipoObjeto tipo;
 	private String nombre;
-	private List<InstanciaAtributoSencilloDOM> atributosSencillos;
-	private List<InstanciaAtributoComplejoDOM> atributosComplejos;
+	private List<InstanciaAtributoSencillo> atributosSencillos;
+	private List<InstanciaAtributoComplejo> atributosComplejos;
 	private int validado;
 	private User creador;
 	private String textoValidacion;
 	private int grupo;
 	private int textoLeido;
 	
-	public InstanciaObjetoDOM() {
+	public InstanciaObjeto() {
 		super();
 	}
 
@@ -29,11 +29,11 @@ public class InstanciaObjetoDOM {
 		this.idInstancia = idInstancia;
 	}
 
-	public TipoObjetoDOM getTipo() {
+	public TipoObjeto getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(TipoObjetoDOM tipo) {
+	public void setTipo(TipoObjeto tipo) {
 		this.tipo = tipo;
 	}
 
@@ -45,19 +45,19 @@ public class InstanciaObjetoDOM {
 		this.nombre = nombre;
 	}
 
-	public List<InstanciaAtributoSencilloDOM> getAtributosSencillos() {
+	public List<InstanciaAtributoSencillo> getAtributosSencillos() {
 		return atributosSencillos;
 	}
 
-	public void setAtributosSencillos(List<InstanciaAtributoSencilloDOM> atributosSencillos) {
+	public void setAtributosSencillos(List<InstanciaAtributoSencillo> atributosSencillos) {
 		this.atributosSencillos = atributosSencillos;
 	}
 
-	public List<InstanciaAtributoComplejoDOM> getAtributosComplejos() {
+	public List<InstanciaAtributoComplejo> getAtributosComplejos() {
 		return atributosComplejos;
 	}
 
-	public void setAtributosComplejos(List<InstanciaAtributoComplejoDOM> atributosComplejos) {
+	public void setAtributosComplejos(List<InstanciaAtributoComplejo> atributosComplejos) {
 		this.atributosComplejos = atributosComplejos;
 	}
 

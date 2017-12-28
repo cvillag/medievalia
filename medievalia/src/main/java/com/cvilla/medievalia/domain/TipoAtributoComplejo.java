@@ -1,6 +1,6 @@
 package com.cvilla.medievalia.domain;
 
-public class TipoAtributoComplejoDOM {
+public class TipoAtributoComplejo {
 	
 	private int idTipoPadre;
 	private int idTipoHijo;
@@ -8,7 +8,7 @@ public class TipoAtributoComplejoDOM {
 	private int idTipoRelacion;
 	private int conFecha;
 	private int conPaginaDoc;
-	public TipoAtributoComplejoDOM() {
+	public TipoAtributoComplejo() {
 		super();
 	}
 	public int getIdTipoPadre() {

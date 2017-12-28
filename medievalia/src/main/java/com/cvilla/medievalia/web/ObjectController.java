@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM;
-import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
-import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
-import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaAtributoSencillo;
+import com.cvilla.medievalia.domain.InstanciaObjeto;
+import com.cvilla.medievalia.domain.TipoAtributoComplejo;
+import com.cvilla.medievalia.domain.TipoObjeto;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IHtmlManager;
@@ -49,7 +49,7 @@ public class ObjectController {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
-		TipoObjetoDOM tipo = (TipoObjetoDOM) sesion.getAttribute("tipoObjeto");
+		TipoObjeto tipo = (TipoObjeto) sesion.getAttribute("tipoObjeto");
 		
 		
 		if(authManager.isAutorized(actionInt, user)){
@@ -58,7 +58,7 @@ public class ObjectController {
 			}
 			else{
 				int idTipoObjeto = (new Integer(request.getParameter("idTipo"))).intValue();
-				TipoObjetoDOM tipoNuevo = objectManager.getTipoObjetoDOM(idTipoObjeto);
+				TipoObjeto tipoNuevo = objectManager.getTipoObjetoDOM(idTipoObjeto);
 				if(tipoNuevo == null){
 					return htmlManager.paramError(logManager, actionInt, user.getId());
 				}
@@ -68,12 +68,12 @@ public class ObjectController {
 					}
 					model = new ModelAndView("2-2.listaObjetos");
 					model.addObject("tipo", tipoNuevo);
-					List<TipoAtributoComplejoDOM> ac = objectManager.getTiposAtributosCompleos(tipoNuevo);
+					List<TipoAtributoComplejo> ac = objectManager.getTiposAtributosCompleos(tipoNuevo);
 					model.addObject("tipoAtributosC", ac);
 					List<ListaRelaciones> listaBiblio = objectManager.getRelaciones(ac);
 					for(ListaRelaciones li : listaBiblio){
 						if(li != null && li.getLi() != null){
-							for(InstanciaObjetoDOM i : li.getLi()){
+							for(InstanciaObjeto i : li.getLi()){
 								fillNames(i);
 							}
 						}
@@ -100,13 +100,13 @@ public class ObjectController {
 		return request.getParameter("idTipo") == null || !htmlManager.isNumeric(request.getParameter("idTipo"));
 	}
 	
-	private void fillNames(InstanciaObjetoDOM n2){
+	private void fillNames(InstanciaObjeto n2){
 		String sub = "";
 		if(n2 != null){
-			InstanciaObjetoDOM io = objectManager.getObjetoDOM(n2.getTipo(), n2.getIdInstancia());
-			for(InstanciaAtributoSencilloDOM ias : io.getAtributosSencillos()){
+			InstanciaObjeto io = objectManager.getObjetoDOM(n2.getTipo(), n2.getIdInstancia());
+			for(InstanciaAtributoSencillo ias : io.getAtributosSencillos()){
 				if(ias.getIdAtributo() == Constants.OBJETO_ATT_CNC && ias.getValor() != null){
-					sub = " ," + ((InstanciaObjetoDOM)ias.getValor()).getNombre();
+					sub = " ," + ((InstanciaObjeto)ias.getValor()).getNombre();
 				}
 			}
 			n2.setNombre(n2.getNombre() + sub);

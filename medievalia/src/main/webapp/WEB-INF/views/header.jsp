@@ -1,4 +1,4 @@
-<%@page import="com.cvilla.medievalia.domain.TipoObjetoDOM"%>
+<%@page import="com.cvilla.medievalia.domain.TipoObjeto"%>
 <%@page import="com.cvilla.medievalia.domain.Group"%>
 <%@ page session="false"%>
 
@@ -46,7 +46,7 @@
 	List<Header> headers = (List<Header>) request.getAttribute("headers");
 	HttpSession ses = request.getSession();
 	Group grupoactual = (Group) ses.getAttribute("grupoActual");
-	TipoObjetoDOM tipoAct = (TipoObjetoDOM) ses.getAttribute("tipoObjeto");
+	TipoObjeto tipoAct = (TipoObjeto) ses.getAttribute("tipoObjeto");
 	%>
 		<div class="container">
 			<div class="navbar-header">

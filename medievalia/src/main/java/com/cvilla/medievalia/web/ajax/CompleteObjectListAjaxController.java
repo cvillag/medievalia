@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cvilla.medievalia.domain.Group;
-import com.cvilla.medievalia.domain.InstanciaObjetoDOM;
-import com.cvilla.medievalia.domain.TipoAtributoComplejoDOM;
-import com.cvilla.medievalia.domain.TipoObjetoDOM;
+import com.cvilla.medievalia.domain.InstanciaObjeto;
+import com.cvilla.medievalia.domain.TipoAtributoComplejo;
+import com.cvilla.medievalia.domain.TipoObjeto;
 import com.cvilla.medievalia.domain.User;
 import com.cvilla.medievalia.service.intf.IAutorizationManager;
 import com.cvilla.medievalia.service.intf.IGroupManager;
@@ -56,7 +56,7 @@ public class CompleteObjectListAjaxController {
 		HttpSession sesion = request.getSession();
 		User user = (User) sesion.getAttribute("user");
 		Group groupA = (Group) sesion.getAttribute("grupoActual");
-		TipoObjetoDOM tipo = (TipoObjetoDOM) sesion.getAttribute("tipoObjeto");
+		TipoObjeto tipo = (TipoObjeto) sesion.getAttribute("tipoObjeto");
 		JSONObject j = new JSONObject();
 		
 		if((errorParam(request) && tipo == null) || groupA == null){
@@ -69,10 +69,10 @@ public class CompleteObjectListAjaxController {
 					logManager.log(user.getId(), actionInt, "Fallo en listado de objetos. Parámetros incorrectos.", Constants.P_NOK);
 				}
 				else{
-					List<InstanciaObjetoDOM> listag;
+					List<InstanciaObjeto> listag;
 					String t2 = request.getParameter("tipo");
 					if(t2 != null && t2.length()>0 && htmlManager.isNumeric(t2)){
-						TipoObjetoDOM to = new TipoObjetoDOM();
+						TipoObjeto to = new TipoObjeto();
 						to.setTipoDOM(new Integer(t2));
 						listag = objectManager.getObjetoDOMListByType(to);
 					}
@@ -83,7 +83,7 @@ public class CompleteObjectListAjaxController {
 					
 					sesion.removeAttribute("listainforme");
 					sesion.setAttribute("listainforme",listag);
-					List<TipoAtributoComplejoDOM> ac = objectManager.getTiposAtributosCompleos(tipo);
+					List<TipoAtributoComplejo> ac = objectManager.getTiposAtributosCompleos(tipo);
 					sesion.removeAttribute("tiposacinforme");
 					sesion.setAttribute("tiposacinforme",ac);
 					
@@ -95,7 +95,7 @@ public class CompleteObjectListAjaxController {
 					if(authManager.isAutorized(Constants.P_RENAME_OBJECT_INSTANCE, user)){
 						model.addObject("permisoRenombrado", "ok");
 					}
-					List<TipoAtributoComplejoDOM> lac = objectManager.getTiposAtributosCompleos(tipo);
+					List<TipoAtributoComplejo> lac = objectManager.getTiposAtributosCompleos(tipo);
 					boolean btnModify = objectManager.hasSimpleAttributes(tipo) || lac.size()>0;
 					if(btnModify && authManager.isAutorized(Constants.P_MODIFY_OBJECT_INSTANCE, user)){
 						model.addObject("permisoModificar","ok");

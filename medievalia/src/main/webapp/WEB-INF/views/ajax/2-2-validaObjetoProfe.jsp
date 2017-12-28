@@ -1,10 +1,10 @@
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
-<%@page import="com.cvilla.medievalia.domain.TipoAtributoComplejoDOM"%>
-<%@page import="com.cvilla.medievalia.domain.InstanciaAtributoComplejoDOM"%>
+<%@page import="com.cvilla.medievalia.domain.TipoAtributoComplejo"%>
+<%@page import="com.cvilla.medievalia.domain.InstanciaAtributoComplejo"%>
 <%@page import="com.cvilla.medievalia.utils.SpecialDate"%>
-<%@page import="com.cvilla.medievalia.domain.InstanciaAtributoSencilloDOM"%>
-<%@page import="com.cvilla.medievalia.domain.InstanciaObjetoDOM"%>
+<%@page import="com.cvilla.medievalia.domain.InstanciaAtributoSencillo"%>
+<%@page import="com.cvilla.medievalia.domain.InstanciaObjeto"%>
 <%@page import="com.cvilla.medievalia.utils.Constants"%>
 <%@page import="com.cvilla.medievalia.domain.User"%>
 <%@page import="java.util.List"%>
@@ -12,18 +12,18 @@
 <%
 User user = (User) session.getAttribute("user");
 String type= (String) request.getAttribute("message");
-InstanciaObjetoDOM objeto = (InstanciaObjetoDOM) request.getAttribute("object");
+InstanciaObjeto objeto = (InstanciaObjeto) request.getAttribute("object");
 @SuppressWarnings("unchecked")
 List<User> listU = (List<User>) request.getAttribute("users");
 int modo = ((Integer) request.getAttribute("modo")).intValue();
 boolean disabled = modo == 1;
 @SuppressWarnings("unchecked")
-List<TipoAtributoComplejoDOM> listaTipos = (List<TipoAtributoComplejoDOM>) request.getAttribute("tatributoc");
+List<TipoAtributoComplejo> listaTipos = (List<TipoAtributoComplejo>) request.getAttribute("tatributoc");
 @SuppressWarnings("unchecked")
 Map<Integer, Integer> badges = (Map<Integer, Integer>) request.getAttribute("badges");
 int totalbadges = 0;
 if(objeto != null){
-	List<InstanciaAtributoComplejoDOM> acl = objeto.getAtributosComplejos();
+	List<InstanciaAtributoComplejo> acl = objeto.getAtributosComplejos();
 	%>
 	<input type="hidden" id="objetodetallevalidado" value="<%=objeto.isValidado()?"1":"0"%>">
 	<input type="hidden" id="idObjetoValidar" value="<%=objeto.getIdInstancia()%>">
@@ -32,7 +32,7 @@ if(objeto != null){
 		<%
 		if(listaTipos != null && listaTipos.size() > 0){
 			
-			for(TipoAtributoComplejoDOM ac : listaTipos){
+			for(TipoAtributoComplejo ac : listaTipos){
 				int badge = 0;
 				if(badges != null){
 					if(badges.containsKey(ac.getIdTipoHijo())){
@@ -50,13 +50,13 @@ if(objeto != null){
 	<div id="modDetAtributos0">
 	<%
 	
-	List<InstanciaAtributoSencilloDOM> atrS = objeto.getAtributosSencillos();
+	List<InstanciaAtributoSencillo> atrS = objeto.getAtributosSencillos();
 	if(atrS != null && atrS.size() > 0){
 		%>
 		
 			<form>
 			<%
-			for(InstanciaAtributoSencilloDOM as : atrS){
+			for(InstanciaAtributoSencillo as : atrS){
 				if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_FECHA){
 					boolean empty = as.getValor() == null;
 					Integer d = null,m = null,a = null;
@@ -139,7 +139,7 @@ if(objeto != null){
 					<%
 				}
 				else if(as.getTipoAtributo() == Constants.TIPO_ATRIBUTO_OBJECT){
-					InstanciaObjetoDOM o = (InstanciaObjetoDOM) as.getValor();
+					InstanciaObjeto o = (InstanciaObjeto) as.getValor();
 					%>
 					<div class="row">
 						<div class="col-xs-12 form-group">
@@ -167,12 +167,12 @@ if(objeto != null){
 	</div>
 	<%if(listaTipos != null && listaTipos.size() > 0){
 		int idPag = 0;
-		for(TipoAtributoComplejoDOM act : listaTipos){
+		for(TipoAtributoComplejo act : listaTipos){
 			idPag++;	
 			%>
 	<div id="modDetAtributos<%=act.getIdTipoHijo() %>" class="modDetAtributosC">
 		<ul class="list-group">
-		<%	for(InstanciaAtributoComplejoDOM ac : acl){
+		<%	for(InstanciaAtributoComplejo ac : acl){
 				if(ac.getTipoHijo().getTipoDOM() == act.getIdTipoHijo()){
 			%>
 			<li class="list-group-item clearfix">
