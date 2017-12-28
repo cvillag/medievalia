@@ -16,7 +16,7 @@ List<Teachers> lt = (List<Teachers>)request.getAttribute("listaT");%>
 <div class="container">
 	<div class="row">
 		<div class="panel panel-default">
-			<button class="button" data-toggle="modal" data-target="#modalMatricularAlumno">Matricular</button>
+			<button class="btn btn-info" data-toggle="modal" data-target="#modalMatricularAlumno" title="<fmt:message key="p4-1.btn.title"></fmt:message>"><fmt:message key="p4-1.btn.matricular"></fmt:message></button>
 		</div>
 	</div>
 	<div class="row">
@@ -35,10 +35,6 @@ List<Teachers> lt = (List<Teachers>)request.getAttribute("listaT");%>
 		</div>
 	</div>
 </div>
-
-
-
-
 
 <div id="modalMatricularAlumno" class="modal fade" role="dialog">
 	<div class="modal-dialog">

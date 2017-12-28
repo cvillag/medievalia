@@ -85,14 +85,14 @@ $(document).ready(function(){
 	$("#displayActivity").click(function(){
 		if(btnact == 0){
 			$("#activity-block").slideUp(500);
-			$("#displayActivity").removeClass();
-			$("#displayActivity").addClass("glyphicon glyphicon-chevron-up");
+			$("#displayActivityi").removeClass();
+			$("#displayActivityi").addClass("glyphicon glyphicon-chevron-up");
 			btnact = 1;
 		}
 		else{
 			$("#activity-block").slideDown(500);
-			$("#displayActivity").removeClass();
-			$("#displayActivity").addClass("glyphicon glyphicon-chevron-down");
+			$("#displayActivityi").removeClass();
+			$("#displayActivityi").addClass("glyphicon glyphicon-chevron-down");
 			btnact = 0;
 		}
 	});

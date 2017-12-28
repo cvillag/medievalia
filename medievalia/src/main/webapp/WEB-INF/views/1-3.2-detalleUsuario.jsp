@@ -47,7 +47,7 @@ int numPags = (Integer)request.getAttribute("numPags");
 <div class="container">
 	<legend>
 		<h3>
-			<button id="displayActivity" class="btn btn-sm btn-info btn-xs">
+			<button id="displayActivity" class="btn btn-sm btn-info btn-xs" title="<fmt:message key="acc.mostrarActividad"/>">
 				<span id="displayActivityi" class="glyphicon glyphicon-chevron-down"></span>
 			</button>
 			&nbsp;
@@ -89,10 +89,9 @@ int numPags = (Integer)request.getAttribute("numPags");
 		</ul>
 	</div>
 </div>
-<%@ include file="/WEB-INF/views/common/groups-list.jsp"%>
 <div class="container">
 	<div class="col-md-6 col-md-offset-3">
-		<button type="button" class="btn btn-sm btn-info" id="volver">
+		<button type="button" class="btn btn-sm btn-info" id="volver" title="<fmt:message key="acc.volver"/>">
 			<fmt:message key="general.volver" />
 		</button>
 	</div>

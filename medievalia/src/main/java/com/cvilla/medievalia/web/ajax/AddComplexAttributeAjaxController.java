@@ -69,16 +69,13 @@ public class AddComplexAttributeAjaxController {
 				int selRel = (new Integer(request.getParameter("selRel"))).intValue();
 				SpecialDate inicio = null;
 				SpecialDate fin = null;
-				int paginaDoc = 0;
+				String paginaDoc = null;
 				if(objectManager.isConFecha(tipo.getTipoDOM(),idTipoAttr)){
 					inicio = Fechas.getDate(request,"i");
 					fin = Fechas.getDate(request,"f");
 				}
 				if(objectManager.isConPag(tipo.getTipoDOM(),idTipoAttr)){
-					String pd = request.getParameter("paginaDoc");
-					if(pd!=null && htmlManager.isNumeric(pd)){
-						paginaDoc = (new Integer(pd).intValue());
-					}
+					paginaDoc = request.getParameter("paginaDoc");
 				}
 				int val;
 				if(authManager.isAutorized(actionInt2, user)){

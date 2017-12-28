@@ -81,15 +81,14 @@
 				<div class="col-md-4">
 					<input id="pass2" name="pass2" type="password"
 						placeholder="<fmt:message key="p1-2.form.passhelp"/>"
-						class="form-control input-md"> <span class="help-block"><fmt:message
-							key="p1-2.form.passnote2" /></span>
+						class="form-control input-md">
 				</div>
 			</div>
 
 			<div class="form-group">
 				<div class="col-md-4"></div>
 				<div class="col-md-4">
-					<button id="createUser" name="createUser" class="btn btn-smbtn-primary">
+					<button id="createUser" name="createUser" class="btn btn-sm btn-info" title="<fmt:message key="acc.creauser" />">
 						<fmt:message key="p1-2.form.button" />
 					</button>
 				</div>

@@ -19,5 +19,10 @@
 		<servlet-name>medievalia</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error404.jsp</location>
+	</error-page> 	
 
 </web-app>

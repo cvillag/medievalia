@@ -324,6 +324,9 @@ public class ObjetoDAO implements IObjetoDAO {
 			SpecialDate ini = ao.getFechaInicio();
 			SpecialDate fin = ao.getFechaFin();
 			int i = 0;
+			if(ao.getPaginaDoc() == null){
+				ao.setPaginaDoc("");
+			}
 			if(ao.getInstanciaObjetoRelacion() != null){
 				if(ini != null && fin != null){
 					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),ao.getInstanciaObjetoRelacion().getIdInstancia(),ao.getConFecha(),ao.getFechaInicio().getDia(),ao.getFechaInicio().getMes(),ao.getFechaInicio().getAnio(),ao.getFechaFin().getDia(),ao.getFechaFin().getMes(),ao.getFechaFin().getAnio(),ao.getConPaginaDoc(),ao.getPaginaDoc(),ao.getTextoLeido()});
@@ -339,6 +342,7 @@ public class ObjetoDAO implements IObjetoDAO {
 				}
 			}
 			else{
+				
 				if(ini != null && fin != null){
 					i = jdbcTemplate.update(ADD_COMPLEX_ATTRIBUTE, new Object[]{ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstanciaPadre,ao.getInstanciaHijo().getIdInstancia(),ao.getValidado(),ao.getTextoValidacion(),ao.getIdGrupo(),ao.getCreador(),ao.getIdTipoObjetoRelacion(),null,ao.getConFecha(),ao.getFechaInicio().getDia(),ao.getFechaInicio().getMes(),ao.getFechaInicio().getAnio(),ao.getFechaFin().getDia(),ao.getFechaFin().getMes(),ao.getFechaFin().getAnio(),ao.getConPaginaDoc(),ao.getPaginaDoc(),ao.getTextoLeido()});
 				}
@@ -690,6 +694,9 @@ public class ObjetoDAO implements IObjetoDAO {
 			SpecialDate in = ao.getFechaInicio();
 			SpecialDate fi = ao.getFechaFin();
 			int i = 0;
+			if(ao.getPaginaDoc() == null){
+				ao.setPaginaDoc("");
+			}
 			if(in != null && fi != null){
 				i = jdbcTemplate.update(UPDATE_COMPLEX_ATTRIBUTE, new Object[]{ao.getInstanciaObjetoRelacion().getIdInstancia(),in.getDia(),in.getMes(),in.getAnio(),fi.getDia(),fi.getMes(),fi.getAnio(),ao.getConPaginaDoc(),ao.getPaginaDoc(),ao.getTipoPadre().getTipoDOM(),ao.getTipoHijo().getTipoDOM(),idInstPadre,ao.getInstanciaHijo().getIdInstancia()});
 			}

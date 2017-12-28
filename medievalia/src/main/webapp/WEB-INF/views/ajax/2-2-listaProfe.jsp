@@ -22,10 +22,10 @@ List<InstanciaObjetoDOM> lista = (List<InstanciaObjetoDOM>) request.getAttribute
 			<tr class="trObjetoP" id="objetoProfe<%=c.getIdInstancia()%>" data-nom="<%=c.getNombre()%>">
 				<td rowspan="2">
 					<input type="text" id="objetoNameP<%=c.getIdInstancia()%>" value="<%=c.getNombre() %>" disabled class="nombreP">
-					<button type="button" id="saveObjetoP<%=c.getIdInstancia()%>" class="btn btn-xs btn-info saveNewNameP" data-val="<%=c.getIdInstancia()%>">
+					<button type="button" id="saveObjetoP<%=c.getIdInstancia()%>" class="btn btn-xs btn-info saveNewNameP" data-val="<%=c.getIdInstancia()%>" title="<fmt:message key="acc.2-2.btn.savenewname"></fmt:message>">
 						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 					</button>
-					<button type="button" id="cancelObjetoP<%=c.getIdInstancia()%>" class="btn btn-xs btn-info cancelNewNameP" data-val="<%=c.getIdInstancia()%>">
+					<button type="button" id="cancelObjetoP<%=c.getIdInstancia()%>" class="btn btn-xs btn-info cancelNewNameP" data-val="<%=c.getIdInstancia()%>" title="<fmt:message key="acc.2-2.btn.cancelnewname"></fmt:message>">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 					</button>
 				</td>
@@ -34,11 +34,11 @@ List<InstanciaObjetoDOM> lista = (List<InstanciaObjetoDOM>) request.getAttribute
 				</td>
 				<td rowspan="2">
 					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-info detalleObjetoProfe" data-val="<%=c.getIdInstancia()%>" data-name="<%=c.getNombre()%>">
+						<button type="button" class="btn btn-xs btn-info detalleObjetoProfe" data-val="<%=c.getIdInstancia()%>" data-name="<%=c.getNombre()%>" title="<fmt:message key="acc.2-2.btn.objectdetail"></fmt:message><%=c.getNombre()%>">
 							<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 						</button>
 						<div class="btn-group">
-							<button class="btn btn-info btn-xs dropdown-toggle" type="button" id="dropdownAcciones<%=c.getIdInstancia()%>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							<button class="btn btn-info btn-xs dropdown-toggle" type="button" id="dropdownAcciones<%=c.getIdInstancia()%>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="<fmt:message key="acc.2-2.btn.objectactions"></fmt:message><%=c.getNombre()%>">
 								<span class="glyphicon glyphicon-collapse-down" aria-hidden="true"></span>
 							</button>
 							<ul class="dropdown-menu" aria-labelledby="dropdownAcciones<%=c.getIdInstancia()%>" role="menu">

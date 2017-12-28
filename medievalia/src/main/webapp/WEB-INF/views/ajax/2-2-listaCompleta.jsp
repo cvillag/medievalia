@@ -24,20 +24,20 @@ if (objetos != null && objetos.size() > 0){
 <%-- 						<span class="label label-warning"><fmt:message key="general.novalidado"></fmt:message></span> --%>
 <%-- 					<%} %> --%>
 					<input type="text" id="objetoName<%=c.getIdInstancia()%>" value="<%=c.getNombre() %>" disabled class="nombreCom">
-					<button type="button" id="saveObjeto<%=c.getIdInstancia()%>" class="btn btn-xs btn-info saveNewName" data-val="<%=c.getIdInstancia()%>">
+					<button type="button" id="saveObjeto<%=c.getIdInstancia()%>" class="btn btn-xs btn-info saveNewName" data-val="<%=c.getIdInstancia()%>" title="<fmt:message key="acc.2-2.btn.savenewname"></fmt:message>">
 						<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 					</button>
-					<button type="button" id="cancelObjeto<%=c.getIdInstancia()%>" class="btn btn-xs btn-info cancelNewName" data-val="<%=c.getIdInstancia()%>">
+					<button type="button" id="cancelObjeto<%=c.getIdInstancia()%>" class="btn btn-xs btn-info cancelNewName" data-val="<%=c.getIdInstancia()%>" title="<fmt:message key="acc.2-2.btn.cancelnewname"></fmt:message>">
 						<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
 					</button>
 				</td>
 				<td>
 					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-info detalleObjeto" data-val="<%=c.getIdInstancia()%>" data-name="<%=c.getNombre()%>">
+						<button type="button" class="btn btn-xs btn-info detalleObjeto" data-val="<%=c.getIdInstancia()%>" data-name="<%=c.getNombre()%>" title="<fmt:message key="acc.2-2.btn.objectdetail"></fmt:message><%=c.getNombre()%>">
 							<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 						</button>
 						<div class="btn-group">
-							<button class="btn btn-info btn-xs dropdown-toggle" type="button" id="dropdownAcciones" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							<button class="btn btn-info btn-xs dropdown-toggle" type="button" id="dropdownAcciones" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="<fmt:message key="acc.2-2.btn.objectactions"></fmt:message><%=c.getNombre()%>">
 								<span class="glyphicon glyphicon-collapse-down" aria-hidden="true"></span>
 							</button>
 							<ul class="dropdown-menu" aria-labelledby="dropdownAcciones" role="menu">

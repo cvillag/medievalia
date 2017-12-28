@@ -19,7 +19,10 @@ int numPags = (Integer)request.getAttribute("numPag");
 <div class="container">
 	<legend>
 		<h3>
-			<span id="displayActivity" class="glyphicon glyphicon-chevron-down"></span>
+			<button id="displayActivity" class="btn btn-sm btn-info btn-xs" title="<fmt:message key="acc.mostrarActividad"/>">
+			<span id="displayActivityi" class="glyphicon glyphicon-chevron-down"></span>
+			</button>
+			&nbsp;
 			<fmt:message key="p1-8.actividad" />
 		</h3>
 	</legend>

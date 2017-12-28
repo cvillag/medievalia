@@ -29,7 +29,7 @@
 		</div>
 		<div class="form-group">
 			<div class="col-xs-offset-3 col-xs-2">
-				<button type="submit" class="btn btn-sm btn-info">
+				<button type="submit" class="btn btn-sm btn-info" title="<fmt:message key="intro.btn1" />">
 					<fmt:message key="intro.btn1" />
 				</button>
 			</div>

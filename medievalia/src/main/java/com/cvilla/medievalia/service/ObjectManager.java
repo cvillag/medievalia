@@ -287,7 +287,7 @@ public class ObjectManager implements IObjectManager {
 		return null;
 	}
 
-	public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA, int selRel, SpecialDate inicio, SpecialDate fin, int paginaDoc) {
+	public String addObjetoDOMAttributeByType(int padre, int hijo, TipoObjetoDOM tipoP, int tipoH, int val, User user, Group groupA, int selRel, SpecialDate inicio, SpecialDate fin, String paginaDoc) {
 		String message = "";
 		InstanciaObjetoDOM op = objetoDAO.getObjectInstance(tipoP, padre);
 		TipoAtributoComplejoDOM tac  = null;
@@ -338,7 +338,7 @@ public class ObjectManager implements IObjectManager {
 				ao.setIdTipoObjetoRelacion(tac.getIdTipoRelacion());
 				ao.setInstanciaObjetoRelacion(docrel);
 				ao.setConPaginaDoc(tac.getConPaginaDoc());
-				if(ao.isConPagina() && paginaDoc != 0){
+				if(ao.isConPagina() && paginaDoc != null){
 					ao.setPaginaDoc(paginaDoc);
 				}
 				if(objetoDAO.isConFecha(tipoP.getTipoDOM(),tipoH)){
@@ -681,7 +681,7 @@ public class ObjectManager implements IObjectManager {
 		return null;
 	}
 
-	public String updateObjetoDOMAttributeByType(int idInstPadre, int idInstHijo, TipoObjetoDOM tipo, int idTipoAttr, int val, User user, Group groupA, int selRel, SpecialDate inicio,	SpecialDate fin, int paginaDoc) {
+	public String updateObjetoDOMAttributeByType(int idInstPadre, int idInstHijo, TipoObjetoDOM tipo, int idTipoAttr, int val, User user, Group groupA, int selRel, SpecialDate inicio,	SpecialDate fin, String paginaDoc) {
 		String message = "";
 		InstanciaObjetoDOM op = objetoDAO.getObjectInstance(tipo, idInstPadre);
 		TipoAtributoComplejoDOM tac  = null;

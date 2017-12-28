@@ -125,7 +125,7 @@
 					}
 					%>
 					<button type="button" class="btn btn-default navbar-btn"
-						onclick="document.location.href='logout.do'">
+						onclick="document.location.href='logout.do'" title="<fmt:message key="acc.logout"></fmt:message>">
 						<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
 					</button>
 					<%

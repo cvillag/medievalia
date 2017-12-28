@@ -70,13 +70,13 @@ public class UpdateComplexAttributeAjaxController {
 				int confecha = (new Integer(request.getParameter("confecha"))).intValue();
 				SpecialDate inicio = null;
 				SpecialDate fin = null;
-				int paginaDoc = 0;
+				String paginaDoc = null;
 				if(confecha == 1){
 					inicio = Fechas.getDate(request,"i");
 					fin = Fechas.getDate(request,"f");
 				}
 				if(objectManager.isConPag(tipo.getTipoDOM(), idTipoAttr)){
-					paginaDoc = (new Integer(request.getParameter("paginaDoc"))).intValue();
+					paginaDoc =request.getParameter("paginaDoc");
 				}
 				int val;
 				if(authManager.isAutorized(actionInt2, user)){

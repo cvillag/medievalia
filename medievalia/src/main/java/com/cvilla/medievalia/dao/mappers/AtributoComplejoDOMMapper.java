@@ -74,7 +74,7 @@ public class AtributoComplejoDOMMapper implements RowMapper<InstanciaAtributoCom
 		}
 		a.setConPaginaDoc(rs.getInt("conPaginaDoc"));
 		if(a.isConPagina()){
-			a.setPaginaDoc(rs.getInt("paginaDoc"));
+			a.setPaginaDoc(rs.getString("paginaDoc"));
 		}
 		
 		return a;

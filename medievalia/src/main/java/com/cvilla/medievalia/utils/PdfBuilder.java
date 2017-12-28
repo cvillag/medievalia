@@ -117,7 +117,7 @@ public class PdfBuilder extends AbstractITextPdfView {
 	        		}
 	        		table.addCell(c);
 	        		if(a.isConPagina()){
-	        			c.setPhrase(new Phrase((new Integer(a.getPaginaDoc()).toString())));
+	        			c.setPhrase(new Phrase(a.getPaginaDoc()));
 	        		}
 	        		else{
 	        			c.setPhrase(new Phrase(" "));

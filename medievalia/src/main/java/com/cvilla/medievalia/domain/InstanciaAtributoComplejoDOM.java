@@ -21,7 +21,7 @@ public class InstanciaAtributoComplejoDOM {
 	private SpecialDate fechaInicio;
 	private SpecialDate fechaFin;
 	private int conPaginaDoc;
-	private int paginaDoc;
+	private String paginaDoc;
 	
 	public InstanciaAtributoComplejoDOM() {
 		super();
@@ -135,10 +135,10 @@ public class InstanciaAtributoComplejoDOM {
 	public void setConPaginaDoc(int conPaginaDoc) {
 		this.conPaginaDoc = conPaginaDoc;
 	}
-	public int getPaginaDoc() {
+	public String getPaginaDoc() {
 		return paginaDoc;
 	}
-	public void setPaginaDoc(int paginaDoc) {
+	public void setPaginaDoc(String paginaDoc) {
 		this.paginaDoc = paginaDoc;
 	}
 	public boolean isConPagina(){

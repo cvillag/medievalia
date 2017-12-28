@@ -31,7 +31,7 @@ List<TipoAtributoComplejoDOM> lto = (List<TipoAtributoComplejoDOM>) request.getA
 	<div class="row">
 		<div class="panel panel-default col-sm-6">
 			<div class="panel-heading">
-				<button id="displayCreate" class="btn btn-sm btn-info btn-xs">
+				<button id="displayCreate" class="btn btn-sm btn-info btn-xs" title="<fmt:message key="acc.2-2.disp.create"></fmt:message>">
 					<span id="displayCreatei" class="glyphicon glyphicon-chevron-down"></span>
 				</button>
 				&nbsp;
@@ -39,17 +39,17 @@ List<TipoAtributoComplejoDOM> lto = (List<TipoAtributoComplejoDOM>) request.getA
 			</div>	
 			<div id="group-block1" class="panel-body">
 				<p><fmt:message key="p2.2.objetos.nombre"></fmt:message><input type="text" id="newObjectName">
-				<button type="button" class="btn btn-xs btn-info" id="createButton">
+				<button type="button" class="btn btn-xs btn-info" id="createButton" title="<fmt:message key="acc.2-2.btn.create"></fmt:message>">
 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 				</button>
-				<button type="button" class="btn btn-xs btn-info" id="cancelButton">
+				<button type="button" class="btn btn-xs btn-info" id="cancelButton" title="<fmt:message key="acc.2-2.btn.cancel"></fmt:message>">
 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 				</button></p>
 			</div>
 		</div>
 		<div class="panel panel-default col-sm-6">
 			<div class="panel-heading">
-				<button id="displayFilters" class="btn btn-sm btn-info btn-xs">
+				<button id="displayFilters" class="btn btn-sm btn-info btn-xs" title="<fmt:message key="acc.2-2.disp.filtro"></fmt:message>">
 					<span id="displayFilteri" class="glyphicon glyphicon-chevron-down"></span>
 				</button>
 				&nbsp;
@@ -88,13 +88,13 @@ List<TipoAtributoComplejoDOM> lto = (List<TipoAtributoComplejoDOM>) request.getA
 			</div>
 			<div id="group-blockf2" class="panel-footer">
 				<div class="input-group">
-					<button type="button" class="btn btn-xs btn-info" id="filterButton">
+					<button type="button" class="btn btn-xs btn-info" id="filterButton" title="<fmt:message key="acc.2-2.btn.addfiltro"></fmt:message>">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 					</button>&nbsp;
-					<button type="button" class="btn btn-xs btn-info" id="cancelFButton">
+					<button type="button" class="btn btn-xs btn-info" id="cancelFButton" title="<fmt:message key="acc.2-2.btn.remfiltro"></fmt:message>">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>&nbsp;
-					<button type="button" class="btn btn-xs btn-info" id="getInstancesFiltered">
+					<button type="button" class="btn btn-xs btn-info" id="getInstancesFiltered" title="<fmt:message key="acc.2-2.btn.playfiltro"></fmt:message>">
 						<fmt:message key="p2-2.botonfiltrar"></fmt:message>
 					</button>
 				</div>
@@ -1559,7 +1559,7 @@ if(listarel != null && listarel.size() > 0 ){
 				<br>
 				<div class="form-group">
 					<label for="paginaDoc<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.pagina"></fmt:message></label>
-					<input type="number" name="paginaDoc<%=rel.getAc().getIdTipoHijo() %>" id="paginaDoc<%=rel.getAc().getIdTipoHijo() %>" min="1" size="4" class="form-control">
+					<input type="text" name="paginaDoc<%=rel.getAc().getIdTipoHijo() %>" id="paginaDoc<%=rel.getAc().getIdTipoHijo() %>" min="1" size="4" class="form-control">
 				</div>
 				<%} %>
 				<input type="hidden" name="conFecha" id="conFecha<%=rel.getAc().getIdTipoHijo()%>">
@@ -1643,7 +1643,7 @@ if(listarel != null && listarel.size() > 0 ){
 				<br>
 				<div class="form-group">
 					<label for="paginaDocM<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.pagina"></fmt:message></label>
-					<input type="number" name="paginaDocM<%=rel.getAc().getIdTipoHijo() %>" id="paginaDocM<%=rel.getAc().getIdTipoHijo() %>" min="1" size="4" class="form-control">
+					<input type="text" name="paginaDocM<%=rel.getAc().getIdTipoHijo() %>" id="paginaDocM<%=rel.getAc().getIdTipoHijo() %>" min="1" size="4" class="form-control">
 				</div>
 				<%} %>
 				<input type="hidden" name="conFechaM" id="conFechaM<%=rel.getAc().getIdTipoHijo()%>">
@@ -1727,7 +1727,7 @@ if(listarel != null && listarel.size() > 0 ){
 				<br>
 				<div class="form-group">
 					<label for="paginaDocV<%=rel.getAc().getIdTipoHijo() %>"><fmt:message key="p2.2.detalle.pagina"></fmt:message></label>
-					<input DISABLED type="number" name="paginaDocV<%=rel.getAc().getIdTipoHijo() %>" id="paginaDocV<%=rel.getAc().getIdTipoHijo() %>" min="1" size="4" class="form-control">
+					<input DISABLED type="text" name="paginaDocV<%=rel.getAc().getIdTipoHijo() %>" id="paginaDocV<%=rel.getAc().getIdTipoHijo() %>" min="1" size="4" class="form-control">
 				</div>
 				<%} %>				
 			</div>
