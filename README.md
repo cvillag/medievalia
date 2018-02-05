@@ -2,6 +2,7 @@
 Medievalia is a web application with a customizable base of knowledge for research and a
 tool for undergraduate or masters students from different disciplines to learn the research
 techniques used by their teachers.
+This base of knoledge is configurable. Every object could be modified, deleted or just could add new ones. In this version it needs to edit some database tables: ObjetoDOM, AtributoComplejoObjeto and AtributoSencilloObjeto. See the configuration guide (in spanish) to make any change.
 # Getting Started
 This webapp needs:
 * Tomcat Server (7 or higher)
@@ -16,4 +17,3 @@ This webapp needs:
 5. Add the mysql connector to Tomcat's libraries.
 6. Import the file BDmedievalia.sql from Mysql.
 7. Access to <yourhost>:8080/medievalia
-
