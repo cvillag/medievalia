@@ -1,7 +1,7 @@
 -- phpMyAdmin SQL Dump
 -- version 4.0.10deb1
 -- http://www.phpmyadmin.net
--- Text
+-- Text 2
 -- Servidor: localhost
 -- Tiempo de generación: 11-01-2018 a las 19:21:05
 -- Versión del servidor: 5.5.58-0ubuntu0.14.04.1
